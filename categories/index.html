@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>TaLEsCuber&#39;Home</title>
+    <title>categories | TaLEsCuber&#39;Home</title>
     <meta name="author" content="TaLEsCuber" />
     <meta name="description" content="A self-entertaining learning site" />
     <meta name="keywords" content="" />
@@ -42,7 +42,9 @@
 
 
 
-<script src="/js/lib/home.js"></script>
+
+
+
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -152,40 +154,11 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="home-head">
-    <div
-        id="home-background"
-        ref="homeBackground"
-        data-images="/images/background4.jpg,/images/background1.png"
-    ></div>
-    <div id="home-info" @click="homeClick">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>TaLEsCuber&#39;Home</h1>
-                <h3></h3>
-                <h5>A self-entertaining learning site</h5>
-            </div>
-        </span>
+            <div class="article">
+    <div>
+        <h1>categories</h1>
     </div>
-</div>
-<div
-    id="home-posts-wrap"
-    ref="homePostsWrap"
-    true
->
-    <div id="home-posts">
-        
-
-<div class="post">
-    <a href="/2024/08/30/test1/">
-        <h2 class="post-title">Origin</h2>
-    </a>
-    <div class="category-and-date">
-        
+    <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
@@ -195,105 +168,16 @@
         
         
     </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我在日常刷B站时，刷到了一条关于利用<a target="_blank" rel="noopener" href="https://pages.github.com/">GithubPages</a>部署个人网站的视频，便萌生了自己动手搭建一个网站的想法，于是便有了这个网站。</p>
-<p>本网站使用<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a>进行搭建，同时使用<a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">Particlex</a>模板。搭建网站的过程请参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Eg41157tL/?spm_id_from=333.337.search-card.all.click&vd_source=a1a7e0d336b7ea6214fb34dcfec990b4">这个视频</a>。</p>
-<p>本网站计划不定期更新我的一些大学学习资料和一些随笔。</p>
-<p>目前大部分的有用的资料在这个<a target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLabR</a>Github仓库里，里面存放了我在大二下学期的基础物理实验中所完成的实验报告。</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-        
-    </div>
-    <a href="/2024/08/30/test1/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2024/08/30/hello-world/">
-        <h2 class="post-title">Hello World</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/8/30
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-        
-    </div>
-    <a href="/2024/08/30/hello-world/" class="go-post">阅读全文</a>
-</div>
-
-
-        <div class="page-current">
     
-    <span class="current">1</span>
+    <div class="content" v-pre>
+        
+    </div>
     
     
     
     
-</div>
-
-    </div>
     
-    <div id="home-card">
-        <div id="card-style">
-    <div id="card-div">
-        <div class="avatar">
-            <img src="/images/talescuber.jpg" alt="avatar" />
-        </div>
-        <div class="name">TaLEsCuber</div>
-        <div class="description">
-            <h1 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h1><p>Carpe Diem<br>…</p>
-
-        </div>
-        
-        
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://github.com/TaLEsCuber">TaLEsCuber&#39;Github</a>
-            </div>
-            
-        </div>
-        
-    </div>
-</div>
-
-    </div>
+    
     
 </div>
 
@@ -325,6 +209,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>
