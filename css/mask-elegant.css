@@ -1,0 +1,20 @@
+/* 黑色毛玻璃条（行内/块级自适应） */
+.text-mask {
+  display: inline-block;   /* 行内也可设宽高，不撑行距 */
+  color: transparent;      /* 先隐藏文字 */
+  background: #111;        /* 纯黑 */
+  border-radius: 4px;
+  padding: 0 4px;
+  line-height: 1.4;
+  filter: blur(3px);       /* 毛玻璃强度，可改 0-5px */
+  transition: all .25s ease;
+  cursor: pointer;
+  user-select: none;       /* 防止双击选中 */
+}
+
+/* 鼠标悬停或点击后解除打码
+.text-mask.reveal {
+  color: inherit;
+  background: transparent;
+  filter: none;
+} */
