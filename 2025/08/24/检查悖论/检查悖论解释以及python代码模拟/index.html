@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://talescuber.github.io/img/talescuber.jpg">
 <meta property="article:published_time" content="2025-08-24T13:25:06.000Z">
-<meta property="article:modified_time" content="2025-08-24T14:46:31.938Z">
+<meta property="article:modified_time" content="2025-08-24T14:50:28.315Z">
 <meta property="article:author" content="TaLEsCuber">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="检查悖论">
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2025-08-24 22:46:31'
+  postUpdate: '2025-08-24 22:50:28'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -154,7 +154,7 @@
         }
       }
       detectApple()
-    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">检查悖论解释以及python代码模拟</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-24T13:25:06.000Z" title="发表于 2025-08-24 21:25:06">2025-08-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-24T14:46:31.938Z" title="更新于 2025-08-24 22:46:31">2025-08-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/python/">python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="检查悖论解释以及python代码模拟"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="检查悖论解释以及python代码模拟"><a href="#检查悖论解释以及python代码模拟" class="headerlink" title="检查悖论解释以及python代码模拟"></a>检查悖论解释以及python代码模拟</h1><h2 id="什么是检查悖论"><a href="#什么是检查悖论" class="headerlink" title="什么是检查悖论"></a>什么是检查悖论</h2><p>公交车一定比你想象的更难等？你的朋友也一定比你朋友多，还更有钱、更好看、更快乐？毕导在<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PE421w7jL/?spm_id_from=333.1387.upload.video_card.click&vd_source=a1a7e0d336b7ea6214fb34dcfec990b4">这期视频</a>里面以检查悖论为对象，讨论了一种我们认识世界的方式。</p>
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">检查悖论解释以及python代码模拟</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-24T13:25:06.000Z" title="发表于 2025-08-24 21:25:06">2025-08-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-24T14:50:28.315Z" title="更新于 2025-08-24 22:50:28">2025-08-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/python/">python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="检查悖论解释以及python代码模拟"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="检查悖论解释以及python代码模拟"><a href="#检查悖论解释以及python代码模拟" class="headerlink" title="检查悖论解释以及python代码模拟"></a>检查悖论解释以及python代码模拟</h1><h2 id="什么是检查悖论"><a href="#什么是检查悖论" class="headerlink" title="什么是检查悖论"></a>什么是检查悖论</h2><p>公交车一定比你想象的更难等？你的朋友也一定比你朋友多，还更有钱、更好看、更快乐？毕导在<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PE421w7jL/?spm_id_from=333.1387.upload.video_card.click&vd_source=a1a7e0d336b7ea6214fb34dcfec990b4">这期视频</a>里面以检查悖论为对象，讨论了一种我们认识世界的方式。</p>
 <p><strong>检查悖论（inspection paradox）</strong>说的是：当你随机“检查”一个系统时，看到的往往并不是系统的平均状态，而是更容易被抽中的那些状态。</p>
 <p>把公交车班次当作系统。假设公交按计划每10分钟一班，但偶尔因堵车或红灯会拉长到20分钟。你走到站台的瞬间是随机的，因而更可能落在一辆“晚到”的20分钟间隔里，而不是“准点”的10分钟间隔里。结果你实际等车的平均时间会比公交公司宣称的10分钟要长。</p>
 <p>换句话说，你大概率落在一个较长的间隔里，于是体验到的时间比系统真正的平均间隔更长——这就是检查悖论。</p>
@@ -200,7 +200,7 @@
 <blockquote>
 <p>这里的 $\mu$ 并不是“名义”发车间隔，而是乘客视角下被 <strong>长度加权</strong> 后的平均间隔。</p>
 </blockquote>
-<h3 id="检查悖论：为什么-mu-被放大"><a href="#检查悖论：为什么-mu-被放大" class="headerlink" title="检查悖论：为什么 $\mu$ 被放大"></a>检查悖论：为什么 $\mu$ 被放大</h3><p>乘客落进一条长度为 $t$ 的间隔的概率 <strong>正比于 $t$</strong> 。定义 <strong>长度加权分布</strong><br>$$<br>    f_L(t)&#x3D;\frac{t f(t)}{\mu},<br>$$<br>则乘客看到的间隔长度期望<br>$$<br>    \mathbb E_L[T]&#x3D;\int_0^\infty t,f_L(t),dt&#x3D;\frac{\mathbb E[T^2]}{\mu}&#x3D;\frac{\sigma^2+\mu^2}{\mu}&#x3D;\mu+\frac{\sigma^2}{\mu}.<br>$$</p>
+<h3 id="检查悖论：为什么-mu-被放大"><a href="#检查悖论：为什么-mu-被放大" class="headerlink" title="检查悖论：为什么 $\mu$ 被放大"></a>检查悖论：为什么 $\mu$ 被放大</h3><p>乘客落进一条长度为 $t$ 的间隔的概率 <strong>正比于 $t$</strong> 。定义 <strong>长度加权分布</strong><br>$$<br>    f_L(t)&#x3D;\frac{t f(t)}{\mu},<br>$$<br>则乘客看到的间隔长度期望<br>$$<br>    \mathbb E_L[T]&#x3D;\int_0^\infty tf_L(t)dt&#x3D;\frac{\mathbb E[T^2]}{\mu}&#x3D;\frac{\sigma^2+\mu^2}{\mu}&#x3D;\mu+\frac{\sigma^2}{\mu}.<br>$$</p>
 <p>将更新–报酬定理中的 $\mu$ 替换为 $\mathbb E_L[T]$，得到<br>$$<br>    W&#x3D;\frac{\mathbb E_L[T]}{2}&#x3D;\frac{\mu}{2}+\frac{\sigma^2}{2\mu}. \tag{1}<br>$$</p>
 <ul>
 <li>若间隔完全恒定（$\sigma^2&#x3D;0$），则 $W&#x3D;\mu&#x2F;2$，无悖论。  </li>
@@ -209,31 +209,13 @@
 <h3 id="完全随机到站：指数间隔"><a href="#完全随机到站：指数间隔" class="headerlink" title="完全随机到站：指数间隔"></a>完全随机到站：指数间隔</h3><p>当 <strong>“公交车完全随机到站”</strong> 时，最自然的模型是把发车间隔 $T$ 设为 <strong>指数分布</strong>，参数 $\lambda&gt;0$。此时<br>$$<br>    \mu&#x3D;\frac{1}{\lambda},\quad \sigma^2&#x3D;\frac{1}{\lambda^2}.<br>$$</p>
 <p>代入 (1)：<br>$$<br>    W&#x3D;\frac{\mu}{2}+\frac{\sigma^2}{2\mu}<br>  &#x3D;\frac{1}{2\lambda}+\frac{1&#x2F;\lambda^2}{2\cdot 1&#x2F;\lambda}<br>  &#x3D;\frac{1}{2\lambda}+\frac{1}{2\lambda}<br>  &#x3D;\frac{1}{\lambda}&#x3D;\mu.<br>$$</p>
 <p><strong>结论</strong>：在完全随机（泊松到站）的极端情况下，乘客平均等车时间 <strong>等于平均发车间隔</strong> $\mu$，而非直觉上的 $\mu&#x2F;2$。检查悖论在此达到最大：$W&#x3D;\mu$。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
-<thead>
-<tr>
-<th>情况</th>
-<th>平均等车时长 $W$</th>
-<th>检查悖论大小</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>间隔恒定（$\sigma^2&#x3D;0$）</td>
-<td>$\mu&#x2F;2$</td>
-<td>无</td>
-</tr>
-<tr>
-<td>一般分布（$\sigma^2&gt;0$）</td>
-<td>$\displaystyle\frac{\mu}{2}+\frac{\sigma^2}{2\mu}$</td>
-<td>有</td>
-</tr>
-<tr>
-<td>完全随机（指数间隔）</td>
-<td>$\mu$</td>
-<td>最大</td>
-</tr>
-</tbody></table>
-<p>检查悖论的核心：  </p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><!-- | 情况 | 平均等车时长 $W$ | 检查悖论大小 |
+|---|---|---|
+| 间隔恒定（$\sigma^2=0$） | $\mu/2$ | 无 |
+| 一般分布（$\sigma^2>0$） | $\displaystyle\frac{\mu}{2}+\frac{\sigma^2}{2\mu}$ | 有 |
+| 完全随机（指数间隔） | $\mu$ | 最大 | -->
+
+<p>检查悖论的核心：</p>
 <blockquote>
 <p>乘客随机到达 → 看到的间隔被 <strong>长度加权</strong> → 平均间隔被放大 → 等车时间随之放大。</p>
 </blockquote>
