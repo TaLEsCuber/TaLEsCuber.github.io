@@ -1,0 +1,10 @@
+/* 1. 相关推荐卡片无封面时的占位背景 */
+.relatedPosts .relatedPosts-list .cover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/* 2. 文章顶部首图仍保持透明（或彻底隐藏） */
+#post-cover,
+#page-header.post-bg {
+  background: transparent !important;
+}
