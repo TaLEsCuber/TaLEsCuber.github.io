@@ -161,150 +161,201 @@
 document.addEventListener('pjax:send', () => {
   Pace.restart()
 })
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">电光调制器（EOM）详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-18T09:03:49.000Z" title="发表于 2025-09-18 17:03:49">2025-09-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-18T09:14:02.816Z" title="更新于 2025-09-18 17:14:02">2025-09-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/">实验仪器</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/EOM/">EOM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="电光调制器（EOM）详解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="电光调制器-EOM-详解"><a href="#电光调制器-EOM-详解" class="headerlink" title="电光调制器 (EOM) 详解"></a>电光调制器 (EOM) 详解</h1><h2 id="一、EOM-是什么？"><a href="#一、EOM-是什么？" class="headerlink" title="一、EOM 是什么？"></a>一、EOM 是什么？</h2><p><strong>电光调制器 (Electro-Optic Modulator, EOM)</strong> 是一种利用<strong>电光效应</strong>来对激光的<strong>相位</strong>、<strong>频率</strong>、<strong>振幅（强度）</strong> 甚至<strong>偏振态</strong>进行高速调制的光电器件。其核心原理是通过施加的<strong>电压信号</strong>直接改变电光晶体的折射率，从而实现对光波参数的精确控制。</p>
-<p>EOM 是实现高速、高精度光调制的关键器件，广泛应用于光通信、量子光学和精密测量等领域。</p>
-<h2 id="二、工作原理"><a href="#二、工作原理" class="headerlink" title="二、工作原理"></a>二、工作原理</h2><p>EOM 的核心是基于<strong>电光效应</strong>，特别是<strong>普克尔效应 (Pockels Effect)<strong>。该效应是指某些晶体（称为电光晶体，如铌酸锂 LiNbO₃、磷酸二氢钾 KDP 等）的折射率与施加在其上的外部电场呈</strong>线性变化</strong>的关系。</p>
-<p>其工作过程基于<strong>马赫-曾德尔干涉仪 (MZI)</strong> 或<strong>相位调制</strong>结构：</p>
-<h3 id="1-相位调制器-最简单的EOM"><a href="#1-相位调制器-最简单的EOM" class="headerlink" title="1. 相位调制器 (最简单的EOM)"></a>1. 相位调制器 (最简单的EOM)</h3><ul>
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">电光调制器（EOM）详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-18T09:03:49.000Z" title="发表于 2025-09-18 17:03:49">2025-09-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-18T09:14:02.816Z" title="更新于 2025-09-18 17:14:02">2025-09-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/">实验仪器</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/EOM/">EOM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="电光调制器（EOM）详解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="电光调制器-eom-详解">电光调制器 (EOM) 详解</h1>
+<h2 id="一eom-是什么">一、EOM 是什么？</h2>
+<p><strong>电光调制器 (Electro-Optic Modulator, EOM)</strong>
+是一种利用<strong>电光效应</strong>来对激光的<strong>相位</strong>、<strong>频率</strong>、<strong>振幅（强度）</strong>
+甚至<strong>偏振态</strong>进行高速调制的光电器件。其核心原理是通过施加的<strong>电压信号</strong>直接改变电光晶体的折射率，从而实现对光波参数的精确控制。</p>
+<p>EOM
+是实现高速、高精度光调制的关键器件，广泛应用于光通信、量子光学和精密测量等领域。</p>
+<h2 id="二工作原理">二、工作原理</h2>
+<p>EOM 的核心是基于<strong>电光效应</strong>，特别是<strong>普克尔效应
+(Pockels Effect)</strong>。该效应是指某些晶体（称为电光晶体，如铌酸锂
+LiNbO₃、磷酸二氢钾 KDP
+等）的折射率与施加在其上的外部电场呈<strong>线性变化</strong>的关系。</p>
+<p>其工作过程基于<strong>马赫-曾德尔干涉仪 (MZI)</strong>
+或<strong>相位调制</strong>结构：</p>
+<h3 id="相位调制器-最简单的eom">1. 相位调制器 (最简单的EOM)</h3>
+<ul>
 <li><strong>结构</strong>：一段电光晶体波导，两侧有电极。</li>
-<li><strong>原理</strong>：施加在电极上的电压 <code>V(t)</code> 产生电场，改变波导的折射率 <code>n</code>。</li>
-<li><strong>结果</strong>：光在波导中传播时，其相位延迟 <code>φ(t)</code> 随之改变：<code>Δφ ∝ V(t)</code>。</li>
+<li><strong>原理</strong>：施加在电极上的电压 <code>V(t)</code>
+产生电场，改变波导的折射率 <code>n</code>。</li>
+<li><strong>结果</strong>：光在波导中传播时，其相位延迟
+<code>φ(t)</code> 随之改变：<code>Δφ ∝ V(t)</code>。</li>
 <li><strong>输出</strong>：输出的是<strong>相位被调制</strong>的光：<code>E_out = E_in * exp(iΔφ(t))</code>。</li>
 </ul>
-<h3 id="2-马赫-曾德尔强度调制器-最常见的EOM"><a href="#2-马赫-曾德尔强度调制器-最常见的EOM" class="headerlink" title="2. 马赫-曾德尔强度调制器 (最常见的EOM)"></a>2. 马赫-曾德尔强度调制器 (最常见的EOM)</h3><ul>
-<li><strong>结构</strong>：输入光波导被分成<strong>两条完全相同的路径（臂）</strong>，然后在输出端重新合束。</li>
-<li><strong>原理</strong>：<ol>
-<li>输入光在分束器处被分为两束，分别进入两个波导臂。</li>
-<li>至少在一个臂上施加电极和调制电压 <code>V(t)</code>。该电压使该臂的折射率发生变化，导致通过该臂的光产生相位延迟。</li>
-<li>两束光在输出合束器处发生干涉。</li>
-</ol>
-</li>
-<li><strong>结果</strong>：两束光之间的<strong>相位差</strong>决定了输出端是<strong>相长干涉</strong>（光强最大）还是<strong>相消干涉</strong>（光强最小）。</li>
-<li><strong>输出</strong>：输出光的<strong>强度</strong> <code>I_out</code> 随施加的电压 <code>V(t)</code> 变化：<code>I_out ∝ cos²(Δφ(t)/2)</code>。通过设置合适的直流偏置点，可以实现线性的强度调制。</li>
-</ul>
-<p><strong>简单总结</strong>：<strong>电信号（电压） → 改变晶体折射率 → 改变光波的相位 →（通过干涉）最终控制输出光的强度。</strong></p>
-<h2 id="三、主要用途"><a href="#三、主要用途" class="headerlink" title="三、主要用途"></a>三、主要用途</h2><p>EOM 因其极高的带宽和精度，被应用于众多前沿领域：</p>
-<ol>
-<li><p><strong>光纤通信与电信</strong>：</p>
+<h3 id="马赫-曾德尔强度调制器-最常见的eom">2. 马赫-曾德尔强度调制器
+(最常见的EOM)</h3>
 <ul>
-<li><strong>核心调制器件</strong>：用于产生高速光通信中承载信息的<strong>幅度调制 (ASK)<strong>、</strong>相位调制 (PSK&#x2F;DQPSK)</strong> 和<strong>正交幅度调制 (QAM)</strong> 格式的光信号，是100G、400G及更高速光模块的核心。</li>
+<li><strong>结构</strong>：输入光波导被分成<strong>两条完全相同的路径（臂）</strong>，然后在输出端重新合束。</li>
+<li><strong>原理</strong>：
+<ol type="1">
+<li>输入光在分束器处被分为两束，分别进入两个波导臂。</li>
+<li>至少在一个臂上施加电极和调制电压
+<code>V(t)</code>。该电压使该臂的折射率发生变化，导致通过该臂的光产生相位延迟。</li>
+<li>两束光在输出合束器处发生干涉。</li>
+</ol></li>
+<li><strong>结果</strong>：两束光之间的<strong>相位差</strong>决定了输出端是<strong>相长干涉</strong>（光强最大）还是<strong>相消干涉</strong>（光强最小）。</li>
+<li><strong>输出</strong>：输出光的<strong>强度</strong>
+<code>I_out</code> 随施加的电压 <code>V(t)</code>
+变化：<code>I_out ∝ cos²(Δφ(t)/2)</code>。通过设置合适的直流偏置点，可以实现线性的强度调制。</li>
 </ul>
-</li>
-<li><p><strong>量子信息科学</strong>：</p>
+<p><strong>简单总结</strong>：<strong>电信号（电压） → 改变晶体折射率 →
+改变光波的相位 →（通过干涉）最终控制输出光的强度。</strong></p>
+<h2 id="三主要用途">三、主要用途</h2>
+<p>EOM 因其极高的带宽和精度，被应用于众多前沿领域：</p>
+<ol type="1">
+<li><strong>光纤通信与电信</strong>：
+<ul>
+<li><strong>核心调制器件</strong>：用于产生高速光通信中承载信息的<strong>幅度调制
+(ASK)</strong>、<strong>相位调制 (PSK/DQPSK)</strong>
+和<strong>正交幅度调制 (QAM)</strong>
+格式的光信号，是100G、400G及更高速光模块的核心。</li>
+</ul></li>
+<li><strong>量子信息科学</strong>：
 <ul>
 <li><strong>量子比特操纵</strong>：在光量子计算中，用于精确操控光子的量子态（偏振、路径等）。</li>
 <li><strong>制备压缩态光</strong>：用于量子光学实验，生成非经典光场。</li>
-</ul>
-</li>
-<li><p><strong>超快激光脉冲操控</strong>：</p>
+</ul></li>
+<li><strong>超快激光脉冲操控</strong>：
 <ul>
-<li><strong>锁模</strong>：在激光腔内用于启动和维持锁模，产生飞秒&#x2F;皮秒激光脉冲。</li>
+<li><strong>锁模</strong>：在激光腔内用于启动和维持锁模，产生飞秒/皮秒激光脉冲。</li>
 <li><strong>脉冲整形</strong>：与脉冲整形器结合，对超快激光脉冲的相位和振幅进行编程控制。</li>
-</ul>
-</li>
-<li><p><strong>精密测量</strong>：</p>
+</ul></li>
+<li><strong>精密测量</strong>：
 <ul>
 <li><strong>外差干涉仪</strong>：与AOM类似，可以引入频率移，用于振动、位移的纳米级精度测量。</li>
 <li><strong>相位噪声抑制</strong>：用于激光稳频系统，补偿激光器的相位噪声。</li>
-</ul>
-</li>
-<li><p><strong>模拟射频光链路</strong>：</p>
+</ul></li>
+<li><strong>模拟射频光链路</strong>：
 <ul>
-<li>将高频微波&#x2F;射频信号直接加载到光载波上，用于天线遥馈、雷达等微波光子学系统。</li>
-</ul>
-</li>
+<li>将高频微波/射频信号直接加载到光载波上，用于天线遥馈、雷达等微波光子学系统。</li>
+</ul></li>
 </ol>
-<h2 id="四、使用方法"><a href="#四、使用方法" class="headerlink" title="四、使用方法"></a>四、使用方法</h2><p>使用EOM通常需要一个完整的系统，并对光路 alignment 有较高要求。</p>
-<h3 id="1-系统组成"><a href="#1-系统组成" class="headerlink" title="1. 系统组成"></a>1. 系统组成</h3><ul>
-<li><strong>EOM 主体</strong>：通常是带有光纤输入&#x2F;输出端口的封装器件，内部是LiNbO₃等晶体波导芯片。</li>
-<li>**直流偏置控制器 (Bias Controller)**：用于提供并稳定MZ型调制器所需的直流偏置电压，使其工作在最佳线性点（如正交偏置点）。</li>
-<li>**射频放大器 (RF Amplifier)**：用于放大来自信号源的射频驱动信号，以达到EOM所需的半波电压 <code>Vπ</code> 水平。</li>
+<h2 id="四使用方法">四、使用方法</h2>
+<p>使用EOM通常需要一个完整的系统，并对光路 alignment 有较高要求。</p>
+<h3 id="系统组成">1. 系统组成</h3>
+<ul>
+<li><strong>EOM
+主体</strong>：通常是带有光纤输入/输出端口的封装器件，内部是LiNbO₃等晶体波导芯片。</li>
+<li><strong>直流偏置控制器 (Bias
+Controller)</strong>：用于提供并稳定MZ型调制器所需的直流偏置电压，使其工作在最佳线性点（如正交偏置点）。</li>
+<li><strong>射频放大器 (RF
+Amplifier)</strong>：用于放大来自信号源的射频驱动信号，以达到EOM所需的半波电压
+<code>Vπ</code> 水平。</li>
 <li><strong>信号源</strong>：任意波形发生器、矢量信号发生器或简单的TTL信号源，用于产生调制电信号。</li>
 <li><strong>阻抗匹配网络</strong>：确保射频信号从放大器到EOM电极的有效传输。</li>
 </ul>
-<h3 id="2-连接与设置-以MZ强度调制器为例"><a href="#2-连接与设置-以MZ强度调制器为例" class="headerlink" title="2. 连接与设置 (以MZ强度调制器为例)"></a>2. 连接与设置 (以MZ强度调制器为例)</h3><ol>
+<h3 id="连接与设置-以mz强度调制器为例">2. 连接与设置
+(以MZ强度调制器为例)</h3>
+<ol type="1">
 <li><strong>光学连接</strong>：用光纤将<strong>激光器</strong>输出连接到EOM的<strong>输入端口</strong>，将EOM的<strong>输出端口</strong>连接到后续光路（如探测器或光纤系统）。</li>
-<li><strong>电气连接</strong>：<ul>
+<li><strong>电气连接</strong>：
+<ul>
 <li>将<strong>信号源</strong>的输出连接到<strong>射频放大器</strong>的输入。</li>
 <li>用<strong>射频电缆</strong>将放大器的输出连接到EOM的<strong>射频电极</strong>端口。</li>
 <li>将<strong>直流偏置控制器</strong>的输出连接到EOM的<strong>偏置电极</strong>端口。</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>通电</strong>：为射频放大器、偏置控制器接通电源。</li>
 </ol>
-<h3 id="3-操作与调节"><a href="#3-操作与调节" class="headerlink" title="3. 操作与调节"></a>3. 操作与调节</h3><ol>
+<h3 id="操作与调节">3. 操作与调节</h3>
+<ol type="1">
 <li><strong>开启激光</strong>：先打开激光器，并确保光功率在EOM的安全工作范围内。</li>
-<li><strong>设置偏置点</strong>：<ul>
+<li><strong>设置偏置点</strong>：
+<ul>
 <li>施加一个简单的射频信号（如正弦波）。</li>
 <li>缓慢调节偏置控制器输出的直流电压，同时监测EOM的输出光功率。</li>
-<li>找到输出功率随偏压变化曲线上的**正交工作点 (Quadrature Point)**，此点线性度最好。</li>
-<li>许多高端偏置控制器具有<strong>自动偏置控制 (ABC)</strong> 功能，可自动锁定并跟踪最佳工作点。</li>
-</ul>
-</li>
+<li>找到输出功率随偏压变化曲线上的<strong>正交工作点 (Quadrature
+Point)</strong>，此点线性度最好。</li>
+<li>许多高端偏置控制器具有<strong>自动偏置控制 (ABC)</strong>
+功能，可自动锁定并跟踪最佳工作点。</li>
+</ul></li>
 <li><strong>施加调制信号</strong>：将需要调制的信号输入到信号源，系统即可工作。</li>
 </ol>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li>**半波电压 (Vπ)**：是EOM最关键参数，指产生π相位差（使输出从最大到最小）所需的驱动电压。<code>Vπ</code> 越低，所需的驱动功率越小，调制器灵敏度越高。</li>
+<h3 id="注意事项">注意事项</h3>
+<ul>
+<li><strong>半波电压
+(Vπ)</strong>：是EOM最关键参数，指产生π相位差（使输出从最大到最小）所需的驱动电压。<code>Vπ</code>
+越低，所需的驱动功率越小，调制器灵敏度越高。</li>
 <li><strong>偏振敏感性</strong>：绝大多数EOM是<strong>偏振相关</strong>的，要求输入光为特定的线性偏振方向。需使用偏振控制器来调整入射激光的偏振态。</li>
 <li><strong>阻抗匹配</strong>：必须确保射频驱动端的阻抗（通常50Ω）与EOM的电极阻抗匹配，否则会导致信号反射和调制效率下降。</li>
-<li>** chirp**：调制过程中会不可避免地产生频率 chirp（瞬时的频率变化），在某些应用中需要特别注意或利用。</li>
+<li>** chirp**：调制过程中会不可避免地产生频率
+chirp（瞬时的频率变化），在某些应用中需要特别注意或利用。</li>
 </ul>
-<h2 id="五、EOM-与-AOM-的核心区别"><a href="#五、EOM-与-AOM-的核心区别" class="headerlink" title="五、EOM 与 AOM 的核心区别"></a>五、EOM 与 AOM 的核心区别</h2><table>
+<h2 id="五eom-与-aom-的核心区别">五、EOM 与 AOM 的核心区别</h2>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 42%" />
+<col style="width: 46%" />
+</colgroup>
 <thead>
 <tr>
-<th align="left">特性</th>
-<th align="left">电光调制器 (EOM)</th>
-<th align="left">声光调制器 (AOM)</th>
+<th style="text-align: left;">特性</th>
+<th style="text-align: left;">电光调制器 (EOM)</th>
+<th style="text-align: left;">声光调制器 (AOM)</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left"><strong>物理效应</strong></td>
-<td align="left">电光效应 (普克尔效应)</td>
-<td align="left">声光效应</td>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>物理效应</strong></td>
+<td style="text-align: left;">电光效应 (普克尔效应)</td>
+<td style="text-align: left;">声光效应</td>
 </tr>
 <tr>
-<td align="left"><strong>调制机制</strong></td>
-<td align="left">电场直接改变折射率</td>
-<td align="left">声波形成光栅引起衍射</td>
+<td style="text-align: left;"><strong>调制机制</strong></td>
+<td style="text-align: left;">电场直接改变折射率</td>
+<td style="text-align: left;">声波形成光栅引起衍射</td>
 </tr>
 <tr>
-<td align="left"><strong>调制速度</strong></td>
-<td align="left"><strong>极快</strong> (通常可达 GHz 至数十 GHz)</td>
-<td align="left">较快 (通常可达 MHz 级，最高至百MHz级)</td>
+<td style="text-align: left;"><strong>调制速度</strong></td>
+<td style="text-align: left;"><strong>极快</strong> (通常可达 GHz 至数十
+GHz)</td>
+<td style="text-align: left;">较快 (通常可达 MHz 级，最高至百MHz级)</td>
 </tr>
 <tr>
-<td align="left"><strong>主要功能</strong></td>
-<td align="left"><strong>相位调制</strong>、强度调制、偏振调制、IQ调制</td>
-<td align="left"><strong>强度调制</strong>、频率移频、光束偏转</td>
+<td style="text-align: left;"><strong>主要功能</strong></td>
+<td
+style="text-align: left;"><strong>相位调制</strong>、强度调制、偏振调制、IQ调制</td>
+<td
+style="text-align: left;"><strong>强度调制</strong>、频率移频、光束偏转</td>
 </tr>
 <tr>
-<td align="left"><strong>驱动信号</strong></td>
-<td align="left">电压信号 (宽带射频信号)</td>
-<td align="left">射频功率信号 (单一频率或窄带)</td>
+<td style="text-align: left;"><strong>驱动信号</strong></td>
+<td style="text-align: left;">电压信号 (宽带射频信号)</td>
+<td style="text-align: left;">射频功率信号 (单一频率或窄带)</td>
 </tr>
 <tr>
-<td align="left"><strong>光路设计</strong></td>
-<td align="left">通常为<strong>在线式</strong>光纤器件，易于集成</td>
-<td align="left">通常为<strong>自由空间</strong>器件，需要精密调节入射角</td>
+<td style="text-align: left;"><strong>光路设计</strong></td>
+<td
+style="text-align: left;">通常为<strong>在线式</strong>光纤器件，易于集成</td>
+<td
+style="text-align: left;">通常为<strong>自由空间</strong>器件，需要精密调节入射角</td>
 </tr>
 <tr>
-<td align="left"><strong>插入损耗</strong></td>
-<td align="left">相对较低 (约3-6 dB)</td>
-<td align="left">相对较高 (源于衍射效率损耗，但高效器件也可&gt;90%)</td>
+<td style="text-align: left;"><strong>插入损耗</strong></td>
+<td style="text-align: left;">相对较低 (约3-6 dB)</td>
+<td style="text-align: left;">相对较高
+(源于衍射效率损耗，但高效器件也可&gt;90%)</td>
 </tr>
 <tr>
-<td align="left"><strong>成本</strong></td>
-<td align="left">较高</td>
-<td align="left">相对较低</td>
+<td style="text-align: left;"><strong>成本</strong></td>
+<td style="text-align: left;">较高</td>
+<td style="text-align: left;">相对较低</td>
 </tr>
 <tr>
-<td align="left"><strong>典型应用</strong></td>
-<td align="left">高速光纤通信、量子技术、超快光学、精密测量</td>
-<td align="left">激光打印、Q开关、外差干涉测量、噪声抑制、光束扫描</td>
+<td style="text-align: left;"><strong>典型应用</strong></td>
+<td
+style="text-align: left;">高速光纤通信、量子技术、超快光学、精密测量</td>
+<td
+style="text-align: left;">激光打印、Q开关、外差干涉测量、噪声抑制、光束扫描</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88EOM%EF%BC%89%E8%AF%A6%E8%A7%A3/">http://talescuber.github.io/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88EOM%EF%BC%89%E8%AF%A6%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/">实验仪器</a><a class="post-meta__tags" href="/tags/EOM/">EOM</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E6%B3%A2%E9%95%BF%E8%AE%A1%E8%AF%A6%E8%A7%A3/" title="波长计详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">波长计详解</div></div></a></div><div class="next-post pull-right"><a href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">声光调制器 (AOM) 详解</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-18</div><div class="title">声光调制器 (AOM) 详解</div></div></a></div><div><a href="/2025/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E6%B3%A2%E9%95%BF%E8%AE%A1%E8%AF%A6%E8%A7%A3/" title="波长计详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-19</div><div class="title">波长计详解</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/TaLEsCuber"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/344473910" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
-</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8-EOM-%E8%AF%A6%E8%A7%A3"><span class="toc-text">电光调制器 (EOM) 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81EOM-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">一、EOM 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">二、工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%9B%B8%E4%BD%8D%E8%B0%83%E5%88%B6%E5%99%A8-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84EOM"><span class="toc-text">1. 相位调制器 (最简单的EOM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%A9%AC%E8%B5%AB-%E6%9B%BE%E5%BE%B7%E5%B0%94%E5%BC%BA%E5%BA%A6%E8%B0%83%E5%88%B6%E5%99%A8-%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84EOM"><span class="toc-text">2. 马赫-曾德尔强度调制器 (最常见的EOM)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94"><span class="toc-text">三、主要用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">四、使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90"><span class="toc-text">1. 系统组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BF%9E%E6%8E%A5%E4%B8%8E%E8%AE%BE%E7%BD%AE-%E4%BB%A5MZ%E5%BC%BA%E5%BA%A6%E8%B0%83%E5%88%B6%E5%99%A8%E4%B8%BA%E4%BE%8B"><span class="toc-text">2. 连接与设置 (以MZ强度调制器为例)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%B0%83%E8%8A%82"><span class="toc-text">3. 操作与调节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81EOM-%E4%B8%8E-AOM-%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-text">五、EOM 与 AOM 的核心区别</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E6%B3%A2%E9%95%BF%E8%AE%A1%E8%AF%A6%E8%A7%A3/" title="波长计详解">波长计详解</a><time datetime="2025-09-19T03:24:04.000Z" title="发表于 2025-09-19 11:24:04">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88EOM%EF%BC%89%E8%AF%A6%E8%A7%A3/" title="电光调制器（EOM）详解">电光调制器（EOM）详解</a><time datetime="2025-09-18T09:03:49.000Z" title="发表于 2025-09-18 17:03:49">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解">声光调制器 (AOM) 详解</a><time datetime="2025-09-18T08:48:31.000Z" title="发表于 2025-09-18 16:48:31">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/python-uncertainties%E5%8C%85%E4%BB%8B%E7%BB%8D/" title="python-uncertainties包介绍">python-uncertainties包介绍</a><time datetime="2025-09-17T14:50:38.000Z" title="发表于 2025-09-17 22:50:38">2025-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6%C2%B7%E9%AB%98%E6%98%BE-%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94/" title="经典力学·高显--习题解答">经典力学·高显--习题解答</a><time datetime="2025-09-17T13:17:05.000Z" title="发表于 2025-09-17 21:17:05">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8-eom-%E8%AF%A6%E8%A7%A3"><span class="toc-text">电光调制器 (EOM) 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80eom-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">一、EOM 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">二、工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BD%8D%E8%B0%83%E5%88%B6%E5%99%A8-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84eom"><span class="toc-text">1. 相位调制器 (最简单的EOM)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E8%B5%AB-%E6%9B%BE%E5%BE%B7%E5%B0%94%E5%BC%BA%E5%BA%A6%E8%B0%83%E5%88%B6%E5%99%A8-%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84eom"><span class="toc-text">2. 马赫-曾德尔强度调制器
+(最常见的EOM)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94"><span class="toc-text">三、主要用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">四、使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%BB%84%E6%88%90"><span class="toc-text">1. 系统组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E4%B8%8E%E8%AE%BE%E7%BD%AE-%E4%BB%A5mz%E5%BC%BA%E5%BA%A6%E8%B0%83%E5%88%B6%E5%99%A8%E4%B8%BA%E4%BE%8B"><span class="toc-text">2. 连接与设置
+(以MZ强度调制器为例)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%B0%83%E8%8A%82"><span class="toc-text">3. 操作与调节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94eom-%E4%B8%8E-aom-%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-text">五、EOM 与 AOM 的核心区别</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E6%B3%A2%E9%95%BF%E8%AE%A1%E8%AF%A6%E8%A7%A3/" title="波长计详解">波长计详解</a><time datetime="2025-09-19T03:24:04.000Z" title="发表于 2025-09-19 11:24:04">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88EOM%EF%BC%89%E8%AF%A6%E8%A7%A3/" title="电光调制器（EOM）详解">电光调制器（EOM）详解</a><time datetime="2025-09-18T09:03:49.000Z" title="发表于 2025-09-18 17:03:49">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解">声光调制器 (AOM) 详解</a><time datetime="2025-09-18T08:48:31.000Z" title="发表于 2025-09-18 16:48:31">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/python-uncertainties%E5%8C%85%E4%BB%8B%E7%BB%8D/" title="python-uncertainties包介绍">python-uncertainties包介绍</a><time datetime="2025-09-17T14:50:38.000Z" title="发表于 2025-09-17 22:50:38">2025-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6%C2%B7%E9%AB%98%E6%98%BE-%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94/" title="经典力学·高显--习题解答">经典力学·高显--习题解答</a><time datetime="2025-09-17T13:17:05.000Z" title="发表于 2025-09-17 21:17:05">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
 </div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
