@@ -160,62 +160,29 @@
 document.addEventListener('pjax:send', () => {
   Pace.restart()
 })
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">实验数据处理指南（持续更新）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-15T10:54:16.000Z" title="发表于 2025-09-15 18:54:16">2025-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-20T08:58:08.378Z" title="更新于 2025-09-20 16:58:08">2025-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C/">实验</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">960</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="实验数据处理指南（持续更新）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="实验数据处理指南">实验数据处理指南</h1>
-<p>本人本科做实验时常常会苦恼于实验数据处理，但是本院所开设的“误差分析与数据处理”课程内容可能不够全面，以及本人以后也是做实验方向的研究，会经常用到实验数据处理的相关内容，所以我计划整理实验数据处理的一般方法和流程，并在此持续更新。</p>
-<h2 id="误差与不确定度基础">误差与不确定度基础</h2>
-<p>首先我想明确一个事情，<strong>有测量就有误差</strong>。</p>
-<p>假设我们现在正在测量一支笔的长度。直观上，这支笔一定有一个真实的长度（记为<span
-class="math inline"><em>L</em><sub>0</sub></span>）。然后我们拿一把尺子，零刻度线对着笔的一端，读出笔另一端所对应的读数（记为<span
-class="math inline"><em>L</em></span>）。这个测量值是不可能等于真值的，因为读数必然受到各种因素的影响（实验条件、仪器精度、人为操作等），我们所能做的，只有通过各种方式，使得实验测量值尽可能的接近真值<span
-class="math inline"><em>L</em><sub>0</sub></span>。但是，还是一样的，有测量就有误差，所以我们的实验测量值至多只能给出一个<strong>范围</strong>，并且声明我们有多大的<strong>把握</strong>真值同时也落在这个范围内。</p>
-<h3 id="算数平均值与标准差">算数平均值与标准差</h3>
-<p>为了更精确的得到我们的测量结果，很自然的可以想到，多次测量取平均值。这背后支撑的数学原理是
-<strong>大数定律</strong>。</p>
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">实验数据处理指南（持续更新）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-15T10:54:16.000Z" title="发表于 2025-09-15 18:54:16">2025-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-20T08:58:08.378Z" title="更新于 2025-09-20 16:58:08">2025-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C/">实验</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">974</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="实验数据处理指南（持续更新）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="实验数据处理指南"><a href="#实验数据处理指南" class="headerlink" title="实验数据处理指南"></a>实验数据处理指南</h1><p>本人本科做实验时常常会苦恼于实验数据处理，但是本院所开设的“误差分析与数据处理”课程内容可能不够全面，以及本人以后也是做实验方向的研究，会经常用到实验数据处理的相关内容，所以我计划整理实验数据处理的一般方法和流程，并在此持续更新。</p>
+<h2 id="误差与不确定度基础"><a href="#误差与不确定度基础" class="headerlink" title="误差与不确定度基础"></a>误差与不确定度基础</h2><p>首先我想明确一个事情，<strong>有测量就有误差</strong>。</p>
+<p>假设我们现在正在测量一支笔的长度。直观上，这支笔一定有一个真实的长度（记为$L_0$）。然后我们拿一把尺子，零刻度线对着笔的一端，读出笔另一端所对应的读数（记为$L$）。这个测量值是不可能等于真值的，因为读数必然受到各种因素的影响（实验条件、仪器精度、人为操作等），我们所能做的，只有通过各种方式，使得实验测量值尽可能的接近真值$L_0$。但是，还是一样的，有测量就有误差，所以我们的实验测量值至多只能给出一个<strong>范围</strong>，并且声明我们有多大的<strong>把握</strong>真值同时也落在这个范围内。</p>
+<h3 id="算数平均值与标准差"><a href="#算数平均值与标准差" class="headerlink" title="算数平均值与标准差"></a>算数平均值与标准差</h3><p>为了更精确的得到我们的测量结果，很自然的可以想到，多次测量取平均值。这背后支撑的数学原理是 <strong>大数定律</strong>。</p>
 <blockquote>
 <p><strong>大数定律</strong>：当独立重复试验次数趋于无穷时，样本均值依概率收敛于总体期望值。</p>
 </blockquote>
-<p>设 <span
-class="math inline"><em>l</em><sub>1</sub>, <em>l</em><sub>2</sub>, ⋯, <em>l</em><sub><em>n</em></sub></span>
-为 <span class="math inline"><em>n</em></span>
-次测量所得到的值，则算术平均值 <span
-class="math inline"><em>x̄</em></span> 为：</p>
-<p><span class="math display">$$
-\bar{x} = \frac{1}{n} \sum_i l_i
-$$</span></p>
+<p>设 $l_1, l_2, \cdots, l_n$ 为 $n$ 次测量所得到的值，则算术平均值 $\bar{x}$ 为：</p>
+<p>$$<br>\bar{x} &#x3D; \frac{1}{n} \sum_i l_i<br>$$</p>
 <p>在实际情况中，被测量量的真值都是未知的，所以实践中<strong>常用算术平均值作为被测量量的真值</strong>。</p>
 <p>虽然算术平均值能够提供一个较为可靠的真值估计，但仅凭平均值，我们仍无法判断测量结果的<strong>一致性</strong>或<strong>稳定性</strong>。在实际测量中，数据往往会围绕平均值上下波动，这种波动的程度正是我们需要关注的另一个关键指标——<strong>标准差</strong>。</p>
-<p>设 <span
-class="math inline"><em>l</em><sub>1</sub>, <em>l</em><sub>2</sub>, ⋯, <em>l</em><sub><em>n</em></sub></span>
-为 <span class="math inline"><em>n</em></span>
-次测量所得到的值，这些测量结果的算术平均值为 <span
-class="math inline"><em>x̄</em></span>，则对应的标准差 <span
-class="math inline"><em>σ</em></span> 为： <span class="math display">$$
-\sigma = \sqrt{\frac{1}{n-1}\sum_i (l_i - \bar{x})^2}
-$$</span></p>
+<p>设 $l_1, l_2, \cdots, l_n$ 为 $n$ 次测量所得到的值，这些测量结果的算术平均值为 $\bar{x}$，则对应的标准差 $\sigma$ 为：<br>$$<br>\sigma &#x3D; \sqrt{\frac{1}{n-1}\sum_i (l_i - \bar{x})^2}<br>$$</p>
 <blockquote>
-<p>需要注意的是，这里使用的是 <span
-class="math inline">(<em>n</em> − 1)</span> 而不是 <span
-class="math inline">(<em>n</em>)</span>，因为这里是对标准差的一个估计。核心差异是，我们用真值的估计值
-<span class="math inline"><em>x̄</em></span> 代替了真值 <span
-class="math inline"><em>l</em><sub>0</sub></span>。这被称为
-<strong>贝塞尔估计</strong>。</p>
+<p>需要注意的是，这里使用的是 $(n-1)$ 而不是 $(n)$，因为这里是对标准差的一个估计。核心差异是，我们用真值的估计值 $\bar{x}$ 代替了真值 $l_0$。这被称为 <strong>贝塞尔估计</strong>。</p>
 </blockquote>
 <p>标准差反映了测量数据相对于平均值的偏离程度。标准差越小，说明测量结果越集中，测量过程越稳定；反之，标准差越大，则表明测量误差较大，数据波动明显。</p>
 <p>简单总结一下标准差的用途：</p>
 <ul>
 <li>评估测量精度：标准差是衡量测量精度的重要指标。一个较小的标准差意味着测量系统具有较好的重复性和可靠性。</li>
-<li>识别异常值：通过标准差，我们可以判断某个测量值是否为异常值（outlier）。通常，若某数据点与平均值的偏差超过
-<span
-class="math inline">3<em>σ</em></span>（即三倍标准差），则认为该点可能受到粗大误差的影响。</li>
-<li>构建置信区间：在正态分布假设下，平均值 <span
-class="math inline"><em>x̄</em></span> 与标准差 <span
-class="math inline"><em>σ</em></span> 可用于构建置信区间。例如，约 68%
-的测量值落在 <span class="math inline"><em>x̄</em> ± <em>σ</em></span>
-范围内，95% 落在 <span
-class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
+<li>识别异常值：通过标准差，我们可以判断某个测量值是否为异常值（outlier）。通常，若某数据点与平均值的偏差超过 $3\sigma$（即三倍标准差），则认为该点可能受到粗大误差的影响。</li>
+<li>构建置信区间：在正态分布假设下，平均值 $\bar{x}$ 与标准差 $\sigma$ 可用于构建置信区间。例如，约 68% 的测量值落在 $\bar{x} \pm \sigma$ 范围内，95% 落在 $\bar{x} \pm 2\sigma$  范围内。</li>
 </ul>
-<h3 id="不确定度-a-类与-b-类评定">不确定度 A 类与 B 类评定</h3>
-<p>未完待续。</p>
+<h3 id="不确定度-A-类与-B-类评定"><a href="#不确定度-A-类与-B-类评定" class="headerlink" title="不确定度 A 类与 B 类评定"></a>不确定度 A 类与 B 类评定</h3><p>未完待续。</p>
 <!-- ### 2.1 术语统一
 ### 2.2 不确定度 A 类与 B 类评定
 ### 2.3 合成标准不确定度与有效自由度
@@ -226,6 +193,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 2.8 软件实操
 ### 2.9 案例 1：游标卡尺测钢球直径
 ### 2.10 案例 2：示波器测时间间隔 -->
+
 <!-- ## 3 数据清洗与预处理
 ### 3.1 原始数据文件命名公约
 ### 3.2 缺失值处理
@@ -234,6 +202,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 3.5 单位自动转换与量纲检查
 ### 3.6 元数据记录 YAML 模板
 ### 3.7 案例：光电门“鬼点”清洗 -->
+
 <!-- ## 4 统计图表与可视化规范（实践，2 h）
 ### 4.1 物理实验 8 种基本图表
 ### 4.2 误差棒类型选择
@@ -242,6 +211,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 4.5 matplotlib 样式模板
 ### 4.6 交互式可视化
 ### 4.7 案例：迈克尔逊干涉仪圆环计数 -->
+
 <!-- ## 5 常用参数估计方法（理论＋实践，6 h）
 ### 5.1 单量测量
 ### 5.2 两量比较
@@ -252,6 +222,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 5.7 软件实操
 ### 5.8 案例 1：弹簧劲度系数 k 的四种拟合对比
 ### 5.9 案例 2：RLC 阻尼振荡衰减系数 β 的最大似然估计 -->
+
 <!-- ## 6 高阶拟合与模型选择（选读，6 h）
 ### 6.1 通用线性模型与多项式回归
 ### 6.2 正交多项式
@@ -259,6 +230,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 6.4 模型选择
 ### 6.5 误差棒非对称处理
 ### 6.6 案例：黑体辐射谱 Planck 拟合 -->
+
 <!-- ## 7 蒙特卡洛方法实战（选读，4 h）
 ### 7.1 误差传播解析失效场景
 ### 7.2 正向蒙特卡洛
@@ -267,6 +239,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 7.5 可视化
 ### 7.6 案例 1：单摆 g 的不确定度
 ### 7.7 案例 2：透镜焦距 Bootstrap 置信区间 -->
+
 <!-- ## 8 信号处理与滤波（选读，4 h）
 ### 8.1 采样定理与抗混叠
 ### 8.2 数字滤波
@@ -274,6 +247,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 8.4 快速傅里叶变换
 ### 8.5 短时傅里叶与小波
 ### 8.6 案例：声速测量相位差法 -->
+
 <!-- ## 9 多变量分析与机器学习入门（拓展，4 h）
 ### 9.1 主成分分析降维
 ### 9.2 聚类
@@ -281,6 +255,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 9.4 神经网络
 ### 9.5 可解释性
 ### 9.6 警告 -->
+
 <!-- ## 10 实验特定模块（按需查阅，每个实验 1–2 h）
 ### 10.1 力学
 #### 10.1.1 单摆测 g
@@ -305,6 +280,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 #### 10.6.1 倒立摆自平衡 PID
 #### 10.6.2 激光散斑测微小位移
 #### 10.6.3 智能手机测地磁场 -->
+
 <!-- ## 11 自动化与可复现工作流（实践，3 h）
 ### 11.1 Git 入门与 .gitignore 模板
 ### 11.2 JupyterLab 环境封装
@@ -312,6 +288,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 11.4 连续集成
 ### 11.5 Makefile 一键命令
 ### 11.6 案例：新学生复现整份报告 -->
+
 <!-- ## 12 报告撰写与学术伦理（必读，2 h）
 ### 12.1 物理实验报告 8 段结构
 ### 12.2 图表编号与引用
@@ -320,6 +297,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 12.5 学术不端红线
 ### 12.6 合作与分工
 ### 12.7 自查表 3：提交前 12 项检查 -->
+
 <!-- ## 13 附录
 ### A 数学附录
 #### A.1 矩阵微积分速查
@@ -330,6 +308,7 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### C 常数与换算
 ### D 标准溶液/标准件不确定度 lookup 表
 ### E 英汉术语对照 -->
+
 <!-- ## 14 教师用书（单独装订）
 ### 14.1 学习目标与布鲁姆分类映射
 ### 14.2 课堂活动设计
@@ -341,8 +320,8 @@ class="math inline"><em>x̄</em> ± 2<em>σ</em></span> 范围内。</li>
 ### 15.1 如何提交新实验模板
 ### 15.2 风格指南
 ### 15.3 发布节奏 -->
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2025/09/15/%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8C%87%E5%8D%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">http://talescuber.github.io/2025/09/15/%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8C%87%E5%8D%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/09/17/%E5%B9%BF%E4%B9%89Snell%E5%AE%9A%E5%BE%8B/" title="广义Snell定律"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">广义Snell定律</div></div></a></div><div class="next-post pull-right"><a href="/2025/09/11/temp-mail/" title="TempMail 介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TempMail 介绍</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/17/python-uncertainties%E5%8C%85%E4%BB%8B%E7%BB%8D/" title="python-uncertainties包介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-17</div><div class="title">python-uncertainties包介绍</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/TaLEsCuber"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/344473910" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
-</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8C%87%E5%8D%97"><span class="toc-text">实验数据处理指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AF%E5%B7%AE%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E5%9F%BA%E7%A1%80"><span class="toc-text">误差与不确定度基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%95%B0%E5%B9%B3%E5%9D%87%E5%80%BC%E4%B8%8E%E6%A0%87%E5%87%86%E5%B7%AE"><span class="toc-text">算数平均值与标准差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6-a-%E7%B1%BB%E4%B8%8E-b-%E7%B1%BB%E8%AF%84%E5%AE%9A"><span class="toc-text">不确定度 A 类与 B 类评定</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E6%B3%A2%E9%95%BF%E8%AE%A1%E8%AF%A6%E8%A7%A3/" title="波长计详解">波长计详解</a><time datetime="2025-09-19T03:24:04.000Z" title="发表于 2025-09-19 11:24:04">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88EOM%EF%BC%89%E8%AF%A6%E8%A7%A3/" title="电光调制器（EOM）详解">电光调制器（EOM）详解</a><time datetime="2025-09-18T09:03:49.000Z" title="发表于 2025-09-18 17:03:49">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解">声光调制器 (AOM) 详解</a><time datetime="2025-09-18T08:48:31.000Z" title="发表于 2025-09-18 16:48:31">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/python-uncertainties%E5%8C%85%E4%BB%8B%E7%BB%8D/" title="python-uncertainties包介绍">python-uncertainties包介绍</a><time datetime="2025-09-17T14:50:38.000Z" title="发表于 2025-09-17 22:50:38">2025-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/%E5%AD%A6%E4%B9%A0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6%C2%B7%E9%AB%98%E6%98%BE-%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94/" title="经典力学·高显--习题解答">经典力学·高显--习题解答</a><time datetime="2025-09-17T13:17:05.000Z" title="发表于 2025-09-17 21:17:05">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2025/09/15/%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8C%87%E5%8D%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">http://talescuber.github.io/2025/09/15/%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8C%87%E5%8D%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/09/17/%E5%B9%BF%E4%B9%89Snell%E5%AE%9A%E5%BE%8B/" title="广义Snell定律"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">广义Snell定律</div></div></a></div><div class="next-post pull-right"><a href="/2025/09/11/temp-mail/" title="TempMail 介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TempMail 介绍</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/17/python-uncertainties%E5%8C%85%E4%BB%8B%E7%BB%8D/" title="python-uncertainties包介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-17</div><div class="title">python-uncertainties包介绍</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/TaLEsCuber"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/344473910" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8C%87%E5%8D%97"><span class="toc-text">实验数据处理指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AF%E5%B7%AE%E4%B8%8E%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E5%9F%BA%E7%A1%80"><span class="toc-text">误差与不确定度基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%95%B0%E5%B9%B3%E5%9D%87%E5%80%BC%E4%B8%8E%E6%A0%87%E5%87%86%E5%B7%AE"><span class="toc-text">算数平均值与标准差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6-A-%E7%B1%BB%E4%B8%8E-B-%E7%B1%BB%E8%AF%84%E5%AE%9A"><span class="toc-text">不确定度 A 类与 B 类评定</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/25/%E8%B6%85%E6%9E%84%E8%A1%A8%E9%9D%A2%E4%BB%8B%E7%BB%8D/" title="超构表面介绍">超构表面介绍</a><time datetime="2025-09-25T15:24:24.000Z" title="发表于 2025-09-25 23:24:24">2025-09-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E6%B3%A2%E9%95%BF%E8%AE%A1%E8%AF%A6%E8%A7%A3/" title="波长计详解">波长计详解</a><time datetime="2025-09-19T03:24:04.000Z" title="发表于 2025-09-19 11:24:04">2025-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E7%94%B5%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88EOM%EF%BC%89%E8%AF%A6%E8%A7%A3/" title="电光调制器（EOM）详解">电光调制器（EOM）详解</a><time datetime="2025-09-18T09:03:49.000Z" title="发表于 2025-09-18 17:03:49">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解">声光调制器 (AOM) 详解</a><time datetime="2025-09-18T08:48:31.000Z" title="发表于 2025-09-18 16:48:31">2025-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/17/python-uncertainties%E5%8C%85%E4%BB%8B%E7%BB%8D/" title="python-uncertainties包介绍">python-uncertainties包介绍</a><time datetime="2025-09-17T14:50:38.000Z" title="发表于 2025-09-17 22:50:38">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
 </div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
