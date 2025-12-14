@@ -1,3 +1,4 @@
+http://talescuber.github.io/2025/12/14/akinator/
 http://talescuber.github.io/about/index.html
 http://talescuber.github.io/2025/10/08/Python%E7%9B%B8%E5%85%B3/%E5%AD%97%E7%AC%A6%E7%94%BB/
 http://talescuber.github.io/2025/09/09/Zotero%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/
@@ -53,6 +54,7 @@ http://talescuber.github.io/tags/%E6%A3%80%E6%9F%A5%E6%82%96%E8%AE%BA/
 http://talescuber.github.io/tags/%E7%BD%91%E7%AB%99/
 http://talescuber.github.io/tags/%E7%94%9F%E6%B4%BB/
 http://talescuber.github.io/tags/%E8%A3%85%E6%9C%BA/
+http://talescuber.github.io/tags/AI%E6%B8%B8%E6%88%8F/
 http://talescuber.github.io/categories/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/
 http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C/
 http://talescuber.github.io/categories/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/TempMail/
@@ -77,3 +79,4 @@ http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%
 http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/
 http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%BD%91%E7%AB%99/
 http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E8%A3%85%E6%9C%BA/
+http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E6%B8%B8%E6%88%8F/
