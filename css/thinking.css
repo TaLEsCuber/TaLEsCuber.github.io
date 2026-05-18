@@ -58,12 +58,10 @@
   font-size: 1.1rem;
   margin: 0;
 }
-.thinking-card-title a {
+.thinking-card-title-text {
+  font-size: 1.1rem;
   color: var(--font-color, #333);
-  text-decoration: none;
-}
-.thinking-card-title a:hover {
-  color: #49b1f5;
+  font-weight: bold;
 }
 
 /* Card body: full rendered content */
