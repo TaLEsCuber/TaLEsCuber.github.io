@@ -3,7 +3,19 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
 }
 
-/* 2. 文章顶部首图仍保持透明（或彻底隐藏） */
+/* 2. 归档侧边栏日期列对齐：年份在前、月份在后 */
+.archive-year {
+  display: inline-block;
+  width: 3.2em;
+  text-align: right;
+}
+.archive-month {
+  display: inline-block;
+  width: 2.5em;
+  text-align: left;
+}
+
+/* 3. 文章顶部首图仍保持透明（或彻底隐藏） */
 #post-cover,
 #page-header.post-bg {
   background: transparent !important;
