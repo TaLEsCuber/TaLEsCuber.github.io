@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2048 游戏关卡 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content=".game-wrapper {   display: flex;   flex-direction: column;   align-items: center;   padding: 20px 0;   font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Lato, Roboto, &#39;Pin">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2048 游戏关卡 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content=".game-wrapper {   display: flex;   flex-direction: column;   align-items: center;   padding: 20px 0;   font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Lato, Roboto">
 <meta property="og:type" content="website">
 <meta property="og:title" content="2048 游戏关卡">
 <meta property="og:url" content="http://talescuber.github.io/bilibili-gate/index.html">
 <meta property="og:site_name" content="TaLEsCuber&#39;Home">
-<meta property="og:description" content=".game-wrapper {   display: flex;   flex-direction: column;   align-items: center;   padding: 20px 0;   font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Lato, Roboto, &#39;Pin">
+<meta property="og:description" content=".game-wrapper {   display: flex;   flex-direction: column;   align-items: center;   padding: 20px 0;   font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, &#39;Helvetica Neue&#39;, Lato, Roboto">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
-<meta property="article:published_time" content="2026-05-21T16:12:02.128Z">
-<meta property="article:modified_time" content="2026-05-21T16:12:02.082Z">
+<meta property="article:published_time" content="2026-05-22T03:55:47.740Z">
+<meta property="article:modified_time" content="2026-05-22T03:55:47.719Z">
 <meta property="article:author" content="TaLEsCuber">
 <meta property="article:tag" content="物理, 学习资料">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2026-05-22 00:12:02'
+  postUpdate: '2026-05-22 11:55:47'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -335,43 +335,116 @@ document.addEventListener('pjax:send', () => {
 [data-theme='dark'] .win-dialog { background: #1e1e1e; }
 [data-theme='dark'] .win-dialog p { color: rgba(255,255,255,0.6); }
 </style>
-
 <div class="game-wrapper">
-  <div class="game-header">
-    <span class="game-title">2048</span>
-    <div class="game-scores">
-      <div class="score-box"><div class="score-label">分数</div><div class="score-value" id="score">0</div></div>
-      <div class="score-box"><div class="score-label">最高分</div><div class="score-value" id="best-score">0</div></div>
-    </div>
-  </div>
-  <div class="game-actions">
-    <button class="game-btn btn-new" id="btn-new" onclick="game.newGame()">新游戏</button>
-    <button class="game-btn btn-undo" id="btn-undo" onclick="game.undo()" disabled>撤回</button>
-  </div>
-  <div class="game-board" id="game-board">
-    <div class="grid-bg">
-      <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-      <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-      <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-      <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-    </div>
-    <div class="tile-layer" id="tile-layer"></div>
-  </div>
-  <p class="game-hint">方向键或滑动操作，合成 <span id="win-tile-text">2048</span> 即可过关</p>
+<div class="game-header">
+<span class="game-title">2048</span>
+<div class="game-scores">
+<div class="score-box">
+<div class="score-label">
+分数
 </div>
-
-<div class="win-overlay" id="win-overlay">
-  <div class="win-dialog">
-    <h2>恭喜通关！</h2>
-    <p id="win-msg">你成功合成了 <strong>2048</strong>！</p>
-    <p class="countdown" id="countdown-text">3 秒后自动跳转至哔哩哔哩主页...</p>
-    <div class="win-actions">
-      <button class="win-btn-continue" onclick="game.goNow()">立即跳转</button>
-      <button class="win-btn-keep" onclick="game.keepPlaying()">继续游戏</button>
-    </div>
-  </div>
+<div id="score" class="score-value">
+0
 </div>
+</div>
+<div class="score-box">
+<div class="score-label">
+最高分
+</div>
+<div id="best-score" class="score-value">
+0
+</div>
+</div>
+</div>
+</div>
+<div class="game-actions">
+<button class="game-btn btn-new" id="btn-new" onclick="game.newGame()">
+新游戏
+</button>
+<button class="game-btn btn-undo" id="btn-undo" onclick="game.undo()" disabled>
+撤回
+</button>
+</div>
+<div id="game-board" class="game-board">
+<div class="grid-bg">
+<div class="grid-cell">
 
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+</div>
+<div id="tile-layer" class="tile-layer">
+
+</div>
+</div>
+<p class="game-hint">
+方向键或滑动操作，合成 <span id="win-tile-text">2048</span> 即可过关
+</p>
+</div>
+<div id="win-overlay" class="win-overlay">
+<div class="win-dialog">
+<h2>
+恭喜通关！
+</h2>
+<p id="win-msg">
+你成功合成了 <strong>2048</strong>！
+</p>
+<p class="countdown" id="countdown-text">
+3 秒后自动跳转至哔哩哔哩主页…
+</p>
+<div class="win-actions">
+<button class="win-btn-continue" onclick="game.goNow()">
+立即跳转
+</button>
+<button class="win-btn-keep" onclick="game.keepPlaying()">
+继续游戏
+</button>
+</div>
+</div>
+</div>
 <script>
 // ============================================================
 // 配置区
@@ -385,17 +458,17 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
 
   var SIZE = 4;
   var boardEl, tileLayer, scoreEl, bestEl, undoBtn, overlay, countdownText, winMsg, winTileText;
-  var tiles = [];       // { id, value, row, col, mergedFrom }
-  var prevTiles = null; // snapshot for undo: { tiles: [...], score: number }
+
+  // 2D grid: grid[row][col] = 0 or tile value (e.g., 2, 4, 8, ...)
+  var grid = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]];
+  var prevGrid = null; // undo snapshot: deep copy of grid
+  var prevScore = 0;
   var score = 0;
   var bestScore = 0;
-  var nextId = 1;
   var won = false;
   var keepGoing = false;
   var countdownTimer = null;
-
-  // DOM cache: tile id → element
-  var tileEls = {};
+  var mergeScore = 0; // accumulates score during sumSeqs
 
   // ========== Initialization ==========
   function init() {
@@ -411,244 +484,166 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
     winTileText.textContent = WIN_TILE;
 
     try { var s = localStorage.getItem('b2048_best'); if (s) bestScore = parseInt(s, 10) || 0; } catch (e) {}
+    updateScores();
     startGame();
   }
 
-  // ========== Grid helpers ==========
-  function forEachCell(fn) {
-    for (var r = 0; r < SIZE; r++)
-      for (var c = 0; c < SIZE; c++)
-        fn(r, c);
+  // ========== Core algorithm (from Python reference) ==========
+
+  // Remove zeros and pad to length 4
+  // direction=0: pad right (left/top), direction=1: pad left (right/bottom)
+  function trim(arr, direction) {
+    var filtered = [];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] !== 0) filtered.push(arr[i]);
+    }
+    if (direction === 0) {
+      while (filtered.length < 4) filtered.push(0);
+    } else {
+      while (filtered.length < 4) filtered.unshift(0);
+    }
+    return filtered;
   }
 
-  function getTile(r, c) {
-    for (var i = 0; i < tiles.length; i++)
-      if (tiles[i].row === r && tiles[i].col === c) return tiles[i];
-    return null;
+  // Merge pass on a trimmed row/col
+  function sumSeqs(arr, direction) {
+    if (arr[1] && arr[2] && arr[1] === arr[2]) {
+      mergeScore += arr[1] * 2;
+      return trim([arr[0], arr[1] * 2, 0, arr[3]], direction);
+    }
+    if (arr[0] && arr[1] && arr[0] === arr[1]) {
+      mergeScore += arr[0] * 2;
+      arr[0] = arr[0] * 2;
+      arr[1] = 0;
+    }
+    if (arr[2] && arr[3] && arr[2] === arr[3]) {
+      mergeScore += arr[2] * 2;
+      arr[2] = arr[2] * 2;
+      arr[3] = 0;
+    }
+    return trim(arr, direction);
   }
 
+  function moveLeft(g) {
+    return g.map(function(row) { return sumSeqs(trim(row, 0), 0); });
+  }
+
+  function moveRight(g) {
+    return g.map(function(row) { return sumSeqs(trim(row, 1), 1); });
+  }
+
+  function moveUp(g) {
+    var result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    for (var col = 0; col < 4; col++) {
+      var column = [g[0][col], g[1][col], g[2][col], g[3][col]];
+      var processed = sumSeqs(trim(column, 0), 0);
+      for (var row = 0; row < 4; row++) {
+        result[row][col] = processed[row];
+      }
+    }
+    return result;
+  }
+
+  function moveDown(g) {
+    var result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    for (var col = 0; col < 4; col++) {
+      var column = [g[0][col], g[1][col], g[2][col], g[3][col]];
+      var processed = sumSeqs(trim(column, 1), 1);
+      for (var row = 0; row < 4; row++) {
+        result[row][col] = processed[row];
+      }
+    }
+    return result;
+  }
+
+  function copyGrid(g) {
+    return g.map(function(r) { return r.slice(); });
+  }
+
+  function gridsEqual(a, b) {
+    for (var r = 0; r < 4; r++)
+      for (var c = 0; c < 4; c++)
+        if (a[r][c] !== b[r][c]) return false;
+    return true;
+  }
+
+  // ========== Random tile ==========
   function availableCells() {
     var cells = [];
-    forEachCell(function (r, c) {
-      if (!getTile(r, c)) cells.push({ row: r, col: c });
-    });
+    for (var r = 0; r < 4; r++)
+      for (var c = 0; c < 4; c++)
+        if (grid[r][c] === 0) cells.push({ row: r, col: c });
     return cells;
   }
 
-  // ========== Core move logic (canonical 2048 algorithm) ==========
-  function prepareTiles() {
-    for (var i = 0; i < tiles.length; i++) {
-      delete tiles[i].mergedFrom;
-      delete tiles[i].previousPosition;
-    }
+  function addRandomTile() {
+    var cells = availableCells();
+    if (cells.length === 0) return;
+    var pos = cells[Math.floor(Math.random() * cells.length)];
+    grid[pos.row][pos.col] = Math.random() < 0.9 ? 2 : 4;
   }
 
-  function moveTile(tile, cell, vector) {
-    // Slide tile as far as possible in the given direction
-    var prev;
-    do {
-      prev = { row: cell.row, col: cell.col };
-      cell.row += vector.y;
-      cell.col += vector.x;
-    } while (cell.row >= 0 && cell.row < SIZE &&
-             cell.col >= 0 && cell.col < SIZE &&
-             !getTile(cell.row, cell.col));
-
-    // Went one step too far — back up to the farthest valid position
-    var farthest = prev;
-    var next = { row: cell.row, col: cell.col };
-
-    // Check if next cell is within bounds and has a mergeable tile
-    if (next.row >= 0 && next.row < SIZE &&
-        next.col >= 0 && next.col < SIZE) {
-      var nextTile = getTile(next.row, next.col);
-      if (nextTile && nextTile.value === tile.value && !nextTile.mergedFrom) {
-        // Merge
-        nextTile.value *= 2;
-        nextTile.mergedFrom = [tile, nextTile];
-        score += nextTile.value;
-        // Remove current tile
-        removeFromArray(tiles, tile);
-        return { merged: true, into: nextTile };
-      }
-    }
-
-    if (farthest.row !== tile.row || farthest.col !== tile.col) {
-      tile.row = farthest.row;
-      tile.col = farthest.col;
-      return { moved: true };
-    }
-    return { moved: false };
-  }
-
-  function buildTraversals(vector) {
-    var traversals = [];
-    // For LEFT (0): process left→right; RIGHT (2): process right→left
-    // For UP (1): process top→bottom; DOWN (3): process bottom→top
-    var rowStart, rowEnd, rowStep, colStart, colEnd, colStep;
-
-    if (vector.y === 0) {
-      // Horizontal: row order doesn't matter, col order depends on direction
-      rowStart = 0; rowEnd = SIZE; rowStep = 1;
-      if (vector.x === 1) { colStart = SIZE - 1; colEnd = -1; colStep = -1; }   // RIGHT: right→left
-      else                { colStart = 0;       colEnd = SIZE; colStep = 1;  }   // LEFT: left→right
-    } else {
-      // Vertical: col order doesn't matter, row order depends on direction
-      colStart = 0; colEnd = SIZE; colStep = 1;
-      if (vector.y === 1) { rowStart = SIZE - 1; rowEnd = -1; rowStep = -1; }   // DOWN: bottom→top
-      else                { rowStart = 0;       rowEnd = SIZE; rowStep = 1;  }   // UP: top→bottom
-    }
-
-    for (var r = rowStart; r !== rowEnd; r += rowStep) {
-      for (var c = colStart; c !== colEnd; c += colStep) {
-        traversals.push({ row: r, col: c });
-      }
-    }
-    return traversals;
-  }
-
-  function getVector(dir) {
-    var vectors = {
-      0: { x: -1, y: 0 },  // LEFT
-      2: { x: 1,  y: 0 },  // RIGHT
-      1: { x: 0,  y: -1 }, // UP
-      3: { x: 0,  y: 1 }   // DOWN
-    };
-    return vectors[dir];
-  }
-
+  // ========== Main move ==========
   function move(dir) {
     if (won && !keepGoing) return false;
 
-    var vector = getVector(dir);
-    var traversals = buildTraversals(vector);
+    var moveFn = [moveLeft, moveUp, moveRight, moveDown][dir];
+    mergeScore = 0;
+    var newGrid = moveFn(copyGrid(grid));
 
-    // Snapshot for undo (deep copy tiles with previous positions)
-    prevTiles = {
-      tiles: tiles.map(function (t) {
-        return { id: t.id, value: t.value, row: t.row, col: t.col };
-      }),
-      score: score
-    };
+    if (gridsEqual(newGrid, grid)) return false;
 
-    prepareTiles();
-    var moved = false;
+    // Save undo state
+    prevGrid = copyGrid(grid);
+    prevScore = score;
 
-    for (var i = 0; i < traversals.length; i++) {
-      var cell = traversals[i];
-      var tile = getTile(cell.row, cell.col);
-      if (!tile) continue;
-
-      // Save previous position for animation
-      tile.previousPosition = { row: tile.row, col: tile.col };
-
-      var result = moveTile(tile, { row: tile.row, col: tile.col }, vector);
-      if (result.moved || result.merged) moved = true;
-    }
-
-    if (!moved) {
-      prevTiles = null;
-      return false;
-    }
+    grid = newGrid;
+    score += mergeScore;
 
     // Add new random tile
-    var cells = availableCells();
-    if (cells.length > 0) {
-      var pos = cells[Math.floor(Math.random() * cells.length)];
-      var val = Math.random() < 0.9 ? 2 : 4;
-      tiles.push({ id: nextId++, value: val, row: pos.row, col: pos.col, isNew: true });
-    }
+    addRandomTile();
 
     if (score > bestScore) {
       bestScore = score;
       try { localStorage.setItem('b2048_best', bestScore); } catch (e) {}
     }
 
-    renderTiles();
+    renderGrid();
     updateScores();
     updateUndo();
     checkWin();
     return true;
   }
 
-  // ========== Tile rendering with smooth transitions ==========
+  // ========== Rendering ==========
   function getTileSize() {
-    // Calculate cell size in pixels based on the tile layer dimensions
     var rect = tileLayer.getBoundingClientRect();
     var w = rect.width;
-    var gap = 10; // matches grid-gap
-    return { cell: (w - gap * (SIZE + 1)) / SIZE, gap: gap, offset: gap };
+    if (w <= 0) w = 416; // fallback
+    var gap = 10;
+    return { cell: (w - gap * (SIZE - 1)) / SIZE, gap: gap };
   }
 
   function positionTile(el, row, col) {
     var s = getTileSize();
-    var left = s.offset + col * (s.cell + s.gap);
-    var top = s.offset + row * (s.cell + s.gap);
-    el.style.left = left + 'px';
-    el.style.top = top + 'px';
+    el.style.left = (col * (s.cell + s.gap)) + 'px';
+    el.style.top = (row * (s.cell + s.gap)) + 'px';
     el.style.width = s.cell + 'px';
     el.style.height = s.cell + 'px';
   }
 
-  function createTileEl(tile) {
-    var el = document.createElement('div');
-    el.className = 'tile tile-' + tile.value + ' tile-new';
-    if (tile.value > 4096) el.className += ' tile-super';
-    el.textContent = tile.value;
-    positionTile(el, tile.row, tile.col);
-    tileLayer.appendChild(el);
-    tileEls[tile.id] = el;
-    setTimeout(function () { el.classList.remove('tile-new'); }, 200);
-  }
+  function renderGrid() {
+    tileLayer.innerHTML = '';
 
-  function renderTiles() {
-    // Determine which tiles to keep, which are new, which are gone
-    var activeIds = {};
-    for (var i = 0; i < tiles.length; i++) {
-      activeIds[tiles[i].id] = true;
-    }
-
-    // Remove dead tile elements
-    for (var id in tileEls) {
-      if (!activeIds[id]) {
-        tileEls[id].remove();
-        delete tileEls[id];
-      }
-    }
-
-    // Update or create tile elements
-    for (var i = 0; i < tiles.length; i++) {
-      var t = tiles[i];
-      var el = tileEls[t.id];
-
-      if (t.isNew) {
-        // Brand new tile
-        t.isNew = undefined;
-        createTileEl(t);
-      } else if (t.mergedFrom) {
-        // Merged tile: update value, add pop animation
-        el.textContent = t.value;
-        el.className = 'tile tile-' + t.value + ' tile-merged';
-        if (t.value > 4096) el.className += ' tile-super';
-        positionTile(el, t.row, t.col);
-        // Also remove the merged-from tile elements
-        for (var j = 0; j < t.mergedFrom.length; j++) {
-          var mf = t.mergedFrom[j];
-          if (mf.id !== t.id && tileEls[mf.id]) {
-            tileEls[mf.id].remove();
-            delete tileEls[mf.id];
-          }
-        }
-        setTimeout(function () { el.classList.remove('tile-merged'); }, 200);
-      } else {
-        // Regular move: just update position (CSS transition does the animation)
-        positionTile(el, t.row, t.col);
-        // If value changed (merged into this tile), update display
-        if (el.textContent != t.value) {
-          el.textContent = t.value;
-          el.className = 'tile tile-' + t.value;
-          if (t.value > 4096) el.className += ' tile-super';
-        }
+    for (var r = 0; r < 4; r++) {
+      for (var c = 0; c < 4; c++) {
+        if (grid[r][c] === 0) continue;
+        var el = document.createElement('div');
+        el.className = 'tile tile-' + grid[r][c];
+        if (grid[r][c] > 4096) el.className += ' tile-super';
+        el.textContent = grid[r][c];
+        positionTile(el, r, c);
+        tileLayer.appendChild(el);
       }
     }
   }
@@ -660,34 +655,30 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
   }
 
   function updateUndo() {
-    undoBtn.disabled = !prevTiles;
+    undoBtn.disabled = !prevGrid;
   }
 
   // ========== Win / Game Over ==========
   function checkWin() {
     if (won && !keepGoing) return;
-    for (var i = 0; i < tiles.length; i++) {
-      if (tiles[i].value >= WIN_TILE) {
-        if (!won) { won = true; showOverlay(); }
-        return;
-      }
-    }
+    for (var r = 0; r < 4; r++)
+      for (var c = 0; c < 4; c++)
+        if (grid[r][c] >= WIN_TILE) {
+          if (!won) { won = true; showOverlay(); }
+          return;
+        }
   }
 
   function isGameOver() {
-    if (availableCells().length > 0) return false;
-    // Check for any adjacent equal tiles
-    for (var i = 0; i < tiles.length; i++) {
-      var t = tiles[i];
-      var neighbors = [
-        { row: t.row - 1, col: t.col },
-        { row: t.row + 1, col: t.col },
-        { row: t.row, col: t.col - 1 },
-        { row: t.row, col: t.col + 1 }
-      ];
-      for (var n = 0; n < neighbors.length; n++) {
-        var nb = getTile(neighbors[n].row, neighbors[n].col);
-        if (nb && nb.value === t.value) return false;
+    // Check for empty cells
+    for (var r = 0; r < 4; r++)
+      for (var c = 0; c < 4; c++)
+        if (grid[r][c] === 0) return false;
+    // Check for adjacent equal tiles
+    for (r = 0; r < 4; r++) {
+      for (c = 0; c < 4; c++) {
+        if (c < 3 && grid[r][c] === grid[r][c + 1]) return false;
+        if (r < 3 && grid[r][c] === grid[r + 1][c]) return false;
       }
     }
     return true;
@@ -714,47 +705,31 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
   var game = window.game = {};
 
   game.newGame = function () {
-    // Clean up old tile elements
-    for (var id in tileEls) { tileEls[id].remove(); }
-    tileEls = {};
-    tiles = [];
-    prevTiles = null;
+    grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    prevGrid = null;
     score = 0;
     won = false;
     keepGoing = false;
-    nextId = 1;
     hideOverlay();
 
-    // Place 2 initial tiles
-    var cells = availableCells();
-    var pos1 = cells[Math.floor(Math.random() * cells.length)];
-    tiles.push({ id: nextId++, value: Math.random() < 0.9 ? 2 : 4, row: pos1.row, col: pos1.col, isNew: true });
-    cells = availableCells();
-    var pos2 = cells[Math.floor(Math.random() * cells.length)];
-    tiles.push({ id: nextId++, value: Math.random() < 0.9 ? 2 : 4, row: pos2.row, col: pos2.col, isNew: true });
+    addRandomTile();
+    addRandomTile();
 
-    renderTiles();
+    renderGrid();
     updateScores();
     updateUndo();
   };
 
   game.undo = function () {
-    if (!prevTiles) return;
-    // Clean up current tile elements
-    for (var id in tileEls) { tileEls[id].remove(); }
-    tileEls = {};
-
-    tiles = prevTiles.tiles;
-    score = prevTiles.score;
-    prevTiles = null;
-
-    // Mark all as new so they get recreated
-    for (var i = 0; i < tiles.length; i++) tiles[i].isNew = true;
-
-    renderTiles();
+    if (!prevGrid) return;
+    grid = prevGrid;
+    score = prevScore;
+    prevGrid = null;
+    prevScore = 0;
+    renderGrid();
     updateScores();
     updateUndo();
-    won = false; // allow winning again after undo
+    won = false;
   };
 
   game.keepPlaying = function () {
@@ -768,24 +743,16 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
   };
 
   function startGame() {
-    // Clean slate
-    for (var id in tileEls) { tileEls[id].remove(); }
-    tileEls = {};
-    tiles = [];
-    prevTiles = null;
+    grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    prevGrid = null;
     score = 0;
     won = false;
     keepGoing = false;
-    nextId = 1;
 
-    var cells = availableCells();
-    var p1 = cells[Math.floor(Math.random() * cells.length)];
-    tiles.push({ id: nextId++, value: Math.random() < 0.9 ? 2 : 4, row: p1.row, col: p1.col, isNew: true });
-    cells = availableCells();
-    var p2 = cells[Math.floor(Math.random() * cells.length)];
-    tiles.push({ id: nextId++, value: Math.random() < 0.9 ? 2 : 4, row: p2.row, col: p2.col, isNew: true });
+    addRandomTile();
+    addRandomTile();
 
-    renderTiles();
+    renderGrid();
     updateScores();
     updateUndo();
     hideOverlay();
@@ -829,22 +796,10 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
     }, { passive: true });
   })();
 
-  // Handle window resize — reposition all tiles
+  // Handle window resize
   window.addEventListener('resize', function () {
-    for (var id in tileEls) {
-      for (var i = 0; i < tiles.length; i++) {
-        if (tiles[i].id == id) {
-          positionTile(tileEls[id], tiles[i].row, tiles[i].col);
-          break;
-        }
-      }
-    }
+    renderGrid();
   });
-
-  function removeFromArray(arr, item) {
-    var idx = arr.indexOf(item);
-    if (idx >= 0) arr.splice(idx, 1);
-  }
 
   init();
 })();
@@ -858,7 +813,7 @@ var BILIBILI_URL = 'https://space.bilibili.com/344473910';
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">学习</span><span class="card-category-list-count">11</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">物理笔记</span><span class="card-category-list-count">5</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%8E%9F%E5%AD%90%E7%89%A9%E7%90%86%E5%AD%A6/"><span class="card-category-list-name">原子物理学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA/"><span class="card-category-list-name">广义相对论</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">经典力学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">量子力学</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/"><span class="card-category-list-name">论文推荐</span><span class="card-category-list-count">1</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">23k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-21T16:16:33.967Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">22.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-22T04:03:11.118Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
 </div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
