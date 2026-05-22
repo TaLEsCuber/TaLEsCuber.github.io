@@ -1,455 +1,712 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>2048 - TaLEsCuber</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      width: 100%; height: 100%;
-      background: #faf8ef;
-      font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    .game-container {
-      --gap: 15px;
-      --padding: 15px;
-      width: min(500px, calc(100vw - 2rem));
-      display: flex; flex-direction: column; gap: 16px;
-      user-select: none; -webkit-user-select: none;
-    }
-
-    .game-header {
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
-    }
-
-    .game-title {
-      font-size: clamp(36px, 10vw, 60px); font-weight: 800; color: #776e65;
-      line-height: 1;
-    }
-
-    .scores { display: flex; gap: 8px; }
-
-    .score-box {
-      background: #bbada0; color: #fff; border-radius: 4px; padding: 6px 16px;
-      text-align: center; min-width: 72px;
-    }
-
-    .score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
-
-    .score-value { font-size: 20px; font-weight: 700; }
-
-    .new-game-btn {
-      background: #8f7a66; color: #f9f6f2; border: none; border-radius: 4px;
-      padding: 10px 20px; font-size: 16px; font-weight: 700; cursor: pointer;
-      min-height: 44px; transition: background 0.15s;
-    }
-    .new-game-btn:hover { background: #9f8b77; }
-    .new-game-btn:active { background: #7a6658; }
-
-    .game-board {
-      position: relative; width: 100%; aspect-ratio: 1;
-      background: #bbada0; border-radius: 8px; padding: var(--padding);
-    }
-
-    .grid-container {
-      display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr);
-      gap: var(--gap); width: 100%; height: 100%;
-    }
-
-    .grid-cell {
-      background: rgba(238, 228, 218, 0.35); border-radius: 4px;
-    }
-
-    .tile-container {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    }
-
-    .tile {
-      position: absolute; display: flex; align-items: center; justify-content: center;
-      border-radius: 4px; font-weight: 700; z-index: 1;
-    }
-
-    .tile-existing { transition: left 150ms ease-in-out, top 150ms ease-in-out; }
-
-    .tile-new { animation: tile-appear 200ms ease; }
-
-    .tile-merged { animation: tile-pop 200ms ease; z-index: 10; }
-
-    @keyframes tile-appear {
-      0%   { transform: scale(0); opacity: 0; }
-      50%  { transform: scale(1.1); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes tile-pop {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
-    .game-overlay {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(238, 228, 218, 0.73); border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 300ms ease;
-      z-index: 100;
-    }
-    .game-overlay.active { opacity: 1; pointer-events: auto; }
-
-    .overlay-content { text-align: center; }
-
-    .overlay-text { font-size: 36px; font-weight: 800; color: #776e65; margin-bottom: 20px; }
-
-    .overlay-countdown { font-size: 16px; color: #a39485; margin-bottom: 16px; }
-
-    .overlay-btn {
-      background: #8f7a66; color: #f9f6f2; border: none; border-radius: 4px;
-      padding: 10px 24px; font-size: 16px; font-weight: 700; cursor: pointer;
-      margin: 0 6px 10px; min-height: 44px; transition: background 0.15s;
-    }
-    .overlay-btn:hover { background: #9f8b77; }
-    .overlay-btn:active { background: #7a6658; }
-
-    @media (max-width: 400px) {
-      .game-container { --gap: 10px; --padding: 10px; }
-      .game-header { justify-content: center; }
-      .game-title { font-size: 42px; }
-      .overlay-text { font-size: 28px; }
-    }
-  </style>
-</head>
-<body>
-  <div class="game-container">
-    <div class="game-header">
-      <h1 class="game-title">2048</h1>
-      <div class="scores">
-        <div class="score-box">
-          <div class="score-label">SCORE</div>
-          <div class="score-value" id="score-value">0</div>
-        </div>
-        <div class="score-box">
-          <div class="score-label">BEST</div>
-          <div class="score-value" id="best-value">0</div>
-        </div>
-      </div>
-      <button class="new-game-btn" id="undo-btn" disabled>Undo</button>
-      <button class="new-game-btn" id="new-game-btn">New Game</button>
-    </div>
-
-    <div class="game-board" id="game-board">
-      <div class="grid-container">
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-      </div>
-      <div class="tile-container" id="tile-container"></div>
-
-      <div class="game-overlay" id="overlay-lose">
-        <div class="overlay-content">
-          <p class="overlay-text">Game Over!</p>
-          <button class="overlay-btn" id="try-again-btn">Try Again</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="game-engine.js"></script>
-  <script>
-    (function () {
-      'use strict';
-
-      const engine = window.GameEngine;
-
-      // ── DOM refs ──────────────────────────────────
-      const boardEl = document.getElementById('game-board');
-      const tileContainer = document.getElementById('tile-container');
-      const scoreEl = document.getElementById('score-value');
-      const bestEl = document.getElementById('best-value');
-      const overlayLose = document.getElementById('overlay-lose');
-      const undoBtn = document.getElementById('undo-btn');
-      const newGameBtn = document.getElementById('new-game-btn');
-      const tryAgainBtn = document.getElementById('try-again-btn');
-
-      // ── UI Constants ──────────────────────────────
-      const BILIBILI_URL = 'https://space.bilibili.com/344473910';
-
-      const TILE_COLORS = {
-        2:     { bg: '#eee4da', color: '#776e65' },
-        4:     { bg: '#ede0c8', color: '#776e65' },
-        8:     { bg: '#f2b179', color: '#f9f6f2' },
-        16:    { bg: '#f59563', color: '#f9f6f2' },
-        32:    { bg: '#f67c5f', color: '#f9f6f2' },
-        64:    { bg: '#f65e3b', color: '#f9f6f2' },
-        128:   { bg: '#edcf72', color: '#f9f6f2' },
-        256:   { bg: '#edcc61', color: '#f9f6f2' },
-        512:   { bg: '#edc850', color: '#f9f6f2' },
-        1024:  { bg: '#edc53f', color: '#f9f6f2' },
-        2048:  { bg: '#edc22e', color: '#f9f6f2' },
-      };
-      function tileColor(v) { return TILE_COLORS[v] || { bg: '#3c3a32', color: '#f9f6f2' }; }
-
-      function fontSize(value, cellSize) {
-        if (value < 100)   return cellSize * 0.42 + 'px';
-        if (value < 1000)  return cellSize * 0.35 + 'px';
-        if (value < 10000) return cellSize * 0.28 + 'px';
-        return cellSize * 0.22 + 'px';
-      }
-
-      // ── UI State ──────────────────────────────────
-      let isAnimating = false;
-
-      // ── Board metrics ─────────────────────────────
-      function boardMetrics() {
-        const boardWidth = boardEl.clientWidth;
-        const style = getComputedStyle(boardEl);
-        const padding = parseFloat(style.getPropertyValue('--padding')) || 15;
-        const gap = parseFloat(style.getPropertyValue('--gap')) || 15;
-        const cellSize = (boardWidth - 2 * padding - 3 * gap) / 4;
-        return { boardWidth, padding, gap, cellSize };
-      }
-
-      // ── Render ────────────────────────────────────
-      function render(oldGrid) {
-        isAnimating = true;
-        updateScores();
-
-        const { padding, gap, cellSize } = boardMetrics();
-        const oldPositions = {};
-        for (let r = 0; r < 4; r++)
-          for (let c = 0; c < 4; c++) {
-            const t = oldGrid[r][c];
-            if (t) oldPositions[t.id] = { row: r, col: c, value: t.value };
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2048 小游戏 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content=".game-container, .game-container *, .game-container *::before, .game-container *::after { box-sizing: border-box; margin: 0; padding: 0; }  .game-container { --gap: 15px; --padding: 15px; wid">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2048 小游戏">
+<meta property="og:url" content="http://talescuber.github.io/bilibili-gate/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content=".game-container, .game-container *, .game-container *::before, .game-container *::after { box-sizing: border-box; margin: 0; padding: 0; }  .game-container { --gap: 15px; --padding: 15px; wid">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-05-22T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-22T15:34:12.812Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="物理, 学习资料">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/bilibili-gate/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2048 小游戏',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2026-05-22 23:34:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
           }
-
-        const existingEls = {};
-        tileContainer.querySelectorAll('.tile').forEach(el => {
-          existingEls[el.dataset.tileId] = el;
-        });
-        const usedIds = new Set();
-        const fragment = document.createDocumentFragment();
-
-        for (let r = 0; r < 4; r++) {
-          for (let c = 0; c < 4; c++) {
-            const tile = engine.grid[r][c];
-            if (!tile) continue;
-
-            usedIds.add(tile.id);
-            const x = padding + c * (cellSize + gap);
-            const y = padding + r * (cellSize + gap);
-            const old = oldPositions[tile.id];
-
-            let el = existingEls[tile.id];
-            if (el) {
-              // Existing tile — update position and check for merge
-              el.classList.remove('tile-new', 'tile-merged');
-              el.classList.add('tile-existing');
-              el.style.left = x + 'px';
-              el.style.top = y + 'px';
-              el.style.width = el.style.height = cellSize + 'px';
-              el.style.fontSize = fontSize(tile.value, cellSize);
-
-              if (parseInt(el.dataset.value) !== tile.value) {
-                el.dataset.value = tile.value;
-                el.textContent = tile.value;
-                const colors = tileColor(tile.value);
-                el.style.backgroundColor = colors.bg;
-                el.style.color = colors.color;
-                // Merge: after slide completes, trigger pop
-                setTimeout(() => {
-                  el.classList.add('tile-merged');
-                  el.addEventListener('animationend', () => el.classList.remove('tile-merged'), { once: true });
-                }, 150);
-              }
-            } else {
-              // New tile
-              el = document.createElement('div');
-              el.className = 'tile tile-new';
-              el.dataset.tileId = tile.id;
-              el.dataset.value = tile.value;
-              el.style.width = el.style.height = cellSize + 'px';
-              el.style.left = x + 'px';
-              el.style.top = y + 'px';
-              el.style.fontSize = fontSize(tile.value, cellSize);
-              const colors = tileColor(tile.value);
-              el.style.backgroundColor = colors.bg;
-              el.style.color = colors.color;
-              el.textContent = tile.value;
-
-              el.addEventListener('animationend', () => {
-                el.classList.remove('tile-new');
-                el.classList.add('tile-existing');
-              }, { once: true });
-            }
-
-            fragment.appendChild(el);
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
           }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
         }
 
-        // Remove consumed tiles
-        for (const id in existingEls) {
-          if (!usedIds.has(parseInt(id))) existingEls[id].remove();
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
         }
-
-        tileContainer.innerHTML = '';
-        tileContainer.appendChild(fragment);
-
-        setTimeout(() => { isAnimating = false; }, 300);
-      }
-
-      function updateScores() {
-        scoreEl.textContent = engine.score;
-        bestEl.textContent = engine.bestScore;
-      }
-
-      function updateUndoButton() {
-        undoBtn.disabled = engine.historyLength === 0;
-      }
-
-      // ── Overlays ──────────────────────────────────
-      let winTimer = null;
-
-      function showWinOverlay() {
-        let ov = document.getElementById('overlay-win');
-
-        if (!ov) {
-          ov = document.createElement('div');
-          ov.className = 'game-overlay';
-          ov.id = 'overlay-win';
-          ov.innerHTML = '<div class="overlay-content"><p class="overlay-text">You Win!</p><p class="overlay-countdown" id="countdown-text">5 秒后自动跳转至 B站...</p><button class="overlay-btn" id="keep-playing-btn">继续游戏</button><button class="overlay-btn" id="goto-bilibili-btn">前往 B站主页</button></div>';
-          boardEl.appendChild(ov);
-
-          ov.querySelector('#keep-playing-btn').addEventListener('click', () => {
-            clearInterval(winTimer);
-            winTimer = null;
-            engine.keepPlaying = true;
-            engine.won = false;
-            ov.classList.remove('active');
-            if (engine.gameOver) return;
-            isAnimating = false;
-          });
-
-          ov.querySelector('#goto-bilibili-btn').addEventListener('click', () => {
-            clearInterval(winTimer);
-            winTimer = null;
-            window.location.href = BILIBILI_URL;
-          });
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
         }
-
-        // Start countdown
-        const countdownEl = ov.querySelector('#countdown-text');
-        let seconds = 5;
-        if (winTimer) clearInterval(winTimer);
-        countdownEl.textContent = seconds + ' 秒后自动跳转至 B站...';
-        winTimer = setInterval(() => {
-          seconds--;
-          if (seconds <= 0) { window.location.href = BILIBILI_URL; return; }
-          countdownEl.textContent = seconds + ' 秒后自动跳转至 B站...';
-        }, 1000);
-
-        setTimeout(() => ov.classList.add('active'), 300);
       }
-
-      function showLoseOverlay() {
-        setTimeout(() => overlayLose.classList.add('active'), 300);
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
       }
-
-      // ── Reset ─────────────────────────────────────
-      function resetGame() {
-        engine.init();
-        isAnimating = false;
-        tileContainer.innerHTML = '';
-
-        const ovWin = document.getElementById('overlay-win');
-        if (ovWin) ovWin.classList.remove('active');
-        overlayLose.classList.remove('active');
-
-        render(engine.grid.map(r => [null, null, null, null]));
-        updateUndoButton();
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
       }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
 
-      // ── Input: keyboard ───────────────────────────
-      function setupKeyboard() {
-        document.addEventListener('keydown', e => {
-          const map = {
-            ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
-            w: 'up', W: 'up', s: 'down', S: 'down', a: 'left', A: 'left', d: 'right', D: 'right',
-          };
-          const dir = map[e.key];
-          if (!dir) return;
-          if (isAnimating) return;
-          e.preventDefault();
-          const result = engine.move(dir);
-          if (result.moved) {
-            render(result.oldGrid);
-            updateUndoButton();
-            if (engine.won && !engine.keepPlaying) showWinOverlay();
-            else if (engine.gameOver) showLoseOverlay();
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">2048 小游戏</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><style>
+.game-container, .game-container *, .game-container *::before, .game-container *::after {
+box-sizing: border-box; margin: 0; padding: 0;
+}
+
+.game-container {
+--gap: 15px;
+--padding: 15px;
+width: min(500px, 100%);
+margin: 0 auto;
+background: #faf8ef;
+border-radius: 8px;
+padding: 20px;
+display: flex; flex-direction: column; gap: 16px;
+user-select: none; -webkit-user-select: none;
+font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.game-header {
+display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+
+.scores { display: flex; gap: 8px; }
+
+.score-box {
+background: #bbada0; color: #fff; border-radius: 4px; padding: 6px 16px;
+text-align: center; min-width: 72px;
+}
+
+.score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+
+.score-value { font-size: 20px; font-weight: 700; }
+
+.new-game-btn {
+background: #8f7a66; color: #f9f6f2; border: none; border-radius: 4px;
+padding: 10px 20px; font-size: 16px; font-weight: 700; cursor: pointer;
+min-height: 44px; transition: background 0.15s;
+}
+.new-game-btn:hover { background: #9f8b77; }
+.new-game-btn:active { background: #7a6658; }
+
+.game-board {
+position: relative; width: 100%; aspect-ratio: 1;
+background: #bbada0; border-radius: 8px; padding: var(--padding);
+}
+
+.grid-container {
+display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr);
+gap: var(--gap); width: 100%; height: 100%;
+}
+
+.grid-cell {
+background: rgba(238, 228, 218, 0.35); border-radius: 4px;
+}
+
+.tile-container {
+position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+}
+
+.tile {
+position: absolute; display: flex; align-items: center; justify-content: center;
+border-radius: 4px; font-weight: 700; z-index: 1;
+}
+
+.tile-existing { transition: left 150ms ease-in-out, top 150ms ease-in-out; }
+
+.tile-new { animation: tile-appear 200ms ease; }
+
+.tile-merged { animation: tile-pop 200ms ease; z-index: 10; }
+
+@keyframes tile-appear {
+0%   { transform: scale(0); opacity: 0; }
+50%  { transform: scale(1.1); }
+100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes tile-pop {
+0%   { transform: scale(1); }
+50%  { transform: scale(1.2); }
+100% { transform: scale(1); }
+}
+
+.game-overlay {
+position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(238, 228, 218, 0.73); border-radius: 8px;
+display: flex; align-items: center; justify-content: center;
+opacity: 0; pointer-events: none; transition: opacity 300ms ease;
+z-index: 100;
+}
+.game-overlay.active { opacity: 1; pointer-events: auto; }
+
+.overlay-content { text-align: center; }
+
+.game-container .overlay-text {
+font-size: 36px; font-weight: 800; color: #776e65; margin: 0 0 20px;
+}
+
+.game-container .overlay-countdown {
+font-size: 16px; color: #a39485; margin: 0 0 16px;
+}
+
+.overlay-btn {
+background: #8f7a66; color: #f9f6f2; border: none; border-radius: 4px;
+padding: 10px 24px; font-size: 16px; font-weight: 700; cursor: pointer;
+margin: 0 6px 10px; min-height: 44px; transition: background 0.15s;
+}
+.overlay-btn:hover { background: #9f8b77; }
+.overlay-btn:active { background: #7a6658; }
+
+@media (max-width: 400px) {
+.game-container { --gap: 10px; --padding: 10px; }
+.game-header { justify-content: center; }
+.game-container .overlay-text { font-size: 28px; }
+}
+</style>
+<div class="game-container">
+<div class="game-header">
+<div class="scores">
+<div class="score-box">
+<div class="score-label">
+SCORE
+</div>
+<div id="score-value" class="score-value">
+0
+</div>
+</div>
+<div class="score-box">
+<div class="score-label">
+BEST
+</div>
+<div id="best-value" class="score-value">
+0
+</div>
+</div>
+</div>
+<button class="new-game-btn" id="undo-btn" disabled>
+Undo
+</button>
+<button class="new-game-btn" id="new-game-btn">
+New Game
+</button>
+</div>
+<div id="game-board" class="game-board">
+<div class="grid-container">
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+<div class="grid-cell">
+
+</div>
+</div>
+<div id="tile-container" class="tile-container">
+
+</div>
+<div id="overlay-lose" class="game-overlay">
+<div class="overlay-content">
+<p class="overlay-text">
+Game Over!
+</p>
+<button class="overlay-btn" id="try-again-btn">
+Try Again
+</button>
+</div>
+</div>
+</div>
+</div>
+<script src="game-engine.js"></script>
+<script>
+(function () {
+'use strict';
+
+const engine = window.GameEngine;
+
+// ── DOM refs ──────────────────────────────────
+const boardEl = document.getElementById('game-board');
+const tileContainer = document.getElementById('tile-container');
+const scoreEl = document.getElementById('score-value');
+const bestEl = document.getElementById('best-value');
+const overlayLose = document.getElementById('overlay-lose');
+const undoBtn = document.getElementById('undo-btn');
+const newGameBtn = document.getElementById('new-game-btn');
+const tryAgainBtn = document.getElementById('try-again-btn');
+
+// ── UI Constants ──────────────────────────────
+const BILIBILI_URL = 'https://space.bilibili.com/344473910';
+
+const TILE_COLORS = {
+2:     { bg: '#eee4da', color: '#776e65' },
+4:     { bg: '#ede0c8', color: '#776e65' },
+8:     { bg: '#f2b179', color: '#f9f6f2' },
+16:    { bg: '#f59563', color: '#f9f6f2' },
+32:    { bg: '#f67c5f', color: '#f9f6f2' },
+64:    { bg: '#f65e3b', color: '#f9f6f2' },
+128:   { bg: '#edcf72', color: '#f9f6f2' },
+256:   { bg: '#edcc61', color: '#f9f6f2' },
+512:   { bg: '#edc850', color: '#f9f6f2' },
+1024:  { bg: '#edc53f', color: '#f9f6f2' },
+2048:  { bg: '#edc22e', color: '#f9f6f2' },
+};
+function tileColor(v) { return TILE_COLORS[v] || { bg: '#3c3a32', color: '#f9f6f2' }; }
+
+function fontSize(value, cellSize) {
+if (value < 100)   return cellSize * 0.42 + 'px';
+if (value < 1000)  return cellSize * 0.35 + 'px';
+if (value < 10000) return cellSize * 0.28 + 'px';
+return cellSize * 0.22 + 'px';
+}
+
+// ── UI State ──────────────────────────────────
+let isAnimating = false;
+
+// ── Board metrics ─────────────────────────────
+function boardMetrics() {
+const boardWidth = boardEl.clientWidth;
+const style = getComputedStyle(boardEl);
+const padding = parseFloat(style.getPropertyValue('--padding')) || 15;
+const gap = parseFloat(style.getPropertyValue('--gap')) || 15;
+const cellSize = (boardWidth - 2 * padding - 3 * gap) / 4;
+return { boardWidth, padding, gap, cellSize };
+}
+
+// ── Render ────────────────────────────────────
+function render(oldGrid) {
+isAnimating = true;
+updateScores();
+
+const { padding, gap, cellSize } = boardMetrics();
+const oldPositions = {};
+for (let r = 0; r < 4; r++)
+for (let c = 0; c < 4; c++) {
+const t = oldGrid[r][c];
+if (t) oldPositions[t.id] = { row: r, col: c, value: t.value };
+}
+
+const existingEls = {};
+tileContainer.querySelectorAll('.tile').forEach(el => {
+existingEls[el.dataset.tileId] = el;
+});
+const usedIds = new Set();
+const fragment = document.createDocumentFragment();
+
+for (let r = 0; r < 4; r++) {
+for (let c = 0; c < 4; c++) {
+const tile = engine.grid[r][c];
+if (!tile) continue;
+
+usedIds.add(tile.id);
+const x = padding + c * (cellSize + gap);
+const y = padding + r * (cellSize + gap);
+const old = oldPositions[tile.id];
+
+let el = existingEls[tile.id];
+if (el) {
+el.classList.remove('tile-new', 'tile-merged');
+el.classList.add('tile-existing');
+el.style.left = x + 'px';
+el.style.top = y + 'px';
+el.style.width = el.style.height = cellSize + 'px';
+el.style.fontSize = fontSize(tile.value, cellSize);
+
+if (parseInt(el.dataset.value) !== tile.value) {
+el.dataset.value = tile.value;
+el.textContent = tile.value;
+const colors = tileColor(tile.value);
+el.style.backgroundColor = colors.bg;
+el.style.color = colors.color;
+setTimeout(() => {
+el.classList.add('tile-merged');
+el.addEventListener('animationend', () => el.classList.remove('tile-merged'), { once: true });
+}, 150);
+}
+} else {
+el = document.createElement('div');
+el.className = 'tile tile-new';
+el.dataset.tileId = tile.id;
+el.dataset.value = tile.value;
+el.style.width = el.style.height = cellSize + 'px';
+el.style.left = x + 'px';
+el.style.top = y + 'px';
+el.style.fontSize = fontSize(tile.value, cellSize);
+const colors = tileColor(tile.value);
+el.style.backgroundColor = colors.bg;
+el.style.color = colors.color;
+el.textContent = tile.value;
+
+el.addEventListener('animationend', () => {
+el.classList.remove('tile-new');
+el.classList.add('tile-existing');
+}, { once: true });
+}
+
+fragment.appendChild(el);
+}
+}
+
+for (const id in existingEls) {
+if (!usedIds.has(parseInt(id))) existingEls[id].remove();
+}
+
+tileContainer.innerHTML = '';
+tileContainer.appendChild(fragment);
+
+setTimeout(() => { isAnimating = false; }, 300);
+}
+
+function updateScores() {
+scoreEl.textContent = engine.score;
+bestEl.textContent = engine.bestScore;
+}
+
+function updateUndoButton() {
+undoBtn.disabled = engine.historyLength === 0;
+}
+
+// ── Overlays ──────────────────────────────────
+let winTimer = null;
+
+function showWinOverlay() {
+let ov = document.getElementById('overlay-win');
+
+if (!ov) {
+ov = document.createElement('div');
+ov.className = 'game-overlay';
+ov.id = 'overlay-win';
+ov.innerHTML = '<div class="overlay-content"><p class="overlay-text">You Win!</p><p class="overlay-countdown" id="countdown-text">5 秒后自动跳转至 B站...</p><button class="overlay-btn" id="keep-playing-btn">继续游戏</button><button class="overlay-btn" id="goto-bilibili-btn">前往 B站主页</button></div>';
+boardEl.appendChild(ov);
+
+ov.querySelector('#keep-playing-btn').addEventListener('click', () => {
+clearInterval(winTimer);
+winTimer = null;
+engine.keepPlaying = true;
+engine.won = false;
+ov.classList.remove('active');
+if (engine.gameOver) return;
+isAnimating = false;
+});
+
+ov.querySelector('#goto-bilibili-btn').addEventListener('click', () => {
+clearInterval(winTimer);
+winTimer = null;
+window.location.href = BILIBILI_URL;
+});
+}
+
+const countdownEl = ov.querySelector('#countdown-text');
+let seconds = 5;
+if (winTimer) clearInterval(winTimer);
+countdownEl.textContent = seconds + ' 秒后自动跳转至 B站...';
+winTimer = setInterval(() => {
+seconds--;
+if (seconds <= 0) { window.location.href = BILIBILI_URL; return; }
+countdownEl.textContent = seconds + ' 秒后自动跳转至 B站...';
+}, 1000);
+
+setTimeout(() => ov.classList.add('active'), 300);
+}
+
+function showLoseOverlay() {
+setTimeout(() => overlayLose.classList.add('active'), 300);
+}
+
+// ── Reset ─────────────────────────────────────
+function resetGame() {
+engine.init();
+isAnimating = false;
+tileContainer.innerHTML = '';
+
+const ovWin = document.getElementById('overlay-win');
+if (ovWin) ovWin.classList.remove('active');
+overlayLose.classList.remove('active');
+
+render(engine.grid.map(r => [null, null, null, null]));
+updateUndoButton();
+}
+
+// ── Input: keyboard ───────────────────────────
+function setupKeyboard() {
+document.addEventListener('keydown', e => {
+const map = {
+ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+w: 'up', W: 'up', s: 'down', S: 'down', a: 'left', A: 'left', d: 'right', D: 'right',
+};
+const dir = map[e.key];
+if (!dir) return;
+if (isAnimating) return;
+
+// 仅当焦点在游戏区域内或 body 时才拦截方向键
+const gameContainer = document.querySelector('.game-container');
+const active = document.activeElement;
+if (active && active !== document.body && !gameContainer.contains(active)) {
+return;
+}
+
+e.preventDefault();
+const result = engine.move(dir);
+if (result.moved) {
+render(result.oldGrid);
+updateUndoButton();
+if (engine.won && !engine.keepPlaying) showWinOverlay();
+else if (engine.gameOver) showLoseOverlay();
+}
+});
+}
+
+// ── Input: touch ──────────────────────────────
+function setupTouch() {
+let sx = 0, sy = 0;
+const SWIPE = 30;
+
+boardEl.addEventListener('touchstart', e => {
+sx = e.touches[0].clientX;
+sy = e.touches[0].clientY;
+}, { passive: true });
+
+boardEl.addEventListener('touchend', e => {
+if (sx === 0 && sy === 0) return;
+if (isAnimating) { sx = 0; sy = 0; return; }
+const dx = e.changedTouches[0].clientX - sx;
+const dy = e.changedTouches[0].clientY - sy;
+const absDx = Math.abs(dx), absDy = Math.abs(dy);
+if (Math.max(absDx, absDy) < SWIPE) { sx = 0; sy = 0; return; }
+e.preventDefault();
+const dir = absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+const result = engine.move(dir);
+if (result.moved) {
+render(result.oldGrid);
+updateUndoButton();
+if (engine.won && !engine.keepPlaying) showWinOverlay();
+else if (engine.gameOver) showLoseOverlay();
+}
+sx = 0; sy = 0;
+});
+
+boardEl.addEventListener('touchmove', e => { e.preventDefault(); }, { passive: false });
+}
+
+// ── Init ──────────────────────────────────────
+function init() {
+engine.init();
+updateScores();
+render(engine.grid.map(r => [null, null, null, null]));
+setupKeyboard();
+setupTouch();
+undoBtn.addEventListener('click', () => {
+if (isAnimating) return;
+if (winTimer) { clearInterval(winTimer); winTimer = null; }
+const result = engine.undo();
+if (!result) return;
+tileContainer.innerHTML = '';
+const ovWin = document.getElementById('overlay-win');
+if (ovWin) ovWin.classList.remove('active');
+overlayLose.classList.remove('active');
+render(result.oldGrid);
+updateUndoButton();
+});
+newGameBtn.addEventListener('click', resetGame);
+tryAgainBtn.addEventListener('click', resetGame);
+}
+
+init();
+})();
+</script>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-21T08:30:00.000Z">2026-05-21 16:30</time></div><p class="thinking-sidebar-excerpt">我不应当失败，所以如今我最好奇的是，抵达胜利的路是否坎坷。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/19/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/2026-05-19-%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/" title="arXiv 论文推荐 | 2026 年 5 月 19 日">arXiv 论文推荐 | 2026 年 5 月 19 日</a><time datetime="2026-05-19T10:30:00.000Z" title="发表于 2026-05-19 18:30:00">2026-05-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/19/%E7%BB%98%E5%88%B6%E5%85%89%E8%B7%AF%E5%9B%BE%E7%9A%84%E5%B0%8F%E5%B7%A7%E6%80%9D/" title="绘制光路图的小巧思">绘制光路图的小巧思</a><time datetime="2026-01-19T13:04:33.000Z" title="发表于 2026-01-19 21:04:33">2026-01-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/24/%E5%AD%A6%E4%B9%A0/%E5%8E%9F%E5%AD%90%E7%89%A9%E7%90%86%E5%AD%A6%E5%B0%8F%E6%8A%84/" title="原子物理学笔记">原子物理学笔记</a><time datetime="2025-12-24T15:22:34.000Z" title="发表于 2025-12-24 23:22:34">2025-12-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/14/akinator/" title="akinator">akinator</a><time datetime="2025-12-14T07:13:25.000Z" title="发表于 2025-12-14 15:13:25">2025-12-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/08/Python%E7%9B%B8%E5%85%B3/%E5%AD%97%E7%AC%A6%E7%94%BB/" title="字符画">字符画</a><time datetime="2025-10-08T08:57:22.000Z" title="发表于 2025-10-08 16:57:22">2025-10-08</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">学习</span><span class="card-category-list-count">11</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">物理笔记</span><span class="card-category-list-count">5</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%8E%9F%E5%AD%90%E7%89%A9%E7%90%86%E5%AD%A6/"><span class="card-category-list-name">原子物理学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA/"><span class="card-category-list-name">广义相对论</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">经典力学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">量子力学</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/"><span class="card-category-list-name">论文推荐</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">22.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-22T15:36:58.806Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
           }
-        });
+        }, '']
       }
-
-      // ── Input: touch ──────────────────────────────
-      function setupTouch() {
-        let sx = 0, sy = 0;
-        const SWIPE = 30;
-
-        boardEl.addEventListener('touchstart', e => {
-          sx = e.touches[0].clientX;
-          sy = e.touches[0].clientY;
-        }, { passive: true });
-
-        boardEl.addEventListener('touchend', e => {
-          if (sx === 0 && sy === 0) return;
-          if (isAnimating) { sx = 0; sy = 0; return; }
-          const dx = e.changedTouches[0].clientX - sx;
-          const dy = e.changedTouches[0].clientY - sy;
-          const absDx = Math.abs(dx), absDy = Math.abs(dy);
-          if (Math.max(absDx, absDy) < SWIPE) { sx = 0; sy = 0; return; }
-          e.preventDefault();
-          const dir = absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
-          const result = engine.move(dir);
-          if (result.moved) {
-            render(result.oldGrid);
-            updateUndoButton();
-            if (engine.won && !engine.keepPlaying) showWinOverlay();
-            else if (engine.gameOver) showLoseOverlay();
-          }
-          sx = 0; sy = 0;
-        });
-
-        boardEl.addEventListener('touchmove', e => { e.preventDefault(); }, { passive: false });
-      }
-
-      // ── Init ──────────────────────────────────────
-      function init() {
-        engine.init();
-        updateScores();
-        render(engine.grid.map(r => [null, null, null, null]));
-        setupKeyboard();
-        setupTouch();
-        undoBtn.addEventListener('click', () => {
-          if (isAnimating) return;
-          if (winTimer) { clearInterval(winTimer); winTimer = null; }
-          const result = engine.undo();
-          if (!result) return;
-          tileContainer.innerHTML = '';
-          const ovWin = document.getElementById('overlay-win');
-          if (ovWin) ovWin.classList.remove('active');
-          overlayLose.classList.remove('active');
-          render(result.oldGrid);
-          updateUndoButton();
-        });
-        newGameBtn.addEventListener('click', resetGame);
-        tryAgainBtn.addEventListener('click', resetGame);
-      }
-
-      init();
-    })();
-  </script>
-</body>
-</html>
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
