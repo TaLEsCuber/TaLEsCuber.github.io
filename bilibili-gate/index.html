@@ -104,6 +104,8 @@
 
     .overlay-text { font-size: 36px; font-weight: 800; color: #776e65; margin-bottom: 20px; }
 
+    .overlay-countdown { font-size: 16px; color: #a39485; margin-bottom: 16px; }
+
     .overlay-btn {
       background: #8f7a66; color: #f9f6f2; border: none; border-radius: 4px;
       padding: 10px 24px; font-size: 16px; font-weight: 700; cursor: pointer;
@@ -134,6 +136,7 @@
           <div class="score-value" id="best-value">0</div>
         </div>
       </div>
+      <button class="new-game-btn" id="undo-btn" disabled>Undo</button>
       <button class="new-game-btn" id="new-game-btn">New Game</button>
     </div>
 
@@ -155,9 +158,12 @@
     </div>
   </div>
 
+  <script src="game-engine.js"></script>
   <script>
     (function () {
       'use strict';
+
+      const engine = window.GameEngine;
 
       // ── DOM refs ──────────────────────────────────
       const boardEl = document.getElementById('game-board');
@@ -165,10 +171,13 @@
       const scoreEl = document.getElementById('score-value');
       const bestEl = document.getElementById('best-value');
       const overlayLose = document.getElementById('overlay-lose');
+      const undoBtn = document.getElementById('undo-btn');
       const newGameBtn = document.getElementById('new-game-btn');
       const tryAgainBtn = document.getElementById('try-again-btn');
 
-      // ── Constants ─────────────────────────────────
+      // ── UI Constants ──────────────────────────────
+      const BILIBILI_URL = 'https://space.bilibili.com/344473910';
+
       const TILE_COLORS = {
         2:     { bg: '#eee4da', color: '#776e65' },
         4:     { bg: '#ede0c8', color: '#776e65' },
@@ -191,37 +200,8 @@
         return cellSize * 0.22 + 'px';
       }
 
-      // ── State ─────────────────────────────────────
-      let grid = [];          // Tile[][] 4×4 (Tile or null)
-      let score = 0;
-      let bestScore = 0;
-      let gameOver = false;
-      let won = false;
-      let keepPlaying = false;
-      let tileIdCounter = 0;
+      // ── UI State ──────────────────────────────────
       let isAnimating = false;
-
-      // ── localStorage helpers ──────────────────────
-      const LS_KEY = 'bilibili-gate-2048-best';
-      function loadBestScore() {
-        try { bestScore = parseInt(localStorage.getItem(LS_KEY)) || 0; }
-        catch (_) { bestScore = 0; }
-      }
-      function saveBestScore() {
-        try { localStorage.setItem(LS_KEY, String(bestScore)); }
-        catch (_) { /* private browsing */ }
-      }
-
-      // ── Tile creation ─────────────────────────────
-      function createTile(value) { return { id: ++tileIdCounter, value: value }; }
-
-      function emptyCells() {
-        const cells = [];
-        for (let r = 0; r < 4; r++)
-          for (let c = 0; c < 4; c++)
-            if (grid[r][c] === null) cells.push({ r, c });
-        return cells;
-      }
 
       // ── Board metrics ─────────────────────────────
       function boardMetrics() {
@@ -231,149 +211,6 @@
         const gap = parseFloat(style.getPropertyValue('--gap')) || 15;
         const cellSize = (boardWidth - 2 * padding - 3 * gap) / 4;
         return { boardWidth, padding, gap, cellSize };
-      }
-
-      // ── Slide one line ────────────────────────────
-      function slideLine(line) {
-        const tiles = [];
-        for (let i = 0; i < 4; i++) { if (line[i] !== null) tiles.push(line[i]); }
-
-        let points = 0;
-        const consumedIds = [];
-
-        for (let i = 0; i < tiles.length - 1; i++) {
-          if (tiles[i].value === tiles[i + 1].value) {
-            tiles[i].value *= 2;
-            points += tiles[i].value;
-            consumedIds.push(tiles[i + 1].id);
-            tiles.splice(i + 1, 1);
-          }
-        }
-
-        const result = [null, null, null, null];
-        for (let i = 0; i < tiles.length; i++) result[i] = tiles[i];
-
-        return { result, points, consumedIds };
-      }
-
-      // ── Grid transformations ──────────────────────
-      function cloneGrid() {
-        return grid.map(row => row.map(t => t ? { id: t.id, value: t.value } : null));
-      }
-
-      function gridsEqual(a, b) {
-        for (let r = 0; r < 4; r++)
-          for (let c = 0; c < 4; c++) {
-            const ta = a[r][c], tb = b[r][c];
-            if ((ta === null) !== (tb === null)) return false;
-            if (ta && ta.id !== tb.id) return false;
-          }
-        return true;
-      }
-
-      function transpose(g) {
-        const t = Array.from({ length: 4 }, () => [null, null, null, null]);
-        for (let r = 0; r < 4; r++)
-          for (let c = 0; c < 4; c++)
-            t[c][r] = g[r][c];
-        return t;
-      }
-
-      function reverseRows(g) {
-        return g.map(row => [...row].reverse());
-      }
-
-      // ── Spawn ─────────────────────────────────────
-      function spawnTile() {
-        const cells = emptyCells();
-        if (cells.length === 0) return;
-        const { r, c } = cells[Math.floor(Math.random() * cells.length)];
-        grid[r][c] = createTile(Math.random() < 0.9 ? 2 : 4);
-      }
-
-      // ── Game state checks ─────────────────────────
-      function canMove() {
-        for (let r = 0; r < 4; r++)
-          for (let c = 0; c < 4; c++) {
-            if (grid[r][c] === null) return true;
-            const v = grid[r][c].value;
-            if (c < 3 && grid[r][c + 1] && grid[r][c + 1].value === v) return true;
-            if (r < 3 && grid[r + 1][c] && grid[r + 1][c].value === v) return true;
-          }
-        return false;
-      }
-
-      function checkWin() {
-        if (keepPlaying) return;
-        for (let r = 0; r < 4; r++)
-          for (let c = 0; c < 4; c++)
-            if (grid[r][c] && grid[r][c].value >= 2048) { won = true; }
-      }
-
-      function checkGameOver() {
-        if (!canMove()) gameOver = true;
-      }
-
-      // ── Move ──────────────────────────────────────
-      function move(direction) {
-        if (gameOver || isAnimating) return;
-        if (won && !keepPlaying) return;
-
-        const oldGrid = cloneGrid();
-
-        // Transform so the slide direction becomes "left"
-        let workGrid;
-        if (direction === 'left') {
-          workGrid = cloneGrid();
-        } else if (direction === 'right') {
-          workGrid = reverseRows(cloneGrid());
-        } else if (direction === 'up') {
-          workGrid = transpose(cloneGrid());
-        } else if (direction === 'down') {
-          const src = cloneGrid();
-          workGrid = Array.from({ length: 4 }, () => [null, null, null, null]);
-          for (let r = 0; r < 4; r++)
-            for (let c = 0; c < 4; c++)
-              workGrid[c][3 - r] = src[r][c];
-        }
-
-        let totalPoints = 0;
-        const consumedIds = [];
-
-        for (let r = 0; r < 4; r++) {
-          const { result, points, consumedIds: ids } = slideLine(workGrid[r]);
-          workGrid[r] = result;
-          totalPoints += points;
-          consumedIds.push(...ids);
-        }
-
-        // Inverse transform
-        if (direction === 'up') {
-          grid = transpose(workGrid);
-        } else if (direction === 'down') {
-          const result = Array.from({ length: 4 }, () => [null, null, null, null]);
-          for (let r = 0; r < 4; r++)
-            for (let c = 0; c < 4; c++)
-              result[r][c] = workGrid[c][3 - r];
-          grid = result;
-        } else if (direction === 'right') {
-          grid = reverseRows(workGrid);
-        } else {
-          grid = workGrid;
-        }
-
-        if (gridsEqual(oldGrid, grid)) return;
-
-        score += totalPoints;
-        if (score > bestScore) { bestScore = score; saveBestScore(); }
-
-        spawnTile();
-        checkWin();
-        checkGameOver();
-        render(oldGrid);
-
-        if (won && !keepPlaying) showWinOverlay();
-        else if (gameOver) showLoseOverlay();
       }
 
       // ── Render ────────────────────────────────────
@@ -389,7 +226,6 @@
             if (t) oldPositions[t.id] = { row: r, col: c, value: t.value };
           }
 
-        // Track which existing DOM elements are still needed
         const existingEls = {};
         tileContainer.querySelectorAll('.tile').forEach(el => {
           existingEls[el.dataset.tileId] = el;
@@ -399,7 +235,7 @@
 
         for (let r = 0; r < 4; r++) {
           for (let c = 0; c < 4; c++) {
-            const tile = grid[r][c];
+            const tile = engine.grid[r][c];
             if (!tile) continue;
 
             usedIds.add(tile.id);
@@ -466,32 +302,55 @@
       }
 
       function updateScores() {
-        scoreEl.textContent = score;
-        bestEl.textContent = bestScore;
+        scoreEl.textContent = engine.score;
+        bestEl.textContent = engine.bestScore;
+      }
+
+      function updateUndoButton() {
+        undoBtn.disabled = engine.historyLength === 0;
       }
 
       // ── Overlays ──────────────────────────────────
-      function buildWinOverlay() {
-        // Reuse lose overlay as base and add keep-playing overlay
-        const existing = document.getElementById('overlay-win');
-        if (existing) return existing;
-        const ov = document.createElement('div');
-        ov.className = 'game-overlay';
-        ov.id = 'overlay-win';
-        ov.innerHTML = '<div class="overlay-content"><p class="overlay-text">You Win!</p><button class="overlay-btn" id="keep-playing-btn">Keep Playing</button><button class="overlay-btn" id="win-new-game-btn">New Game</button></div>';
-        boardEl.appendChild(ov);
-        ov.querySelector('#keep-playing-btn').addEventListener('click', () => {
-          keepPlaying = true; won = false;
-          ov.classList.remove('active');
-          if (gameOver) return;
-          isAnimating = false;
-        });
-        ov.querySelector('#win-new-game-btn').addEventListener('click', resetGame);
-        return ov;
-      }
+      let winTimer = null;
 
       function showWinOverlay() {
-        const ov = buildWinOverlay();
+        let ov = document.getElementById('overlay-win');
+
+        if (!ov) {
+          ov = document.createElement('div');
+          ov.className = 'game-overlay';
+          ov.id = 'overlay-win';
+          ov.innerHTML = '<div class="overlay-content"><p class="overlay-text">You Win!</p><p class="overlay-countdown" id="countdown-text">5 秒后自动跳转至 B站...</p><button class="overlay-btn" id="keep-playing-btn">继续游戏</button><button class="overlay-btn" id="goto-bilibili-btn">前往 B站主页</button></div>';
+          boardEl.appendChild(ov);
+
+          ov.querySelector('#keep-playing-btn').addEventListener('click', () => {
+            clearInterval(winTimer);
+            winTimer = null;
+            engine.keepPlaying = true;
+            engine.won = false;
+            ov.classList.remove('active');
+            if (engine.gameOver) return;
+            isAnimating = false;
+          });
+
+          ov.querySelector('#goto-bilibili-btn').addEventListener('click', () => {
+            clearInterval(winTimer);
+            winTimer = null;
+            window.location.href = BILIBILI_URL;
+          });
+        }
+
+        // Start countdown
+        const countdownEl = ov.querySelector('#countdown-text');
+        let seconds = 5;
+        if (winTimer) clearInterval(winTimer);
+        countdownEl.textContent = seconds + ' 秒后自动跳转至 B站...';
+        winTimer = setInterval(() => {
+          seconds--;
+          if (seconds <= 0) { window.location.href = BILIBILI_URL; return; }
+          countdownEl.textContent = seconds + ' 秒后自动跳转至 B站...';
+        }, 1000);
+
         setTimeout(() => ov.classList.add('active'), 300);
       }
 
@@ -501,22 +360,16 @@
 
       // ── Reset ─────────────────────────────────────
       function resetGame() {
-        score = 0;
-        gameOver = false;
-        won = false;
-        keepPlaying = false;
+        engine.init();
         isAnimating = false;
-        tileIdCounter = 0;
-        grid = Array.from({ length: 4 }, () => [null, null, null, null]);
         tileContainer.innerHTML = '';
 
         const ovWin = document.getElementById('overlay-win');
         if (ovWin) ovWin.classList.remove('active');
         overlayLose.classList.remove('active');
 
-        spawnTile();
-        spawnTile();
-        render(grid.map(r => [null, null, null, null]));
+        render(engine.grid.map(r => [null, null, null, null]));
+        updateUndoButton();
       }
 
       // ── Input: keyboard ───────────────────────────
@@ -527,7 +380,16 @@
             w: 'up', W: 'up', s: 'down', S: 'down', a: 'left', A: 'left', d: 'right', D: 'right',
           };
           const dir = map[e.key];
-          if (dir) { e.preventDefault(); move(dir); }
+          if (!dir) return;
+          if (isAnimating) return;
+          e.preventDefault();
+          const result = engine.move(dir);
+          if (result.moved) {
+            render(result.oldGrid);
+            updateUndoButton();
+            if (engine.won && !engine.keepPlaying) showWinOverlay();
+            else if (engine.gameOver) showLoseOverlay();
+          }
         });
       }
 
@@ -543,13 +405,20 @@
 
         boardEl.addEventListener('touchend', e => {
           if (sx === 0 && sy === 0) return;
+          if (isAnimating) { sx = 0; sy = 0; return; }
           const dx = e.changedTouches[0].clientX - sx;
           const dy = e.changedTouches[0].clientY - sy;
           const absDx = Math.abs(dx), absDy = Math.abs(dy);
-          if (Math.max(absDx, absDy) < SWIPE) return;
+          if (Math.max(absDx, absDy) < SWIPE) { sx = 0; sy = 0; return; }
           e.preventDefault();
-          if (absDx > absDy) move(dx > 0 ? 'right' : 'left');
-          else               move(dy > 0 ? 'down' : 'up');
+          const dir = absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+          const result = engine.move(dir);
+          if (result.moved) {
+            render(result.oldGrid);
+            updateUndoButton();
+            if (engine.won && !engine.keepPlaying) showWinOverlay();
+            else if (engine.gameOver) showLoseOverlay();
+          }
           sx = 0; sy = 0;
         });
 
@@ -558,15 +427,23 @@
 
       // ── Init ──────────────────────────────────────
       function init() {
-        loadBestScore();
-        grid = Array.from({ length: 4 }, () => [null, null, null, null]);
-        score = 0;
+        engine.init();
         updateScores();
-        spawnTile();
-        spawnTile();
-        render(grid.map(r => [null, null, null, null]));
+        render(engine.grid.map(r => [null, null, null, null]));
         setupKeyboard();
         setupTouch();
+        undoBtn.addEventListener('click', () => {
+          if (isAnimating) return;
+          if (winTimer) { clearInterval(winTimer); winTimer = null; }
+          const result = engine.undo();
+          if (!result) return;
+          tileContainer.innerHTML = '';
+          const ovWin = document.getElementById('overlay-win');
+          if (ovWin) ovWin.classList.remove('active');
+          overlayLose.classList.remove('active');
+          render(result.oldGrid);
+          updateUndoButton();
+        });
         newGameBtn.addEventListener('click', resetGame);
         tryAgainBtn.addEventListener('click', resetGame);
       }
