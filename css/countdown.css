@@ -661,10 +661,113 @@
   flex: 1;
   min-height: 0;
 }
-.pdf-preview-body iframe {
+.pdf-preview-body embed {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* ---- 密码弹窗 ---- */
+.pwd-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s;
+}
+.pwd-modal-card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.pwd-modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--font-color, #333);
+  margin-bottom: 1rem;
+}
+.pwd-modal-input-wrap {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.pwd-modal-input {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+  border: 1px solid var(--heo-card-border, #ddd);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--font-color, #333);
+  background: var(--card-bg, #fff);
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.pwd-modal-input:focus {
+  border-color: #49b1f5;
+}
+.pwd-modal-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--heo-secondtext, #999);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pwd-modal-error {
+  color: #e74c3c;
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+  display: none;
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.pwd-modal-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.pwd-modal-btns button {
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid var(--heo-card-border, #ddd);
+}
+.pwd-modal-btn-cancel {
+  background: transparent;
+  color: var(--heo-secondtext, #858585);
+}
+.pwd-modal-btn-cancel:hover {
+  background: rgba(0,0,0,0.05);
+}
+.pwd-modal-btn-confirm {
+  background: #49b1f5;
+  color: #fff;
+  border-color: #49b1f5;
+}
+.pwd-modal-btn-confirm:hover {
+  background: #3498db;
 }
 
 /* ---- 图例 ---- */
@@ -738,6 +841,12 @@
 }
 [data-theme="dark"] .pdf-preview-modal {
   background: var(--card-bg, #1e1e1e);
+}
+[data-theme="dark"] .pwd-modal-card {
+  background: var(--card-bg, #1e1e1e);
+}
+[data-theme="dark"] .pwd-modal-btn-cancel:hover {
+  background: rgba(255,255,255,0.08);
 }
 [data-theme="dark"] .countdown-mode-btn:hover {
   color: #fff;

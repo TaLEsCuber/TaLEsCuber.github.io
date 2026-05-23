@@ -729,39 +729,106 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
     }
   });
 
-  // ---- SHA-256 (pure JS, no dependencies) ----
-  function sha256(str) {
-    function R(n, w) { return (n >>> w) | (n << (32 - w)); }
-    var K = [1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298];
-    var msg = unescape(encodeURIComponent(str));
-    var bytes = [];
-    for (var i = 0; i < msg.length; i++) bytes.push(msg.charCodeAt(i));
-    var bl = bytes.length * 8;
-    bytes.push(0x80);
-    while ((bytes.length * 8) % 512 !== 448) bytes.push(0);
-    for (var j = 7; j >= 0; j--) bytes.push((bl >>> (j * 8)) & 0xff);
-    var H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
-    for (var bi = 0; bi < bytes.length; bi += 64) {
-      var W = new Array(64);
-      for (var t = 0; t < 16; t++) W[t] = (bytes[bi+t*4]<<24)|(bytes[bi+t*4+1]<<16)|(bytes[bi+t*4+2]<<8)|bytes[bi+t*4+3];
-      for (t = 16; t < 64; t++) { var s0 = R(W[t-15],7)^R(W[t-15],18)^(W[t-15]>>>3); var s1 = R(W[t-2],17)^R(W[t-2],19)^(W[t-2]>>>10); W[t] = (W[t-16]+s0+W[t-7]+s1) | 0; }
-      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
-      for (t = 0; t < 64; t++) { var S1=R(e,6)^R(e,11)^R(e,25),ch=(e&f)^((~e)&g),temp1=(h+S1+ch+K[t]+W[t])|0,S0=R(a,2)^R(a,13)^R(a,22),maj=(a&b)^(a&c)^(b&c),temp2=(S0+maj)|0; h=g;g=f;f=e;e=(d+temp1)|0;d=c;c=b;b=a;a=(temp1+temp2)|0; }
-      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
-    }
-    var hex = "";
-    for (i = 0; i < 8; i++) { var v = H[i]; hex += ("0000000" + ((v >>> 0).toString(16))).slice(-8); }
-    return hex;
+  // ---- SHA-256 (Web Crypto API) ----
+  async function sha256(str) {
+    var encoder = new TextEncoder();
+    var data = encoder.encode(str);
+    var hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    var hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
   }
 
-  function unlockAttachment(rowEl) {
-    var pwd = prompt("请输入附件密码：");
+  function showPasswordModal() {
+    return new Promise(function(resolve) {
+      var overlay = document.createElement("div");
+      overlay.className = "pwd-modal-overlay";
+      overlay.innerHTML =
+        "<div class=\"pwd-modal-card\">" +
+          "<div class=\"pwd-modal-title\">请输入附件密码</div>" +
+          "<div class=\"pwd-modal-input-wrap\">" +
+            "<input class=\"pwd-modal-input\" type=\"password\" placeholder=\"输入密码\">" +
+            "<button class=\"pwd-modal-toggle\" title=\"显示/隐藏\">👁</button>" +
+          "</div>" +
+          "<div class=\"pwd-modal-error\">密码错误，请重试</div>" +
+          "<div class=\"pwd-modal-btns\">" +
+            "<button class=\"pwd-modal-btn-cancel\">取消</button>" +
+            "<button class=\"pwd-modal-btn-confirm\">确认</button>" +
+          "</div>" +
+        "</div>";
+      document.body.appendChild(overlay);
+      var input = overlay.querySelector(".pwd-modal-input");
+      var errorEl = overlay.querySelector(".pwd-modal-error");
+      var toggleBtn = overlay.querySelector(".pwd-modal-toggle");
+      input.focus();
+
+      function close(val) {
+        overlay.remove();
+        document.removeEventListener("keydown", keyHandler);
+        resolve(val);
+      }
+
+      function shake() {
+        errorEl.style.display = "block";
+        errorEl.style.animation = "none";
+        errorEl.offsetHeight;
+        errorEl.style.animation = "shake 0.4s";
+        input.style.borderColor = "#e74c3c";
+        input.value = "";
+        input.focus();
+      }
+
+      toggleBtn.addEventListener("click", function() {
+        if (input.type === "password") {
+          input.type = "text";
+          toggleBtn.textContent = "🙈";
+        } else {
+          input.type = "password";
+          toggleBtn.textContent = "👁";
+        }
+      });
+
+      overlay.addEventListener("click", function(e) {
+        if (e.target === overlay) close(null);
+      });
+
+      overlay.querySelector(".pwd-modal-btn-cancel").addEventListener("click", function() {
+        close(null);
+      });
+
+      overlay.querySelector(".pwd-modal-btn-confirm").addEventListener("click", function() {
+        var pwd = input.value;
+        if (!pwd) { shake(); return; }
+        close(pwd);
+      });
+
+      input.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+          var pwd = input.value;
+          if (!pwd) { shake(); return; }
+          close(pwd);
+        }
+      });
+
+      function keyHandler(e) {
+        if (e.key === "Escape") close(null);
+      }
+      document.addEventListener("keydown", keyHandler);
+    });
+  }
+
+  async function unlockAttachment(rowEl) {
+    var pwd = await showPasswordModal();
     if (!pwd) return;
-    var hash = sha256(pwd);
+    var hash = await sha256(pwd);
     var expectedHash = rowEl.getAttribute("data-password-hash");
     if (hash !== expectedHash) {
-      alert("密码错误！");
-      return;
+      var retryPwd = await showPasswordModal();
+      if (!retryPwd) return;
+      var retryHash = await sha256(retryPwd);
+      if (retryHash !== expectedHash) {
+        alert("密码错误！");
+        return;
+      }
     }
     var attName = rowEl.querySelector(".attachment-name").textContent;
     var fileUrl = rowEl.getAttribute("data-file");
@@ -882,7 +949,7 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">学习</span><span class="card-category-list-count">11</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">物理笔记</span><span class="card-category-list-count">5</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%8E%9F%E5%AD%90%E7%89%A9%E7%90%86%E5%AD%A6/"><span class="card-category-list-name">原子物理学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA/"><span class="card-category-list-name">广义相对论</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">经典力学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">量子力学</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/"><span class="card-category-list-name">论文推荐</span><span class="card-category-list-count">1</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">22.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-23T14:17:26.383Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">22.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-23T14:28:05.490Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
 </div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
