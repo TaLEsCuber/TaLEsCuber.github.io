@@ -181,6 +181,7 @@
 
 /* ---- 月份选择器 ---- */
 .month-picker {
+  grid-column: 1 / -1;
   display: block;
   max-width: 340px;
   margin: 0 auto;
