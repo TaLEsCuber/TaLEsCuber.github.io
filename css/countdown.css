@@ -181,6 +181,9 @@
 
 /* ---- 月份选择器 ---- */
 .month-picker {
+  display: block;
+  max-width: 340px;
+  margin: 0 auto;
   user-select: none;
 }
 .month-picker-year {
