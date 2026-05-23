@@ -1,0 +1,600 @@
+/* ============================================
+   倒计时卡片 — 双模式（倒计时 / 日历）
+   ============================================ */
+
+/* ---- 卡片容器 ---- */
+.countdown-card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s;
+}
+.countdown-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- 标题栏 ---- */
+.countdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--heo-card-border, #e0e0e0);
+}
+.countdown-title {
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--font-color, #333);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.countdown-title i {
+  color: #49b1f5;
+  font-size: 1rem;
+}
+.countdown-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  color: #49b1f5;
+  background: transparent;
+  border: 1px solid #49b1f5;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  line-height: 1.4;
+}
+.countdown-mode-btn:hover {
+  color: #fff;
+  background: #49b1f5;
+}
+.countdown-mode-btn i {
+  font-size: 0.85rem;
+}
+
+/* ---- 倒计时列表 ---- */
+.countdown-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.countdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(73, 177, 245, 0.04);
+  transition: background 0.3s;
+  gap: 0.5rem;
+}
+.countdown-item:hover {
+  background: rgba(73, 177, 245, 0.09);
+}
+.countdown-name {
+  font-size: 0.95rem;
+  color: var(--font-color, #333);
+  flex: 1;
+}
+.countdown-days {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #49b1f5;
+  white-space: nowrap;
+  min-width: 3.5em;
+  text-align: right;
+}
+/* 警示色 */
+.countdown-item.urgent .countdown-days {
+  color: #f39c12;
+}
+.countdown-item.critical .countdown-days {
+  color: #e74c3c;
+}
+/* 跳转到日历按钮 */
+.countdown-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--heo-secondtext, #858585);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.countdown-jump-btn:hover {
+  background: rgba(73, 177, 245, 0.15);
+  color: #49b1f5;
+}
+
+/* ---- 空状态 ---- */
+.countdown-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--heo-secondtext, #858585);
+  font-size: 0.95rem;
+}
+
+/* ---- 日历面板 ---- */
+.calendar-panel {
+  user-select: none;
+}
+
+/* 月份导航 */
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.calendar-nav-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--heo-card-border, #e0e0e0);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: var(--font-color, #333);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.calendar-nav-btn:hover {
+  border-color: #49b1f5;
+  color: #49b1f5;
+}
+.calendar-month-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--font-color, #333);
+  min-width: 8em;
+  text-align: center;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+  user-select: none;
+}
+.calendar-month-label:hover {
+  background: rgba(73, 177, 245, 0.1);
+}
+.calendar-today-btn {
+  width: auto;
+  padding: 0 0.65rem;
+  font-size: 0.78rem;
+  border-radius: 6px;
+}
+
+/* ---- 月份选择器 ---- */
+.month-picker {
+  user-select: none;
+}
+.month-picker-year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.month-picker-year-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--font-color, #333);
+  min-width: 5em;
+  text-align: center;
+}
+.month-picker-year-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--heo-card-border, #e0e0e0);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: var(--font-color, #333);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.month-picker-year-btn:hover {
+  border-color: #49b1f5;
+  color: #49b1f5;
+}
+.month-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+.month-picker-btn {
+  position: relative;
+  padding: 0.65rem 0.5rem;
+  border: 1px solid var(--heo-card-border, #e0e0e0);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: var(--font-color, #333);
+  cursor: pointer;
+  font-size: 0.88rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+.month-picker-btn:hover {
+  border-color: #49b1f5;
+  color: #49b1f5;
+  background: rgba(73, 177, 245, 0.06);
+}
+.month-picker-btn.current {
+  border-color: #49b1f5;
+  color: #49b1f5;
+  font-weight: 700;
+  background: rgba(73, 177, 245, 0.08);
+}
+.month-picker-btn.has-events::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #49b1f5;
+}
+.month-picker-today {
+  display: block;
+  margin: 0 auto;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--heo-card-border, #e0e0e0);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: var(--font-color, #333);
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.3s;
+}
+.month-picker-today:hover {
+  border-color: #49b1f5;
+  color: #49b1f5;
+}
+
+/* 暗色模式 */
+[data-theme="dark"] .calendar-month-label:hover {
+  background: rgba(73, 177, 245, 0.15);
+}
+[data-theme="dark"] .month-picker-btn.current {
+  background: rgba(73, 177, 245, 0.15);
+}
+
+/* 响应式 */
+@media screen and (max-width: 768px) {
+  .month-picker-btn {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.8rem;
+  }
+  .month-picker-grid {
+    gap: 4px;
+  }
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+.calendar-day-header {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--heo-secondtext, #858585);
+  padding: 0.5rem 0;
+}
+.calendar-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: default;
+  color: var(--font-color, #333);
+  transition: background 0.2s;
+}
+.calendar-cell:hover {
+  background: rgba(73, 177, 245, 0.06);
+}
+.calendar-cell.other-month {
+  color: var(--heo-secondtext, #bbb);
+  opacity: 0.4;
+}
+
+/* 今天标记 */
+.calendar-cell.today {
+  font-weight: 700;
+  color: #49b1f5;
+  box-shadow: inset 0 0 0 2px #49b1f5;
+  border-radius: 50%;
+}
+
+/* 倒计时事件标记（蓝色） */
+.calendar-cell.has-event {
+  cursor: pointer;
+  background: rgba(73, 177, 245, 0.1);
+  font-weight: 600;
+}
+.calendar-cell.has-event::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #49b1f5;
+}
+
+/* 节日标记（橙色） */
+.calendar-cell.has-holiday {
+  cursor: pointer;
+  background: rgba(232, 115, 90, 0.08);
+}
+.calendar-cell.has-holiday.has-event {
+  background: rgba(73, 177, 245, 0.1);
+}
+.calendar-cell.has-holiday::before {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: calc(50% - 7px);
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e8735a;
+  z-index: 1;
+}
+/* 当同时有事件、节日时，橙色圆点在左，蓝色在右 */
+.calendar-cell.has-holiday.has-event::before {
+  left: calc(50% - 7px);
+}
+.calendar-cell.has-holiday.has-event::after {
+  left: calc(50% + 7px);
+}
+/* 仅有节日没有事件时，单个橙色圆点居中 */
+.calendar-cell.has-holiday:not(.has-event)::before {
+  left: 50%;
+}
+
+/* 里程碑标记（绿色） */
+.calendar-cell.has-milestone {
+  cursor: pointer;
+  font-weight: 600;
+}
+.calendar-cell.has-milestone .calendar-milestone-dot {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2ecc71;
+}
+/* 多重标记时圆点排列 */
+.calendar-cell.has-milestone.has-holiday .calendar-milestone-dot {
+  left: calc(50% + 7px);
+}
+.calendar-cell.has-milestone.has-event .calendar-milestone-dot {
+  left: calc(50% + 7px);
+}
+/* 三种标记：节日左、事件中、里程碑右 */
+.calendar-cell.has-milestone.has-holiday.has-event .calendar-milestone-dot {
+  left: calc(50% + 12px);
+}
+.calendar-cell.has-milestone.has-holiday.has-event::before {
+  left: calc(50% - 12px);
+}
+.calendar-cell.has-milestone.has-holiday.has-event::after {
+  left: 50%;
+}
+
+/* 选中态 */
+.calendar-cell.has-event.active,
+.calendar-cell.has-holiday.active,
+.calendar-cell.has-milestone.active {
+  background: #49b1f5;
+  color: #fff;
+  border-radius: 50%;
+}
+.calendar-cell.has-event.active::after,
+.calendar-cell.has-holiday.active::before,
+.calendar-cell.has-milestone.active .calendar-milestone-dot {
+  background: #fff;
+}
+.calendar-cell.today.active {
+  border-radius: 50%;
+}
+.calendar-cell.has-event.today {
+  border-radius: 8px;
+}
+
+/* ---- 事件详情区 ---- */
+.event-detail {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  background: rgba(73, 177, 245, 0.05);
+  border-left: 3px solid #49b1f5;
+}
+.event-detail-date {
+  font-size: 0.85rem;
+  color: var(--heo-secondtext, #858585);
+  margin-bottom: 0.4rem;
+}
+.event-detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.event-detail-item {
+  padding: 0.4rem 0;
+  color: var(--font-color, #333);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.event-detail-item:not(:last-child) {
+  border-bottom: 1px dashed var(--heo-card-border, #e0e0e0);
+}
+.event-detail-item .detail-icon {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  margin-top: 0.1rem;
+}
+.event-detail-item .detail-body {
+  flex: 1;
+}
+.event-detail-name {
+  font-weight: 600;
+}
+.event-detail-desc {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  color: var(--heo-secondtext, #858585);
+}
+/* 类型颜色标识 */
+.event-detail-item.type-holiday .detail-icon { color: #e8735a; }
+.event-detail-item.type-holiday { border-left: 3px solid #e8735a; padding-left: 0.6rem; }
+.event-detail-item.type-milestone .detail-icon { color: #2ecc71; }
+.event-detail-item.type-milestone { border-left: 3px solid #2ecc71; padding-left: 0.6rem; }
+.event-detail-item.type-event .detail-icon { color: #49b1f5; }
+.event-detail-item.type-event { border-left: 3px solid #49b1f5; padding-left: 0.6rem; }
+
+/* ---- 图例 ---- */
+.countdown-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--heo-card-border, #e0e0e0);
+  font-size: 0.78rem;
+  color: var(--heo-secondtext, #858585);
+}
+.countdown-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.countdown-legend .legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.legend-dot.dot-event { background: #49b1f5; }
+.legend-dot.dot-holiday { background: #e8735a; }
+.legend-dot.dot-milestone { background: #2ecc71; }
+
+/* ---- 暗色模式 ---- */
+[data-theme="dark"] .countdown-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+[data-theme="dark"] .countdown-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+[data-theme="dark"] .countdown-item {
+  background: rgba(73, 177, 245, 0.06);
+}
+[data-theme="dark"] .countdown-item:hover {
+  background: rgba(73, 177, 245, 0.12);
+}
+[data-theme="dark"] .calendar-cell.has-event {
+  background: rgba(73, 177, 245, 0.15);
+}
+[data-theme="dark"] .calendar-cell.has-holiday {
+  background: rgba(232, 115, 90, 0.12);
+}
+[data-theme="dark"] .calendar-cell.has-holiday.has-event {
+  background: rgba(73, 177, 245, 0.15);
+}
+[data-theme="dark"] .event-detail {
+  background: rgba(73, 177, 245, 0.08);
+}
+[data-theme="dark"] .countdown-mode-btn:hover {
+  color: #fff;
+  background: #49b1f5;
+}
+[data-theme="dark"] .countdown-jump-btn:hover {
+  background: rgba(73, 177, 245, 0.2);
+}
+
+/* ---- 响应式 ---- */
+@media screen and (max-width: 768px) {
+  .countdown-card {
+    padding: 1rem 1.25rem;
+  }
+  .countdown-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .countdown-mode-btn {
+    align-self: flex-end;
+  }
+  .countdown-name {
+    font-size: 0.88rem;
+  }
+  .countdown-days {
+    font-size: 0.82rem;
+    min-width: 3em;
+  }
+  .countdown-jump-btn {
+    width: 24px;
+    height: 24px;
+  }
+  .calendar-cell {
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+  .calendar-day-header {
+    font-size: 0.7rem;
+  }
+  .calendar-nav-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .calendar-today-btn {
+    width: auto;
+    padding: 0 0.5rem;
+    font-size: 0.72rem;
+  }
+  .calendar-month-label {
+    min-width: 6em;
+    font-size: 0.9rem;
+  }
+  .countdown-legend {
+    font-size: 0.72rem;
+    gap: 0.5rem 0.75rem;
+  }
+}
