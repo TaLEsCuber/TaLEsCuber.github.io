@@ -211,7 +211,7 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
   </div>
   <div class="event-detail" id="event-detail" style="display:none"></div>
 </div>
-<script type="application/json" id="countdown-data">[{"name":"组会","date":"2026-05-29","repeat":"weekly","until":"2031-07-01","desc":"记得准时参加","exclude":[]},{"name":"学校毕业典礼","date":"2026-06-27","desc":""},{"name":"JLPT N4 考试","date":"2026-07-05","desc":"日本语能力测试 N4"}]</script>
+<script type="application/json" id="countdown-data">[{"name":"组会","date":"2026-05-29","repeat":"weekly","until":"2031-07-01","desc":"记得准时参加","exclude":[],"attachments_by_date":{"2026-05-29":[{"name":"会议议程","file":"/attachments/events/2026-05-29/meeting-agenda.pdf","password_hash":"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"}]}},{"name":"学校毕业典礼","date":"2026-06-27","desc":""},{"name":"JLPT N4 考试","date":"2026-07-05","desc":"日本语能力测试 N4","attachments":[{"name":"准考证","file":"/attachments/events/2026-07-05/n4-admit.pdf","password_hash":"16bc085963ae6a0ab7a32d36a6b07c9410165a5d9bf561f46a8d922866f7d446"},{"name":"复习资料","file":"/attachments/events/2026-07-05/n4-review.pdf"}]}]</script>
 <script type="application/json" id="holidays-data">[]</script>
 <script type="application/json" id="milestones-data">[{"name":"博客上线","date":"2024-08-30","desc":"使用 Hexo + Butterfly 搭建"}]</script>
 <script>(function(){
@@ -307,6 +307,17 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
   }
   function hasAnyMarker(dateStr) {
     return hasEvent(dateStr) || hasHoliday(dateStr) || hasMilestone(dateStr);
+  }
+
+  function getAttachmentsForEvent(event, dateStr) {
+    var list = [];
+    if (event.attachments && Array.isArray(event.attachments)) {
+      list = list.concat(event.attachments);
+    }
+    if (event.attachments_by_date && event.attachments_by_date[dateStr]) {
+      list = list.concat(event.attachments_by_date[dateStr]);
+    }
+    return list;
   }
 
   // ---- Countdown update ----
@@ -473,6 +484,34 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
       html += "<span class=\"event-detail-name\">" + escapeHTML(ev.name) + "</span>";
       if (ev.desc) {
         html += "<span class=\"event-detail-desc\">" + escapeHTML(ev.desc) + "</span>";
+      }
+      var attachments = getAttachmentsForEvent(ev, dateStr);
+      if (attachments.length > 0) {
+        html += "<div class=\"event-detail-attachments\">";
+        attachments.forEach(function(att) {
+          var isEncrypted = !!att.password_hash;
+          var isPDF = att.file && att.file.toLowerCase().endsWith(".pdf");
+          html += "<div class=\"event-detail-attachment" + (isEncrypted ? " attachment-locked" : "") + "\"";
+          if (isEncrypted) {
+            html += " data-password-hash=\"" + escapeHTML(att.password_hash) + "\" data-file=\"" + escapeHTML(att.file) + "\"";
+          }
+          html += ">";
+          if (isEncrypted) {
+            html += "<span class=\"attach-icon\">🔒</span>";
+            html += "<span class=\"attachment-name\">" + escapeHTML(att.name) + "</span>";
+            html += "<span class=\"attachment-locked-hint\">(需密码)</span>";
+            html += "<button class=\"attach-unlock-btn\" title=\"输入密码解锁\">🔓</button>";
+          } else {
+            html += "<span class=\"attach-icon\">📎</span>";
+            html += "<a href=\"" + escapeHTML(att.file) + "\" target=\"_blank\">" + escapeHTML(att.name) + "</a>";
+            if (isPDF) {
+              html += "<button class=\"attach-preview-btn\" data-file=\"" + escapeHTML(att.file) + "\" title=\"在线预览\">👁</button>";
+              html += "<button class=\"attach-download-btn\" data-file=\"" + escapeHTML(att.file) + "\" title=\"下载文件\">💾</button>";
+            }
+          }
+          html += "</div>";
+        });
+        html += "</div>";
       }
       html += "</span></div>";
     });
@@ -690,6 +729,137 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
     }
   });
 
+  // ---- SHA-256 (pure JS, no dependencies) ----
+  function sha256(str) {
+    function R(n, w) { return (n >>> w) | (n << (32 - w)); }
+    var K = [1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298];
+    var msg = unescape(encodeURIComponent(str));
+    var bytes = [];
+    for (var i = 0; i < msg.length; i++) bytes.push(msg.charCodeAt(i));
+    var bl = bytes.length * 8;
+    bytes.push(0x80);
+    while ((bytes.length * 8) % 512 !== 448) bytes.push(0);
+    for (var j = 7; j >= 0; j--) bytes.push((bl >>> (j * 8)) & 0xff);
+    var H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+    for (var bi = 0; bi < bytes.length; bi += 64) {
+      var W = new Array(64);
+      for (var t = 0; t < 16; t++) W[t] = (bytes[bi+t*4]<<24)|(bytes[bi+t*4+1]<<16)|(bytes[bi+t*4+2]<<8)|bytes[bi+t*4+3];
+      for (t = 16; t < 64; t++) { var s0 = R(W[t-15],7)^R(W[t-15],18)^(W[t-15]>>>3); var s1 = R(W[t-2],17)^R(W[t-2],19)^(W[t-2]>>>10); W[t] = (W[t-16]+s0+W[t-7]+s1) | 0; }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for (t = 0; t < 64; t++) { var S1=R(e,6)^R(e,11)^R(e,25),ch=(e&f)^((~e)&g),temp1=(h+S1+ch+K[t]+W[t])|0,S0=R(a,2)^R(a,13)^R(a,22),maj=(a&b)^(a&c)^(b&c),temp2=(S0+maj)|0; h=g;g=f;f=e;e=(d+temp1)|0;d=c;c=b;b=a;a=(temp1+temp2)|0; }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    var hex = "";
+    for (i = 0; i < 8; i++) { var v = H[i]; hex += ("0000000" + ((v >>> 0).toString(16))).slice(-8); }
+    return hex;
+  }
+
+  function unlockAttachment(rowEl) {
+    var pwd = prompt("请输入附件密码：");
+    if (!pwd) return;
+    var hash = sha256(pwd);
+    var expectedHash = rowEl.getAttribute("data-password-hash");
+    if (hash !== expectedHash) {
+      alert("密码错误！");
+      return;
+    }
+    var attName = rowEl.querySelector(".attachment-name").textContent;
+    var fileUrl = rowEl.getAttribute("data-file");
+    var isPDF = fileUrl && fileUrl.toLowerCase().endsWith(".pdf");
+    rowEl.classList.remove("attachment-locked");
+    rowEl.classList.add("attachment-unlocked");
+    rowEl.querySelector(".attach-icon").textContent = "📎";
+    rowEl.querySelector(".attachment-name").remove();
+    rowEl.querySelector(".attachment-locked-hint").remove();
+    rowEl.querySelector(".attach-unlock-btn").remove();
+    rowEl.removeAttribute("data-password-hash");
+    rowEl.removeAttribute("data-file");
+    var link = document.createElement("a");
+    link.href = fileUrl;
+    link.target = "_blank";
+    link.textContent = attName;
+    rowEl.querySelector(".attach-icon").after(link);
+    if (isPDF) {
+      var previewBtn = document.createElement("button");
+      previewBtn.className = "attach-preview-btn";
+      previewBtn.setAttribute("data-file", fileUrl);
+      previewBtn.title = "在线预览";
+      previewBtn.textContent = "👁";
+      rowEl.appendChild(previewBtn);
+      var dlBtn = document.createElement("button");
+      dlBtn.className = "attach-download-btn";
+      dlBtn.setAttribute("data-file", fileUrl);
+      dlBtn.title = "下载文件";
+      dlBtn.textContent = "💾";
+      rowEl.appendChild(dlBtn);
+    }
+  }
+
+  function showPDFPreview(fileUrl) {
+    var fileName = fileUrl.split("/").pop();
+    var overlay = document.createElement("div");
+    overlay.className = "pdf-preview-overlay";
+    overlay.id = "pdf-preview-overlay";
+    overlay.innerHTML =
+      "<div class=\"pdf-preview-modal\">" +
+        "<div class=\"pdf-preview-header\">" +
+          "<span class=\"pdf-preview-title\">" + escapeHTML(fileName) + "</span>" +
+          "<button class=\"pdf-preview-close\" title=\"关闭\">✕</button>" +
+        "</div>" +
+        "<div class=\"pdf-preview-body\">" +
+          "<embed src=\"" + escapeHTML(fileUrl) + "\" type=\"application/pdf\" width=\"100%\" height=\"100%\">" +
+        "</div>" +
+      "</div>";
+    overlay.addEventListener("click", function(e) {
+      if (e.target === overlay || e.target.closest(".pdf-preview-close")) {
+        closePDFPreview();
+      }
+    });
+    document.addEventListener("keydown", function escHandler(e) {
+      if (e.key === "Escape") { closePDFPreview(); document.removeEventListener("keydown", escHandler); }
+    });
+    document.body.appendChild(overlay);
+    document.body.style.overflow = "hidden";
+  }
+
+  function closePDFPreview() {
+    var overlay = document.getElementById("pdf-preview-overlay");
+    if (overlay) overlay.remove();
+    document.body.style.overflow = "";
+  }
+
+  function triggerDownload(fileUrl) {
+    var a = document.createElement("a");
+    a.href = fileUrl;
+    a.download = fileUrl.split("/").pop();
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  // ---- Attachment: unlock, preview, download event delegation (on document) ----
+  document.addEventListener("click", function(e) {
+    var unlockBtn = e.target.closest(".attach-unlock-btn");
+    if (unlockBtn && unlockBtn.closest("#event-detail")) {
+      e.preventDefault();
+      unlockAttachment(unlockBtn.closest(".event-detail-attachment"));
+      return;
+    }
+    var previewBtn = e.target.closest(".attach-preview-btn");
+    if (previewBtn && previewBtn.closest("#event-detail")) {
+      e.preventDefault();
+      showPDFPreview(previewBtn.getAttribute("data-file"));
+      return;
+    }
+    var dlBtn = e.target.closest(".attach-download-btn");
+    if (dlBtn && dlBtn.closest("#event-detail")) {
+      e.preventDefault();
+      triggerDownload(dlBtn.getAttribute("data-file"));
+      return;
+    }
+  });
+
   // ---- Init ----
   updateCountdown();
   setInterval(updateCountdown, 60000);
@@ -712,7 +882,7 @@ target="_blank" rel="noopener" href="https://github.com/TaLEsCuber/GPLabR">GPLab
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">学习</span><span class="card-category-list-count">11</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">物理笔记</span><span class="card-category-list-count">5</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%8E%9F%E5%AD%90%E7%89%A9%E7%90%86%E5%AD%A6/"><span class="card-category-list-name">原子物理学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA/"><span class="card-category-list-name">广义相对论</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">经典力学</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/"><span class="card-category-list-name">量子力学</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/"><span class="card-category-list-name">论文推荐</span><span class="card-category-list-count">1</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">22.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-23T12:13:06.205Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+            </ul></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">May</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date"><span class="archive-year">2026</span> <span class="archive-month">Jan</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Dec</span></span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Oct</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Sep</span></span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date"><span class="archive-year">2025</span> <span class="archive-month">Jul</span></span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date"><span class="archive-year">2024</span> <span class="archive-month">Aug</span></span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2024-08-30T22:03:14.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">22.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-23T14:17:26.383Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
 </div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {

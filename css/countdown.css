@@ -494,6 +494,179 @@
 .event-detail-item.type-event .detail-icon { color: #49b1f5; }
 .event-detail-item.type-event { border-left: 3px solid #49b1f5; padding-left: 0.6rem; }
 
+/* ---- 附件列表 ---- */
+.event-detail-attachments {
+  margin-top: 0.4rem;
+}
+.event-detail-attachment {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0;
+  font-size: 0.82rem;
+}
+.event-detail-attachment .attach-icon {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--heo-secondtext, #858585);
+}
+.event-detail-attachment a {
+  color: #49b1f5;
+  text-decoration: none;
+  word-break: break-all;
+  transition: color 0.2s;
+}
+.event-detail-attachment a:hover {
+  text-decoration: underline;
+  color: #3498db;
+}
+
+/* 加密附件 */
+.attachment-locked {
+  background: rgba(160, 160, 160, 0.08);
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+}
+.attachment-locked-hint {
+  font-size: 0.75rem;
+  color: var(--heo-secondtext, #999);
+  flex: 1;
+}
+.attach-unlock-btn {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--heo-card-border, #ddd);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.attach-unlock-btn:hover {
+  border-color: #2ecc71;
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.08);
+}
+
+/* 解锁后状态 */
+.attachment-unlocked .attach-icon {
+  color: #49b1f5;
+}
+
+/* PDF 预览按钮 */
+.attach-preview-btn {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--heo-card-border, #ddd);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-left: 0.25rem;
+}
+.attach-preview-btn:hover {
+  border-color: #f39c12;
+  color: #f39c12;
+  background: rgba(243, 156, 18, 0.08);
+}
+
+/* 下载按钮 */
+.attach-download-btn {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--heo-card-border, #ddd);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-left: 0.15rem;
+}
+.attach-download-btn:hover {
+  border-color: #3498db;
+  color: #3498db;
+  background: rgba(52, 152, 219, 0.08);
+}
+
+/* ---- PDF 预览模态 ---- */
+.pdf-preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.pdf-preview-modal {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+.pdf-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--heo-card-border, #e0e0e0);
+  flex-shrink: 0;
+}
+.pdf-preview-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--font-color, #333);
+}
+.pdf-preview-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--heo-secondtext, #858585);
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.pdf-preview-close:hover {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+.pdf-preview-body {
+  flex: 1;
+  min-height: 0;
+}
+.pdf-preview-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 /* ---- 图例 ---- */
 .countdown-legend {
   display: flex;
@@ -544,6 +717,27 @@
 }
 [data-theme="dark"] .event-detail {
   background: rgba(73, 177, 245, 0.08);
+}
+[data-theme="dark"] .event-detail-attachment a {
+  color: #6db3f2;
+}
+[data-theme="dark"] .event-detail-attachment a:hover {
+  color: #8ec5f7;
+}
+[data-theme="dark"] .attachment-locked {
+  background: rgba(160, 160, 160, 0.12);
+}
+[data-theme="dark"] .attach-unlock-btn:hover {
+  background: rgba(46, 204, 113, 0.15);
+}
+[data-theme="dark"] .attach-preview-btn:hover {
+  background: rgba(243, 156, 18, 0.15);
+}
+[data-theme="dark"] .attach-download-btn:hover {
+  background: rgba(52, 152, 219, 0.15);
+}
+[data-theme="dark"] .pdf-preview-modal {
+  background: var(--card-bg, #1e1e1e);
 }
 [data-theme="dark"] .countdown-mode-btn:hover {
   color: #fff;
