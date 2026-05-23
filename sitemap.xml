@@ -322,6 +322,13 @@
   </url>
   
   <url>
+    <loc>http://talescuber.github.io/tags/TempMail/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://talescuber.github.io/tags/%E5%AE%9E%E9%AA%8C/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -337,13 +344,6 @@
   
   <url>
     <loc>http://talescuber.github.io/tags/uncertainties/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/tags/TempMail/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -371,14 +371,21 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/tags/polyglot/</loc>
+    <loc>http://talescuber.github.io/tags/%E6%8B%93%E5%B1%95%E5%90%8D/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/tags/%E6%8B%93%E5%B1%95%E5%90%8D/</loc>
+    <loc>http://talescuber.github.io/tags/%E6%8A%9B%E7%A1%AC%E5%B8%81/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://talescuber.github.io/tags/polyglot/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -392,7 +399,14 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/tags/%E6%8A%9B%E7%A1%AC%E5%B8%81/</loc>
+    <loc>http://talescuber.github.io/tags/arXiv/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://talescuber.github.io/tags/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -413,28 +427,14 @@
   </url>
   
   <url>
+    <loc>http://talescuber.github.io/tags/%E6%A3%80%E6%9F%A5%E6%82%96%E8%AE%BA/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://talescuber.github.io/tags/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/tags/arXiv/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/tags/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -462,21 +462,14 @@
   </url>
   
   <url>
+    <loc>http://talescuber.github.io/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://talescuber.github.io/tags/EOM/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/tags/Git/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/tags/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -490,7 +483,21 @@
   </url>
   
   <url>
+    <loc>http://talescuber.github.io/tags/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://talescuber.github.io/tags/%E5%8E%8B%E7%BC%A9%E5%8C%85/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://talescuber.github.io/tags/Git/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -538,13 +545,6 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>http://talescuber.github.io/tags/%E6%A3%80%E6%9F%A5%E6%82%96%E8%AE%BA/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
@@ -562,7 +562,7 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C/</loc>
+    <loc>http://talescuber.github.io/categories/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/TempMail/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -576,7 +576,7 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/TempMail/</loc>
+    <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -604,14 +604,14 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/</loc>
+    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -632,13 +632,6 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/python/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -646,7 +639,14 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/Git/</loc>
+    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -667,14 +667,14 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%BD%91%E7%AB%99/</loc>
+    <loc>http://talescuber.github.io/categories/%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5/Git/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -689,6 +689,13 @@
   
   <url>
     <loc>http://talescuber.github.io/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8/%E6%B3%A2%E9%95%BF%E8%AE%A1/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -716,14 +723,7 @@
   </url>
   
   <url>
-    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/</loc>
+    <loc>http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E7%BD%91%E7%AB%99/</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
