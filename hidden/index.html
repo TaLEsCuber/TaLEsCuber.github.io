@@ -6,8 +6,8 @@
 <meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
-<meta property="article:published_time" content="2026-05-25T10:18:25.660Z">
-<meta property="article:modified_time" content="2026-05-25T10:18:25.639Z">
+<meta property="article:published_time" content="2026-05-25T10:34:44.942Z">
+<meta property="article:modified_time" content="2026-05-25T10:34:44.919Z">
 <meta property="article:author" content="TaLEsCuber">
 <meta property="article:tag" content="物理, 学习资料">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2026-05-25 18:18:25'
+  postUpdate: '2026-05-25 18:34:44'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -153,7 +153,50 @@
         }
       }
       detectApple()
-    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><meta name="generator" content="Hexo 7.3.0"><style>
+/* hidden page password card — overrides hexo-blog-encrypt defaults */
+#hexo-blog-encrypt .hbe-container{max-width:400px;margin:3rem auto}
+#hexo-blog-encrypt .hbe-content{background:#fff;border-radius:12px;padding:2.5rem 2.25rem 2rem;box-shadow:0 3px 8px 6px rgba(7,17,27,.05);text-align:center;font-size:14px;color:#4C4948}
+
+/* lock icon (added by JS) */
+.hbe-lock-icon{display:block;width:48px;height:48px;margin:0 auto 1rem;color:#49B1F5}
+
+/* reset material-design input wrapper */
+#hexo-blog-encrypt .hbe-input,#hexo-blog-encrypt .hbe-input-default{overflow:visible;margin:0;width:100%;float:none}
+
+/* static label above input (remove floating animation) */
+#hexo-blog-encrypt .hbe-input-label,#hexo-blog-encrypt .hbe-input-label-default{position:static;width:100%;float:none;text-align:center;padding:0 0 .75rem;pointer-events:none;font-size:15px;font-weight:400;color:#4C4948;user-select:none}
+#hexo-blog-encrypt .hbe-input-label-default::before,
+#hexo-blog-encrypt .hbe-input-label-default::after{display:none}
+#hexo-blog-encrypt .hbe-input-label-content,#hexo-blog-encrypt .hbe-input-label-content-default{padding:0;font-size:15px;color:#4C4948;transform:none;transition:none;display:inline}
+#hexo-blog-encrypt .hbe-input-field-default:focus+.hbe-input-label-default .hbe-input-label-content-default,
+#hexo-blog-encrypt .hbe-input--filled .hbe-input-label-default .hbe-input-label-content-default{color:#4C4948;transform:none}
+
+/* bordered input field */
+#hexo-blog-encrypt .hbe-input-field,#hexo-blog-encrypt .hbe-input-field-default{width:100%;padding:.75rem 1rem;margin-bottom:1rem;border:2px solid #e0e0e0;border-radius:12px;background:#fff;color:#4C4948;font-size:14px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;opacity:1;float:none;display:block;transition:border-color .3s ease;box-sizing:border-box;outline:none}
+#hexo-blog-encrypt .hbe-input-field:focus,#hexo-blog-encrypt .hbe-input-field-default:focus{border-color:#49B1F5}
+
+/* submit button (added by JS) */
+.hbe-submit-btn{width:100%;padding:.75rem 1rem;border:none;border-radius:12px;background:#49B1F5;color:#fff;font-size:15px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer;transition:background .3s ease,box-shadow .3s ease;box-shadow:0 2px 6px rgba(73,177,245,.3)}
+.hbe-submit-btn:hover{background:#3a9ee0;box-shadow:0 4px 12px rgba(73,177,245,.4)}
+.hbe-submit-btn:active{background:#2e8bc8;box-shadow:0 1px 3px rgba(73,177,245,.2)}
+
+/* hint text below button (added by JS) */
+.hbe-hint{margin-top:.75rem;font-size:12px;color:#999}
+
+/* "Encrypt again" button (shown after decryption) */
+.hbe-button{width:auto;max-width:200px;padding:.6rem 1.5rem;border:none;border-bottom:none;border-radius:8px;background:#49B1F5;color:#fff;font-size:14px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:400;cursor:pointer;text-align:center;text-indent:0;text-shadow:none;box-shadow:0 2px 6px rgba(73,177,245,.3);transition:background .3s ease,box-shadow .3s ease;margin:1.5rem auto 0;display:block;height:auto;line-height:1.5;position:static}
+.hbe-button::after{display:none}
+.hbe-button:hover{background:#3a9ee0;box-shadow:0 4px 12px rgba(73,177,245,.4)}
+.hbe-button:active{top:0;box-shadow:0 1px 3px rgba(73,177,245,.2)}
+
+/* mobile responsiveness */
+@media screen and (max-width:480px){
+  #hexo-blog-encrypt .hbe-container{margin:2rem 1rem}
+  #hexo-blog-encrypt .hbe-content{padding:1.75rem 1.25rem}
+  #hexo-blog-encrypt .hbe-input-field-default{font-size:16px}
+}
+</style></head><body><script>window.paceOptions = {
   restartOnPushState: false
 }
 
@@ -161,12 +204,12 @@ document.addEventListener('pjax:send', () => {
   Pace.restart()
 })
 </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">私密链接</h1></div></header><main class="layout hide-aside" id="content-inner"><div id="page"><div id="article-container"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Ciallo～(∠・ω< )⌒★" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="5c75ed7c1cb7c93abba13e9e764717bb53bd65c2c0a30eb524268c37009cfa25">543fcb0eb6448f54c4284b2a5c7d1eb2d7f00ab0beff7a36a711f133f20de3cd18c3c9cbc1fe3285a0d5bb03bfe6c97173e7e963bed22138bfbb441246c659a067ea84166fc412b9d48d9487847b14238129009fed6df8a42a2fb7a86e6999e1085de571a104d4247934a060c275cbc9d610ca0536c4fefd6c27d5c5ba760113ce6c391688846aaa165216f9d30925364d3849946eb92acefa0f4abd2356e75e29ab4715c8d8435862b065056db8c76d5a0818bc029312182d4f1b8a92b0789fbd7e39dfb3e3ff95771ced8455f24f2f55ade0812703235db808e426b3ee3c4483466db0817a44a4521aa7230c039a50dcfe51f03bb5424e3b2e658de5158edb97d6e1d1d34f5f948a08d3ed216d91ed8e4f54f4b2c37e932c77400b4b7945c54bce180cb6908fcd81b5911468496bf2024e53d692b0ee7c625302c9348a8feb98269cd2717b3490c13d17cdf351313262f09234fb2504e48814f7e798fec09f4d7cfaaf30571afddbfdc72c5a3411cc15771e2c8707899458649da2d83b8ec64a36b158f15ea5e5234c4ec3405914b6b1720b8a541b04784bc8af11a7c097d3e0f6c7f325d2ad8ec4fb59f5348e9140373941a7cf03dbf6ed80d50812e82a7ab9b42a9dfe7336b1b4ceedc78a5c28a76d69ccee1c85b24ee16f3e8df76516766ec88f630946d55d2da4c0af7159a97361e5ee28d6dc7ae79d688da81a6d60f20bfd1d3a47b0154383de41946127a6c3bbef5df7b1738d1a997d0eaed9e3cd624f6b7d2951c3d665f900b50811661f7d1662ce5d15cb8931561c8407fed980d0b5f71555ff831cafb53343f24405f7878f181f1e9d8229682d6172adfd2425b5b57c2aacd564e8bbce3ad8a995f6a20fa6b6bcf5adff361c92dc6f4d12ed7dddd65c3498c564efac87b8c440c5d63968ab672460571b3f4486bc8ae136e3e7021089de5835cc70820b0e3fefa742d4e17355feaefcddbc397d616b2ec4adfa756c52bf1a6533a86b01f103247a9d5789d0aac9458b25c7e259c75b1ef6c71a8204b542e47fc8044f07581535177df52f4a143088d7ff44ccee717f24324a7c76c482e752d11221583545f9329a1570948d6b4f738f13a08b6ea79c116f132eaf898519ef152c620aad346edbc74aae7715e41c22619e6adbe6df134ce34438aa9cda3bdb2a5dfbd99ddf1b079a7a8a5dc53cca56f4b73d35a63b0176debd331ae44c83d2468fb55c54d306bcad075b471985fa1ccde12daeaf586c012d6c6ca2dbe004c6c4084c8f737f2713fc65efae7114d56d0d1152fa43842c9ee42877e4cadbe72373659639c24c96f61c913d0a5f738397690b5ff529be0a80626c2986832ac8f5bf22c55f9b9429885e2fe4c9b70542bab37441ebc8bd1dd46caff5c1e097ec2823f067afd831109564286a02d2060dbc0fc18ee1733b4ec0428cb4184f8d4a4b303610b2815a233a6631ab24aef73a7674408de9e850ae8d19e9f25c46bf6245c2720e92d77ebbf73db4aef1bf2c46346e51288808ff8c26a8e494feca9466870f9aec49f041a0da63e0a46033fed6cc1f925b87f1c04d318d137cbaa904a195648577f37fa66940681b1fa616b9fc883d3285f49d2781c3db07318db449d1989f0c621d0ad3bb12f78b467532ad5b7b6aeda751645a1827b8ef4a8e19874eff0d5bc2c8456376c96a8544e8b25d69eace21f6c6f92327f83db22843f9cc2f10abd0414859b45fbdd3839fe1ba950556ecf3988c4a6355dd94d6c5399f7395589dd599d94fc8567d1deb83d84344c00d5c37fe6a62c65d09b398d9e6e7693b9fc1fbf03a3f0caa55dfdeef63e7b6c4cd93fdcb0d0f390edefc528c2cf21c26ff176564b2cfbfb6f437928259e41a2ac6aed6754875b16b641d0468655b1db2a6c4b8e0319349c96123aaf3126f272c807664dbad4886630917c135384fc71c3c620d2c361b0c2df4e7ceb4ad1cff54d20204d87bf64c93864709d3a00174d8e3824f862347fc40c708adabda0c93ea937f2d31b8bba467e2c1e37eff445c96e11383f9bc346cb75376c4dbbb789ce4327f2d3fbc2efed719c6c70c64b1dc138e08baa0d1610953dc0ad8290224f9c091ea33f4724732cf7ea0541d1ef018ebe33a8e32d74dc6a9c6a50b86cdcfeb4350475a5b27d4abc4b7833b93a3aeb556f5335d023f344b2bc4800163c4699a35d737975307945a9083ae58f8b51bd86d40a39784b2307fe8ba5f68a9edebc1fad3277b5587400cfa2d06f3e3d278376f23d86cb5acbc2557af61a89b7f196eccc14119143c8a4db0d29646dae6c8b3072259f15ca48d07cd838c059573</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="7e309e1269f08d11df81fd645b98297af9da2b0b1f379d192d49897715aaf7c9">543fcb0eb6448f54c4284b2a5c7d1eb2d7f00ab0beff7a36a711f133f20de3cd18c3c9cbc1fe3285a0d5bb03bfe6c97173e7e963bed22138bfbb441246c659a067ea84166fc412b9d48d9487847b14238129009fed6df8a42a2fb7a86e6999e1085de571a104d4247934a060c275cbc9d610ca0536c4fefd6c27d5c5ba760113ce6c391688846aaa165216f9d30925364d3849946eb92acefa0f4abd2356e75e29ab4715c8d8435862b065056db8c76d5a0818bc029312182d4f1b8a92b0789fbd7e39dfb3e3ff95771ced8455f24f2f55ade0812703235db808e426b3ee3c4483466db0817a44a4521aa7230c039a50dcfe51f03bb5424e3b2e658de5158edb97d6e1d1d34f5f948a08d3ed216d91ed8e4f54f4b2c37e932c77400b4b7945c54bce180cb6908fcd81b5911468496bf2024e53d692b0ee7c625302c9348a8feb98269cd2717b3490c13d17cdf351313262f09234fb2504e48814f7e798fec09f4d7cfaaf30571afddbfdc72c5a3411cc15771e2c8707899458649da2d83b8ec64a36b158f15ea5e5234c4ec3405914b6b1720b8a541b04784bc8af11a7c097d3e0f6c7f325d2ad8ec4fb59f5348e9140373941a7cf03dbf6ed80d50812e82a7ab9b42a9dfe7336b1b4ceedc78a5c28a76d69ccee1c85b24ee16f3e8df76516766ec88f630946d55d2da4c0af7159a97361e5ee28d6dc7ae79d688da81a6d60f20bfd1d3a47b0154383de41946127a6c3bbef5df7b1738d1a997d0eaed9e3cd624f6b7d2951c3d665f900b50811661f7d1662ce5d15cb8931561c8407fed980d0b5f71555ff831cafb53343f24405f7878f181f1e9d8229682d6172adfd2425b5b57c2aacd564e8bbce3ad8a995f6a20fa6b6bcf5adff361c92dc6f4d12ed7dddd65c3498c564efac87b8c440c5d63968ab672460571b3f4486bc8ae136e3e7021089de5835cc70820b0e3fefa742d4e17355feaefcddbc397d616b2ec4adfa756c52bf1a6533a86b01f103247a9d5789d0aac9458b25c7e259c75b1ef6c71a8204b542e47fc8044f07581535177df52f4a143088d7ff44ccee717f24324a7c76c482e752d11221583545f9329a1570948d6b4f738f13a08b6ea79c116f132eaf898519ef152c620aad346edbc74aae7715e41c22619e6adbe6df134ce34438aa9cda3bdb2a5dfbd99ddf1b079a7a8a5dc53cca56f4b73d35a63b0176debd331ae44c83d2468fb55c54d306bcad075b471985fa1ccde12daeaf586c012d6c6ca2dbe004c6c4084c8f737f2713fc65efae7114d56d0d1152fa43842c9ee42877e4cadbe72373659639c24c96f61c913d0a5f738397690b5ff529be0a80626c2986832ac8f5bf22c55f9b9429885e2fe4c9b70542bab37441ebc8bd1dd46caff5c1e097ec2823f067afd831109564286a02d2060dbc0fc18ee1733b4ec0428cb4184f8d4a4b303610b2815a233a6631ab24aef73a7674408de9e850ae8d19e9f25c46bf6245c2720e92d77ebbf73db4aef1bf2c46346e51288808ff8c26a8e494feca9466870f9aec49f041a0da63e0a46033fed6cc1f925b87f1c04d318d137cbaa904a195648577f37fa66940681b1fa616b9fc883d3285f49d2781c3db07318db449d1989f0c621d0ad3bb12f78b467532ad5b7b6aeda751645a1827b8ef4a8e19874eff0d5bc2c8456376c96a8544e8b25d69eace21f6c6f92327f83db22843f9cc2f10abd0414859b45fbdd3839fe1ba950556ecf3988c4a6355dd94d6c5399f7395589dd599d94fc8567d1deb83d84344c00d5c37fe6a62c65d09b398d9e6e7693b9fc1fbf03a3f0caa55dfdeef63e7b6c4cd93fdcb0d0f390edefc528c2cf21c26ff176564b2cfbfb6f437928259e41a2ac6aed6754875b16b641d0468655b1db2a6c4b8e0319349c96123aaf3126f272c807664dbad4886630917c135384fc71c3c620d2c361b0c2df4e7ceb4ad1cff54d20204d87bf64c93864709d3a00174d8e3824f862347fc40c708adabda0c93ea937f2d31b8bba467e2c1e37eff445c96e11383f9bc346cb75376c4dbbb789ce4327f2d3fbc2efed719c6c70c64ddce3846d258f60247ffb908164c8c2d727e2920842c66da0c3a6c63ca2e45a02763f1fdf798a1ed7e61bffa865f9c7dc21c2cf41d30fca2a06214719f12675ec742b2de6e2423958443b89e552763bc92bb117bcae72022f141d3bc78a2966666ecefa112e8ae54db8ce7256bda6eff4668033db59f167f774e53a1350b7d12360a1a3e40a356e843691e94a10f99dcc8aa2c8c118c030cdeefd0fb931853013f4cd2e3931de2a9b1b643fa411eabf659fc8a3049aa4b48ef0ba22042d09de4</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
       <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Ciallo～(∠・ω< )⌒★</span>
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码</span>
       </label>
     </div>
   </div>
@@ -207,4 +250,30 @@ document.addEventListener('pjax:send', () => {
   MathJax.startup.document.state(0)
   MathJax.texReset()
   MathJax.typesetPromise()
-}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><script>
+(function(){
+  var input=document.getElementById("hbePass");if(!input)return;
+  var container=document.querySelector("#hexo-blog-encrypt .hbe-content");if(!container)return;
+
+  // SVG lock icon (Feather icon)
+  var icon=document.createElement("div");icon.className="hbe-lock-icon";
+  icon.innerHTML='<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>';
+  container.insertBefore(icon,container.firstChild);
+
+  // Submit button — dispatches a KeyboardEvent(Enter) on the container,
+  // which is what hbe.js listens for (hbe.js line 268-292)
+  var btn=document.createElement("button");btn.className="hbe-submit-btn";btn.type="button";
+  btn.textContent="\u89e3\u9501";
+  btn.addEventListener("click",function(){
+    var m=document.getElementById("hexo-blog-encrypt");if(!m)return;
+    m.dispatchEvent(new KeyboardEvent("keydown",{keyCode:13,which:13,key:"Enter",bubbles:true}));
+  });
+  var wrapper=container.querySelector(".hbe-input");
+  if(wrapper)wrapper.parentNode.insertBefore(btn,wrapper.nextSibling);
+
+  // Hint text
+  var hint=document.createElement("div");hint.className="hbe-hint";
+  hint.textContent="\u8f93\u5165\u5bc6\u7801\u540e\u70b9\u51fb\u89e3\u9501\uff0c\u6216\u6309 Enter \u952e";
+  btn.parentNode.insertBefore(hint,btn.nextSibling);
+})();
+</script></body></html>
