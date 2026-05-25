@@ -196,6 +196,22 @@
   #hexo-blog-encrypt .hbe-content{padding:1.75rem 1.25rem}
   #hexo-blog-encrypt .hbe-input-field-default{font-size:16px}
 }
+
+/* hidden post list (embedded within /hidden/ page) */
+.hidden-post-list{margin-top:2.5rem}
+.hidden-post-list h2{font-size:1.3rem;font-weight:600;color:#4C4948;margin-bottom:1.25rem;padding-bottom:.5rem;border-bottom:2px solid #49B1F5}
+.hidden-post-item{border:1px solid #e8e8e8;border-radius:8px;margin-bottom:.75rem;overflow:hidden;transition:box-shadow .2s ease}
+.hidden-post-item:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.hidden-post-item[open]{border-color:#d0d0d0}
+.hidden-post-summary{display:flex;align-items:center;gap:.75rem;padding:.85rem 1rem;cursor:pointer;list-style:none;user-select:none;font-size:15px;color:#4C4948;transition:background .15s ease}
+.hidden-post-summary::-webkit-details-marker{display:none}
+.hidden-post-summary::marker{display:none;content:""}
+.hidden-post-summary:hover{background:#f8f9fa}
+.hidden-post-date{flex-shrink:0;font-size:12px;color:#999;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+.hidden-post-title{font-weight:600;color:#49B1F5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hidden-post-desc{flex:1;font-size:13px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;min-width:0}
+.hidden-post-content{padding:0 1rem 1.25rem;font-size:14px;color:#4C4948;line-height:1.8;border-top:1px solid #f0f0f0}
+.hidden-post-content>:first-child{margin-top:1rem}
 </style></head><body><script>window.paceOptions = {
   restartOnPushState: false
 }
