@@ -1,0 +1,452 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战 引言 跑 FDTD 仿真这件事，做光子学的同学应该都不陌生：打开 Lumerical，手动画结构、加光源、放监视器、设置网格精度，跑一次，看结果，不理想就改参数再来一次。如果还要做参数扫描或设计优化，经常是盯着进度条熬到深夜。 最近”找寻归宿的流浪猫”分享了一篇文章和配套视频，用编程 Agent（Vibe Codi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战">
+<meta property="og:url" content="http://talescuber.github.io/2026/08/08/%E5%AD%A6%E4%B9%A0/AI%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0FDTD%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%8C%96/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战 引言 跑 FDTD 仿真这件事，做光子学的同学应该都不陌生：打开 Lumerical，手动画结构、加光源、放监视器、设置网格精度，跑一次，看结果，不理想就改参数再来一次。如果还要做参数扫描或设计优化，经常是盯着进度条熬到深夜。 最近”找寻归宿的流浪猫”分享了一篇文章和配套视频，用编程 Agent（Vibe Codi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-08-08T03:38:37.000Z">
+<meta property="article:modified_time" content="2026-08-08T03:38:37.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="FDTD">
+<meta property="article:tag" content="Lumerical">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/08/08/%E5%AD%A6%E4%B9%A0/AI%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0FDTD%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%8C%96/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-08-08 11:38:37'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="9c8df07a480609df588411dc5a046674d529aa15dd4dc20cc6c81b26f17b8d98";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-08T03:38:37.000Z" title="发表于 2026-08-08 11:38:37">2026-08-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="让-ai-替你跑-fdtd-仿真编程-agent-全自动设计优化实战">让 AI
+替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战</h1>
+<h2 id="引言">引言</h2>
+<p>跑 FDTD 仿真这件事，做光子学的同学应该都不陌生：打开
+Lumerical，手动画结构、加光源、放监视器、设置网格精度，跑一次，看结果，不理想就改参数再来一次。如果还要做参数扫描或设计优化，经常是盯着进度条熬到深夜。</p>
+<p>最近”找寻归宿的流浪猫”分享了一篇文章和配套视频，用<strong>编程
+Agent（Vibe Coding）</strong>跑通了 Lumerical FDTD、Ansys HFSS、CST
+等仿真软件的全自动建模与优化。作者的原话是：</p>
+<blockquote>
+<p>学会了这个方法之后，我再也没有手动跑过仿真了。</p>
+</blockquote>
+<p>参考这两份资料，我把这套方法整理成一篇实战教程：从 Vibe Coding
+是什么讲起，到用 Codex 全自动完成一个 1×2 MMI
+分束器的设计与仿真，重点是给出可以直接复制的
+Prompt，照着改参数就能用。</p>
+<h2 id="什么是-vibe-coding">什么是 Vibe Coding</h2>
+<p>Vibe Coding 的核心是用自然语言描述意图，让 AI
+把代码写出来。但最前沿的玩法已经不止是”聊聊天生成几行代码”，而是：</p>
+<blockquote>
+<p>用自然语言描述目标，让 Agent
+负责拆解、执行、调试和交付，人类负责定义问题、设置边界、审核结果。</p>
+</blockquote>
+<p>从工具形态上看，大致分三档：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>层次</th>
+<th>工具</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网页对话</td>
+<td>ChatGPT、DeepSeek 等网页端</td>
+<td>门槛最低，靠复制粘贴搬运信息，效率也最低</td>
+</tr>
+<tr>
+<td>IDE 内 AI</td>
+<td>VS Code 插件、Trae、AntiGravity、Cursor</td>
+<td>能自动补全、修改代码，但还不能独立跑完整流程</td>
+</tr>
+<tr>
+<td>纯 Agent 编程</td>
+<td>Claude Code、Codex</td>
+<td>能调用终端、读写文件、运行脚本、看报错、反复迭代，全流程自动化</td>
+</tr>
+</tbody>
+</table>
+<p>纯 Agent 编程的代表工具是 Claude Code 和 Codex。Claude Code
+基本只能官方订阅，价格较高；Codex
+可以自己注册账号，用相对便宜的价格订阅。第二档的 Cursor、Trae
+国际版、Kimi Code、智谱 ZCode
+等也可以用，但一些较弱的模型容易出错。<strong>本文以 Codex Windows
+桌面端为例演示。</strong></p>
+<h2 id="为什么-fdtd-场景特别适合交给-agent">为什么 FDTD 场景特别适合交给
+Agent</h2>
+<p>并不是所有工作都适合直接交给 Agent，但 Lumerical
+仿真是一个典型的好场景，原因有四个：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务目标清晰</td>
+<td>要仿什么器件、什么波段、什么工艺平台，物理上定义得很明确</td>
+</tr>
+<tr>
+<td>反馈链条完整</td>
+<td>脚本报错、仿真结果、监视器数据都是机器可读的，Agent
+可以自己读结果、自己 debug</td>
+</tr>
+<tr>
+<td>验收条件可量化</td>
+<td>损耗、透射率、分束比都有明确数值，可以直接写进验收标准</td>
+</tr>
+<tr>
+<td>交付物可检查</td>
+<td>仿真文件、报告、图都可以打开验证，结果可追溯</td>
+</tr>
+</tbody>
+</table>
+<p>换句话说，这个流程天然就是”写代码 → 跑仿真 → 看报错 →
+改代码”的闭环，而这正好是编程 Agent
+最擅长的循环。所以只要把需求描述清楚，整个迭代就可以完全交给它。</p>
+<h2 id="实战codex-全自动完成-12-mmi-分束器设计">实战：Codex 全自动完成
+1×2 MMI 分束器设计</h2>
+<p>下面用 Lumerical FDTD（2025 R1
+版本）演示一个完整案例：<strong>设计一个 3D 的 1×2 MMI
+分束器</strong>，在 1550nm 波段实现等功率分束。全程不需要手动操作
+Lumerical。</p>
+<h3 id="第一步准备环境">第一步：准备环境</h3>
+<ol type="1">
+<li>在你喜欢的地方创建一个工作文件夹；</li>
+<li>打开 Codex，选择这个文件夹作为 Workspace；</li>
+<li>建议在权限设置里开启”完全访问权限”，这样 Agent
+运行脚本、读写文件时不需要一次次手动确认。目前看仿真 Lumerical
+并没有太大安全风险，但如果介意，也可以保留手动确认。</li>
+</ol>
+<h3 id="第二步设计-prompt最核心的一步">第二步：设计
+Prompt（最核心的一步）</h3>
+<p>Prompt 是这套方法里最关键的部分，写得好不好直接决定 Agent
+能不能完成任务。一份合格的仿真 Prompt 至少要包含四个要素：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 解释器路径</td>
+<td>Lumerical 自带 Python 解释器的完整路径，让 Agent
+知道用什么环境跑脚本</td>
+</tr>
+<tr>
+<td>② 器件与工艺参数</td>
+<td>结构组成、材料、工艺平台、波段、模式、网格精度等，越详细越好</td>
+</tr>
+<tr>
+<td>③ 可量化验收条件</td>
+<td>比如”损耗 &lt; 0.5dB、分束不均衡度 &lt; 5%“，让 Agent
+知道什么时候算完成</td>
+</tr>
+<tr>
+<td>④ 交付物要求</td>
+<td>保存 .fsp 文件、生成仿真报告等，方便你事后验收</td>
+</tr>
+</tbody>
+</table>
+<p>针对这个案例，可以直接使用下面的 Prompt（基于原作者的版本整理）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">你需要完成 Lumerical FDTD 仿真任务，具体细节如下：</span><br><span class="line"></span><br><span class="line">1. 我正在使用 2025 R1 版本的 Lumerical，请使用其自带的 Python 解释器，</span><br><span class="line">   路径为 &quot;C:\Program Files\ANSYS Inc\v251\Lumerical\python-3.9.9-embed-amd64\python.exe&quot;。</span><br><span class="line">2. 编写脚本仿真设计一个 3D 的 1×2 MMI 分束器，分束器包括输入波导、</span><br><span class="line">   输入 taper、矩形的 MMI 干涉区、输出 taper、输出波导等结构。</span><br><span class="line">   你需要自己搜索学习标准的 1×2 MMI 的结构。</span><br><span class="line">3. 仿真波段为 1550nm，基模 TE 模式。</span><br><span class="line">4. 基于 220nm 的 SOI 硅波导工艺平台，衬底和包层均为二氧化硅，波导宽度 450nm。</span><br><span class="line">5. FDTD 的仿真精度设为 2。</span><br><span class="line"></span><br><span class="line">验收条件：器件成功实现等功率分束，分束功率的不均衡度小于 5%，</span><br><span class="line">同时传输损耗小于 0.5dB。</span><br><span class="line"></span><br><span class="line">要注意的地方：</span><br><span class="line">1. 请你自己运行代码，根据代码的返回结果，在终端里帮我 debug 程序，</span><br><span class="line">   直到整个代码可以正常运行，并且器件性能满足验收条件。</span><br><span class="line">2. 全程用固定文件名自动保存文件，避免 Lumerical 弹交互窗口。</span><br><span class="line">3. 注意监视器的尺寸，不要与其他波导重叠，导致检测功率值偏高。</span><br><span class="line"></span><br><span class="line">最后，在你完成所有优化后：</span><br><span class="line">1. 把最终优化完成的结果保存为一个 Lumerical FDTD 文件（.fsp）让我检验。</span><br><span class="line">2. 撰写一份详细的仿真报告，展示 MMI 器件的模型结构、传输光场、</span><br><span class="line">   损耗、分束功率等核心参数。</span><br></pre></td></tr></table></figure>
+<p>三个写 Prompt 的小技巧：</p>
+<ul>
+<li><strong>解释器路径怎么找</strong>：一般和上面类似，都在安装目录下；找不到就用
+Everything 搜 <code>python.exe</code>，定位到 Lumerical
+目录里的那个。一定要把这个路径提供给 Agent。</li>
+<li><strong>验收条件要可量化、且确定能设计出来</strong>：别写”性能要好”这种模糊要求。同时心里要有数，这个指标在物理上是能达成的；如果把握不准，可以加一句”如果达不到，请在迭代
+X 次后结束”，X 根据场景设成十几次或几十次。</li>
+<li><strong>把常见坑写进
+Prompt</strong>：比如固定文件名自动保存避免弹窗、监视器不要和波导重叠。这些都是实践中
+Agent 容易犯的 Lumerical
+仿真错误，提醒一次可以省下大量无效迭代，而且可以固化在以后所有的
+Lumerical 仿真 Prompt 里复用。</li>
+</ul>
+<h3 id="第三步等待-agent-自动迭代">第三步：等待 Agent 自动迭代</h3>
+<p>把 Prompt 发给 Codex 之后，它会自动完成整个循环：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">建模 → 运行仿真 → 读取结果 → 发现问题 → 修改参数 → 重新仿真 → 直到满足验收条件</span><br></pre></td></tr></table></figure>
+<p>整个过程不需要人盯着。原作者的演示中大约半小时，Codex
+就自动完成了所有仿真、优化和报告生成，并在工作目录下创建好了文件。如果没有开启完全访问权限，中间可能需要手动确认一些操作。</p>
+<h3 id="第四步验收">第四步：验收</h3>
+<p>仿真结束后，验收同样重要：</p>
+<ol type="1">
+<li>打开生成的 .fsp 文件，检查模型结构是否合理；</li>
+<li>查看仿真报告中的器件结构图、光场传输图、损耗和分束功率；</li>
+<li>核对是否满足验收条件（分束不均衡度 &lt; 5%、传输损耗 &lt;
+0.5dB）；</li>
+<li>不满足就补充反馈，让它继续迭代。</li>
+</ol>
+<h2 id="进阶玩法">进阶玩法</h2>
+<p>这套方法不止能做参数优化：</p>
+<ul>
+<li><strong>论文复现</strong>：直接喂一篇文献，让 Agent
+复现其中的某个结构。只要 Prompt
+认真写，就可以一键复现论文里的仿真。</li>
+<li><strong>MCP 直接控制</strong>：更进一步，可以用 MCP 把 Lumerical
+直接暴露给 AI 客户端。社区里已经有 <a
+target="_blank" rel="noopener" href="https://github.com/leisymqaz/lumerical-fdtd-mcp">lumerical-fdtd-mcp</a>
+这样的开源项目，可以在 Codex 里通过工具调用直接控制 Lumerical
+会话、运行脚本、读取变量，实现自然语言驱动的仿真工作流。</li>
+<li><strong>了解底层 API</strong>：如果想弄清 Agent
+实际在操作什么，可以看 <a
+target="_blank" rel="noopener" href="https://lumerical.docs.pyansys.com/version/stable/user_guide/session_management.html">Lumerical
+Python API 官方文档</a>。Lumerical 提供了完整的 Python
+会话和对象接口（如
+<code>lumapi.FDTD()</code>），这正是自动化仿真的基础。</li>
+</ul>
+<h2 id="注意事项与边界">注意事项与边界</h2>
+<ol type="1">
+<li><strong>选对工具</strong>：较弱的模型很容易在复杂仿真任务中出错，建议优先使用
+Claude Code、Codex，或性能足够强的模型。</li>
+<li><strong>物理正确性仍要人核验</strong>：Agent
+能把脚本跑通、指标达标，但边界条件、材料模型、监视器设置是否物理正确，最终还是要自己检查。AI
+节省的是重复劳动，不是思考本身。</li>
+<li><strong>权限风险</strong>：开启完全访问权限后，Agent
+可以执行任意命令，注意工作环境里不要放敏感数据。</li>
+<li><strong>迭代要有上限</strong>：给验收条件设定迭代次数上限，避免在达不到的目标上无限空转。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>整套流程概括起来就是四步：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 准备环境</td>
+<td>建工作文件夹，打开 Codex 并设为 Workspace</td>
+</tr>
+<tr>
+<td>2. 编写 Prompt</td>
+<td>包含解释器路径、器件参数、量化验收条件、交付物要求</td>
+</tr>
+<tr>
+<td>3. 自动执行</td>
+<td>Agent 自己建模、仿真、debug、优化，循环直到达标</td>
+</tr>
+<tr>
+<td>4. 验收结果</td>
+<td>检查 .fsp 和报告，不达标就补充反馈继续迭代</td>
+</tr>
+</tbody>
+</table>
+<p>一句话：<strong>你负责定义问题和验收标准，Agent
+负责中间所有的脏活累活。</strong></p>
+<p>“工具从来不是为了取代思考，而是为了把思考者从重复劳动中解放出来。当年
+MATLAB 替我们算矩阵，FDTD 替我们解麦克斯韦方程，今天 Agent
+开始替我们操作这些求解器本身。”</p>
+<p>参考来源：</p>
+<a class="btn-beautify red larger" target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1udwBzjEUQ/" 
+  title="视频：AI 编程实现 Lumerical FDTD 仿真全自动设计优化"><i class="fa-brands fa-bilibili"></i><span>视频：AI 编程实现 Lumerical FDTD 仿真全自动设计优化</span></a>
+<a class="btn-beautify green larger" target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_qA3shADaPx6pZiwq2gMeg" 
+  title="公众号原文：让 AI 替你跑仿真"><i class="fa-solid fa-book"></i><span>公众号原文：让 AI 替你跑仿真</span></a>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/08/08/%E5%AD%A6%E4%B9%A0/AI%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0FDTD%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%8C%96/">http://talescuber.github.io/2026/08/08/%E5%AD%A6%E4%B9%A0/AI%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0FDTD%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%8C%96/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E7%BC%96%E7%A8%8B/">AI编程</a><a class="post-meta__tags" href="/tags/FDTD/">FDTD</a><a class="post-meta__tags" href="/tags/Lumerical/">Lumerical</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/08/07/%E5%AD%A6%E4%B9%A0/DeepSeek-%E8%A7%86%E8%A7%89%E5%A2%9E%E5%BC%BA%E5%AE%9E%E6%88%98/" title="DeepSeek 视觉增强实战"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">DeepSeek 视觉增强实战</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A9-ai-%E6%9B%BF%E4%BD%A0%E8%B7%91-fdtd-%E4%BB%BF%E7%9C%9F%E7%BC%96%E7%A8%8B-agent-%E5%85%A8%E8%87%AA%E5%8A%A8%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96%E5%AE%9E%E6%88%98"><span class="toc-text">让 AI
+替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-vibe-coding"><span class="toc-text">什么是 Vibe Coding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-fdtd-%E5%9C%BA%E6%99%AF%E7%89%B9%E5%88%AB%E9%80%82%E5%90%88%E4%BA%A4%E7%BB%99-agent"><span class="toc-text">为什么 FDTD 场景特别适合交给
+Agent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98codex-%E5%85%A8%E8%87%AA%E5%8A%A8%E5%AE%8C%E6%88%90-12-mmi-%E5%88%86%E6%9D%9F%E5%99%A8%E8%AE%BE%E8%AE%A1"><span class="toc-text">实战：Codex 全自动完成
+1×2 MMI 分束器设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="toc-text">第一步：准备环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E8%AE%BE%E8%AE%A1-prompt%E6%9C%80%E6%A0%B8%E5%BF%83%E7%9A%84%E4%B8%80%E6%AD%A5"><span class="toc-text">第二步：设计
+Prompt（最核心的一步）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E7%AD%89%E5%BE%85-agent-%E8%87%AA%E5%8A%A8%E8%BF%AD%E4%BB%A3"><span class="toc-text">第三步：等待 Agent 自动迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E9%AA%8C%E6%94%B6"><span class="toc-text">第四步：验收</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E7%8E%A9%E6%B3%95"><span class="toc-text">进阶玩法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E4%B8%8E%E8%BE%B9%E7%95%8C"><span class="toc-text">注意事项与边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/08/%E5%AD%A6%E4%B9%A0/AI%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0FDTD%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%8C%96/" title="让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战">让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战</a><time datetime="2026-08-08T03:38:37.000Z" title="发表于 2026-08-08 11:38:37">2026-08-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/07/%E5%AD%A6%E4%B9%A0/DeepSeek-%E8%A7%86%E8%A7%89%E5%A2%9E%E5%BC%BA%E5%AE%9E%E6%88%98/" title="DeepSeek 视觉增强实战">DeepSeek 视觉增强实战</a><time datetime="2026-08-07T02:38:01.000Z" title="发表于 2026-08-07 10:38:01">2026-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/19/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/2026-05-19-%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/" title="arXiv 论文推荐 | 2026 年 5 月 19 日">arXiv 论文推荐 | 2026 年 5 月 19 日</a><time datetime="2026-05-19T10:30:00.000Z" title="发表于 2026-05-19 18:30:00">2026-05-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/19/%E7%BB%98%E5%88%B6%E5%85%89%E8%B7%AF%E5%9B%BE%E7%9A%84%E5%B0%8F%E5%B7%A7%E6%80%9D/" title="绘制光路图的小巧思">绘制光路图的小巧思</a><time datetime="2026-01-19T13:04:33.000Z" title="发表于 2026-01-19 21:04:33">2026-01-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/24/%E5%AD%A6%E4%B9%A0/%E5%8E%9F%E5%AD%90%E7%89%A9%E7%90%86%E5%AD%A6%E5%B0%8F%E6%8A%84/" title="原子物理学笔记">原子物理学笔记</a><time datetime="2025-12-24T15:22:34.000Z" title="发表于 2025-12-24 23:22:34">2025-12-24</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
