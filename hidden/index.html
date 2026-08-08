@@ -153,8 +153,7 @@
         }
       }
       detectApple()
-    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="b2734e26d82c8e809eea1a7ba156a6b03a883078f9601cbc1f7cabe32e15f79a";</script>
-<style>
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><style>
 /* hidden page password card — overrides hexo-blog-encrypt defaults */
 #hexo-blog-encrypt .hbe-container{max-width:400px;margin:3rem auto}
 #hexo-blog-encrypt .hbe-content{background:#fff;border-radius:12px;padding:2.5rem 2.25rem 2rem;box-shadow:0 3px 8px 6px rgba(7,17,27,.05);text-align:center;font-size:14px;color:#4C4948}
@@ -218,7 +217,8 @@
 .hidden-post-content::-webkit-scrollbar-track{background:transparent}
 .hidden-post-content::-webkit-scrollbar-thumb{background:#d0d0d0;border-radius:3px}
 .hidden-post-content::-webkit-scrollbar-thumb:hover{background:#b0b0b0}
-</style></head><body><script>window.paceOptions = {
+</style><script>window.__SITE_ENC_KEY__="0832ae9e3250853e4490cded188de1e6f1037e739d4ae4eb54cbe0e1c8ab6a92";</script>
+</head><body><script>window.paceOptions = {
   restartOnPushState: false
 }
 
@@ -274,6 +274,10 @@ document.addEventListener('pjax:send', () => {
   MathJax.typesetPromise()
 }</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><script>
 (function(){
+  // 解密成功后让 MathJax 对解密出来的公式重新排版
+  window.addEventListener("hexo-blog-decrypt",function(){
+    if(window.MathJax&&MathJax.typesetPromise){MathJax.typesetPromise();}
+  });
   var input=document.getElementById("hbePass");if(!input)return;
   var container=document.querySelector("#hexo-blog-encrypt .hbe-content");if(!container)return;
 
