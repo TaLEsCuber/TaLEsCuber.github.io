@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
 <meta property="article:published_time" content="2026-09-12T06:22:09.000Z">
-<meta property="article:modified_time" content="2026-09-12T06:22:09.000Z">
+<meta property="article:modified_time" content="2026-09-12T15:13:19.000Z">
 <meta property="article:author" content="TaLEsCuber">
 <meta property="article:tag" content="离子阱">
 <meta property="article:tag" content="Paul阱">
@@ -60,7 +60,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2026-09-12 14:22:09'
+  postUpdate: '2026-09-12 23:13:19'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -157,7 +157,7 @@
         }
       }
       detectApple()
-    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="bb039efb87f98d39638800b91d1a41019e857c70389c086f523c604d00bbb339";</script>
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="148bb31827944f2f767452d151f10afbd8c6b9fa7e534c45f9a70ac7c90006fe";</script>
 </head><body><script>window.paceOptions = {
   restartOnPushState: false
 }
@@ -185,7 +185,7 @@ document.addEventListener('pjax:send', () => {
 </ul>
 <h2 id="2-理想刀片阱的电势模型"><a href="#2-理想刀片阱的电势模型" class="headerlink" title="2. 理想刀片阱的电势模型"></a>2. 理想刀片阱的电势模型</h2><p>令刀片长轴为 $z$ 轴，$x,y$ 是两个径向主轴。在阱中心附近，一个方便的理想模型是</p>
 <p>$$<br>\Phi_{\rm rf}(x,y,t)<br>&#x3D;\frac{\eta V_{\rm rf}}{2r_0^2}(x^2-y^2)\cos\Omega t,<br>$$</p>
-<p>其中 $V_{\rm rf}$ 是本文采用的<strong>峰值电压</strong>，$Omega$ 是 RF 角频率，$r_0$ 是选定的径向尺度，$eta$ 是实际刀片相对理想双曲面电极的几何效率。不同论文可能把峰峰值、单端幅值或两组电极之间的差分幅值都记作 $V_{\rm rf}$，直接套公式前必须先统一约定。</p>
+<p>其中 $V_{\rm rf}$ 是本文采用的<strong>峰值电压</strong>，$\Omega$ 是 RF 角频率，$r_0$ 是选定的径向尺度，$\eta$ 是实际刀片相对理想双曲面电极的几何效率。不同论文可能把峰峰值、单端幅值或两组电极之间的差分幅值都记作 $V_{\rm rf}$，直接套公式前必须先统一约定。</p>
 <p>轴向静电势可在中心附近写成</p>
 <p>$$<br>\Phi_{\rm dc}(x,y,z)<br>&#x3D;\frac{\kappa U_{\rm dc}}{2z_0^2}<br>\left(2z^2-x^2-y^2\right),<br>$$</p>
 <p>其中 $z_0$ 是轴向几何尺度，$\kappa$ 是 DC 几何效率。括号内三个二阶项的系数之和为零，明确显示了轴向聚焦与径向去聚焦的关系。对于不对称的真实刀片，$x^2$ 和 $y^2$ 的系数可以不同，但拉普拉斯约束仍然成立。</p>
@@ -328,7 +328,7 @@ document.addEventListener('pjax:send', () => {
 <p>$$<br>d&#x3D;2z_0<br>&#x3D;\left(\frac{2Q^2}{4\pi\epsilon_0m\omega_z^2}\right)^{1&#x2F;3}.<br>$$</p>
 <p>以上一节的 $^{172}\mathrm{Yb}^+$ 和 200 kHz 轴向频率为例，$d\simeq10.1\ \mu\mathrm m$。</p>
 <p>在平衡位置附近，把 $U_N$ 展开到二阶：</p>
-<p>$$<br>U_N\simeq U_0+rac12\sum_{i\alpha,j\beta}<br>H_{i\alpha,j\beta},<br>\delta r_{i\alpha}\delta r_{j\beta}.<br>$$</p>
+<p>$$<br>U_N\simeq U_0+\frac{1}{2}<br>\sum_{i,j&#x3D;1}^{N}<br>\sum_{\alpha,\beta\in\lbrace x,y,z\rbrace}<br>H_{i\alpha,j\beta}<br>\delta r_{i\alpha}\delta r_{j\beta}.<br>$$</p>
 <p>质量归一化 Hessian 的本征向量就是集体振动模，本征值为模频率平方。轴向质心模中所有离子同相运动，频率等于单离子轴向频率；其他模包含由库仑耦合产生的相对运动。这些声子模构成离子阱量子逻辑门和量子模拟中的信息总线。<a target="_blank" rel="noopener" href="https://doi.org/10.1007/s003400050373">James 对离子链平衡位置与正规模的经典推导</a></p>
 <p>若逐渐减弱径向束缚，直线链会发生 zigzag 结构转变，继续改变各向异性还能得到二维、三维晶体。刀片阱良好的多方向光学通道使它适合观察这些结构；但离开 RF 零场轴的离子具有不可忽略的固有微运动，所以二维晶体的取向会直接影响谱学和量子控制。开放端帽刀片阱可通过增强轴向束缚、形成径向二维晶体，使垂直于晶体面的模与阱轴共线，从而保持该方向无微运动。<a target="_blank" rel="noopener" href="https://doi.org/10.1103/PhysRevB.77.064111">Fishman 等关于线性—zigzag 相变的理论</a>；<a target="_blank" rel="noopener" href="https://doi.org/10.1088/2058-9565/ac40cf">开放端帽径向二维晶体实验</a></p>
 <h2 id="11-量子化、加热与表面噪声"><a href="#11-量子化、加热与表面噪声" class="headerlink" title="11. 量子化、加热与表面噪声"></a>11. 量子化、加热与表面噪声</h2><p>在赝势且谐振近似成立时，每个正规模都可量子化为</p>
