@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="570" viewBox="0 0 1080 570" role="img" aria-labelledby="title desc">
+<title id="title">光学频率梳与拍频</title><desc id="desc">等间隔梳齿中的一根与连续激光产生射频差频。图示不按比例。</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8" fill="#475569"/></marker></defs>
+<rect width="1080" height="570" rx="20" fill="#f5f8fc"/>
+<g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#172c45">
+<text x="50" y="55" font-size="28" font-weight="bold">一把光频刻度尺，把差频带到电子学范围</text>
+<text x="50" y="92" font-size="18" fill="#53657b">蓝色：梳齿　红色：连续激光　灰色虚线：光谱包络</text>
+<path d="M85 350H1000" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M85 350V128" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="25" y="150" font-size="18">功率</text><text x="944" y="388" font-size="18">光频 ν</text>
+<path d="M135 325 Q505 0 915 325" fill="none" stroke="#a7b4c6" stroke-width="2" stroke-dasharray="7 7"/>
+<g stroke="#2563aa" stroke-width="5"><path d="M165 350V300M255 350V249M345 350V211M435 350V186M525 350V183M615 350V192M705 350V218M795 350V255M885 350V306"/></g>
+<path d="M568 350V141" stroke="#d34d43" stroke-width="5"/>
+<text x="589" y="150" font-size="21" fill="#c33d34">νL 连续激光</text>
+<path d="M525 247H568" stroke="#475569" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="720" y="160" font-size="20">fb = |νL − νn|</text>
+<path d="M435 385H525" stroke="#475569" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="453" y="420" font-size="20">frep</text><text x="506" y="377" font-size="18" fill="#2563aa">νn</text>
+<rect x="50" y="455" width="980" height="79" rx="12" fill="#e7eef8"/>
+<text x="75" y="486" font-size="21">梳齿：νn = n frep + fceo</text>
+<text x="75" y="517" font-size="18">间隔由重复频率决定；整体偏移由 CEO 决定。附近连续光与梳齿在光电探测器上拍频。</text>
+</g></svg>
