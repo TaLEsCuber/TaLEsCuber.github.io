@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="760" viewBox="0 0 1120 760" role="img" aria-labelledby="title desc">
+<title id="title">935 nm 回泵激光的快慢反馈锁频建议布局</title><desc id="desc">激光先经过公共双程 AOM，再分给离子工作支路和与频率梳拍频的取样支路。鉴相控制器通过 RF FM 驱动 AOM 快反馈，并通过激光调谐端口慢反馈。</desc>
+<defs><marker id="red" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#c84843"/></marker><marker id="blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#2e65a5"/></marker><marker id="green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#27816b"/></marker></defs>
+<rect width="1120" height="760" rx="20" fill="#f5f8fc"/>
+<g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#172c45">
+<text x="40" y="51" font-size="28" font-weight="bold">共同修正工作光与取样光，再分光</text>
+<text x="40" y="85" font-size="18" fill="#53657b">面向 935 nm 回泵的迁移方案 · 不是本机实测接线图</text>
+<g fill="white" stroke="#b8c6d8" stroke-width="2"><rect x="40" y="145" width="182" height="90" rx="12"/><rect x="295" y="145" width="196" height="90" rx="12"/><rect x="570" y="145" width="100" height="90" rx="12"/><rect x="757" y="132" width="320" height="116" rx="12"/>
+<rect x="40" y="336" width="222" height="102" rx="12"/><rect x="390" y="336" width="325" height="102" rx="12"/><rect x="793" y="347" width="284" height="80" rx="12"/>
+<rect x="766" y="520" width="311" height="91" rx="12"/><rect x="301" y="520" width="272" height="91" rx="12"/></g>
+<text x="65" y="182">935 nm 激光</text><text x="63" y="214" font-size="17">慢速调谐端口</text>
+<text x="321" y="182">双程快 AOM</text><text x="318" y="214" font-size="17">光频改变量 = ±2 δfA</text>
+<text x="599" y="197">分光</text>
+<text x="781" y="165">实验开关 / 附加移频</text><text x="781" y="198">光纤 → 离子</text><text x="781" y="228" font-size="16">后级移频与传输噪声需另记账</text>
+<text x="64" y="373">已稳定的频率梳</text><text x="64" y="406" font-size="17">935 nm 相干光谱支路</text>
+<text x="414" y="373">合束 + 同偏振投影 + PD</text><text x="414" y="406" font-size="17">取样光与附近梳齿产生 RF 拍频</text>
+<text x="816" y="380">带通 / 放大 / 功分</text><text x="816" y="409" font-size="16">另一路 → 频谱仪 / 计数器</text>
+<text x="789" y="554">PFD + 快慢控制器</text><text x="789" y="587" font-size="17">与已知 RF 参考比较</text>
+<text x="325" y="554">RF 驱动信号源</text><text x="325" y="587" font-size="17">FM 控制 → 改变 AOM 频率</text>
+<g fill="none" stroke="#c84843" stroke-width="3" marker-end="url(#red)"><path d="M222 190H295"/><path d="M491 190H570"/><path d="M670 190H757"/><path d="M620 235V336"/><path d="M262 387H390"/></g>
+<g fill="none" stroke="#2e65a5" stroke-width="3" marker-end="url(#blue)"><path d="M715 387H793"/><path d="M935 427V520"/><path d="M766 564H573"/><path d="M437 520V477H340V270H393V235"/></g>
+<text x="631" y="292" font-size="17" fill="#c84843">持续取样</text><text x="646" y="553" font-size="18" fill="#2e65a5">快反馈</text>
+<path d="M920 611V650H20V205H40" fill="none" stroke="#27816b" stroke-width="3" marker-end="url(#green)"/>
+<text x="317" y="639" font-size="18" fill="#27816b">慢反馈：补偿长期漂移，维持快执行器余量</text>
+<text x="42" y="710" font-size="18" fill="#53657b">锁住的是 AOM 后的光。只修正取样支路，不能保证离子收到的光获得同样的快速修正。</text>
+</g></svg>

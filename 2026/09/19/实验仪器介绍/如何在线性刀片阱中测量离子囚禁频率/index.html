@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>如何在线性刀片阱中测量离子囚禁频率 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="介绍线性刀片 Paul 阱中轴向与径向世俗频率的测量方法，重点讨论 tickle 电激励扫频、参数激励、荧光与位置读出、边带谱，以及数据拟合和常见误判。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在线性刀片阱中测量离子囚禁频率">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="介绍线性刀片 Paul 阱中轴向与径向世俗频率的测量方法，重点讨论 tickle 电激励扫频、参数激励、荧光与位置读出、边带谱，以及数据拟合和常见误判。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-09-19T10:30:41.000Z">
+<meta property="article:modified_time" content="2026-09-19T10:30:41.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="离子阱">
+<meta property="article:tag" content="Paul阱">
+<meta property="article:tag" content="刀片阱">
+<meta property="article:tag" content="囚禁频率">
+<meta property="article:tag" content="世俗频率">
+<meta property="article:tag" content="实验方法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '如何在线性刀片阱中测量离子囚禁频率',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-19 18:30:41'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="c30e1ccfc3c07422ad398ce84add2eda58947efad49d93ce73beefd3408e89d5";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">如何在线性刀片阱中测量离子囚禁频率</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-19T10:30:41.000Z" title="发表于 2026-09-19 18:30:41">2026-09-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/">实验仪器介绍</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="如何在线性刀片阱中测量离子囚禁频率"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在线性刀片阱中，RF 电压产生径向赝势，端帽或分段 DC 电极产生轴向势。离子在这三个方向上的慢运动频率通常称为世俗频率（secular frequency），它决定了离子晶体的振动模、激光边带间隔、加热率标定以及量子门的工作点。频率测量看似只是“扫一个信号找共振”，但实际必须区分<strong>位移激励</strong>、<strong>参数激励</strong>和<strong>光谱边带</strong>，还要确认读出的峰对应哪个振动方向。</p>
+<p>本文以单个 $^{172}\mathrm{Yb}^{+}$ 或其他单价原子离子为例，说明一套可以在刀片阱上直接实施的测量流程。所有频率都建议明确写成普通频率 $f&#x3D;\omega&#x2F;2\pi$；公式中使用角频率 $\omega$ 时，会特别标出。</p>
+<span id="more"></span>
+
+<h2 id="1-先明确要测的频率"><a href="#1-先明确要测的频率" class="headerlink" title="1. 先明确要测的频率"></a>1. 先明确要测的频率</h2><p>线性 Paul 阱的 RF 角频率记为 $\Omega_{\rm rf}$。在稳定区、且 $|q|$ 较小时，某一主轴 $u$ 上的运动可以近似写成</p>
+<p>$$<br>u(t)\simeq u_{\rm sec}(t)\left[1-\frac{q_u}{2}\cos(\Omega_{\rm rf}t)\right],<br>$$</p>
+<p>其中 $u_{\rm sec}$ 以世俗角频率 $\omega_u$ 振荡，方括号中的 RF 分量是微运动。对 Mathieu 方程</p>
+<p>$$<br>\frac{d^2u}{d\tau^2}+[a_u-2q_u\cos(2\tau)]u&#x3D;0,<br>\qquad \tau&#x3D;\frac{\Omega_{\rm rf}t}{2},<br>$$</p>
+<p>小参数近似给出</p>
+<p>$$<br>\omega_u\simeq\frac{\Omega_{\rm rf}}{2}<br>\sqrt{a_u+\frac{q_u^2}{2}}.<br>$$</p>
+<p>因此，实验要测的是 RF 频率以下的慢运动频率，而不是几十 MHz 的 $\Omega_{\rm rf}&#x2F;2\pi$ 本身。径向的两个主轴通常在数百 kHz 到数 MHz，轴向频率往往更低。刀片几何、端帽电压、补偿电压以及离子质量都会改变这些数值。</p>
+<p>测量前先固定以下条件，并记录在实验日志中：RF 频率和实际峰值电压、端帽及分段电极电压、离子种类和数量、冷却光失谐与功率、磁场方向、相机放大率，以及本次扫频所用电极。改变端帽电压后径向频率也会变化，因为轴向 DC 势按照拉普拉斯约束会对径向产生去聚焦。</p>
+<h2 id="2-最实用的方法：tickle-电激励扫频"><a href="#2-最实用的方法：tickle-电激励扫频" class="headerlink" title="2. 最实用的方法：tickle 电激励扫频"></a>2. 最实用的方法：tickle 电激励扫频</h2><h3 id="2-1-物理图像"><a href="#2-1-物理图像" class="headerlink" title="2.1 物理图像"></a>2.1 物理图像</h3><p>在一个 DC 或补偿电极上叠加很小的正弦电压</p>
+<p>$$<br>V_{\rm tickle}(t)&#x3D;V_d\sin(2\pi f_d t),<br>$$</p>
+<p>它在离子处产生近似均匀的交变电场，直接驱动离子的平衡位置。驱动频率 $f_d$ 接近某一世俗频率 $f_u$ 时，运动幅度增大。若离子仍在冷却光束和成像区域内，荧光会因为 Doppler 失谐和空间平均而降低；激励足够强时还可能把离子加热出阱。</p>
+<p>这就是最常见的 tickle 测量。它不要求窄线光谱或 Raman 系统，只需要一个能在目标 kHz 频段传输信号的电极、信号源和荧光读出。NIST 的实验记录也将它描述为：在世俗频率处施加振荡电场，扫描频率并拟合荧光计数的最低点。<a target="_blank" rel="noopener" href="https://www.nist.gov/system/files/documents/2022/04/14/SusannaTodaro_2020.pdf">NIST 离子阱实验学位论文中的频率测量说明</a></p>
+<h3 id="2-2-信号接入"><a href="#2-2-信号接入" class="headerlink" title="2.2 信号接入"></a>2.2 信号接入</h3><p>不要默认任意电极都能直接接入扫频源。许多刀片阱的 DC 线上有 RC 低通滤波器，其截止频率远低于径向世俗频率。更稳妥的方案是：</p>
+<ol>
+<li>先用网络分析仪或示波器确认从信号源到电极的传输幅度和相位；</li>
+<li>选择带宽足够的专用 tickle 端口、补偿电极或微波天线；</li>
+<li>用隔直电容和衰减器把小信号叠加到电极，避免信号源直流偏置改变离子平衡位置；</li>
+<li>在离子位置估算电场幅度。首次扫描宁可从较小电压开始，再逐步增加脉冲时长或幅度。</li>
+</ol>
+<p>对于轴向频率，可以在端帽或分段 DC 电极上加低幅度信号；对于径向频率，应使用对目标径向方向有明显场投影的电极。电极与主轴不平行时，同一个扫频可能同时激发两个径向模，表现为两个相邻的荧光谷。</p>
+<h3 id="2-3-推荐的扫频序列"><a href="#2-3-推荐的扫频序列" class="headerlink" title="2.3 推荐的扫频序列"></a>2.3 推荐的扫频序列</h3><p>一个适合单离子的基本序列是：</p>
+<ol>
+<li>开启 RF、DC、冷却光和回泵光，确认离子稳定并记录无激励时的荧光基线 $R_0$；</li>
+<li>让 $f_d$ 在预估频率附近扫描。第一次可用较宽范围和较小步进，例如在预估值的 $±10%$ 内扫 51–101 个点；</li>
+<li>每个频点固定激励时长 $t_d$，在激励期间同步采集荧光计数 $R(f_d)$；若采用脉冲激励，则在激励结束后立即记录再冷却早期的荧光瞬态。不能等离子完全冷却后才读出，否则运动信号可能已经消失；</li>
+<li>每个频点重复多次，并随机化扫描方向或交错测量基线，排除离子数漂移和激光功率漂移；</li>
+<li>在谷底附近缩小频率范围、降低步进，重新扫一遍以确定中心。</li>
+</ol>
+<p>若扫频过程中离子直接丢失，说明激励过强或扫频时间过长。缩短 $t_d$、降低 $V_d$，并在每个点后重新装载或确认离子仍然存在。不要把“离子消失的第一个频点”直接当作共振中心：它受扫频方向、冷却速率和失稳阈值影响，通常会偏向高响应一侧。</p>
+<h3 id="2-4-如何拟合"><a href="#2-4-如何拟合" class="headerlink" title="2.4 如何拟合"></a>2.4 如何拟合</h3><p>在小激励、稳定冷却的条件下，荧光谷可以用经验的 Lorentz 型响应拟合：</p>
+<p>$$<br>R(f)&#x3D;R_{\rm bg}-\frac{A}{1+4(f-f_0)^2&#x2F;\Gamma_f^2},<br>$$</p>
+<p>其中 $f_0$ 是待测频率，$\Gamma_f$ 是由阻尼、激励时长、扫描步长和功率展宽共同决定的有效宽度。它不必等于离子的自然线宽。若激励较强，响应会变得不对称或出现饱和，此时应只用谷底附近的弱激励数据，或对完整的受驱动阻尼振子模型进行拟合。</p>
+<p>对于每个频点，建议同时记录荧光计数、相机光斑宽度、离子是否仍被俘获和激励幅度。普通相机曝光通常跨越许多个振动周期，周期运动主要表现为光斑展宽，平均质心未必移动；要测周期内的位置变化，需要同步或频闪成像。对单离子，拟合中心的不确定度应结合重复扫描的离散程度与单次拟合误差评估，避免重复计入同一统计波动，而不能只报告频率步长。</p>
+<h2 id="3-参数激励：在两倍世俗频率处找共振"><a href="#3-参数激励：在两倍世俗频率处找共振" class="headerlink" title="3. 参数激励：在两倍世俗频率处找共振"></a>3. 参数激励：在两倍世俗频率处找共振</h2><p>如果调制的是 RF 电压幅度或某个产生曲率的电极电压，改变的是势阱的曲率，而不是平衡位置。可写成</p>
+<p>$$<br>\omega_u^2(t)&#x3D;\omega_u^2[1+\epsilon\cos(2\pi f_m t)].<br>$$</p>
+<p>参数共振的主条件是</p>
+<p>$$<br>f_m\simeq 2f_u,<br>$$</p>
+<p>所以在确认是主参数共振后，应把共振频率除以 2，才得到世俗频率。参数激励在共振处的能量增长可以比直接位移激励更快，离子可能迅速加热、荧光下降或被选择性移出阱。在适当的调制深度、激励时长和冷却条件下，它可提供较窄的响应和较好的质量选择性；这也是用来区分同位素或清除杂离子的原因。<a target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7547030/">Schmidt 等关于参数激励移除离子的实验</a></p>
+<p>刀片阱中可以在 RF 电极上用小深度幅度调制，也可以在高带宽补偿电极上施加能改变局部曲率的信号。RF 主回路通常功率较高，直接注入调制信号前要确认隔离、滤波器和谐振器不会被过驱。参数激励对离子初始位移很敏感：离子若恰好位于势阱中心且温度极低，增长会变慢。因此实际测量常保留很小的热运动或先施加短暂的弱位移脉冲。</p>
+<p>参数激励的优势是响应尖锐，缺点是更容易丢离子，也更容易把高阶非线性共振误认成主共振。建议先用 tickle 测量得到粗略频率，再在 $2f_u$ 附近做参数激励精扫。</p>
+<h2 id="4-光谱法：从边带直接读出频率"><a href="#4-光谱法：从边带直接读出频率" class="headerlink" title="4. 光谱法：从边带直接读出频率"></a>4. 光谱法：从边带直接读出频率</h2><p>如果实验已有窄线光学跃迁或 Raman 系统，可以通过 motional sideband 测量频率。微波方案还需要磁场梯度等机制建立足够强的自旋与运动耦合，普通均匀微波场通常不能直接替代光学边带探测。激光与离子运动的耦合项含有</p>
+<p>$$<br>e^{ik u}\approx 1+i\eta(a+a^\dagger)+\cdots,<br>$$</p>
+<p>其中 $\eta&#x3D;k_u\sqrt{\hbar&#x2F;(2m\omega_u)}$ 是 Lamb–Dicke 参数，$k_u$ 是激光波矢沿该振动主轴的投影，Raman 方案则使用两束光波矢之差的投影；上述展开要求运动处于 Lamb–Dicke 区域。载波跃迁位于角频率失谐 $\delta&#x3D;0$，一阶红、蓝边带分别位于</p>
+<p>$$<br>\delta&#x3D;-\omega_u,\qquad \delta&#x3D;+\omega_u.<br>$$</p>
+<p>扫 Raman 拍频或窄线激光失谐，拟合载波与边带中心的间隔即可得到 $\omega_u&#x2F;2\pi$。边带法的优点是频率分辨率和方向选择性好，还能同时测量平均声子数；缺点是需要稳定的窄线光源、态制备和高保真读出。共振荧光的频谱也能出现运动边带，但边带宽度会同时包含冷却阻尼，必须区分“中心间隔”和“线宽”。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/quant-ph/0003009">Raab 等对单离子共振荧光运动边带的测量</a></p>
+<p>对 $^{172}\mathrm{Yb}^{+}$，369 nm 冷却线的自然线宽约为 $2\pi\times19.6$ MHz，通常远大于数百 kHz 的世俗频率，因此普通 Doppler 荧光曲线不具备分辨边带的条件。它非常适合做 tickle 的运动读出；若要用边带法，则需要更窄的跃迁或 Raman 方案。</p>
+<h2 id="5-多离子和轴向频率的交叉校验"><a href="#5-多离子和轴向频率的交叉校验" class="headerlink" title="5. 多离子和轴向频率的交叉校验"></a>5. 多离子和轴向频率的交叉校验</h2><p>两个同种离子在轴向谐势中形成间距为 $d$ 的平衡构型。对两个离子，库仑力与谐回复力平衡给出</p>
+<p>$$<br>\frac{1}{2}m\omega_z^2 d<br>&#x3D;\frac{Q^2}{4\pi\varepsilon_0 d^2},<br>$$</p>
+<p>因此</p>
+<p>$$<br>d^3&#x3D;\frac{2Q^2}{4\pi\varepsilon_0m\omega_z^2}.<br>$$</p>
+<p>测量相机标定后的双离子间距，可以得到轴向频率的独立估计。这个方法对成像放大率、离子温度和像差很敏感，但可以用来检查 tickle 结果是否落在合理范围。对多离子链，不能把相邻间距直接代入双离子公式；平衡位置和振动模要由包含全部库仑相互作用的模型计算。James 给出了线性离子链平衡位置和正常模的标准推导。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/quant-ph/9702053">James, <em>Quantum dynamics of cold trapped ions</em></a></p>
+<p>多个离子还会出现共同模、摇摆模和更高阶的轴向、径向模。均匀电场主要耦合到共同模；分段电极产生的场梯度可以激发其他模。因此扫频时看到的多个共振并不一定表示多个“单离子阱频率”，而可能是同一离子晶体的正常模。</p>
+<h2 id="6-一套可复现的数据记录格式"><a href="#6-一套可复现的数据记录格式" class="headerlink" title="6. 一套可复现的数据记录格式"></a>6. 一套可复现的数据记录格式</h2><p>建议每次测量保存一张 CSV，至少包含：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>drive_frequency_hz</code></td>
+<td>外加 tickle 或参数调制频率</td>
+</tr>
+<tr>
+<td><code>drive_amplitude_vpp</code></td>
+<td>信号源输出的峰峰值，并注明电极端实际校准值</td>
+</tr>
+<tr>
+<td><code>duration_s</code></td>
+<td>每个频点的激励时长</td>
+</tr>
+<tr>
+<td><code>fluorescence_counts</code></td>
+<td>同一采集窗口内的光子计数</td>
+</tr>
+<tr>
+<td><code>centroid_x_px</code>, <code>centroid_y_px</code></td>
+<td>相机质心；没有可靠质心时留空</td>
+</tr>
+<tr>
+<td><code>ion_survived</code></td>
+<td>该点结束后离子是否仍在阱中</td>
+</tr>
+<tr>
+<td><code>cooling_detuning_mhz</code></td>
+<td>冷却光失谐，用于检查读出条件是否漂移</td>
+</tr>
+</tbody></table>
+<p>分析时保留原始数据，不只保存拟合后的 $f_0$。对 tickle，拟合 $f_0$；对参数激励，拟合调制共振 $f_m$ 后报告 $f_u&#x3D;f_m&#x2F;2$；对边带，报告红、蓝边带中心的平均间隔。最后把三种方法的结果放在同一表中，并注明它们测的是同一主轴还是不同正常模。</p>
+<h2 id="7-常见误判与排查顺序"><a href="#7-常见误判与排查顺序" class="headerlink" title="7. 常见误判与排查顺序"></a>7. 常见误判与排查顺序</h2><p><strong>把 RF 频率的一半当成径向频率。</strong> $\Omega_{\rm rf}&#x2F;2$ 只是 Mathieu 无量纲时间的换算尺度；真正频率还要乘以特征指数 $\beta_u$，通常远低于 RF 频率。</p>
+<p><strong>忘记参数激励要除以二。</strong> 直接调制势阱曲率时，主共振在 $2f_u$，而均匀交变电场的位移共振在 $f_u$。</p>
+<p><strong>把微运动边带当成世俗频率。</strong> 以载波为中心相隔 $\Omega_{\rm rf}$ 的边带来自 RF 微运动；相隔 $\omega_u$ 的边带才是世俗运动。</p>
+<p><strong>把荧光谷的宽度当成频率不确定度。</strong> 谷宽包含冷却阻尼、激励时长、功率和扫描步长；中心位置的不确定度应由拟合与重复性决定。</p>
+<p><strong>只用一根激光判断三个方向。</strong> 运动引起的 Doppler 变化与 $\mathbf{k}\cdot\mathbf{v}$ 成正比。若探测光对某一主轴投影很小，该方向的共振可能几乎没有荧光响应。可以改变光束方向、改变电极耦合方向，或用相机记录质心运动。</p>
+<p><strong>在扫频中途改变冷却条件。</strong> 冷却光失谐或回泵功率变化会同时改变荧光基线和阻尼，造成假谷。每个频点应保持光学参数不变，并交替采集无激励基线。</p>
+<h2 id="8-推荐的实际工作流"><a href="#8-推荐的实际工作流" class="headerlink" title="8. 推荐的实际工作流"></a>8. 推荐的实际工作流</h2><p>对一台刚装好的线性刀片阱，比较稳妥的顺序是：先用电极几何和已知 RF&#x2F;DC 电压估算三个频率范围；再用低幅度 tickle 宽扫确认轴向和两个径向共振；随后在峰位附近降低步进并重复扫描；最后用参数激励或窄线边带法做交叉验证。若结果随电极电压变化的趋势与赝势模型不一致，应优先检查信号是否真的到达电极、频率计数器的单位、滤波器衰减和电极耦合方向。</p>
+<p>对于常见的刀片阱，频率测量不只是给出一个“囚禁强度”数字。它同时检验 RF 电压标定、DC 势曲率、主轴方向、激光冷却读出和离子是否处在 RF 零场附近。把扫频原始数据、拟合模型和每次实验的电压条件一起保存，后续做微运动补偿、离子搬运和量子控制时才有可追溯的基准。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>S. Todaro, <em>Improved State Detection and Transport of Trapped Ion</em>, NIST dissertation, 2020. <a target="_blank" rel="noopener" href="https://www.nist.gov/system/files/documents/2022/04/14/SusannaTodaro_2020.pdf">频率 tickle 测量说明</a></li>
+<li>J. Schmidt <em>et al.</em>, “Mass-selective removal of ions from Paul traps using parametric excitation”, <em>Applied Physics B</em> 126, 176 (2020). <a target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7547030/">开放全文</a></li>
+<li>Ch. Raab <em>et al.</em>, “Motional sidebands and direct measurement of the cooling rate in the resonance fluorescence of a single trapped ion”, <em>Physical Review Letters</em> 85, 538 (2000). <a target="_blank" rel="noopener" href="https://arxiv.org/abs/quant-ph/0003009">arXiv 版本</a></li>
+<li>D. F. V. James, “Quantum dynamics of cold trapped ions, with application to quantum computation”, <em>Applied Physics B</em> 66, 181–190 (1998). <a target="_blank" rel="noopener" href="https://arxiv.org/abs/quant-ph/9702053">arXiv 版本</a></li>
+<li>C.-H. Kuo <em>et al.</em>, “Preparing pure $^{43}\mathrm{Ca}^{+}$ samples in an ion trap with photoionization and parametric excitations”, <em>Scientific Reports</em> 14, 18524 (2024). <a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41598-024-69166-0">文章页面</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/">http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A6%BB%E5%AD%90%E9%98%B1/">离子阱</a><a class="post-meta__tags" href="/tags/Paul%E9%98%B1/">Paul阱</a><a class="post-meta__tags" href="/tags/%E5%88%80%E7%89%87%E9%98%B1/">刀片阱</a><a class="post-meta__tags" href="/tags/%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/">囚禁频率</a><a class="post-meta__tags" href="/tags/%E4%B8%96%E4%BF%97%E9%A2%91%E7%8E%87/">世俗频率</a><a class="post-meta__tags" href="/tags/%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95/">实验方法</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AOM 双程（Double Pass）光路详解：原理、搭建与调试</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-12</div><div class="title">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</div></div></a></div><div><a href="/2026/09/11/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/172Yb%E7%A6%BB%E5%AD%90%E9%98%B1%E5%AE%9E%E9%AA%8C%E7%9A%84%E6%BF%80%E5%85%89%E6%96%B9%E6%A1%88%E4%B8%8E%E9%A2%91%E7%8E%87%E8%AE%BE%E7%BD%AE/" title="172Yb⁺ 离子阱实验的激光方案与频率设置"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-11</div><div class="title">172Yb⁺ 离子阱实验的激光方案与频率设置</div></div></a></div><div><a href="/2026/05/19/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/2026-05-19-%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/" title="arXiv 论文推荐 | 2026 年 5 月 19 日"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-19</div><div class="title">arXiv 论文推荐 | 2026 年 5 月 19 日</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E6%98%8E%E7%A1%AE%E8%A6%81%E6%B5%8B%E7%9A%84%E9%A2%91%E7%8E%87"><span class="toc-text">1. 先明确要测的频率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9Atickle-%E7%94%B5%E6%BF%80%E5%8A%B1%E6%89%AB%E9%A2%91"><span class="toc-text">2. 最实用的方法：tickle 电激励扫频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%89%A9%E7%90%86%E5%9B%BE%E5%83%8F"><span class="toc-text">2.1 物理图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BF%A1%E5%8F%B7%E6%8E%A5%E5%85%A5"><span class="toc-text">2.2 信号接入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%8E%A8%E8%8D%90%E7%9A%84%E6%89%AB%E9%A2%91%E5%BA%8F%E5%88%97"><span class="toc-text">2.3 推荐的扫频序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%A6%82%E4%BD%95%E6%8B%9F%E5%90%88"><span class="toc-text">2.4 如何拟合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8F%82%E6%95%B0%E6%BF%80%E5%8A%B1%EF%BC%9A%E5%9C%A8%E4%B8%A4%E5%80%8D%E4%B8%96%E4%BF%97%E9%A2%91%E7%8E%87%E5%A4%84%E6%89%BE%E5%85%B1%E6%8C%AF"><span class="toc-text">3. 参数激励：在两倍世俗频率处找共振</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%89%E8%B0%B1%E6%B3%95%EF%BC%9A%E4%BB%8E%E8%BE%B9%E5%B8%A6%E7%9B%B4%E6%8E%A5%E8%AF%BB%E5%87%BA%E9%A2%91%E7%8E%87"><span class="toc-text">4. 光谱法：从边带直接读出频率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A4%9A%E7%A6%BB%E5%AD%90%E5%92%8C%E8%BD%B4%E5%90%91%E9%A2%91%E7%8E%87%E7%9A%84%E4%BA%A4%E5%8F%89%E6%A0%A1%E9%AA%8C"><span class="toc-text">5. 多离子和轴向频率的交叉校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%80%E5%A5%97%E5%8F%AF%E5%A4%8D%E7%8E%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AE%B0%E5%BD%95%E6%A0%BC%E5%BC%8F"><span class="toc-text">6. 一套可复现的数据记录格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%88%A4%E4%B8%8E%E6%8E%92%E6%9F%A5%E9%A1%BA%E5%BA%8F"><span class="toc-text">7. 常见误判与排查顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">8. 推荐的实际工作流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试">AOM 双程（Double Pass）光路详解：原理、搭建与调试</a><time datetime="2026-09-19T15:06:09.000Z" title="发表于 2026-09-19 23:06:09">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率">如何在线性刀片阱中测量离子囚禁频率</a><time datetime="2026-09-19T10:30:41.000Z" title="发表于 2026-09-19 18:30:41">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</a><time datetime="2026-09-12T06:22:09.000Z" title="发表于 2026-09-12 14:22:09">2026-09-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/" title="Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导">Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导</a><time datetime="2026-09-12T06:14:35.000Z" title="发表于 2026-09-12 14:14:35">2026-09-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

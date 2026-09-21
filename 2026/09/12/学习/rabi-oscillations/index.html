@@ -1,0 +1,920 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从电偶极相互作用出发，逐步推导旋转坐标系、旋波近似和失谐 Rabi 公式，以 Bloch 球解释脉冲控制，并讨论退相干、实验拟合与近似失效。附数值验证和绘图代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从电偶极相互作用出发，逐步推导旋转坐标系、旋波近似和失谐 Rabi 公式，以 Bloch 球解释脉冲控制，并讨论退相干、实验拟合与近似失效。附数值验证和绘图代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-09-12T06:14:35.000Z">
+<meta property="article:modified_time" content="2026-09-12T06:14:35.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="量子力学">
+<meta property="article:tag" content="量子光学">
+<meta property="article:tag" content="二能级系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-12 14:14:35'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="c30e1ccfc3c07422ad398ce84add2eda58947efad49d93ce73beefd3408e89d5";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-12T06:14:35.000Z" title="发表于 2026-09-12 14:14:35">2026-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>给一个原子施加频率接近其能级间隔的相干光场，激发态概率并不一定一直上升。在理想条件下，它会从 0 增长到 1，再回到 0，如此往复。这就是 <strong>Rabi 振荡（拉比振荡）</strong>。</p>
+<p>同一套数学也出现在核磁共振、电子自旋共振、离子阱和超导量子比特的控制中。真正共同的结构是：<strong>两个量子态、一个相干耦合，以及可控的相对相位。</strong></p>
+<p>本文假定读者了解态矢量、薛定谔方程和矩阵乘法。从微观相互作用出发，我们将逐步得到</p>
+<div class="math-display">
+$$
+\boxed{P_e(t)=\frac{\Omega^2}{\Omega^2+\Delta^2}
+\sin^2\!\left(\frac{\sqrt{\Omega^2+\Delta^2}}{2}t\right)}.
+$$
+</div>
+
+<p>这个结果适用于：初态为基态、驱动振幅和频率恒定、忽略耗散，并且旋波近似成立的二能级系统。它不是任意强驱动下原始含时哈密顿量的精确解。</p>
+<span id="more"></span>
+
+<h2 id="1-振荡的究竟是什么？"><a href="#1-振荡的究竟是什么？" class="headerlink" title="1. 振荡的究竟是什么？"></a>1. 振荡的究竟是什么？</h2><p>设系统有基态 $|g\rangle$ 和激发态 $|e\rangle$。纯态可以写成</p>
+<div class="math-display">
+$$
+|\psi(t)\rangle=c_e(t)|e\rangle+c_g(t)|g\rangle,
+\qquad |c_e|^2+|c_g|^2=1.
+$$
+</div>
+
+<p>振荡的是重复实验中测得激发态的概率 $P_e&#x3D;|c_e|^2$。一次能量测量只会给出某个能级的结果；把系统反复制备到相同初态，施加相同长度的脉冲，再测量，才可以估计这个概率。</p>
+<p>因此，Rabi 振荡不能理解成一个电子沿着某条经典轨道在两个能级之间来回运动。它描述的是概率振幅的连续、相干演化。</p>
+<p>系统到达激发态之后，外场仍然存在，哈密顿量中的反向耦合也仍然存在。相干受激过程会把振幅重新转移到基态。若只用“吸收一个光子就停住”的图像，就会漏掉这一部分动力学。</p>
+<h2 id="2-先固定符号与频率约定"><a href="#2-先固定符号与频率约定" class="headerlink" title="2. 先固定符号与频率约定"></a>2. 先固定符号与频率约定</h2><p>不同教材里的 Rabi 频率可能差一个因子 2。最可靠的比较方法是直接检查哈密顿量的非对角元。</p>
+<p>本文采用以下约定：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>定义</th>
+<th>单位或含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\omega_0$</td>
+<td>$(E_e-E_g)&#x2F;\hbar$</td>
+<td>裸跃迁角频率，rad&#x2F;s</td>
+</tr>
+<tr>
+<td>$\omega$</td>
+<td>驱动场角频率</td>
+<td>rad&#x2F;s</td>
+</tr>
+<tr>
+<td>$\Delta$</td>
+<td>$\omega_0-\omega$</td>
+<td>失谐，红失谐时为正</td>
+</tr>
+<tr>
+<td>$\Omega$</td>
+<td>共振 Rabi 角频率，取非负值</td>
+<td>RWA 后耦合元的模为 $\hbar\Omega&#x2F;2$</td>
+</tr>
+<tr>
+<td>$\Omega_R$</td>
+<td>$\sqrt{\Omega^2+\Delta^2}$</td>
+<td>广义 Rabi 角频率</td>
+</tr>
+<tr>
+<td>$\phi$</td>
+<td>吸收了耦合符号后的驱动相位</td>
+<td>决定横向旋转轴</td>
+</tr>
+</tbody></table>
+<p>全文使用有序基底 **$(|e\rangle,|g\rangle)$**，并定义</p>
+<div class="math-display">
+$$
+\sigma_z=|e\rangle\langle e|-|g\rangle\langle g|
+=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\quad
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix}.
+$$
+</div>
+
+<p>升降算符为</p>
+<div class="math-display">
+$$
+\sigma_+=|e\rangle\langle g|=\frac{\sigma_x+i\sigma_y}{2},
+\qquad
+\sigma_-=|g\rangle\langle e|=\frac{\sigma_x-i\sigma_y}{2}.
+$$
+</div>
+
+<h2 id="3-从电偶极相互作用建立模型"><a href="#3-从电偶极相互作用建立模型" class="headerlink" title="3. 从电偶极相互作用建立模型"></a>3. 从电偶极相互作用建立模型</h2><h3 id="3-1-自由哈密顿量"><a href="#3-1-自由哈密顿量" class="headerlink" title="3.1 自由哈密顿量"></a>3.1 自由哈密顿量</h3><p>把能量零点选在两能级中间，则</p>
+<div class="math-display">
+$$
+H_0=\frac{\hbar\omega_0}{2}\sigma_z.
+$$
+</div>
+
+<p>减去一个与单位矩阵成正比的能量常数，只改变整体相位，不改变跃迁概率。</p>
+<h3 id="3-2-光场如何耦合两个态"><a href="#3-2-光场如何耦合两个态" class="headerlink" title="3.2 光场如何耦合两个态"></a>3.2 光场如何耦合两个态</h3><p>在电偶极近似下，原子尺度上的场可视为空间均匀，相互作用为</p>
+<div class="math-display">
+$$
+V(t)=-\mathbf d\cdot\mathbf E(t),
+\qquad
+\mathbf E(t)=E_0\boldsymbol\epsilon\cos(\omega t+\phi_{\mathrm{lab}}).
+$$
+</div>
+
+<p>这里 $E_0$ 是线偏振电场的<strong>峰值振幅</strong>。对具有确定宇称的原子态，对角电偶极矩通常为零；先只保留跃迁矩阵元</p>
+<div class="math-display">
+$$
+d_{eg}=\langle e|\mathbf d\cdot\boldsymbol\epsilon|g\rangle.
+$$
+</div>
+
+<p>通过选择基矢相位，可以把这个单一跃迁的矩阵元取为实数；耦合的负号再吸收到驱动相位中。于是模型可写为</p>
+<div class="math-display">
+$$
+\boxed{H(t)=\frac{\hbar\omega_0}{2}\sigma_z
++\hbar\Omega\cos(\omega t+\phi)\sigma_x},
+\qquad
+\Omega=\frac{|d_{eg}|E_0}{\hbar}.
+$$
+</div>
+
+<p>注意：现在余弦前的系数是 $\hbar\Omega$，还没有除以 2。后面出现的 $1&#x2F;2$ 来自余弦的正、负频率分解。</p>
+<p>对于磁偶极跃迁，可以从 $-\boldsymbol\mu\cdot\mathbf B$ 出发，按实际矩阵元定义耦合。对于多能级原子，偏振、选择定则和角动量系数都包含在相应矩阵元中，不能直接拿一个无关跃迁的偶极矩代入。</p>
+<p>二能级近似还要求其他能级的耦合足够弱，或者离共振足够远；真实原子的所有跃迁并不会自动消失。</p>
+<h2 id="4-旋转坐标系与旋波近似"><a href="#4-旋转坐标系与旋波近似" class="headerlink" title="4. 旋转坐标系与旋波近似"></a>4. 旋转坐标系与旋波近似</h2><h3 id="4-1-为什么要换坐标系"><a href="#4-1-为什么要换坐标系" class="headerlink" title="4.1 为什么要换坐标系"></a>4.1 为什么要换坐标系</h3><p>原子自由演化的角频率接近 $\omega_0$，驱动场的角频率为 $\omega$。近共振时，两者都很快，但相对转动很慢。换到与驱动同速旋转的坐标系，可以把这部分共同的快速变化移除。</p>
+<p>定义</p>
+<div class="math-display">
+$$
+R(t)=e^{-i\omega t\sigma_z/2},
+\qquad |\psi(t)\rangle=R(t)|\widetilde\psi(t)\rangle.
+$$
+</div>
+
+<p>代入薛定谔方程，逐项展开：</p>
+<div class="math-display">
+$$
+i\hbar\big(\dot R|\widetilde\psi\rangle
++R|\dot{\widetilde\psi}\rangle\big)
+=HR|\widetilde\psi\rangle,
+$$
+$$
+i\hbar|\dot{\widetilde\psi}\rangle
+=\underbrace{\left(R^\dagger HR-i\hbar R^\dagger\dot R\right)}_{H_{\mathrm{rot}}}
+|\widetilde\psi\rangle.
+$$
+</div>
+
+<p>第二项尤其重要：</p>
+<div class="math-display">
+$$
+-i\hbar R^\dagger\dot R=-\frac{\hbar\omega}{2}\sigma_z,
+$$
+</div>
+
+<p>因此自由项变成 $\hbar\Delta\sigma_z&#x2F;2$，不是原来的 $\hbar\omega_0\sigma_z&#x2F;2$。</p>
+<h3 id="4-2-将快项与慢项明确分开"><a href="#4-2-将快项与慢项明确分开" class="headerlink" title="4.2 将快项与慢项明确分开"></a>4.2 将快项与慢项明确分开</h3><p>利用</p>
+<div class="math-display">
+$$
+R^\dagger\sigma_+R=e^{i\omega t}\sigma_+,
+\qquad
+R^\dagger\sigma_-R=e^{-i\omega t}\sigma_-,
+$$
+</div>
+
+<p>以及余弦的指数表达式，得到<strong>尚未近似</strong>的旋转系哈密顿量：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+H_{\mathrm{rot}}(t)
+={}&\frac{\hbar\Delta}{2}\sigma_z
++\frac{\hbar\Omega}{2}
+\left(e^{-i\phi}\sigma_++e^{i\phi}\sigma_-\right)\\
+&+\frac{\hbar\Omega}{2}
+\left[e^{i(2\omega t+\phi)}\sigma_+
++e^{-i(2\omega t+\phi)}\sigma_-\right].
+\end{aligned}
+$$
+</div>
+
+<p>第一行是慢动力学，第二行以 $2\omega$ 快速变化。在近共振、弱于载频的驱动下，即</p>
+<div class="math-display">
+$$
+\Omega,\ |\Delta|\ll\omega\simeq\omega_0,
+$$
+</div>
+
+<p>快项在 Rabi 时间尺度内的一阶平均贡献较小。舍去它们，就是<strong>旋波近似</strong>（rotating-wave approximation，RWA）：</p>
+<div class="math-display">
+$$
+\boxed{
+H_{\mathrm{eff}}=\frac{\hbar}{2}
+\left[\Delta\sigma_z+
+\Omega\left(\cos\phi\,\sigma_x+\sin\phi\,\sigma_y\right)\right]
+}
+$$
+$$
+=\frac{\hbar}{2}
+\begin{pmatrix}
+\Delta&\Omega e^{-i\phi}\\
+\Omega e^{i\phi}&-\Delta
+\end{pmatrix}.
+$$
+</div>
+
+<p><strong>旋转坐标变换是精确的，舍弃反旋转项才是近似。</strong> 对时间变化的脉冲，包络相对于载波也应足够缓慢。即使参数很小，若要积累极长时间的相位，仍需检查被忽略的高阶修正。</p>
+<p>关于二能级近共振驱动，可交叉阅读 <a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/5-74-introductory-quantum-mechanics-ii-spring-2009/resources/mit5_74s09_study01-1/">MIT 5.74 的 Two-level system 讲义</a>。本文的符号与推导在上面独立固定，比较教材时应先对齐频率定义。</p>
+<h2 id="5-矩阵指数法：一步解出任意失谐"><a href="#5-矩阵指数法：一步解出任意失谐" class="headerlink" title="5. 矩阵指数法：一步解出任意失谐"></a>5. 矩阵指数法：一步解出任意失谐</h2><p>令</p>
+<div class="math-display">
+$$
+\mathbf b=(\Omega\cos\phi,\Omega\sin\phi,\Delta),
+\qquad \Omega_R=|\mathbf b|=\sqrt{\Omega^2+\Delta^2},
+\qquad \mathbf n=\mathbf b/\Omega_R.
+$$
+</div>
+
+<p>对于非零 $\Omega_R$，有效哈密顿量就是</p>
+<div class="math-display">
+$$
+H_{\mathrm{eff}}=\frac{\hbar\Omega_R}{2}\mathbf n\cdot\boldsymbol\sigma.
+$$
+</div>
+
+<p>Pauli 矩阵满足</p>
+<div class="math-display">
+$$
+\sigma_i\sigma_j=\delta_{ij}I+i\sum_k\epsilon_{ijk}\sigma_k,
+\qquad (\mathbf n\cdot\boldsymbol\sigma)^2=I.
+$$
+</div>
+
+<p>将指数的 Taylor 级数分成偶数次幂和奇数次幂，分别求和成余弦与正弦，就得到</p>
+<div class="math-display">
+$$
+\boxed{U(t)=e^{-iH_{\mathrm{eff}}t/\hbar}
+=I\cos\frac{\Omega_Rt}{2}
+-i\frac{\Delta\sigma_z+\Omega(\cos\phi\,\sigma_x+\sin\phi\,\sigma_y)}{\Omega_R}
+\sin\frac{\Omega_Rt}{2}}.
+$$
+</div>
+
+<p>这同时给出了任意初态的演化。若系统从基态出发，旋转系中的初始列向量是 $(0,1)^{\mathsf T}$，因此</p>
+<div class="math-display">
+$$
+\widetilde c_e(t)=-i e^{-i\phi}\frac{\Omega}{\Omega_R}
+\sin\frac{\Omega_Rt}{2},
+$$
+$$
+\widetilde c_g(t)=\cos\frac{\Omega_Rt}{2}
++i\frac{\Delta}{\Omega_R}\sin\frac{\Omega_Rt}{2}.
+$$
+</div>
+
+<p>回到实验室系只需分别乘上相位：</p>
+<div class="math-display">
+$$
+c_e=e^{-i\omega t/2}\widetilde c_e,
+\qquad c_g=e^{i\omega t/2}\widetilde c_g.
+$$
+</div>
+
+<p>这些相位不改变能级占据概率。于是</p>
+<div class="math-display">
+$$
+\boxed{P_e(t)=\frac{\Omega^2}{\Omega_R^2}
+\sin^2\frac{\Omega_Rt}{2}},
+\qquad P_g(t)=1-P_e(t).
+$$
+</div>
+
+<p>这就是 Rabi 公式。若 $\Omega&#x3D;\Delta&#x3D;0$，直接用 $H_{\mathrm{eff}}&#x3D;0$，得到 $U&#x3D;I$，无需代入包含 $\Omega_R$ 分母的表达式。</p>
+<h2 id="6-再用耦合微分方程验证一次"><a href="#6-再用耦合微分方程验证一次" class="headerlink" title="6. 再用耦合微分方程验证一次"></a>6. 再用耦合微分方程验证一次</h2><p>令 $\phi&#x3D;0$，旋转系中的薛定谔方程给出</p>
+<div class="math-display">
+$$
+i\dot{\widetilde c}_e=\frac{\Delta}{2}\widetilde c_e
++\frac{\Omega}{2}\widetilde c_g,
+\qquad
+i\dot{\widetilde c}_g=\frac{\Omega}{2}\widetilde c_e
+-\frac{\Delta}{2}\widetilde c_g.
+$$
+</div>
+
+<p>对第一个方程再求一次导数，再用两个一阶方程替换右边的一阶导数。交叉项相消，得到</p>
+<div class="math-display">
+$$
+\ddot{\widetilde c}_e+\frac{\Delta^2+\Omega^2}{4}\widetilde c_e=0.
+$$
+</div>
+
+<p>初态为基态意味着</p>
+<div class="math-display">
+$$
+\widetilde c_e(0)=0,
+\qquad \dot{\widetilde c}_e(0)=-i\frac{\Omega}{2}.
+$$
+</div>
+
+<p>因此</p>
+<div class="math-display">
+$$
+\widetilde c_e(t)=-i\frac{\Omega}{\Omega_R}
+\sin\frac{\Omega_Rt}{2},
+$$
+</div>
+
+<p>与矩阵指数法完全一致。这种推导也解释了因子 2：<strong>振幅中的正弦角频率是 $\Omega_R&#x2F;2$，但概率可写成 $[1-\cos(\Omega_Rt)]\Omega^2&#x2F;(2\Omega_R^2)$，所以占据概率的振荡角频率是 $\Omega_R$。</strong></p>
+<h2 id="7-共振、失谐与三个极限"><a href="#7-共振、失谐与三个极限" class="headerlink" title="7. 共振、失谐与三个极限"></a>7. 共振、失谐与三个极限</h2><p><img src="/img/rabi-oscillations/population-and-detuning.png" alt="不同失谐下的激发态概率，以及共振 π 脉冲的失谐响应"></p>
+<p><em>图 1：左图固定驱动强度，比较不同失谐；右图固定脉冲时间为共振时的 π 脉冲长度。横轴中的 $\Omega$ 始终是共振 Rabi 角频率。图由本文公式计算。</em></p>
+<h3 id="7-1-共振：可以完全翻转"><a href="#7-1-共振：可以完全翻转" class="headerlink" title="7.1 共振：可以完全翻转"></a>7.1 共振：可以完全翻转</h3><p>当 $\Delta&#x3D;0$ 时，</p>
+<div class="math-display">
+$$
+P_e(t)=\sin^2\frac{\Omega t}{2},
+\qquad T_R=\frac{2\pi}{\Omega}.
+$$
+</div>
+
+<p>第一次完全到达激发态的时间为 $t_\pi&#x3D;\pi&#x2F;\Omega$，是完整概率振荡周期的一半。</p>
+<h3 id="7-2-失谐：振荡变快，但转移不完全"><a href="#7-2-失谐：振荡变快，但转移不完全" class="headerlink" title="7.2 失谐：振荡变快，但转移不完全"></a>7.2 失谐：振荡变快，但转移不完全</h3><p>失谐时有</p>
+<div class="math-display">
+$$
+P_e^{\max}=\frac{\Omega^2}{\Omega^2+\Delta^2},
+\qquad t_{\mathrm{first\ max}}=\frac{\pi}{\Omega_R}.
+$$
+</div>
+
+<p>例如 $|\Delta|&#x3D;\Omega$ 时，振荡角频率增至 $\sqrt2\Omega$，但激发态概率最高只能到 $1&#x2F;2$。失谐让振荡更快，并不意味着驱动更有效。</p>
+<p>这里只讨论恒定失谐、固定相位的矩形脉冲。扫频、复合脉冲等控制方法可以改变结论，不能用这个上限限制所有可能的控制序列。</p>
+<h3 id="7-3-短时间：概率从二次项起步"><a href="#7-3-短时间：概率从二次项起步" class="headerlink" title="7.3 短时间：概率从二次项起步"></a>7.3 短时间：概率从二次项起步</h3><p>当 $\Omega_Rt\ll1$ 时，</p>
+<div class="math-display">
+$$
+P_e(t)=\frac{\Omega^2t^2}{4}+O(t^4).
+$$
+</div>
+
+<p>在 RWA 模型中，初始二次项与失谐无关。若考察比载波周期还短的时间，必须回到原始含时哈密顿量；此时不能继续把 RWA 的短时极限当作精确结果。</p>
+<h3 id="7-4-弱激发与微扰理论的连接"><a href="#7-4-弱激发与微扰理论的连接" class="headerlink" title="7.4 弱激发与微扰理论的连接"></a>7.4 弱激发与微扰理论的连接</h3><p>在相互作用绘景中，一阶微扰给出</p>
+<div class="math-display">
+$$
+c_e^{(1)}(t)=-i\frac{\Omega e^{-i\phi}}{2}
+\int_0^t e^{i\Delta t'}\,dt',
+$$
+$$
+P_e^{(1)}(t)=\frac{\Omega^2}{\Delta^2}
+\sin^2\frac{\Delta t}{2}
+=\frac{\Omega^2t^2}{4}\operatorname{sinc}^2\frac{\Delta t}{2},
+\qquad \operatorname{sinc}x=\frac{\sin x}{x}.
+$$
+</div>
+
+<p>它在跃迁概率很小时与 Rabi 公式一致。共振且时间变长后，微扰式会无限增长，甚至超过 1；完整解则自动包含基态耗尽和反向转移，始终满足概率守恒。</p>
+<p>此外，矩形脉冲的扫频响应带有脉冲面积和旁瓣结构，通常不是一个简单 Lorentz 线型。图 1 右侧的曲线不能与后面讨论的有耗散连续驱动稳态谱混为一谈。</p>
+<h2 id="8-Bloch-球：为什么失谐会限制翻转"><a href="#8-Bloch-球：为什么失谐会限制翻转" class="headerlink" title="8. Bloch 球：为什么失谐会限制翻转"></a>8. Bloch 球：为什么失谐会限制翻转</h2><p>把旋转系密度矩阵写成</p>
+<div class="math-display">
+$$
+\rho=\frac12(I+u\sigma_x+v\sigma_y+w\sigma_z),
+\quad
+(u,v,w)=\big(\langle\sigma_x\rangle,\langle\sigma_y\rangle,\langle\sigma_z\rangle\big).
+$$
+$$
+w=P_e-P_g=2P_e-1,
+\qquad P_e=\frac{1+w}{2}.
+$$
+</div>
+
+<p>本文把激发态放在北极、基态放在南极。纯态满足 $u^2+v^2+w^2&#x3D;1$；混合态位于球内。若使用相反的基底顺序，图中的极点和部分符号也会随之改变。</p>
+<p>将密度矩阵和有效哈密顿量代入</p>
+<div class="math-display">
+$$
+\dot\rho=-\frac{i}{\hbar}[H_{\mathrm{eff}},\rho],
+$$
+</div>
+
+<p>利用 Pauli 矩阵的对易关系，可以得到</p>
+<div class="math-display">
+$$
+\boxed{\dot{\mathbf r}=\mathbf b\times\mathbf r},
+\qquad \mathbf r=(u,v,w).
+$$
+</div>
+
+<p>因此，Bloch 向量绕固定的有效轴 $\mathbf b$ 进动，角速度为 $\Omega_R$。这与经典磁矩在磁场中的进动具有相同的数学形式，但 Bloch 球坐标描述的是量子态。</p>
+<p>令 $\phi&#x3D;0$，初态 $\mathbf r(0)&#x3D;(0,0,-1)$，由 Rodrigues 旋转公式得到</p>
+<div class="math-display">
+$$
+\begin{aligned}
+u(t)&=-\frac{\Omega\Delta}{\Omega_R^2}
+\big[1-\cos(\Omega_Rt)\big],\\
+v(t)&=\frac{\Omega}{\Omega_R}\sin(\Omega_Rt),\\
+w(t)&=-\frac{\Delta^2+\Omega^2\cos(\Omega_Rt)}{\Omega_R^2}.
+\end{aligned}
+$$
+</div>
+
+<p>代入 $P_e&#x3D;(1+w)&#x2F;2$，再次得到 Rabi 公式。</p>
+<p><img src="/img/rabi-oscillations/bloch-trajectories.png" alt="共振和失谐情况下的 Bloch 球轨迹"></p>
+<p><em>图 2：橙色箭头是有效旋转轴，蓝色曲线是一个周期内的纯态轨迹。共振时轴沿 $u$ 方向，轨迹经过南北两极；当 $\Delta&#x3D;\Omega$ 时轴倾斜，轨迹最高只能到赤道，即 $P_e&#x3D;1&#x2F;2$。</em></p>
+<p>这就是失谐限制翻转的几何原因：旋转轴出现了纵向分量，轨迹不再经过北极。对单个无耗散的理想二能级系统而言，这种振幅降低并不是退相干，态依然保持纯态。</p>
+<h2 id="9-π-脉冲、π-2-脉冲与驱动相位"><a href="#9-π-脉冲、π-2-脉冲与驱动相位" class="headerlink" title="9. π 脉冲、π&#x2F;2 脉冲与驱动相位"></a>9. π 脉冲、π&#x2F;2 脉冲与驱动相位</h2><h3 id="9-1-脉冲面积就是旋转角"><a href="#9-1-脉冲面积就是旋转角" class="headerlink" title="9.1 脉冲面积就是旋转角"></a>9.1 脉冲面积就是旋转角</h3><p>在共振且驱动相位固定的情况下，允许耦合包络随时间变化：</p>
+<div class="math-display">
+$$
+H_{\mathrm{eff}}(t)=\frac{\hbar\Omega(t)}{2}\sigma_\phi,
+\qquad \sigma_\phi=\cos\phi\,\sigma_x+\sin\phi\,\sigma_y.
+$$
+</div>
+
+<p>不同时刻的哈密顿量彼此对易，因为它们都正比于同一个算符。因此时间有序指数简化成</p>
+<div class="math-display">
+$$
+U=\exp\left(-\frac{i\Theta}{2}\sigma_\phi\right),
+\qquad \Theta=\int\Omega(t)\,dt.
+$$
+</div>
+
+<p>从基态出发，脉冲结束时</p>
+<div class="math-display">
+$$
+|\widetilde\psi\rangle
+=\cos\frac{\Theta}{2}|g\rangle
+-i e^{-i\phi}\sin\frac{\Theta}{2}|e\rangle.
+$$
+</div>
+
+<table>
+<thead>
+<tr>
+<th>脉冲</th>
+<th>面积</th>
+<th>从基态出发的结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>π&#x2F;2 脉冲</td>
+<td>$\Theta&#x3D;\pi&#x2F;2$</td>
+<td>等权相干叠加，$P_e&#x3D;1&#x2F;2$</td>
+</tr>
+<tr>
+<td>π 脉冲</td>
+<td>$\Theta&#x3D;\pi$</td>
+<td>完全翻转，$P_e&#x3D;1$</td>
+</tr>
+<tr>
+<td>2π 脉冲</td>
+<td>$\Theta&#x3D;2\pi$</td>
+<td>$U&#x3D;-I$，占据概率回到起点</td>
+</tr>
+</tbody></table>
+<p>2π 脉冲后态矢量多了一个负号。对这个封闭二能级空间里的单独态而言，它是整体相位，不影响观测；只有与未经历相同演化的参考支路比较时，才可能变成可测的相对相位。</p>
+<p>若脉冲过程中相位或失谐变化，不同时刻的哈密顿量一般不再对易，单靠面积不能决定最终态。</p>
+<h3 id="9-2-相位决定叠加态，而不只决定能级人口"><a href="#9-2-相位决定叠加态，而不只决定能级人口" class="headerlink" title="9.2 相位决定叠加态，而不只决定能级人口"></a>9.2 相位决定叠加态，而不只决定能级人口</h3><p>共振 π&#x2F;2 脉冲制备</p>
+<div class="math-display">
+$$
+|\widetilde\psi\rangle
+=\frac{|g\rangle-i e^{-i\phi}|e\rangle}{\sqrt2}.
+$$
+</div>
+
+<p>改变 $\phi$ 不改变这次测量的 $P_e&#x3D;1&#x2F;2$，但改变两态的相对相位，也就是 Bloch 球赤道上的位置。第二个相位已知的脉冲可以把这种相位差转换成能级人口差，这正是 Ramsey 类实验的核心。</p>
+<h3 id="9-3-一个可直接换算的数值例子"><a href="#9-3-一个可直接换算的数值例子" class="headerlink" title="9.3 一个可直接换算的数值例子"></a>9.3 一个可直接换算的数值例子</h3><p>假设 $\Omega&#x2F;(2\pi)&#x3D;100,\mathrm{kHz}$，则</p>
+<div class="math-display">
+$$
+\Omega=2\pi\times10^5\,\mathrm{rad/s},
+\qquad
+t_\pi=5\,\mu\mathrm{s},
+\qquad t_{\pi/2}=2.5\,\mu\mathrm{s},
+\qquad T_R=10\,\mu\mathrm{s}.
+$$
+</div>
+
+<p>如果把 100 kHz 直接代入 $\pi&#x2F;\Omega$，就会漏掉 $2\pi$。对真空中的线偏振平面波，平均光强 $I&#x3D;c\epsilon_0E_0^2&#x2F;2$，因而在矩阵元与光束几何不变时，$\Omega\propto E_0\propto\sqrt I$。</p>
+<h2 id="10-本征态视角：振荡来自相位差"><a href="#10-本征态视角：振荡来自相位差" class="headerlink" title="10. 本征态视角：振荡来自相位差"></a>10. 本征态视角：振荡来自相位差</h2><p>在共振、$\phi&#x3D;0$ 时，有效哈密顿量的本征态为</p>
+<div class="math-display">
+$$
+|+\rangle=\frac{|e\rangle+|g\rangle}{\sqrt2},
+\qquad
+|-\rangle=\frac{|e\rangle-|g\rangle}{\sqrt2},
+\qquad E_\pm=\pm\frac{\hbar\Omega}{2}.
+$$
+</div>
+
+<p>基态是这两个本征态的叠加：</p>
+<div class="math-display">
+$$
+|g\rangle=\frac{|+\rangle-|-\rangle}{\sqrt2}.
+$$
+</div>
+
+<p>两个分量各自积累 $e^{\mp i\Omega t&#x2F;2}$ 的相位。重新投影到裸态基底，就有</p>
+<div class="math-display">
+$$
+|\widetilde\psi(t)\rangle
+=\cos\frac{\Omega t}{2}|g\rangle
+-i\sin\frac{\Omega t}{2}|e\rangle.
+$$
+</div>
+
+<p>因此，Rabi 振荡可以看成有效本征态之间的相位差随时间增长，随后在裸态测量中表现为干涉。失谐时，本征值分裂变为 $\hbar\Omega_R$，但裸态与有效本征态的混合程度减弱，所以频率上升、振幅下降。</p>
+<h2 id="11-真实系统：弛豫与退相干"><a href="#11-真实系统：弛豫与退相干" class="headerlink" title="11. 真实系统：弛豫与退相干"></a>11. 真实系统：弛豫与退相干</h2><h3 id="11-1-光学-Bloch-方程"><a href="#11-1-光学-Bloch-方程" class="headerlink" title="11.1 光学 Bloch 方程"></a>11.1 光学 Bloch 方程</h3><p>理想公式忽略了环境。在 Markov 近似下，考虑向基态的能量弛豫与纯退相干，可以写出主方程</p>
+<div class="math-display">
+$$
+\dot\rho=-\frac{i}{\hbar}[H_{\mathrm{eff}},\rho]
++\Gamma_1\mathcal D[\sigma_-]\rho
++\frac{\gamma_\phi}{2}\mathcal D[\sigma_z]\rho,
+$$
+$$
+\mathcal D[L]\rho=L\rho L^\dagger
+-\frac12\left(L^\dagger L\rho+\rho L^\dagger L\right),
+\qquad
+\Gamma_1=\frac1{T_1},\quad
+\Gamma_2=\frac1{T_2}=\frac{\Gamma_1}{2}+\gamma_\phi.
+$$
+</div>
+
+<p>这里的 $T_2$ 是该模型中的均匀横向相干时间。假设环境不产生显著热激发，并令 $\phi&#x3D;0$，代入 Bloch 分量后得到</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\dot u&=-\Delta v-\Gamma_2u,\\
+\dot v&=\Delta u-\Omega w-\Gamma_2v,\\
+\dot w&=\Omega v-\Gamma_1(w+1).
+\end{aligned}
+$$
+</div>
+
+<p>其中 $\Gamma_1$ 控制人口回到基态，$\Gamma_2$ 控制非对角相干衰减。若没有驱动，$w$ 趋向 $-1$。若环境温度使向上的热跃迁不可忽略，则应加入对应跃迁项，平衡人口也会改变。</p>
+<p>与相干驱动和环境耦合有关的标准方程，可参见 <a target="_blank" rel="noopener" href="https://www.ocw.mit.edu/courses/6-974-fundamentals-of-photonics-quantum-electronics-spring-2006/2641db6431ea70989c29e8512d5d91a7_chapter6.pdf">MIT《Interaction of Light and Matter》第 6 章，尤其 §6.6</a>。该讲义的 Rabi 频率符号采用另一种归一化，应先换算再比较。</p>
+<h3 id="11-2-振荡包络的衰减率通常不是-1-T2"><a href="#11-2-振荡包络的衰减率通常不是-1-T2" class="headerlink" title="11.2 振荡包络的衰减率通常不是 1&#x2F;T2"></a>11.2 振荡包络的衰减率通常不是 1&#x2F;T2</h3><p>共振时 $u$ 与另外两个分量解耦。对 $w$ 的方程求导，消去 $v$，得到</p>
+<div class="math-display">
+$$
+\ddot w+(\Gamma_1+\Gamma_2)\dot w
++(\Omega^2+\Gamma_1\Gamma_2)w=-\Gamma_1\Gamma_2.
+$$
+</div>
+
+<p>定义</p>
+<div class="math-display">
+$$
+\alpha=\frac{\Gamma_1+\Gamma_2}{2},
+\qquad
+\Omega_d=\sqrt{\Omega^2-\frac{(\Gamma_1-\Gamma_2)^2}{4}}.
+$$
+</div>
+
+<p>对恒定驱动、初始基态且 $\Omega_d$ 为实数的欠阻尼情况，满足 $P_e(0)&#x3D;\dot P_e(0)&#x3D;0$ 的解为</p>
+<div class="math-display">
+$$
+\boxed{
+P_e(t)=P_e^{\mathrm{ss}}
+\left[1-e^{-\alpha t}\left(
+\cos\Omega_dt+\frac{\alpha}{\Omega_d}\sin\Omega_dt
+\right)\right]},
+\qquad
+P_e^{\mathrm{ss}}=\frac{\Omega^2}{2(\Omega^2+\Gamma_1\Gamma_2)}.
+$$
+</div>
+
+<p>强驱动时 $\Omega_d\simeq\Omega$，包络衰减时间为 $1&#x2F;\alpha$。若只有自发辐射，$\Gamma_2&#x3D;\Gamma_1&#x2F;2$，那么 $\alpha&#x3D;3\Gamma_1&#x2F;4$。这说明不能把测到的 Rabi 包络时间直接认作 $T_2$。</p>
+<p>当根号内为负时，解变成双曲函数形式，系统不再具有这种欠阻尼振荡；临界点取连续极限即可。上述解在无耗散极限又回到 $\sin^2(\Omega t&#x2F;2)$。</p>
+<p><img src="/img/rabi-oscillations/damping-and-rwa.png" alt="Rabi 振荡的耗散衰减，以及原始含时模型与旋波近似的比较"></p>
+<p><em>图 3：左图比较无耗散结果、解析耗散解和 Bloch 方程的数值积分。右图直接积分实验室系哈密顿量，展示弱驱动下 RWA 的准确性，以及较强驱动时出现的偏差。所有时间均以共振 Rabi 周期归一化。</em></p>
+<h3 id="11-3-连续驱动的稳态与功率展宽"><a href="#11-3-连续驱动的稳态与功率展宽" class="headerlink" title="11.3 连续驱动的稳态与功率展宽"></a>11.3 连续驱动的稳态与功率展宽</h3><p>把三个 Bloch 方程的左侧设为零，对于正的弛豫和相干衰减率，有</p>
+<div class="math-display">
+$$
+u_{\mathrm{ss}}=-\frac{\Delta}{\Gamma_2}v_{\mathrm{ss}},
+\qquad
+v_{\mathrm{ss}}=-\frac{\Omega\Gamma_2}{\Delta^2+\Gamma_2^2}w_{\mathrm{ss}}.
+$$
+</div>
+
+<p>再代入第三式：</p>
+<div class="math-display">
+$$
+w_{\mathrm{ss}}=-\frac{1}{1+s},
+\qquad
+s=\frac{\Omega^2\Gamma_2}{\Gamma_1(\Delta^2+\Gamma_2^2)},
+\qquad
+\boxed{P_e^{\mathrm{ss}}=\frac{s}{2(1+s)}}.
+$$
+</div>
+
+<p>固定驱动强度、扫描失谐时，还可写成</p>
+<div class="math-display">
+$$
+P_e^{\mathrm{ss}}(\Delta)=
+\frac{\Omega^2\Gamma_2/(2\Gamma_1)}
+{\Delta^2+\Gamma_2^2+\Omega^2\Gamma_2/\Gamma_1}.
+$$
+</div>
+
+<p>因此，稳态谱的角频率半高全宽为</p>
+<div class="math-display">
+$$
+\mathrm{FWHM}=2\sqrt{\Gamma_2^2+\frac{\Omega^2\Gamma_2}{\Gamma_1}}.
+$$
+</div>
+
+<p>增加驱动不仅提高饱和程度，也使谱线展宽。强连续驱动下的稳态激发概率趋近 $1&#x2F;2$，但相干 π 脉冲可以在瞬态到达接近 1；二者讨论的是不同的时间条件。</p>
+<h3 id="11-4-不均匀性也会抹平振荡"><a href="#11-4-不均匀性也会抹平振荡" class="headerlink" title="11.4 不均匀性也会抹平振荡"></a>11.4 不均匀性也会抹平振荡</h3><p>实验中的振荡衰减还可能来自不同原子经历不同光强、逐次实验的失谐漂移、驱动幅度噪声或运动态分布。</p>
+<p>例如，共振时若每次实验的耦合 $\Omega’$ 在实验期间近似恒定、但在重复实验间服从均值 $\bar\Omega$、标准差 $\sigma_\Omega$ 的窄高斯分布，则</p>
+<div class="math-display">
+$$
+\langle P_e(t)\rangle
+=\frac12\left[1-e^{-\sigma_\Omega^2t^2/2}
+\cos(\bar\Omega t)\right].
+$$
+</div>
+
+<p>每个成员仍可做完美的相干演化，平均信号却出现高斯包络。因此，指数包络、Gaussian 包络、$T_2$ 和自由演化中的 $T_2^*$ 不应不加区分地互相替代。</p>
+<h2 id="12-实验中怎样测量与拟合"><a href="#12-实验中怎样测量与拟合" class="headerlink" title="12. 实验中怎样测量与拟合"></a>12. 实验中怎样测量与拟合</h2><p>典型的 Rabi 扫描按以下步骤进行：</p>
+<ol>
+<li>把系统制备到 $|g\rangle$。</li>
+<li>施加持续时间为 $t$ 的相干驱动。</li>
+<li>通过态选择荧光、色散读出等方法测量能级占据。</li>
+<li>固定 $t$ 重复多次，估计 $P_e(t)$；再扫描脉冲时间。</li>
+</ol>
+<p>对独立二项测量，若每个点重复 $N$ 次，概率估计的标准误差约为 $\sqrt{P_e(1-P_e)&#x2F;N}$。靠近 0 或 1 时，直接用这个估计构造对称误差条可能不合适，实际分析可以采用二项分布的区间估计或似然拟合。</p>
+<p>处理真实数据时，可把读出误差显式写进模型：</p>
+<div class="math-display">
+$$
+P_{\mathrm{obs}}(t)=\epsilon_g+
+(1-\epsilon_g-\epsilon_e)P_e(t),
+$$
+</div>
+
+<p>其中 $\epsilon_g$ 是把基态误判成激发态的概率，$\epsilon_e$ 是把激发态误判成基态的概率。随后按实验条件选用无耗散公式、Bloch 方程解或含准静态分布的平均模型。</p>
+<p>几个容易影响结论的细节是：</p>
+<ul>
+<li>有失谐时，周期给出的是 $\Omega_R$。要标定共振耦合 $\Omega$，应先找到共振，或结合振幅与失谐扫描共同拟合。</li>
+<li>初态制备错误与读出误差都会降低对比度；低峰值不能单独证明失谐或退相干。</li>
+<li>驱动幅度、光束尺寸和偏振稳定时，扫描功率应近似看到 $\Omega\propto\sqrt{\text{功率}}$；偏离关系提示需要检查多能级、漂移或脉冲畸变。</li>
+<li>脉冲上升沿和下降沿有有限面积。高精度控制应标定实际包络，不能只使用信号源标注的矩形持续时间。</li>
+</ul>
+<h2 id="13-超出最简单模型以后"><a href="#13-超出最简单模型以后" class="headerlink" title="13. 超出最简单模型以后"></a>13. 超出最简单模型以后</h2><h3 id="13-1-反旋转项与-Bloch–Siegert-频移"><a href="#13-1-反旋转项与-Bloch–Siegert-频移" class="headerlink" title="13.1 反旋转项与 Bloch–Siegert 频移"></a>13.1 反旋转项与 Bloch–Siegert 频移</h3><p>当 $\Omega&#x2F;\omega_0$ 不再足够小，反旋转项产生的快速微运动和高阶频移不能忽略。对本文的线性余弦驱动约定，近共振、微扰范围内的领先 Bloch–Siegert 频移为</p>
+<div class="math-display">
+$$
+\delta\omega_{\mathrm{BS}}
+\simeq\frac{\Omega^2}{2(\omega_0+\omega)}
+\simeq\frac{\Omega^2}{4\omega_0}.
+$$
+</div>
+
+<p>可以这样理解系数：反旋转耦合元为 $\hbar\Omega&#x2F;2$，虚跃迁的能量分母约为 $\hbar(\omega_0+\omega)$，两个能级受到方向相反的二阶修正，能隙修正是单个修正的两倍。有效共振因此向更高驱动频率移动，即 $\omega_{\mathrm{res}}\simeq\omega_0+\delta\omega_{\mathrm{BS}}$。</p>
+<p>这个表达式只是最低非零阶修正，不是任意强场公式。关于超越 RWA 的系统处理，可参见 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1507.05124">Adriano A. Batista 的原始论文</a>。</p>
+<h3 id="13-2-多能级、运动边带与有效耦合"><a href="#13-2-多能级、运动边带与有效耦合" class="headerlink" title="13.2 多能级、运动边带与有效耦合"></a>13.2 多能级、运动边带与有效耦合</h3><p>若驱动同时耦合多个 Zeeman 子能级，或者离子运动的边带被分辨出来，实验信号可能是多个频率分量的叠加。只有选定一个近似封闭的跃迁后，单个 Rabi 频率才足以描述动力学。</p>
+<p>例如 Raman 驱动可以在远失谐条件下消去中间态，得到两个低能态间的有效耦合，同时还会有差分 AC Stark 位移。此时仍可使用二能级公式，但其中的 $\Omega$ 和 $\Delta$ 必须来自有效哈密顿量，不能直接当作某一束光的单光子参数。</p>
+<h3 id="13-3-量子化光场与真空-Rabi-振荡"><a href="#13-3-量子化光场与真空-Rabi-振荡" class="headerlink" title="13.3 量子化光场与真空 Rabi 振荡"></a>13.3 量子化光场与真空 Rabi 振荡</h3><p>前面把驱动看成经典场。若把单个腔模也量子化，在 RWA 下，Jaynes–Cummings 相互作用为</p>
+<div class="math-display">
+$$
+H_{\mathrm{int}}=\hbar g(a\sigma_++a^\dagger\sigma_-).
+$$
+</div>
+
+<p>共振时，态 $|e,n\rangle$ 与 $|g,n+1\rangle$ 的耦合元是 $\hbar g\sqrt{n+1}$。和本文约定的 $\hbar\Omega&#x2F;2$ 对比，得到</p>
+<div class="math-display">
+$$
+\Omega_n=2g\sqrt{n+1}.
+$$
+</div>
+
+<p>即使腔最初没有光子，初始激发的原子也可在 $|e,0\rangle$ 与 $|g,1\rangle$ 间交换一个激发，发生真空 Rabi 振荡。<strong>初态 $|g,0\rangle$ 在这个模型中不会凭空变成激发态</strong>，因为根本没有可交换的激发。</p>
+<p>当光场含多个光子数分量时，不同 $n$ 对应不同振荡频率；叠加后可能出现塌缩与复苏。相关单模量子化场讨论可参见 <a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/8-421-atomic-and-optical-physics-i-spring-2014/d2b52e5023cc132108b981be4515d5d9_MVOJloovd18.pdf">MIT 8.421 的课堂讲解</a>。</p>
+<h2 id="14-数值复现与自检"><a href="#14-数值复现与自检" class="headerlink" title="14. 数值复现与自检"></a>14. 数值复现与自检</h2><p>本文三张图及检验代码可下载：<a href="/downloads/code/rabi-oscillations/rabi_simulation.py">rabi_simulation.py</a>。需要 Python、NumPy、SciPy 和 Matplotlib；运行时可以用 <code>--output-dir</code> 指定图片目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python rabi_simulation.py --output-dir rabi-figures</span><br></pre></td></tr></table></figure>
+
+<p>脚本做了三类不同层次的计算：直接积分 RWA 薛定谔方程并与 Rabi 公式比较；积分耗散 Bloch 方程并与共振解析解比较；直接积分含反旋转项的实验室系哈密顿量，并展示它与 RWA 的差别。最后一种比较中，差异属于模型近似误差，并不是数值积分误差。</p>
+<p>只想复现最基本的共振和失谐曲线，可以使用以下最小示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">Omega = <span class="number">2</span> * np.pi * <span class="number">100e3</span>  <span class="comment"># rad/s; Omega/(2*pi) = 100 kHz</span></span><br><span class="line">t = np.linspace(<span class="number">0</span>, <span class="number">30e-6</span>, <span class="number">1200</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ratio <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>, <span class="number">2</span>]:</span><br><span class="line">    Delta = ratio * Omega</span><br><span class="line">    Omega_R = np.hypot(Omega, Delta)</span><br><span class="line">    Pe = (Omega / Omega_R)**<span class="number">2</span> * np.sin(Omega_R * t / <span class="number">2</span>)**<span class="number">2</span></span><br><span class="line">    plt.plot(t * <span class="number">1e6</span>, Pe, label=<span class="string">f&quot;Delta/Omega = <span class="subst">&#123;ratio:g&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">&quot;Pulse duration (us)&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;Excited-state probability&quot;</span>)</span><br><span class="line">plt.ylim(<span class="number">0</span>, <span class="number">1.05</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>核对推导或程序时，可以用下列事实快速定位错误：</p>
+<ul>
+<li>无耦合且初态为基态时，$P_e(t)&#x3D;0$。</li>
+<li>共振 π 脉冲给出 $P_e&#x3D;1$，2π 脉冲给出 $P_e&#x3D;0$。</li>
+<li>在本文条件下，改变失谐的正负不改变单次基态起始的占据概率曲线。</li>
+<li>改变驱动相位不改变基态起始的单脉冲人口曲线，但会改变 Bloch 球上的轨迹方向和最终相对相位。</li>
+<li>无耗散演化保持归一化和纯度；有耗散模型应保持 $0\le P_e\le1$。</li>
+</ul>
+<h2 id="15-把几个概念分清楚"><a href="#15-把几个概念分清楚" class="headerlink" title="15. 把几个概念分清楚"></a>15. 把几个概念分清楚</h2><table>
+<thead>
+<tr>
+<th>容易混淆的量或说法</th>
+<th>本文中的准确含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>驱动频率与 Rabi 频率</td>
+<td>前者接近能级间隔，后者描述耦合驱动的人口振荡</td>
+</tr>
+<tr>
+<td>$\Omega$ 与 $\Omega_R$</td>
+<td>一个是共振耦合强度，一个包含失谐贡献</td>
+</tr>
+<tr>
+<td>旋转系与旋波近似</td>
+<td>前者是坐标变换，后者舍弃反旋转项</td>
+</tr>
+<tr>
+<td>失谐造成的低峰值</td>
+<td>可以完全相干，无需发生退相干</td>
+</tr>
+<tr>
+<td>π&#x2F;2 脉冲</td>
+<td>制备有确定相位的等权叠加，人口信息本身不足以描述它</td>
+</tr>
+<tr>
+<td>瞬态完全翻转与稳态饱和</td>
+<td>π 脉冲可达激发态；此处闭合二能级耗散模型的强驱动稳态趋向一半</td>
+</tr>
+<tr>
+<td>Rabi 包络时间与 $T_2$</td>
+<td>一般不同，还要考虑 $T_1$、噪声谱与不均匀性</td>
+</tr>
+</tbody></table>
+<p>Rabi 振荡的核心可以凝结为一个几何事实：<strong>相干驱动使量子态绕有效场旋转；旋转轴的长度给出频率，方向决定能否翻转，驱动相位决定横向轴的位置。</strong> 薛定谔方程、矩阵指数、本征态干涉和 Bloch 球只是从不同角度描述同一个演化过程。</p>
+<h2 id="参考与延伸阅读"><a href="#参考与延伸阅读" class="headerlink" title="参考与延伸阅读"></a>参考与延伸阅读</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/5-74-introductory-quantum-mechanics-ii-spring-2009/resources/mit5_74s09_study01-1/">MIT 5.74，Two-level system</a>：近共振二能级驱动的课程材料。</li>
+<li><a target="_blank" rel="noopener" href="https://www.ocw.mit.edu/courses/6-974-fundamentals-of-photonics-quantum-electronics-spring-2006/2641db6431ea70989c29e8512d5d91a7_chapter6.pdf">MIT 6.974，第 6 章 Interaction of Light and Matter</a>：二能级模型、相干演化和光学 Bloch 方程。</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1507.05124">A. A. Batista，Rabi oscillations in two-level systems beyond the rotating-wave approximation</a>：反旋转项、Bloch–Siegert 频移与短脉冲修正。</li>
+<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/8-421-atomic-and-optical-physics-i-spring-2014/d2b52e5023cc132108b981be4515d5d9_MVOJloovd18.pdf">MIT 8.421，单模量子化场中的原子动力学课堂讲解</a>：不同光子数分量与真空 Rabi 振荡。</li>
+</ol>
+<p>本文所有图均由所附代码根据文内模型生成，不使用实验数据；各节公式统一采用第 2 节的符号约定。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/">http://talescuber.github.io/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/">量子力学</a><a class="post-meta__tags" href="/tags/%E9%87%8F%E5%AD%90%E5%85%89%E5%AD%A6/">量子光学</a><a class="post-meta__tags" href="/tags/%E4%BA%8C%E8%83%BD%E7%BA%A7%E7%B3%BB%E7%BB%9F/">二能级系统</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/11/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/172Yb%E7%A6%BB%E5%AD%90%E9%98%B1%E5%AE%9E%E9%AA%8C%E7%9A%84%E6%BF%80%E5%85%89%E6%96%B9%E6%A1%88%E4%B8%8E%E9%A2%91%E7%8E%87%E8%AE%BE%E7%BD%AE/" title="172Yb⁺ 离子阱实验的激光方案与频率设置"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">172Yb⁺ 离子阱实验的激光方案与频率设置</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/08/25/%E5%AD%A6%E4%B9%A0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6%E4%B9%A0%E9%A2%981/" title="量子力学习题1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-25</div><div class="title">量子力学习题1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8C%AF%E8%8D%A1%E7%9A%84%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">1. 振荡的究竟是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%88%E5%9B%BA%E5%AE%9A%E7%AC%A6%E5%8F%B7%E4%B8%8E%E9%A2%91%E7%8E%87%E7%BA%A6%E5%AE%9A"><span class="toc-text">2. 先固定符号与频率约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%8E%E7%94%B5%E5%81%B6%E6%9E%81%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8%E5%BB%BA%E7%AB%8B%E6%A8%A1%E5%9E%8B"><span class="toc-text">3. 从电偶极相互作用建立模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%87%AA%E7%94%B1%E5%93%88%E5%AF%86%E9%A1%BF%E9%87%8F"><span class="toc-text">3.1 自由哈密顿量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%85%89%E5%9C%BA%E5%A6%82%E4%BD%95%E8%80%A6%E5%90%88%E4%B8%A4%E4%B8%AA%E6%80%81"><span class="toc-text">3.2 光场如何耦合两个态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%97%8B%E8%BD%AC%E5%9D%90%E6%A0%87%E7%B3%BB%E4%B8%8E%E6%97%8B%E6%B3%A2%E8%BF%91%E4%BC%BC"><span class="toc-text">4. 旋转坐标系与旋波近似</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8D%A2%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="toc-text">4.1 为什么要换坐标系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%B0%86%E5%BF%AB%E9%A1%B9%E4%B8%8E%E6%85%A2%E9%A1%B9%E6%98%8E%E7%A1%AE%E5%88%86%E5%BC%80"><span class="toc-text">4.2 将快项与慢项明确分开</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%9F%A9%E9%98%B5%E6%8C%87%E6%95%B0%E6%B3%95%EF%BC%9A%E4%B8%80%E6%AD%A5%E8%A7%A3%E5%87%BA%E4%BB%BB%E6%84%8F%E5%A4%B1%E8%B0%90"><span class="toc-text">5. 矩阵指数法：一步解出任意失谐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%86%8D%E7%94%A8%E8%80%A6%E5%90%88%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E9%AA%8C%E8%AF%81%E4%B8%80%E6%AC%A1"><span class="toc-text">6. 再用耦合微分方程验证一次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%85%B1%E6%8C%AF%E3%80%81%E5%A4%B1%E8%B0%90%E4%B8%8E%E4%B8%89%E4%B8%AA%E6%9E%81%E9%99%90"><span class="toc-text">7. 共振、失谐与三个极限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%85%B1%E6%8C%AF%EF%BC%9A%E5%8F%AF%E4%BB%A5%E5%AE%8C%E5%85%A8%E7%BF%BB%E8%BD%AC"><span class="toc-text">7.1 共振：可以完全翻转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%A4%B1%E8%B0%90%EF%BC%9A%E6%8C%AF%E8%8D%A1%E5%8F%98%E5%BF%AB%EF%BC%8C%E4%BD%86%E8%BD%AC%E7%A7%BB%E4%B8%8D%E5%AE%8C%E5%85%A8"><span class="toc-text">7.2 失谐：振荡变快，但转移不完全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E7%9F%AD%E6%97%B6%E9%97%B4%EF%BC%9A%E6%A6%82%E7%8E%87%E4%BB%8E%E4%BA%8C%E6%AC%A1%E9%A1%B9%E8%B5%B7%E6%AD%A5"><span class="toc-text">7.3 短时间：概率从二次项起步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E5%BC%B1%E6%BF%80%E5%8F%91%E4%B8%8E%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text">7.4 弱激发与微扰理论的连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Bloch-%E7%90%83%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%B1%E8%B0%90%E4%BC%9A%E9%99%90%E5%88%B6%E7%BF%BB%E8%BD%AC"><span class="toc-text">8. Bloch 球：为什么失谐会限制翻转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%CF%80-%E8%84%89%E5%86%B2%E3%80%81%CF%80-2-%E8%84%89%E5%86%B2%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9B%B8%E4%BD%8D"><span class="toc-text">9. π 脉冲、π&#x2F;2 脉冲与驱动相位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E8%84%89%E5%86%B2%E9%9D%A2%E7%A7%AF%E5%B0%B1%E6%98%AF%E6%97%8B%E8%BD%AC%E8%A7%92"><span class="toc-text">9.1 脉冲面积就是旋转角</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E7%9B%B8%E4%BD%8D%E5%86%B3%E5%AE%9A%E5%8F%A0%E5%8A%A0%E6%80%81%EF%BC%8C%E8%80%8C%E4%B8%8D%E5%8F%AA%E5%86%B3%E5%AE%9A%E8%83%BD%E7%BA%A7%E4%BA%BA%E5%8F%A3"><span class="toc-text">9.2 相位决定叠加态，而不只决定能级人口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E4%B8%80%E4%B8%AA%E5%8F%AF%E7%9B%B4%E6%8E%A5%E6%8D%A2%E7%AE%97%E7%9A%84%E6%95%B0%E5%80%BC%E4%BE%8B%E5%AD%90"><span class="toc-text">9.3 一个可直接换算的数值例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%9C%AC%E5%BE%81%E6%80%81%E8%A7%86%E8%A7%92%EF%BC%9A%E6%8C%AF%E8%8D%A1%E6%9D%A5%E8%87%AA%E7%9B%B8%E4%BD%8D%E5%B7%AE"><span class="toc-text">10. 本征态视角：振荡来自相位差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E7%9C%9F%E5%AE%9E%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%BC%9B%E8%B1%AB%E4%B8%8E%E9%80%80%E7%9B%B8%E5%B9%B2"><span class="toc-text">11. 真实系统：弛豫与退相干</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E5%85%89%E5%AD%A6-Bloch-%E6%96%B9%E7%A8%8B"><span class="toc-text">11.1 光学 Bloch 方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E6%8C%AF%E8%8D%A1%E5%8C%85%E7%BB%9C%E7%9A%84%E8%A1%B0%E5%87%8F%E7%8E%87%E9%80%9A%E5%B8%B8%E4%B8%8D%E6%98%AF-1-T2"><span class="toc-text">11.2 振荡包络的衰减率通常不是 1&#x2F;T2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E8%BF%9E%E7%BB%AD%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%A8%B3%E6%80%81%E4%B8%8E%E5%8A%9F%E7%8E%87%E5%B1%95%E5%AE%BD"><span class="toc-text">11.3 连续驱动的稳态与功率展宽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4-%E4%B8%8D%E5%9D%87%E5%8C%80%E6%80%A7%E4%B9%9F%E4%BC%9A%E6%8A%B9%E5%B9%B3%E6%8C%AF%E8%8D%A1"><span class="toc-text">11.4 不均匀性也会抹平振荡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E5%AE%9E%E9%AA%8C%E4%B8%AD%E6%80%8E%E6%A0%B7%E6%B5%8B%E9%87%8F%E4%B8%8E%E6%8B%9F%E5%90%88"><span class="toc-text">12. 实验中怎样测量与拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E8%B6%85%E5%87%BA%E6%9C%80%E7%AE%80%E5%8D%95%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%90%8E"><span class="toc-text">13. 超出最简单模型以后</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-%E5%8F%8D%E6%97%8B%E8%BD%AC%E9%A1%B9%E4%B8%8E-Bloch%E2%80%93Siegert-%E9%A2%91%E7%A7%BB"><span class="toc-text">13.1 反旋转项与 Bloch–Siegert 频移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-%E5%A4%9A%E8%83%BD%E7%BA%A7%E3%80%81%E8%BF%90%E5%8A%A8%E8%BE%B9%E5%B8%A6%E4%B8%8E%E6%9C%89%E6%95%88%E8%80%A6%E5%90%88"><span class="toc-text">13.2 多能级、运动边带与有效耦合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-%E9%87%8F%E5%AD%90%E5%8C%96%E5%85%89%E5%9C%BA%E4%B8%8E%E7%9C%9F%E7%A9%BA-Rabi-%E6%8C%AF%E8%8D%A1"><span class="toc-text">13.3 量子化光场与真空 Rabi 振荡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E6%95%B0%E5%80%BC%E5%A4%8D%E7%8E%B0%E4%B8%8E%E8%87%AA%E6%A3%80"><span class="toc-text">14. 数值复现与自检</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%8A%8A%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5%E5%88%86%E6%B8%85%E6%A5%9A"><span class="toc-text">15. 把几个概念分清楚</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%B8%8E%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB"><span class="toc-text">参考与延伸阅读</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试">AOM 双程（Double Pass）光路详解：原理、搭建与调试</a><time datetime="2026-09-19T15:06:09.000Z" title="发表于 2026-09-19 23:06:09">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率">如何在线性刀片阱中测量离子囚禁频率</a><time datetime="2026-09-19T10:30:41.000Z" title="发表于 2026-09-19 18:30:41">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</a><time datetime="2026-09-12T06:22:09.000Z" title="发表于 2026-09-12 14:22:09">2026-09-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/" title="Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导">Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导</a><time datetime="2026-09-12T06:14:35.000Z" title="发表于 2026-09-12 14:14:35">2026-09-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

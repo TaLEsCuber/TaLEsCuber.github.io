@@ -1,0 +1,909 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>光线传输矩阵：从近轴光线到成像系统与激光谐振腔 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从近轴近似与符号约定出发，推导自由传播、薄透镜、球面折射和反射矩阵，解释成像、扩束、4f 中继、厚透镜、高斯光束和谐振腔稳定性，附可复算的数值实例、光路图与 Python 脚本。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从近轴近似与符号约定出发，推导自由传播、薄透镜、球面折射和反射矩阵，解释成像、扩束、4f 中继、厚透镜、高斯光束和谐振腔稳定性，附可复算的数值实例、光路图与 Python 脚本。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/ray-transfer-matrix/00-cover.png">
+<meta property="article:published_time" content="2026-09-21T11:18:03.000Z">
+<meta property="article:modified_time" content="2026-09-21T11:18:03.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="光学">
+<meta property="article:tag" content="矩阵光学">
+<meta property="article:tag" content="激光物理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/ray-transfer-matrix/00-cover.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '光线传输矩阵：从近轴光线到成像系统与激光谐振腔',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-21 19:18:03'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="c30e1ccfc3c07422ad398ce84add2eda58947efad49d93ce73beefd3408e89d5";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>一束光依次经过空气、透镜、玻璃窗口和反射镜，最后落在什么位置？两片透镜相隔多远才能扩束？把一片透镜放进激光谐振腔，腔还稳定吗？</p>
+<p>这些问题看起来各不相同，却可以共享一套计算方法：<strong>用两个数描述光线，用一个二阶矩阵描述光学元件，再把矩阵按传播顺序组合起来。</strong> 这就是光线传输矩阵，也常称为 <strong>ABCD 矩阵</strong>或<strong>近轴矩阵光学</strong>。</p>
+<p>它的价值不只是节省计算。矩阵中的四个元素分别告诉我们：输入的位置和方向如何影响输出的位置和方向；某些元素为零时，还会直接对应成像、准直和无焦系统等物理条件。</p>
+<p><img src="/img/ray-transfer-matrix/00-cover.png" alt="透镜与会聚光线的概念封面"></p>
+<p><em>封面｜使用生图工具制作的光学概念插画，用于引入主题，不表示严格的透镜曲面、比例或实测光路。下文图 1–5 均由公式和明确参数绘制。</em></p>
+<p>本文面向已经接触过几何光学、希望把零散公式组织成统一方法的读者。第 1–6 节建立基本工具，第 7–9 节处理组合系统，第 10–11 节延伸到高斯光束与激光谐振腔，最后给出计算代码与检查方法。只想先解决成像问题，可以读到第 6 节，再看第 12 节。</p>
+<span id="more"></span>
+
+<h2 id="1-为什么一条光线只需要两个数？"><a href="#1-为什么一条光线只需要两个数？" class="headerlink" title="1. 为什么一条光线只需要两个数？"></a>1. 为什么一条光线只需要两个数？</h2><h3 id="1-1-指定参考面，再描述光线"><a href="#1-1-指定参考面，再描述光线" class="headerlink" title="1.1 指定参考面，再描述光线"></a>1.1 指定参考面，再描述光线</h3><p>考虑围绕同一光轴排列的光学系统。让光主要沿 <script type="math/tex">+z</script> 方向传播，在一个包含光轴的平面内，用以下列向量表示光线在某个参考面上的状态：</p>
+<div class="math-display">
+$$
+\mathbf r=\begin{pmatrix}y\\\theta\end{pmatrix}.
+$$
+</div>
+
+<p>这里，<script type="math/tex">y</script> 是光线相对光轴的横向高度，<script type="math/tex">\theta</script> 是光线相对 <script type="math/tex">+z</script> 轴的有向小角度。向上倾斜取正，向下倾斜取负。</p>
+<p><strong>参考面也是描述的一部分。</strong> 同一条直线在不同位置具有相同倾角，但高度可能不同。因此，说“这组透镜的矩阵是多少”之前，必须说清矩阵从哪个面算到哪个面。</p>
+<h3 id="1-2-近轴近似让问题线性化"><a href="#1-2-近轴近似让问题线性化" class="headerlink" title="1.2 近轴近似让问题线性化"></a>1.2 近轴近似让问题线性化</h3><p>光线在均匀介质中精确满足 <script type="math/tex">\Delta y=d\tan\theta</script>。当角度很小时，</p>
+<div class="math-display">
+$$
+\sin\theta\approx\theta,\qquad
+\tan\theta\approx\theta,\qquad
+\cos\theta\approx1.
+$$
+</div>
+
+<p>球面折射的 Snell 定律也可以在小角度下线性化。这样，输出高度和输出角度都是输入高度、输入角度的线性组合。</p>
+<p>近轴并不等于“只要光线离光轴近就行”。还要保证光线方向与局部表面法线之间的相关角度足够小；对曲率半径为 <script type="math/tex">R</script> 的球面，通常也要求 <script type="math/tex">|y/R|\ll1</script>。例如，<script type="math/tex">\theta=0.1\thinspace \mathrm{rad}</script> 时，<script type="math/tex">\tan\theta</script> 相对于 <script type="math/tex">\theta</script> 的偏差约为 0.335%，但这并不代表整个多面系统的误差也只有这个数。</p>
+<p>矩阵光学是<strong>一阶近似</strong>。强聚焦、高数值孔径、大视场和明显像差问题，通常需要更完整的光线追迹或波动光学计算。</p>
+<h3 id="1-3-本文采用的符号约定"><a href="#1-3-本文采用的符号约定" class="headerlink" title="1.3 本文采用的符号约定"></a>1.3 本文采用的符号约定</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>约定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">z</script></td>
+<td>当前展开光路的正向传播坐标</td>
+</tr>
+<tr>
+<td><script type="math/tex">y</script></td>
+<td>光轴上方为正的横向坐标</td>
+</tr>
+<tr>
+<td><script type="math/tex">\theta</script></td>
+<td>近轴有向角，使用弧度</td>
+</tr>
+<tr>
+<td><script type="math/tex">d</script></td>
+<td>沿传播方向的距离；实际前向传播取正</td>
+</tr>
+<tr>
+<td><script type="math/tex">f</script></td>
+<td>薄透镜焦距，会聚为正、发散为负</td>
+</tr>
+<tr>
+<td><script type="math/tex">R</script></td>
+<td>折射面曲率半径：曲率中心位于顶点的 <script type="math/tex">+z</script> 侧时为正</td>
+</tr>
+<tr>
+<td><script type="math/tex">R_m</script></td>
+<td>反射镜在展开光路约定下的曲率半径，迎向入射光的凹面镜取正</td>
+</tr>
+<tr>
+<td><script type="math/tex">n_1,n_2</script></td>
+<td>入射侧与出射侧的折射率</td>
+</tr>
+</tbody></table>
+<p>折射面的 <script type="math/tex">R</script> 与反射镜的 <script type="math/tex">R_m</script> 使用不同的定义语境，不能仅凭同一张实验台照片直接套用相同正负号。反射如何处理，会在第 4 节说明。</p>
+<h2 id="2-ABCD-四个元素分别是什么？"><a href="#2-ABCD-四个元素分别是什么？" class="headerlink" title="2. ABCD 四个元素分别是什么？"></a>2. ABCD 四个元素分别是什么？</h2><p>一个居中、线性的近轴光学系统可以写成</p>
+<div class="math-display">
+$$
+\begin{pmatrix}y_2\\\theta_2\end{pmatrix}
+=\underbrace{\begin{pmatrix}A&B\\C&D\end{pmatrix}}_{M}
+\begin{pmatrix}y_1\\\theta_1\end{pmatrix},
+\qquad
+\begin{cases}
+y_2=Ay_1+B\theta_1,\\
+\theta_2=Cy_1+D\theta_1.
+\end{cases}
+$$
+</div>
+
+<p>四个元素可以理解成四种响应：</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>保持另一输入量不变时的含义</th>
+<th>量纲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">A</script></td>
+<td>输入高度改变，引起多少输出高度变化</td>
+<td>无量纲</td>
+</tr>
+<tr>
+<td><script type="math/tex">B</script></td>
+<td>输入角度改变，引起多少输出高度变化</td>
+<td>长度</td>
+</tr>
+<tr>
+<td><script type="math/tex">C</script></td>
+<td>输入高度改变，引起多少输出角度变化</td>
+<td>长度的倒数</td>
+</tr>
+<tr>
+<td><script type="math/tex">D</script></td>
+<td>输入角度改变，引起多少输出角度变化</td>
+<td>无量纲</td>
+</tr>
+</tbody></table>
+<p>例如，<script type="math/tex">B=0</script> 表示输出高度不依赖输入角度；<script type="math/tex">C=0</script> 表示输出角度不依赖输入高度。这两个条件分别通向“成像”和“无焦”，但它们不是同一回事。</p>
+<p>还可以用两条测试光线理解整个矩阵：</p>
+<ul>
+<li>输入一条与光轴平行、但高度不为零的光线，测得第一列对应的响应。</li>
+<li>输入一条从轴上出发、具有小倾角的光线，测得第二列对应的响应。</li>
+</ul>
+<p>这种分解说明了线性方法的本质：任意近轴光线的输出都可由这两种基本响应叠加得到。</p>
+<h2 id="3-两个最重要的基本矩阵"><a href="#3-两个最重要的基本矩阵" class="headerlink" title="3. 两个最重要的基本矩阵"></a>3. 两个最重要的基本矩阵</h2><h3 id="3-1-均匀介质中的传播"><a href="#3-1-均匀介质中的传播" class="headerlink" title="3.1 均匀介质中的传播"></a>3.1 均匀介质中的传播</h3><p>光线在同一均匀介质内传播物理距离 <script type="math/tex">d</script>，其方向不变，而高度变为</p>
+<div class="math-display">
+$$
+y_2=y_1+d\theta_1,\qquad \theta_2=\theta_1.
+$$
+</div>
+
+<p>因此传播矩阵为</p>
+<div class="math-display">
+$$
+\boxed{T(d)=\begin{pmatrix}1&d\\0&1\end{pmatrix}}.
+$$
+</div>
+
+<p>注意：此处状态向量是 <script type="math/tex">(y,\theta)^{\mathsf T}</script>，所以即使在玻璃内部传播，<script type="math/tex">B</script> 仍然是实际距离 <script type="math/tex">d</script>。有些教材写 <script type="math/tex">d/n</script>，使用的是另一种坐标，见第 5 节。</p>
+<p>例：<script type="math/tex">y_1=1\thinspace \mathrm{mm}</script>、<script type="math/tex">\theta_1=0.020\thinspace \mathrm{rad}</script>，传播 <script type="math/tex">100\thinspace \mathrm{mm}</script> 后，</p>
+<div class="math-display">
+$$
+y_2=1+100\times0.020=3\,\mathrm{mm}.
+$$
+</div>
+
+<h3 id="3-2-薄透镜"><a href="#3-2-薄透镜" class="headerlink" title="3.2 薄透镜"></a>3.2 薄透镜</h3><p>薄透镜近似把折射集中到一个平面，所以光线通过时高度不变。焦距为 <script type="math/tex">f</script> 的薄透镜使方向产生与高度成正比的变化：</p>
+<div class="math-display">
+$$
+y_2=y_1,\qquad
+\theta_2=\theta_1-\frac{y_1}{f}.
+$$
+</div>
+
+<p>于是</p>
+<div class="math-display">
+$$
+\boxed{L(f)=\begin{pmatrix}1&0\\-1/f&1\end{pmatrix}}.
+$$
+</div>
+
+<p>这条角度公式可以由平行入射光检验：若 <script type="math/tex">\theta_1=0</script>、<script type="math/tex">y_1>0</script>、<script type="math/tex">f>0</script>，则出射光应向下倾斜，并在透镜后 <script type="math/tex">f</script> 处到达光轴，恰好有 <script type="math/tex">\theta_2=-y_1/f</script>。对一般入射倾角，再利用近轴系统的线性性叠加即可。</p>
+<p>这个矩阵假定透镜两侧是同一种介质，且 <script type="math/tex">f</script> 是在该介质中的焦距。跨不同介质的组合应从实际折射面开始建模。</p>
+<p><img src="/img/ray-transfer-matrix/01-basic-elements.png" alt="均匀介质传播与薄透镜的光线变化"></p>
+<p><em>图 1｜左：传播把倾角转化为高度变化。右：薄透镜把高度转化为倾角变化。横纵坐标采用不同显示比例，绘图中的可见夹角不是实际近轴角度。</em></p>
+<p>自由传播与薄透镜的矩阵推导也可参阅 <a target="_blank" rel="noopener" href="https://web.mit.edu/6.161/www/Geometric-Optics-9-07.pdf">MIT 几何光学讲义第 2.2 节</a>。本文后续计算均采用上面明确约定的列向量与符号。</p>
+<h2 id="4-折射面与反射镜：符号最容易出错的地方"><a href="#4-折射面与反射镜：符号最容易出错的地方" class="headerlink" title="4. 折射面与反射镜：符号最容易出错的地方"></a>4. 折射面与反射镜：符号最容易出错的地方</h2><h3 id="4-1-平面折射"><a href="#4-1-平面折射" class="headerlink" title="4.1 平面折射"></a>4.1 平面折射</h3><p>对垂直于光轴的平面界面，近轴 Snell 定律给出</p>
+<div class="math-display">
+$$
+n_1\theta_1=n_2\theta_2.
+$$
+</div>
+
+<p>高度连续，因此</p>
+<div class="math-display">
+$$
+P(n_1,n_2)=\begin{pmatrix}1&0\\0&n_1/n_2\end{pmatrix}.
+$$
+</div>
+
+<p>从空气进入更高折射率的玻璃后，倾角减小；从玻璃返回空气后，倾角恢复。如果中间有有限厚度，光线还会发生横向传播，不能只把两个界面相乘。</p>
+<h3 id="4-2-球面折射"><a href="#4-2-球面折射" class="headerlink" title="4.2 球面折射"></a>4.2 球面折射</h3><p>按照第 1 节的曲率约定，球面在高度 <script type="math/tex">y</script> 处的近轴法线方向满足 <script type="math/tex">\alpha\approx-y/R</script>。相对于这条法线，Snell 定律线性化为</p>
+<div class="math-display">
+$$
+n_1(\theta_1-\alpha)=n_2(\theta_2-\alpha).
+$$
+</div>
+
+<p>整理可得</p>
+<div class="math-display">
+$$
+\theta_2=\frac{n_1}{n_2}\theta_1
+-\frac{n_2-n_1}{n_2R}y,
+$$
+$$
+\boxed{S(n_1,n_2,R)=
+\begin{pmatrix}
+1&0\\
+-\dfrac{n_2-n_1}{n_2R}&\dfrac{n_1}{n_2}
+\end{pmatrix}}.
+$$
+</div>
+
+<p>检验极限很有用：<script type="math/tex">R\to\infty</script> 时，它应退化为平面折射矩阵；<script type="math/tex">n_1=n_2</script> 时，它应成为单位矩阵。这两个检查都能帮助发现符号或折射率比例写反的问题。</p>
+<h3 id="4-3-球面镜与展开光路"><a href="#4-3-球面镜与展开光路" class="headerlink" title="4.3 球面镜与展开光路"></a>4.3 球面镜与展开光路</h3><p>光发生反射后会改变主传播方向。为了继续使用“距离沿传播方向为正”的传播矩阵，可以把返回光路展开，并让局部纵轴跟随主光线传播，同时一致地定义横向坐标。</p>
+<p>在这种约定下，近法向入射、凹面曲率半径为正的球面镜满足</p>
+<div class="math-display">
+$$
+\boxed{K(R_m)=\begin{pmatrix}1&0\\-2/R_m&1\end{pmatrix}},
+\qquad f_m=R_m/2.
+$$
+</div>
+
+<p>平面镜对应 <script type="math/tex">R_m\to\infty</script>，局部矩阵为单位矩阵。<strong>这并不表示平面镜没有改变实验室中的传播方向</strong>，而是整体折转已经由坐标展开承担。</p>
+<p>若坚持使用固定实验室坐标，则必须显式处理反向传播与坐标变换，不能把展开矩阵和固定坐标的负距离随意混合。斜入射球面镜还会使切向和弧矢方向的等效聚焦能力不同，应分别建立矩阵。</p>
+<h2 id="5-为什么有时是-θ，有时是-nθ？"><a href="#5-为什么有时是-θ，有时是-nθ？" class="headerlink" title="5. 为什么有时是 θ，有时是 nθ？"></a>5. 为什么有时是 θ，有时是 nθ？</h2><h3 id="5-1-两种状态向量都正确"><a href="#5-1-两种状态向量都正确" class="headerlink" title="5.1 两种状态向量都正确"></a>5.1 两种状态向量都正确</h3><p>除了本文主用的角度坐标，也常见约化角坐标：</p>
+<div class="math-display">
+$$
+\widetilde{\mathbf r}=\begin{pmatrix}y\\n\theta\end{pmatrix},
+\qquad
+Q(n)=\begin{pmatrix}1&0\\0&n\end{pmatrix}.
+$$
+</div>
+
+<p>若原矩阵从折射率 <script type="math/tex">n_{\mathrm{in}}</script> 的输入面映射到 <script type="math/tex">n_{\mathrm{out}}</script> 的输出面，那么</p>
+<div class="math-display">
+$$
+\widetilde M=Q(n_{\mathrm{out}})M Q(n_{\mathrm{in}})^{-1}.
+$$
+</div>
+
+<p>据此直接得到</p>
+<div class="math-display">
+$$
+\widetilde T(d,n)=\begin{pmatrix}1&d/n\\0&1\end{pmatrix},
+\qquad
+\widetilde S(n_1,n_2,R)=
+\begin{pmatrix}1&0\\-(n_2-n_1)/R&1\end{pmatrix}.
+$$
+</div>
+
+<p>平面折射在约化角坐标下则是单位矩阵，因为 <script type="math/tex">n\theta</script> 连续。这就是不同教材中传播矩阵看起来相差一个 <script type="math/tex">n</script> 的原因。</p>
+<h3 id="5-2-行列式是很好的检查工具"><a href="#5-2-行列式是很好的检查工具" class="headerlink" title="5.2 行列式是很好的检查工具"></a>5.2 行列式是很好的检查工具</h3><p>对本文讨论的这些理想近轴元件，使用 <script type="math/tex">(y,\theta)</script> 时，各折射面的行列式为 <script type="math/tex">n_1/n_2</script>，传播段与透镜的行列式为 1。沿光路相乘后，中间介质的折射率依次约去，所以</p>
+<div class="math-display">
+$$
+\boxed{\det M=AD-BC=\frac{n_{\mathrm{in}}}{n_{\mathrm{out}}}}.
+$$
+</div>
+
+<p>采用 <script type="math/tex">(y,n\theta)</script> 后则有 <script type="math/tex">\det\widetilde M=1</script>。当输入、输出处于同一种介质时，两种坐标的矩阵行列式都为 1。</p>
+<p>行列式约束描述的是几何映射性质，<strong>不等同于光功率透过率为 100%</strong>。即使透镜有反射或吸收损耗，其几何光线矩阵仍可满足上述关系；光功率、孔径截断与镀膜效率需要另行计算。两种坐标与行列式关系也见 <a target="_blank" rel="noopener" href="https://www.rp-photonics.com/abcd_matrix.html">RP Photonics 的 ABCD Matrix 条目</a>。</p>
+<h2 id="6-矩阵乘法顺序，以及成像条件的推导"><a href="#6-矩阵乘法顺序，以及成像条件的推导" class="headerlink" title="6. 矩阵乘法顺序，以及成像条件的推导"></a>6. 矩阵乘法顺序，以及成像条件的推导</h2><h3 id="6-1-先遇到的元件写在最右边"><a href="#6-1-先遇到的元件写在最右边" class="headerlink" title="6.1 先遇到的元件写在最右边"></a>6.1 先遇到的元件写在最右边</h3><p>如果光依次经历 <script type="math/tex">M_1,M_2,M_3</script>，那么</p>
+<div class="math-display">
+$$
+\mathbf r_{\mathrm{out}}=M_3M_2M_1\mathbf r_{\mathrm{in}}.
+$$
+</div>
+
+<p>原因很简单：最右边的矩阵最先作用于输入列向量。以“先传播，再过透镜”为例，</p>
+<div class="math-display">
+$$
+L(f)T(d)=\begin{pmatrix}1&d\\-1/f&1-d/f\end{pmatrix},
+$$
+$$
+T(d)L(f)=\begin{pmatrix}1-d/f&d\\-1/f&1\end{pmatrix}.
+$$
+</div>
+
+<p>这两个矩阵一般不相等。先走到透镜所在位置，再接受折射，与先被透镜折射，再传播一段距离，本来就是不同的物理过程。</p>
+<h3 id="6-2-为什么成像对应-B-0？"><a href="#6-2-为什么成像对应-B-0？" class="headerlink" title="6.2 为什么成像对应 B &#x3D; 0？"></a>6.2 为什么成像对应 B &#x3D; 0？</h3><p>固定物面上的一个点 <script type="math/tex">y_1</script>。它可以向不同角度发出光线。如果这些光线在像面汇聚到同一点，则输出高度 <script type="math/tex">y_2</script> 不应随输入角度变化。</p>
+<p>由 <script type="math/tex">y_2=Ay_1+B\theta_1</script> 可知，两个选定参考面互为共轭面的条件是</p>
+<div class="math-display">
+$$
+\boxed{B=0},\qquad
+\boxed{m=\frac{y_2}{y_1}=A}.
+$$
+</div>
+
+<p>这里的 <script type="math/tex">m</script> 是有符号横向放大率，<script type="math/tex">m<0</script> 表示倒像。条件针对完整的“物面到像面”矩阵，而不是仅针对透镜本体。</p>
+<h3 id="6-3-用矩阵重新得到薄透镜公式"><a href="#6-3-用矩阵重新得到薄透镜公式" class="headerlink" title="6.3 用矩阵重新得到薄透镜公式"></a>6.3 用矩阵重新得到薄透镜公式</h3><p>设实物在透镜前距离 <script type="math/tex">s>0</script> 处，待求实像面在透镜后距离 <script type="math/tex">s'>0</script> 处，则</p>
+<div class="math-display">
+$$
+M=T(s')L(f)T(s)
+=\begin{pmatrix}
+1-s'/f&s+s'-ss'/f\\
+-1/f&1-s/f
+\end{pmatrix}.
+$$
+</div>
+
+<p>令 <script type="math/tex">B=0</script>，就有</p>
+<div class="math-display">
+$$
+\boxed{\frac1s+\frac1{s'}=\frac1f},\qquad
+m=1-\frac{s'}f=-\frac{s'}s.
+$$
+</div>
+
+<p>虚像时，求得的 <script type="math/tex">s'<0</script> 表示把出射光反向延长到一个虚参考面，不表示光实际在这一段倒着传播。</p>
+<h3 id="6-4-完整数值算例"><a href="#6-4-完整数值算例" class="headerlink" title="6.4 完整数值算例"></a>6.4 完整数值算例</h3><p>取 <script type="math/tex">f=100\thinspace \mathrm{mm}</script>、<script type="math/tex">s=150\thinspace \mathrm{mm}</script>，可得 <script type="math/tex">s'=300\thinspace \mathrm{mm}</script>、<script type="math/tex">m=-2</script>。采用毫米与弧度，矩阵为</p>
+<div class="math-display">
+$$
+M=\begin{pmatrix}
+-2&0\,\mathrm{mm}\\
+-0.01\,\mathrm{mm}^{-1}&-0.5
+\end{pmatrix}.
+$$
+</div>
+
+<p>对于高度 <script type="math/tex">2\thinspace \mathrm{mm}</script> 的物点，选取三种发射角并逐段计算：</p>
+<table>
+<thead>
+<tr>
+<th>输入角度 &#x2F; rad</th>
+<th>到达透镜时的高度 &#x2F; mm</th>
+<th>出透镜角度 &#x2F; rad</th>
+<th>像面高度 &#x2F; mm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">-0.020</script></td>
+<td><script type="math/tex">-1</script></td>
+<td><script type="math/tex">-0.010</script></td>
+<td><script type="math/tex">-4</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">0</script></td>
+<td><script type="math/tex">2</script></td>
+<td><script type="math/tex">-0.020</script></td>
+<td><script type="math/tex">-4</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">+0.020</script></td>
+<td><script type="math/tex">5</script></td>
+<td><script type="math/tex">-0.030</script></td>
+<td><script type="math/tex">-4</script></td>
+</tr>
+</tbody></table>
+<p>三个方向不同的光线最终都到达 <script type="math/tex">-4\thinspace \mathrm{mm}</script>，这正是成像。这里默认透镜口径足以接收这些光线。</p>
+<p><img src="/img/ray-transfer-matrix/02-imaging.png" alt="三条光线从同一物点传播并在像面相交"></p>
+<p><em>图 2｜物距 150 mm、像距 300 mm、焦距 100 mm 的成像系统。示意图对横向高度作了视觉放大。矩阵中的 B 为零，保证同一物点的不同近轴出射方向对应同一像点。</em></p>
+<h2 id="7-从一个系统矩阵读出焦点与无焦条件"><a href="#7-从一个系统矩阵读出焦点与无焦条件" class="headerlink" title="7. 从一个系统矩阵读出焦点与无焦条件"></a>7. 从一个系统矩阵读出焦点与无焦条件</h2><p>假定输入与输出介质相同，系统在选定参考面之间的矩阵为 <script type="math/tex">M</script>，并且 <script type="math/tex">C\ne0</script>。</p>
+<h3 id="7-1-后焦距与有效焦距为什么不同？"><a href="#7-1-后焦距与有效焦距为什么不同？" class="headerlink" title="7.1 后焦距与有效焦距为什么不同？"></a>7.1 后焦距与有效焦距为什么不同？</h3><p>让一束轴向平行光入射，即 <script type="math/tex">\theta_1=0</script>。系统出口处有 <script type="math/tex">y_2=Ay_1</script>、<script type="math/tex">\theta_2=Cy_1</script>。再向前传播 <script type="math/tex">z</script> 后，</p>
+<div class="math-display">
+$$
+y(z)=(A+zC)y_1.
+$$
+</div>
+
+<p>所有高度的轴向平行光在 <script type="math/tex">y(z)=0</script> 处相交，故从输出参考面量起的后焦点距离为</p>
+<div class="math-display">
+$$
+\boxed{\mathrm{BFL}=-\frac AC}.
+$$
+</div>
+
+<p>而同介质系统的有效焦距为</p>
+<div class="math-display">
+$$
+\boxed{f_{\mathrm{eff}}=-\frac1C}.
+$$
+</div>
+
+<p>有效焦距从主平面量起；后焦距从选定的出口面量起。只有出口面恰好与后主平面重合时，这两个数才相同。类似地，若物点位于输入面前方距离 <script type="math/tex">s</script>，要求输出准直，则 <script type="math/tex">Cs+D=0</script>，即 <script type="math/tex">s=-D/C</script>。</p>
+<p>这些简式中的 <script type="math/tex">f_{\mathrm{eff}}=-1/C</script> 假定两侧介质相同。两侧折射率不同时，应区分物方与像方焦距。</p>
+<h3 id="7-2-C-0：无焦系统"><a href="#7-2-C-0：无焦系统" class="headerlink" title="7.2 C &#x3D; 0：无焦系统"></a>7.2 C &#x3D; 0：无焦系统</h3><p>当 <script type="math/tex">C=0</script> 时，<script type="math/tex">\theta_2=D\theta_1</script>。对于同一方向的平行入射光，不同入射高度仍对应相同出射方向，因此系统是无焦的。</p>
+<p>轴向平行输入时，输出高度变为 <script type="math/tex">Ay_1</script>，光束几何直径放大倍数为 <script type="math/tex">|A|</script>；小角度的角放大率为 <script type="math/tex">D</script>。在同介质系统中，行列式条件给出 <script type="math/tex">AD=1</script>：横向扩展与角度缩小互相对应。</p>
+<p>其他两个零元素也有用途：<script type="math/tex">A=0</script> 表示输出位置只取决于输入角度；<script type="math/tex">D=0</script> 表示输出角度只取决于输入位置。这些特征在焦平面映射中尤其清楚。</p>
+<h2 id="8-两片透镜：等效焦距、扩束器和-4f-系统"><a href="#8-两片透镜：等效焦距、扩束器和-4f-系统" class="headerlink" title="8. 两片透镜：等效焦距、扩束器和 4f 系统"></a>8. 两片透镜：等效焦距、扩束器和 4f 系统</h2><h3 id="8-1-两片薄透镜的等效焦距"><a href="#8-1-两片薄透镜的等效焦距" class="headerlink" title="8.1 两片薄透镜的等效焦距"></a>8.1 两片薄透镜的等效焦距</h3><p>两片薄透镜的焦距分别为 <script type="math/tex">f_1,f_2</script>，间隔为 <script type="math/tex">d</script>。参考面选在第一片透镜前与第二片透镜后，则</p>
+<div class="math-display">
+$$
+M=L(f_2)T(d)L(f_1)
+=\begin{pmatrix}
+1-d/f_1&d\\
+-1/f_1-1/f_2+d/(f_1f_2)&1-d/f_2
+\end{pmatrix}.
+$$
+</div>
+
+<p>因此</p>
+<div class="math-display">
+$$
+\boxed{\frac1{f_{\mathrm{eff}}}
+=\frac1{f_1}+\frac1{f_2}-\frac d{f_1f_2}}.
+$$
+</div>
+
+<p>当 <script type="math/tex">d=0</script> 时，两片薄透镜的光焦度相加；当间距不可忽略时，必须保留最后一项。</p>
+<h3 id="8-2-无焦扩束器"><a href="#8-2-无焦扩束器" class="headerlink" title="8.2 无焦扩束器"></a>8.2 无焦扩束器</h3><p>令 <script type="math/tex">C=0</script>，得到</p>
+<div class="math-display">
+$$
+d=f_1+f_2,\qquad
+M_{\mathrm{tel}}=
+\begin{pmatrix}
+-f_2/f_1&f_1+f_2\\
+0&-f_1/f_2
+\end{pmatrix}.
+$$
+</div>
+
+<p>例如，<script type="math/tex">f_1=50\thinspace \mathrm{mm}</script>、<script type="math/tex">f_2=150\thinspace \mathrm{mm}</script>，间距取 <script type="math/tex">200\thinspace \mathrm{mm}</script>，轴向平行光的直径放大 3 倍，角度响应缩小为原来的 <script type="math/tex">1/3</script>。两个焦距都为正时，是开普勒式结构；若第一片为负透镜且 <script type="math/tex">f_1+f_2>0</script>，则可构成伽利略式结构。</p>
+<p>这里 <script type="math/tex">B=f_1+f_2</script> 并不为零，所以“从第一片透镜面到第二片透镜面”并不是成像映射。<strong>平行光进、平行光出，不能自动推出任意物面都成像。</strong> 对真实高斯光束，还要进一步检查波前曲率与束腰位置；几何无焦条件不保证任意输入高斯光束在指定出口面都具有平波前。</p>
+<h3 id="8-3-4f-中继为什么变成对角矩阵？"><a href="#8-3-4f-中继为什么变成对角矩阵？" class="headerlink" title="8.3 4f 中继为什么变成对角矩阵？"></a>8.3 4f 中继为什么变成对角矩阵？</h3><p>现在把输入面移到第一片透镜的前焦面，把输出面移到第二片透镜的后焦面，两片透镜仍相隔 <script type="math/tex">f_1+f_2</script>。完整矩阵为</p>
+<div class="math-display">
+$$
+M_{4f}=T(f_2)L(f_2)T(f_1+f_2)L(f_1)T(f_1)
+=\boxed{\begin{pmatrix}-f_2/f_1&0\\0&-f_1/f_2\end{pmatrix}}.
+$$
+</div>
+
+<p>此时既有 <script type="math/tex">B=0</script>，又有 <script type="math/tex">C=0</script>，实现横向倍率为 <script type="math/tex">-f_2/f_1</script> 的中继成像。总物像距离为 <script type="math/tex">2(f_1+f_2)</script>；当 <script type="math/tex">f_1=f_2=f</script> 时正好是 <script type="math/tex">4f</script>，名称由此而来，不同焦距的对应布局也常称为 4f 系统。</p>
+<p><img src="/img/ray-transfer-matrix/03-4f-relay.png" alt="两片透镜构成的4f中继系统"></p>
+<p><em>图 3｜f₁ &#x3D; 100 mm、f₂ &#x3D; 200 mm 的 4f 中继。从物面到像面的矩阵为 diag(−2, −1&#x2F;2)。中间的共同焦平面位于第一片透镜后 100 mm、第二片透镜前 200 mm。</em></p>
+<p>单片透镜从前焦面到后焦面的矩阵为</p>
+<div class="math-display">
+$$
+T(f)L(f)T(f)=\begin{pmatrix}0&f\\-1/f&0\end{pmatrix}.
+$$
+</div>
+
+<p>输出位置 <script type="math/tex">y_2=f\theta_1</script> 只依赖输入角度，直观呈现了位置与角度之间的交换。在标量、相干、近轴波动光学中，理想透镜的这一焦平面映射对应带比例因子与整体相位的傅里叶变换。<strong>仅靠两条几何光线并不能计算衍射强度或滤波结果</strong>，那一步还需要对光场进行传播积分。</p>
+<h2 id="9-厚透镜：把两个折射面拆开"><a href="#9-厚透镜：把两个折射面拆开" class="headerlink" title="9. 厚透镜：把两个折射面拆开"></a>9. 厚透镜：把两个折射面拆开</h2><p>如果透镜厚度不可忽略，不必重新发明方法，只需把元件写成“前表面折射—内部传播—后表面折射”。</p>
+<p>设透镜处于空气中，折射率为 <script type="math/tex">n</script>，中心厚度为 <script type="math/tex">t</script>，两个表面的曲率半径为 <script type="math/tex">R_1,R_2</script>。从前顶点面到后顶点面，</p>
+<div class="math-display">
+$$
+M_{\mathrm{thick}}=S(n,1,R_2)T(t)S(1,n,R_1).
+$$
+</div>
+
+<p>展开可得</p>
+<div class="math-display">
+$$
+\begin{aligned}
+A&=1-\frac{(n-1)t}{nR_1},\qquad B=\frac tn,\\
+C&=-(n-1)\left(\frac1{R_1}-\frac1{R_2}
++\frac{(n-1)t}{nR_1R_2}\right),\\
+D&=1+\frac{(n-1)t}{nR_2}.
+\end{aligned}
+$$
+</div>
+
+<p>因此空气中的厚透镜制镜公式为</p>
+<div class="math-display">
+$$
+\frac1{f_{\mathrm{eff}}}=(n-1)
+\left(\frac1{R_1}-\frac1{R_2}
++\frac{(n-1)t}{nR_1R_2}\right).
+$$
+</div>
+
+<p>这里 <script type="math/tex">B=t/n</script> 是整个“空气—透镜—空气”系统的结果；内部传播这一个步骤仍使用 <script type="math/tex">T(t)</script>，并没有中途切换坐标。</p>
+<p>取 <script type="math/tex">n=1.5</script>、<script type="math/tex">R_1=50\thinspace \mathrm{mm}</script>、<script type="math/tex">R_2=-50\thinspace \mathrm{mm}</script>、<script type="math/tex">t=5\thinspace \mathrm{mm}</script>，得到</p>
+<div class="math-display">
+$$
+M_{\mathrm{thick}}\approx
+\begin{pmatrix}0.966667&3.333333\,\mathrm{mm}\\
+-0.019667\,\mathrm{mm}^{-1}&0.966667\end{pmatrix},
+$$
+$$
+f_{\mathrm{eff}}\approx50.847\,\mathrm{mm},\qquad
+\mathrm{BFL}\approx49.153\,\mathrm{mm}.
+$$
+</div>
+
+<p>后主平面因此位于后顶点前约 <script type="math/tex">1.695\thinspace \mathrm{mm}</script> 处。这个简单例子说明，拿透镜的有效焦距直接当作镜片后表面到焦点的距离，会产生可观的装调偏差。</p>
+<p>同介质、<script type="math/tex">C\ne0</script> 时还可分解为</p>
+<div class="math-display">
+$$
+M=T(b)L(f_{\mathrm{eff}})T(a),\qquad
+a=\frac{D-1}{C},\quad b=\frac{A-1}{C}.
+$$
+</div>
+
+<p>其中前主平面位于输入面之后的有向距离 <script type="math/tex">a</script> 处，后主平面位于输出面之前的有向距离 <script type="math/tex">b</script> 处。主平面是等效描述中的参考面，可能位于玻璃内部，也可能位于系统之外；分解中的距离不必都对应真实的空气段。</p>
+<h2 id="10-从光线推广到高斯光束"><a href="#10-从光线推广到高斯光束" class="headerlink" title="10. 从光线推广到高斯光束"></a>10. 从光线推广到高斯光束</h2><h3 id="10-1-光束不是一条光线"><a href="#10-1-光束不是一条光线" class="headerlink" title="10.1 光束不是一条光线"></a>10.1 光束不是一条光线</h3><p>几何光学中的平行光经过理想透镜，可以会聚到一个点；真实激光束受衍射限制，焦点处仍有有限尺寸。若光场可以近似为理想基模高斯光束，ABCD 矩阵还能描述其束宽与波前曲率的共同演化。</p>
+<p>定义复光束参数</p>
+<div class="math-display">
+$$
+\frac1q=\frac1{R_b}-i\frac{\lambda_0}{\pi n w^2}.
+$$
+</div>
+
+<script type="math/tex">R_b</script> 是波前曲率半径，不是透镜或反射镜的曲率半径；<script type="math/tex">w</script> 是强度降到轴上值 <script type="math/tex">1/e^2</script> 时的半径；<script type="math/tex">\lambda_0</script> 是真空波长。本文选取 <script type="math/tex">\operatorname{Im}q>0</script> 的约定。
+
+<p>在均匀介质中，若束腰位于 <script type="math/tex">z=0</script>，</p>
+<div class="math-display">
+$$
+q(z)=z+iz_R,\qquad
+z_R=\frac{\pi n w_0^2}{\lambda_0},\qquad
+w(z)=w_0\sqrt{1+(z/z_R)^2}.
+$$
+</div>
+
+<h3 id="10-2-ABCD-定律"><a href="#10-2-ABCD-定律" class="headerlink" title="10.2 ABCD 定律"></a>10.2 ABCD 定律</h3><p>使用与 <script type="math/tex">(y,\theta)</script> 对应的矩阵时，复光束参数满足</p>
+<div class="math-display">
+$$
+\boxed{q_2=\frac{Aq_1+B}{Cq_1+D}}.
+$$
+</div>
+
+<p>对于传播与薄透镜，分别化为</p>
+<div class="math-display">
+$$
+q_2=q_1+d,\qquad
+\frac1{q_2}=\frac1{q_1}-\frac1f.
+$$
+</div>
+
+<p>后一式表示：理想薄透镜处光束半径连续，但波前曲率发生变化。由输出 <script type="math/tex">q</script> 可直接提取</p>
+<div class="math-display">
+$$
+\frac1{R_b}=\operatorname{Re}\!\left(\frac1q\right),\qquad
+w=\sqrt{-\frac{\lambda_0}{\pi n\operatorname{Im}(1/q)}}.
+$$
+</div>
+
+<p>ABCD 定律的波动光学推导可参阅 <a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/6-974-fundamentals-of-photonics-quantum-electronics-spring-2006/e9852c138493233bc2813f683da5b199_gaussian_bem_res.pdf">MIT《Gaussian Beams and Resonators》讲义</a>。它建立在近轴高斯场的传播性质上，不能仅由“光线也使用这个矩阵”直接断言。</p>
+<p>如果改用 <script type="math/tex">(y,n\theta)</script> 的矩阵，应同时改用约化参数 <script type="math/tex">\widetilde q=q/n</script>，再写同样形式的分式变换。只改矩阵、不改光束参数，会在介质界面处出错。</p>
+<h3 id="10-3-算例：透镜放在原束腰处"><a href="#10-3-算例：透镜放在原束腰处" class="headerlink" title="10.3 算例：透镜放在原束腰处"></a>10.3 算例：透镜放在原束腰处</h3><p>取空气中的高斯光束，<script type="math/tex">\lambda_0=632.8\thinspace \mathrm{nm}</script>，原束腰半径 <script type="math/tex">w_0=0.300\thinspace \mathrm{mm}</script>，把 <script type="math/tex">f=100\thinspace \mathrm{mm}</script> 的薄透镜放在这个束腰平面。此时</p>
+<div class="math-display">
+$$
+z_R=\frac{\pi w_0^2}{\lambda_0}\approx446.81\,\mathrm{mm},\qquad q_1=iz_R.
+$$
+</div>
+
+<p>代入透镜矩阵，得到</p>
+<div class="math-display">
+$$
+q_2=\frac{iz_R}{1-iz_R/f}
+=-\frac{fz_R^2}{f^2+z_R^2}
++i\frac{f^2z_R}{f^2+z_R^2}.
+$$
+</div>
+
+<p>再传播距离 <script type="math/tex">z</script> 时，<script type="math/tex">q(z)=q_2+z</script>。新束腰对应实部为零，因此</p>
+<div class="math-display">
+$$
+z_{\mathrm{waist}}=\frac{fz_R^2}{f^2+z_R^2}\approx95.23\,\mathrm{mm},
+$$
+$$
+w_0'=\frac{w_0 f}{\sqrt{f^2+z_R^2}}\approx65.52\,\mu\mathrm m.
+$$
+</div>
+
+<p>新束腰位于透镜后约 95.23 mm，并不正好在几何后焦面 100 mm。只有 <script type="math/tex">z_R\gg f</script> 时，才可近似取 <script type="math/tex">z_{\mathrm{waist}}\approx f</script>，以及 <script type="math/tex">w_0'\approx\lambda_0f/(\pi w_0)</script>。</p>
+<p><img src="/img/ray-transfer-matrix/04-gaussian-focus.png" alt="高斯光束半径包络与几何会聚光线的比较"></p>
+<p><em>图 4｜实线是 ABCD 定律计算的高斯光束 1&#x2F;e² 强度半径包络，虚线是平行几何光线的会聚参考。高斯包络不是单条光线，其最小半径保持有限，位置也可与几何焦点不同。</em></p>
+<p>这也解释了为什么高斯束腰匹配不能总靠薄透镜成像公式完成。束腰的变换依赖其瑞利长度，而普通物点成像没有这个参数。</p>
+<h2 id="11-激光谐振腔：往返后能否保持自身？"><a href="#11-激光谐振腔：往返后能否保持自身？" class="headerlink" title="11. 激光谐振腔：往返后能否保持自身？"></a>11. 激光谐振腔：往返后能否保持自身？</h2><h3 id="11-1-先写对往返矩阵"><a href="#11-1-先写对往返矩阵" class="headerlink" title="11.1 先写对往返矩阵"></a>11.1 先写对往返矩阵</h3><p>考虑两面凹球面镜构成的空气腔，镜间距为 <script type="math/tex">L</script>，曲率半径为 <script type="math/tex">R_1,R_2</script>，均按面向腔内为凹面时取正。参考面选在镜 1 反射之后、向镜 2 出发的位置。</p>
+<p>一次往返依次是：传播到镜 2、在镜 2 反射、返回镜 1、在镜 1 反射。因此展开光路中的往返矩阵为</p>
+<div class="math-display">
+$$
+M_{\mathrm{rt}}=K(R_1)T(L)K(R_2)T(L)
+=\begin{pmatrix}A&B\\C&D\end{pmatrix}.
+$$
+</div>
+
+<p>必须比较“同一参考面、同一传播方向”的状态。只算单程传播，或比较一个方向相反的状态，都不能直接使用下面的往返稳定判据。</p>
+<h3 id="11-2-稳定性为什么由迹决定？"><a href="#11-2-稳定性为什么由迹决定？" class="headerlink" title="11.2 稳定性为什么由迹决定？"></a>11.2 稳定性为什么由迹决定？</h3><p>多次往返对应 <script type="math/tex">M_{\mathrm{rt}}^N</script>。因为 <script type="math/tex">\det M_{\mathrm{rt}}=1</script>，其特征值 <script type="math/tex">\mu</script> 满足</p>
+<div class="math-display">
+$$
+\mu^2-(A+D)\mu+1=0.
+$$
+</div>
+
+<p>记 <script type="math/tex">\chi=(A+D)/2</script>，则 <script type="math/tex">\mu_\pm=\chi\pm\sqrt{\chi^2-1}</script>。</p>
+<ul>
+<li>若 <script type="math/tex">|\chi|<1</script>，两个特征值是单位圆上的不同共轭复数，近轴光线在理想线性模型中保持有界，处于严格稳定区。</li>
+<li>若 <script type="math/tex">|\chi|>1</script>，至少一个特征值的模大于 1，一般扰动随往返次数增长。</li>
+<li>若 <script type="math/tex">|\chi|=1</script>，是边界，必须检查矩阵本身，不能仅凭特征值模长为 1 就宣称稳定。</li>
+</ul>
+<p>因此严格稳定判据是</p>
+<div class="math-display">
+$$
+\boxed{\left|\frac{A+D}{2}\right|\lt 1}.
+$$
+</div>
+
+<p>理想几何稳定也不代表真实腔一定低损耗；镜片有限口径、衍射、吸收、热效应和机械失调仍会影响工作状态。</p>
+<h3 id="11-3-g-参数与边界"><a href="#11-3-g-参数与边界" class="headerlink" title="11.3 g 参数与边界"></a>11.3 g 参数与边界</h3><p>定义</p>
+<div class="math-display">
+$$
+g_1=1-\frac L{R_1},\qquad g_2=1-\frac L{R_2}.
+$$
+</div>
+
+<p>直接展开往返矩阵可得 <script type="math/tex">\chi=2g_1g_2-1</script>，所以严格稳定区为</p>
+<div class="math-display">
+$$
+\boxed{0\lt g_1g_2\lt 1}.
+$$
+</div>
+
+<p>一些资料把边界一并写成 <script type="math/tex">0\le g_1g_2\le1</script>。使用时应区分稳定区内部与退化边界：</p>
+<ul>
+<li><strong>平行平面镜腔：</strong> <script type="math/tex">g_1g_2=1</script>，往返矩阵为 <script type="math/tex">T(2L)</script>，初始角度造成横向位置随往返次数线性漂移。</li>
+<li><strong>对称共焦腔：</strong> <script type="math/tex">R_1=R_2=L</script>，<script type="math/tex">g_1g_2=0</script>，往返矩阵恰为 <script type="math/tex">-I</script>，理想近轴光线每两次往返复现。因此不能把所有 <script type="math/tex">g_1g_2=0</script> 的情况都说成光线必然发散。</li>
+</ul>
+<p>共焦点是退化边界，不属于上面的严格稳定区。其实际模式选择、简并和对不同方向参数扰动的响应需要额外分析。对于一般边界矩阵，如果它不是 <script type="math/tex">+I</script> 或 <script type="math/tex">-I</script>，重复作用还可能因非平凡 Jordan 结构而产生线性增长。</p>
+<p><img src="/img/ray-transfer-matrix/05-cavity-stability.png" alt="双球面镜腔的严格稳定区与边界"></p>
+<p><em>图 5｜着色区域满足 0 &lt; g₁g₂ &lt; 1，虚线为需要单独分析的边界。橙色点是本文 L &#x3D; 200 mm、R₁ &#x3D; R₂ &#x3D; 300 mm 的算例。</em></p>
+<h3 id="11-4-用自洽条件求腔模"><a href="#11-4-用自洽条件求腔模" class="headerlink" title="11.4 用自洽条件求腔模"></a>11.4 用自洽条件求腔模</h3><p>腔内高斯模式完成一次往返后，复光束参数应保持不变：</p>
+<div class="math-display">
+$$
+q=\frac{Aq+B}{Cq+D}
+\quad\Longrightarrow\quad
+\boxed{Cq^2+(D-A)q-B=0}.
+$$
+</div>
+
+<p>在非退化稳定情况下，求解后选择满足本文约定 <script type="math/tex">\operatorname{Im}q>0</script> 的根，再由 <script type="math/tex">1/q</script> 得到参考面上的束宽与波前曲率。若矩阵恰为 <script type="math/tex">\pm I</script>，这个方程退化成恒等式，仅凭往返矩阵无法唯一选出 <script type="math/tex">q</script>，这正是边界需要额外分析的另一个表现。</p>
+<p>取 <script type="math/tex">L=200\thinspace \mathrm{mm}</script>、<script type="math/tex">R_1=R_2=300\thinspace \mathrm{mm}</script>，则</p>
+<div class="math-display">
+$$
+g_1=g_2=\frac13,\qquad g_1g_2=\frac19,
+\qquad \chi=-\frac79.
+$$
+</div>
+
+<p>它位于严格稳定区。由于对称性，束腰位于腔中心，瑞利长度为</p>
+<div class="math-display">
+$$
+z_R=\sqrt{\frac L2\left(R_1-\frac L2\right)}
+\approx141.42\,\mathrm{mm}.
+$$
+</div>
+
+<p>在镜 1 反射后参考面，<script type="math/tex">q=-100+i\thinspace 141.42\thinspace \mathrm{mm}</script>。采用 <script type="math/tex">632.8\thinspace \mathrm{nm}</script> 波长，束腰半径约为 <script type="math/tex">0.169\thinspace \mathrm{mm}</script>。把该 <script type="math/tex">q</script> 代回往返分式变换，可以直接核验它确实保持不变。</p>
+<h2 id="12-用-Python-复现计算"><a href="#12-用-Python-复现计算" class="headerlink" title="12. 用 Python 复现计算"></a>12. 用 Python 复现计算</h2><p>下面采用毫米与弧度，列表中的元件按<strong>光实际遇到的顺序</strong>排列。每加入一个新元件，都从左侧乘到累计矩阵上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">propagation</span>(<span class="params">d</span>):</span><br><span class="line">    <span class="keyword">return</span> np.array([[<span class="number">1.0</span>, d], [<span class="number">0.0</span>, <span class="number">1.0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">thin_lens</span>(<span class="params">f</span>):</span><br><span class="line">    <span class="keyword">return</span> np.array([[<span class="number">1.0</span>, <span class="number">0.0</span>], [-<span class="number">1.0</span> / f, <span class="number">1.0</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">system</span>(<span class="params">elements</span>):</span><br><span class="line">    total = np.eye(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> elements:  <span class="comment"># 实际遇到的先后顺序</span></span><br><span class="line">        total = element @ total</span><br><span class="line">    <span class="keyword">return</span> total</span><br><span class="line"></span><br><span class="line">M = system([</span><br><span class="line">    propagation(<span class="number">150.0</span>),</span><br><span class="line">    thin_lens(<span class="number">100.0</span>),</span><br><span class="line">    propagation(<span class="number">300.0</span>),</span><br><span class="line">])</span><br><span class="line"><span class="built_in">print</span>(M)</span><br><span class="line"><span class="comment"># [[-2.    0.  ]</span></span><br><span class="line"><span class="comment">#  [-0.01 -0.5 ]]</span></span><br><span class="line"></span><br><span class="line">ray_in = np.array([<span class="number">2.0</span>, <span class="number">0.02</span>])  <span class="comment"># mm, rad</span></span><br><span class="line"><span class="built_in">print</span>(M @ ray_in)              <span class="comment"># [-4.   -0.03]</span></span><br><span class="line"></span><br><span class="line">q_in = <span class="number">1j</span> * np.pi * <span class="number">0.3</span>**<span class="number">2</span> / <span class="number">0.0006328</span></span><br><span class="line">A, B, C, D = thin_lens(<span class="number">100.0</span>).ravel()</span><br><span class="line">q_out = (A * q_in + B) / (C * q_in + D)</span><br><span class="line">waist_position = -q_out.real</span><br><span class="line">waist_radius = np.sqrt(<span class="number">0.0006328</span> * q_out.imag / np.pi)</span><br><span class="line"><span class="built_in">print</span>(waist_position, waist_radius)  <span class="comment"># mm, mm</span></span><br></pre></td></tr></table></figure>
+
+<p>本文另附<a href="/downloads/ray-transfer-matrix/figures-and-checks.py">配图与数值核验脚本</a>及<a href="/downloads/ray-transfer-matrix/validation.json">核验结果</a>。脚本使用 NumPy 与 Matplotlib，按本仓库的目录结构保存图 1–5 的 PNG 与 SVG；中文字体优先使用 Microsoft YaHei 或 SimHei。下载到其他目录运行时，可修改脚本开头的输出路径。</p>
+<p>核验除了直接做矩阵乘法，还包括逐段光线几何、球面 Snell 定律的小角度极限、厚透镜制镜公式、高斯束腰解析式以及谐振腔自洽条件。它们能检查本文算例与实现是否一致，但不能替代真实器件的误差建模。</p>
+<h2 id="13-适用范围与常见错误"><a href="#13-适用范围与常见错误" class="headerlink" title="13. 适用范围与常见错误"></a>13. 适用范围与常见错误</h2><h3 id="13-1-它能解决什么，不能单独解决什么？"><a href="#13-1-它能解决什么，不能单独解决什么？" class="headerlink" title="13.1 它能解决什么，不能单独解决什么？"></a>13.1 它能解决什么，不能单独解决什么？</h3><p>ABCD 方法适合做近轴系统的一阶设计：成像位置、横向倍率、等效光焦度、束腰匹配、热透镜的一阶影响与谐振腔几何稳定性，都可以纳入同一框架。</p>
+<p>有几类问题需要增加描述：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>为什么二阶矩阵不够</th>
+<th>常见处理方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>球差、彗差等像差</td>
+<td>输入输出不再是简单线性关系</td>
+<td>高阶像差理论或精确光线追迹</td>
+</tr>
+<tr>
+<td>有限孔径与光阑损失</td>
+<td>光线可能被截断，矩阵本身不筛除它们</td>
+<td>加入孔径判断或衍射传播</td>
+</tr>
+<tr>
+<td>任意横向光场</td>
+<td>两个光线参数不携带完整振幅与相位分布</td>
+<td>Fresnel 积分、角谱法等</td>
+</tr>
+<tr>
+<td>偏振变化</td>
+<td>状态向量没有偏振分量</td>
+<td>Jones 或 Mueller 方法</td>
+</tr>
+<tr>
+<td>镀膜干涉</td>
+<td>此处矩阵不传播界面两侧的场振幅</td>
+<td>薄膜的电磁场传输矩阵</td>
+</tr>
+<tr>
+<td>元件偏心、倾斜</td>
+<td>会出现与输入状态无关的常量偏移</td>
+<td>仿射矩阵或失调分析</td>
+</tr>
+<tr>
+<td>横向两个方向耦合</td>
+<td>单个二维光线状态不足以描述</td>
+<td>四维近轴模型</td>
+</tr>
+</tbody></table>
+<p>例如，对偏心或倾斜的一阶描述，可以扩展成</p>
+<div class="math-display">
+$$
+\begin{pmatrix}y_2\\\theta_2\\1\end{pmatrix}
+=\begin{pmatrix}A&B&E\\C&D&F\\0&0&1\end{pmatrix}
+\begin{pmatrix}y_1\\\theta_1\\1\end{pmatrix}.
+$$
+</div>
+
+<p>其中 <script type="math/tex">E</script> 的单位是长度，<script type="math/tex">F</script> 表示角度偏移。齐次坐标将原来的线性映射推广为仿射映射，相关讨论可见 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.09746">Corcovilos 关于齐次坐标矩阵光学的论文</a>。</p>
+<p>对轴对称或可分离系统，可以分别在两个横向方向使用二阶矩阵；如果两个方向存在耦合，则需要更大的状态向量。材料色散也可以通过随波长变化的 <script type="math/tex">n(\lambda)</script> 与 <script type="math/tex">f(\lambda)</script> 逐波长纳入，但单个单色 ABCD 矩阵不包含脉冲的完整时间色散信息。</p>
+<h3 id="13-2-每次计算前后的检查"><a href="#13-2-每次计算前后的检查" class="headerlink" title="13.2 每次计算前后的检查"></a>13.2 每次计算前后的检查</h3><ol>
+<li><strong>写出输入与输出参考面。</strong> 若换了参考面，应把新增传播段乘进去。</li>
+<li><strong>统一坐标。</strong> 全程使用 <script type="math/tex">(y,\theta)</script>，或全程使用 <script type="math/tex">(y,n\theta)</script>，转换时明确写出变换。</li>
+<li><strong>统一单位。</strong> 毫米和米不能混用；角度必须换成弧度。</li>
+<li><strong>检查顺序。</strong> 列向量约定下，先遇到的元件在最右侧。</li>
+<li><strong>核对行列式与极限。</strong> 检查 <script type="math/tex">AD-BC</script>；让 <script type="math/tex">d\to0</script>、<script type="math/tex">f\to\infty</script>、<script type="math/tex">R\to\infty</script>，看结果是否合理。</li>
+<li><strong>用代表光线复算。</strong> 成像时选同一物点的几个出射角；聚焦时选几个入射高度。</li>
+<li><strong>区分条件。</strong> <script type="math/tex">B=0</script> 是两个面的成像条件，<script type="math/tex">C=0</script> 是无焦条件，<script type="math/tex">|(A+D)/2|<1</script> 则是单位行列式往返矩阵的严格稳定条件。</li>
+<li><strong>最后检查物理限制。</strong> 判断近轴条件、口径、像差和光束模型是否满足。</li>
+</ol>
+<p>掌握矩阵光学之后，再看到一套由许多透镜和传播段组成的光路，首先要做的便是定义参考面、列出每一步对光线的作用。明确的坐标与传播顺序，会让成像公式、扩束倍率和谐振腔条件从一组需要分别记忆的结论，变成可以逐步推导和检验的结果。</p>
+<h2 id="参考资料与复算文件"><a href="#参考资料与复算文件" class="headerlink" title="参考资料与复算文件"></a>参考资料与复算文件</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://web.mit.edu/6.161/www/Geometric-Optics-9-07.pdf">MIT，C. Warde：Geometric Optics</a>：第 2.2 节介绍光线矩阵和成像，第 2.3 节讨论望远镜。</li>
+<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/6-974-fundamentals-of-photonics-quantum-electronics-spring-2006/e9852c138493233bc2813f683da5b199_gaussian_bem_res.pdf">MIT：Gaussian Beams and Resonators</a>：高斯光束的 ABCD 定律、腔自洽条件与稳定图。阅读时注意其坐标与边界表述；本文将严格稳定区与边界情况分开。</li>
+<li><a target="_blank" rel="noopener" href="https://www.rp-photonics.com/abcd_matrix.html">Rüdiger Paschotta：ABCD Matrix</a>：两种光线坐标、行列式与常用元件的说明。</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.09746">Thomas A. Corcovilos：Beyond the ABCDs</a>：使用齐次坐标扩展矩阵光学。</li>
+<li><a href="/downloads/ray-transfer-matrix/figures-and-checks.py">配图与数值核验脚本</a>、<a href="/downloads/ray-transfer-matrix/validation.json">机器可读核验结果</a>、<a href="/downloads/ray-transfer-matrix/imagegen-prompts.json">封面生成提示词与制作说明</a>。</li>
+</ul>
+<p><em>本文图 1–5 为按文中模型绘制的教学图，数值用于说明方法，不代表某套实测仪器。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/">http://talescuber.github.io/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%89%E5%AD%A6/">光学</a><a class="post-meta__tags" href="/tags/%E7%9F%A9%E9%98%B5%E5%85%89%E5%AD%A6/">矩阵光学</a><a class="post-meta__tags" href="/tags/%E6%BF%80%E5%85%89%E7%89%A9%E7%90%86/">激光物理</a></div><div class="post_share"><div class="social-share" data-image="/img/ray-transfer-matrix/00-cover.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AOM 双程（Double Pass）光路详解：原理、搭建与调试</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E6%9D%A1%E5%85%89%E7%BA%BF%E5%8F%AA%E9%9C%80%E8%A6%81%E4%B8%A4%E4%B8%AA%E6%95%B0%EF%BC%9F"><span class="toc-text">1. 为什么一条光线只需要两个数？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%8C%87%E5%AE%9A%E5%8F%82%E8%80%83%E9%9D%A2%EF%BC%8C%E5%86%8D%E6%8F%8F%E8%BF%B0%E5%85%89%E7%BA%BF"><span class="toc-text">1.1 指定参考面，再描述光线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%BF%91%E8%BD%B4%E8%BF%91%E4%BC%BC%E8%AE%A9%E9%97%AE%E9%A2%98%E7%BA%BF%E6%80%A7%E5%8C%96"><span class="toc-text">1.2 近轴近似让问题线性化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9C%AC%E6%96%87%E9%87%87%E7%94%A8%E7%9A%84%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A"><span class="toc-text">1.3 本文采用的符号约定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ABCD-%E5%9B%9B%E4%B8%AA%E5%85%83%E7%B4%A0%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">2. ABCD 四个元素分别是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%A4%E4%B8%AA%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A9%E9%98%B5"><span class="toc-text">3. 两个最重要的基本矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%9D%87%E5%8C%80%E4%BB%8B%E8%B4%A8%E4%B8%AD%E7%9A%84%E4%BC%A0%E6%92%AD"><span class="toc-text">3.1 均匀介质中的传播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%96%84%E9%80%8F%E9%95%9C"><span class="toc-text">3.2 薄透镜</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8A%98%E5%B0%84%E9%9D%A2%E4%B8%8E%E5%8F%8D%E5%B0%84%E9%95%9C%EF%BC%9A%E7%AC%A6%E5%8F%B7%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E9%94%99%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">4. 折射面与反射镜：符号最容易出错的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%B9%B3%E9%9D%A2%E6%8A%98%E5%B0%84"><span class="toc-text">4.1 平面折射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%90%83%E9%9D%A2%E6%8A%98%E5%B0%84"><span class="toc-text">4.2 球面折射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E7%90%83%E9%9D%A2%E9%95%9C%E4%B8%8E%E5%B1%95%E5%BC%80%E5%85%89%E8%B7%AF"><span class="toc-text">4.3 球面镜与展开光路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E6%97%B6%E6%98%AF-%CE%B8%EF%BC%8C%E6%9C%89%E6%97%B6%E6%98%AF-n%CE%B8%EF%BC%9F"><span class="toc-text">5. 为什么有时是 θ，有时是 nθ？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E4%B8%A4%E7%A7%8D%E7%8A%B6%E6%80%81%E5%90%91%E9%87%8F%E9%83%BD%E6%AD%A3%E7%A1%AE"><span class="toc-text">5.1 两种状态向量都正确</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%A1%8C%E5%88%97%E5%BC%8F%E6%98%AF%E5%BE%88%E5%A5%BD%E7%9A%84%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-text">5.2 行列式是很好的检查工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E9%A1%BA%E5%BA%8F%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%88%90%E5%83%8F%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%8E%A8%E5%AF%BC"><span class="toc-text">6. 矩阵乘法顺序，以及成像条件的推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%85%88%E9%81%87%E5%88%B0%E7%9A%84%E5%85%83%E4%BB%B6%E5%86%99%E5%9C%A8%E6%9C%80%E5%8F%B3%E8%BE%B9"><span class="toc-text">6.1 先遇到的元件写在最右边</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%90%E5%83%8F%E5%AF%B9%E5%BA%94-B-0%EF%BC%9F"><span class="toc-text">6.2 为什么成像对应 B &#x3D; 0？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E7%94%A8%E7%9F%A9%E9%98%B5%E9%87%8D%E6%96%B0%E5%BE%97%E5%88%B0%E8%96%84%E9%80%8F%E9%95%9C%E5%85%AC%E5%BC%8F"><span class="toc-text">6.3 用矩阵重新得到薄透镜公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%AE%8C%E6%95%B4%E6%95%B0%E5%80%BC%E7%AE%97%E4%BE%8B"><span class="toc-text">6.4 完整数值算例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BB%8E%E4%B8%80%E4%B8%AA%E7%B3%BB%E7%BB%9F%E7%9F%A9%E9%98%B5%E8%AF%BB%E5%87%BA%E7%84%A6%E7%82%B9%E4%B8%8E%E6%97%A0%E7%84%A6%E6%9D%A1%E4%BB%B6"><span class="toc-text">7. 从一个系统矩阵读出焦点与无焦条件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%90%8E%E7%84%A6%E8%B7%9D%E4%B8%8E%E6%9C%89%E6%95%88%E7%84%A6%E8%B7%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="toc-text">7.1 后焦距与有效焦距为什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-C-0%EF%BC%9A%E6%97%A0%E7%84%A6%E7%B3%BB%E7%BB%9F"><span class="toc-text">7.2 C &#x3D; 0：无焦系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%A4%E7%89%87%E9%80%8F%E9%95%9C%EF%BC%9A%E7%AD%89%E6%95%88%E7%84%A6%E8%B7%9D%E3%80%81%E6%89%A9%E6%9D%9F%E5%99%A8%E5%92%8C-4f-%E7%B3%BB%E7%BB%9F"><span class="toc-text">8. 两片透镜：等效焦距、扩束器和 4f 系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E4%B8%A4%E7%89%87%E8%96%84%E9%80%8F%E9%95%9C%E7%9A%84%E7%AD%89%E6%95%88%E7%84%A6%E8%B7%9D"><span class="toc-text">8.1 两片薄透镜的等效焦距</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E6%97%A0%E7%84%A6%E6%89%A9%E6%9D%9F%E5%99%A8"><span class="toc-text">8.2 无焦扩束器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-4f-%E4%B8%AD%E7%BB%A7%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%98%E6%88%90%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%EF%BC%9F"><span class="toc-text">8.3 4f 中继为什么变成对角矩阵？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%8E%9A%E9%80%8F%E9%95%9C%EF%BC%9A%E6%8A%8A%E4%B8%A4%E4%B8%AA%E6%8A%98%E5%B0%84%E9%9D%A2%E6%8B%86%E5%BC%80"><span class="toc-text">9. 厚透镜：把两个折射面拆开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%BB%8E%E5%85%89%E7%BA%BF%E6%8E%A8%E5%B9%BF%E5%88%B0%E9%AB%98%E6%96%AF%E5%85%89%E6%9D%9F"><span class="toc-text">10. 从光线推广到高斯光束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E5%85%89%E6%9D%9F%E4%B8%8D%E6%98%AF%E4%B8%80%E6%9D%A1%E5%85%89%E7%BA%BF"><span class="toc-text">10.1 光束不是一条光线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-ABCD-%E5%AE%9A%E5%BE%8B"><span class="toc-text">10.2 ABCD 定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E7%AE%97%E4%BE%8B%EF%BC%9A%E9%80%8F%E9%95%9C%E6%94%BE%E5%9C%A8%E5%8E%9F%E6%9D%9F%E8%85%B0%E5%A4%84"><span class="toc-text">10.3 算例：透镜放在原束腰处</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%BF%80%E5%85%89%E8%B0%90%E6%8C%AF%E8%85%94%EF%BC%9A%E5%BE%80%E8%BF%94%E5%90%8E%E8%83%BD%E5%90%A6%E4%BF%9D%E6%8C%81%E8%87%AA%E8%BA%AB%EF%BC%9F"><span class="toc-text">11. 激光谐振腔：往返后能否保持自身？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E5%85%88%E5%86%99%E5%AF%B9%E5%BE%80%E8%BF%94%E7%9F%A9%E9%98%B5"><span class="toc-text">11.1 先写对往返矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E7%A8%B3%E5%AE%9A%E6%80%A7%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%B1%E8%BF%B9%E5%86%B3%E5%AE%9A%EF%BC%9F"><span class="toc-text">11.2 稳定性为什么由迹决定？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-g-%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BE%B9%E7%95%8C"><span class="toc-text">11.3 g 参数与边界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4-%E7%94%A8%E8%87%AA%E6%B4%BD%E6%9D%A1%E4%BB%B6%E6%B1%82%E8%85%94%E6%A8%A1"><span class="toc-text">11.4 用自洽条件求腔模</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E7%94%A8-Python-%E5%A4%8D%E7%8E%B0%E8%AE%A1%E7%AE%97"><span class="toc-text">12. 用 Python 复现计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="toc-text">13. 适用范围与常见错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-%E5%AE%83%E8%83%BD%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%EF%BC%8C%E4%B8%8D%E8%83%BD%E5%8D%95%E7%8B%AC%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">13.1 它能解决什么，不能单独解决什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-%E6%AF%8F%E6%AC%A1%E8%AE%A1%E7%AE%97%E5%89%8D%E5%90%8E%E7%9A%84%E6%A3%80%E6%9F%A5"><span class="toc-text">13.2 每次计算前后的检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E4%B8%8E%E5%A4%8D%E7%AE%97%E6%96%87%E4%BB%B6"><span class="toc-text">参考资料与复算文件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试">AOM 双程（Double Pass）光路详解：原理、搭建与调试</a><time datetime="2026-09-19T15:06:09.000Z" title="发表于 2026-09-19 23:06:09">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率">如何在线性刀片阱中测量离子囚禁频率</a><time datetime="2026-09-19T10:30:41.000Z" title="发表于 2026-09-19 18:30:41">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</a><time datetime="2026-09-12T06:22:09.000Z" title="发表于 2026-09-12 14:22:09">2026-09-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/" title="Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导">Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导</a><time datetime="2026-09-12T06:14:35.000Z" title="发表于 2026-09-12 14:14:35">2026-09-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

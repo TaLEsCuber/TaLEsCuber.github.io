@@ -1,0 +1,829 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AOM 双程（Double Pass）光路详解：原理、搭建与调试 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从声光衍射的能量与动量关系出发，解释 AOM 双程光路的两倍频移、猫眼回射和偏振分光，推导带宽、效率与时间响应，并给出搭建步骤、参数算例、测量方法和故障排查表。附六幅原创示意图与可复现绘图代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AOM 双程（Double Pass）光路详解：原理、搭建与调试">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从声光衍射的能量与动量关系出发，解释 AOM 双程光路的两倍频移、猫眼回射和偏振分光，推导带宽、效率与时间响应，并给出搭建步骤、参数算例、测量方法和故障排查表。附六幅原创示意图与可复现绘图代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-09-19T15:06:09.000Z">
+<meta property="article:modified_time" content="2026-09-19T15:06:09.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="激光">
+<meta property="article:tag" content="AOM">
+<meta property="article:tag" content="实验光学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AOM 双程（Double Pass）光路详解：原理、搭建与调试',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-19 23:06:09'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="c30e1ccfc3c07422ad398ce84add2eda58947efad49d93ce73beefd3408e89d5";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AOM 双程（Double Pass）光路详解：原理、搭建与调试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-19T15:06:09.000Z" title="发表于 2026-09-19 23:06:09">2026-09-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/">实验仪器介绍</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>29分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AOM 双程（Double Pass）光路详解：原理、搭建与调试"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在激光冷却、原子与离子光谱、精密干涉实验中，我们经常需要做这样一件事：<strong>让激光频率连续变化几十 MHz，同时尽量保持光束的位置和方向不变。</strong></p>
+<p>声光调制器（Acousto-Optic Modulator，AOM）可以利用射频信号给激光移频，但单次衍射也会改变传播方向。扫射频时，一束原本已经耦合进单模光纤的光，可能逐渐偏离最佳耦合位置；实验中看到的“谱线变弱”，也可能夹杂着光功率下降的影响。</p>
+<p><strong>Double pass，即双程光路，指让选定的光束两次经过 AOM 并发生所需衍射。</strong> 在常见的同号一级衍射双程中，输出频率为</p>
+<div class="math-display">
+$$
+\boxed{\nu_{\mathrm{out}}=\nu_0\pm 2f_{\mathrm{RF}}}.
+$$
+</div>
+
+<p>配合合适的回射光学系统，第二次衍射还能补偿第一次衍射引起的扫频偏转。典型实现采用 <strong>PBS（偏振分束器）+ QWP（四分之一波片）+ cat’s-eye（猫眼回射器）</strong>。<a target="_blank" rel="noopener" href="https://tf.nist.gov/general/pdf/2071.pdf">Donley 等的双程 AOM 论文</a>给出了这种系统的实验实现。</p>
+<p><img src="/img/aom-double-pass/02-layout.svg" alt="AOM 双程光路：输入光经 PBS 和 AOM 后，一级光进入 QWP、透镜和反射镜，再次衍射后从 PBS 输出"></p>
+<p><em>图 1｜典型双程结构。图中角度、器件大小和间距不按比例；橙色回程为便于辨认而略微错开，理想条件下部分光路实际重合。偏振适用条件见第 5 节。</em></p>
+<p>本文面向准备理解或搭建自由空间 AOM 双程光路的读者。先讲清物理原理，再讨论实际系统的效率、带宽、调试和测量。所有配图均为原创绘制，曲线是明确给定参数的计算示例，不是某款器件的实测结果。</p>
+<span id="more"></span>
+
+<h2 id="1-单程-AOM-改变了光的哪些属性？"><a href="#1-单程-AOM-改变了光的哪些属性？" class="headerlink" title="1. 单程 AOM 改变了光的哪些属性？"></a>1. 单程 AOM 改变了光的哪些属性？</h2><h3 id="1-1-晶体中的声波是一副移动的光栅"><a href="#1-1-晶体中的声波是一副移动的光栅" class="headerlink" title="1.1 晶体中的声波是一副移动的光栅"></a>1.1 晶体中的声波是一副移动的光栅</h3><p>射频驱动器通过压电换能器在晶体内产生传播的声波。声波借助光弹效应形成随时间移动的折射率调制。光经过这一调制区域时发生衍射；因为光栅在运动，衍射光的频率也会改变。<a target="_blank" rel="noopener" href="https://isomet.com/App-Manual_pdf/AO%20Modulation.pdf">ISOMET 的声光调制应用说明</a>介绍了这一过程及器件的基本组成。</p>
+<p>这里采用以下符号，全文的普通频率均以 Hz 表示：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\nu_0$</td>
+<td>输入激光的光学频率</td>
+</tr>
+<tr>
+<td>$f_{\mathrm{RF}}$</td>
+<td>射频驱动频率，也就是声波频率</td>
+</tr>
+<tr>
+<td>$\lambda_0$</td>
+<td>激光在真空中的波长</td>
+</tr>
+<tr>
+<td>$v_s$</td>
+<td>器件实际使用的声学模式的相速度</td>
+</tr>
+<tr>
+<td>$\mathbf{k}$</td>
+<td>光在晶体内的波矢</td>
+</tr>
+<tr>
+<td>$\mathbf{K}$</td>
+<td>声波波矢，大小为 $2\pi f_{\mathrm{RF}}&#x2F;v_s$</td>
+</tr>
+<tr>
+<td>$f_L$</td>
+<td>猫眼透镜的焦距，与 RF 频率区分</td>
+</tr>
+<tr>
+<td>$\eta_1,\eta_2$</td>
+<td>第一程、第二程进入选定衍射级的功率比例</td>
+</tr>
+</tbody></table>
+<p>对一次一级声光衍射，能量和动量关系可以写为</p>
+<div class="math-display">
+$$
+\nu_d=\nu_i+s f_{\mathrm{RF}},\qquad
+\mathbf{k}_d=\mathbf{k}_i+s\mathbf{K},\qquad s\in\{+1,-1\}.
+$$
+</div>
+
+<p>$s&#x3D;+1$ 对应升频，$s&#x3D;-1$ 对应降频。零级光没有获得这一声光频移。实验中经常把两种一级光叫作“+1 级”和“−1 级”，但不同观察方向和厂商标注容易引起混淆；本文直接用<strong>实际频移的正负</strong>定义符号。</p>
+<p>在常用 Bragg 工作区，器件通常优化为把能量送入某一个一级衍射方向。示意图画出多个衍射级，并不表示实际 Bragg 器件总能同时高效产生两侧的一级光。</p>
+<h3 id="1-2-为什么扫频会引起光束偏转？"><a href="#1-2-为什么扫频会引起光束偏转？" class="headerlink" title="1.2 为什么扫频会引起光束偏转？"></a>1.2 为什么扫频会引起光束偏转？</h3><p>在各向同性、小角度、常规晶体表面几何的近似下，外部零级与一级光的夹角为</p>
+<div class="math-display">
+$$
+\theta_{\mathrm{sep}}\simeq\frac{\lambda_0 f_{\mathrm{RF}}}{v_s},
+\qquad
+\frac{\partial\theta_{\mathrm{sep}}}{\partial f_{\mathrm{RF}}}
+\simeq\frac{\lambda_0}{v_s}.
+$$
+</div>
+
+<p>注意：<strong>衍射光与零级光的分离角，不等于 Bragg 入射角。</strong> 在同一简化几何下，晶体内部 Bragg 角约为</p>
+<div class="math-display">
+$$
+\theta_{B,\mathrm{int}}\simeq
+\frac{\lambda_0 f_{\mathrm{RF}}}{2nv_s}.
+$$
+</div>
+
+<p>内部角涉及折射率 $n$；外部角还需要考虑界面折射。上述标量公式不能直接套用于任意各向异性衍射、晶体切型或大角度几何。厂商给出的分离角、声速和角度定义应优先用于具体器件设计。<a target="_blank" rel="noopener" href="https://isomet.com/App-Manual_pdf/RFA200-series-inst.pdf">ISOMET 的参数说明</a>也明确区分了分离角与 Bragg 角。</p>
+<p>先做一个数量级估算。假设</p>
+<div class="math-display">
+$$
+\lambda_0=780\ \mathrm{nm},\quad v_s=4.0\ \mathrm{km/s},\quad
+\delta f_{\mathrm{RF}}=10\ \mathrm{MHz},
+$$
+</div>
+
+<p>那么角度变化约为 $1.95\ \mathrm{mrad}$。经过 $1\ \mathrm{m}$ 的自由传播后，光斑横向移动约 $1.95\ \mathrm{mm}$。</p>
+<p>这是一个假设参数的演算，不代表所有 780 nm AOM 的表现。它说明：即使频率变化相对于光学载频非常小，光束偏移也足以影响空间重叠和光纤耦合。</p>
+<h2 id="2-双程为什么可以得到两倍频移？"><a href="#2-双程为什么可以得到两倍频移？" class="headerlink" title="2. 双程为什么可以得到两倍频移？"></a>2. 双程为什么可以得到两倍频移？</h2><h3 id="2-1-先分别记录两次相互作用"><a href="#2-1-先分别记录两次相互作用" class="headerlink" title="2.1 先分别记录两次相互作用"></a>2.1 先分别记录两次相互作用</h3><p>对先后两次衍射，最稳妥的写法是</p>
+<div class="math-display">
+$$
+\nu_{\mathrm{out}}
+=\nu_0+s_1f_1+s_2f_2.
+$$
+</div>
+
+<p>当同一 AOM 由稳定的单频 RF 驱动，并且选取两次同号的一级衍射时，才得到熟悉的</p>
+<div class="math-display">
+$$
+\nu_{\mathrm{out}}=\nu_0+2f_{\mathrm{RF}}
+\quad\text{或}\quad
+\nu_{\mathrm{out}}=\nu_0-2f_{\mathrm{RF}}.
+$$
+</div>
+
+<p><img src="/img/aom-double-pass/01-frequency.svg" alt="升频与降频双程的频率链，每发生一次选定的一级衍射，光频就增加或减少一个 RF 频率"></p>
+<p><em>图 2｜频率要按每次实际衍射记账。反射镜改变传播方向，本身不会把前一次声光频移“减回去”。</em></p>
+<p>例如，80 MHz 的 RF 在升频双程中带来 +160 MHz 的光学频移。把 RF 从 70 MHz 扫到 90 MHz，输出相对输入的频移从 +140 MHz 扫到 +180 MHz，覆盖 40 MHz。</p>
+<p>如果选择的是降频双程，RF 增大反而让输出光频降低。因此，在控制软件里必须同时记录<strong>双程因子 2</strong>和<strong>频移符号</strong>。</p>
+<h3 id="2-2-回来的光为什么还能继续升频？"><a href="#2-2-回来的光为什么还能继续升频？" class="headerlink" title="2.2 回来的光为什么还能继续升频？"></a>2.2 回来的光为什么还能继续升频？</h3><p>容易出现的误解是：“去程向右传播，回程向左传播，所以第二次频移一定反号。”</p>
+<p>传播方向反转不等于声波传播方向反转。用波矢关系可以直接看清楚。以两次升频为例，第一次衍射满足</p>
+<div class="math-display">
+$$
+\mathbf{k}_1=\mathbf{k}_0+\mathbf{K}.
+$$
+</div>
+
+<p>理想回射器把这束光的方向反转，第二程入射波矢近似为 $-\mathbf{k}_1$。第二次仍然选择升频过程，则</p>
+<div class="math-display">
+$$
+\mathbf{k}_{\mathrm{out}}
+\simeq-\mathbf{k}_1+\mathbf{K}
+=-(\mathbf{k}_0+\mathbf{K})+\mathbf{K}
+=-\mathbf{k}_0.
+$$
+</div>
+
+<p>与此同时，频率从 $\nu_0+f_{\mathrm{RF}}$ 继续变为 $\nu_0+2f_{\mathrm{RF}}$。因此，可以同时出现两个结果：</p>
+<ul>
+<li><strong>空间方向</strong>：输出光与原入射光反向重合。</li>
+<li><strong>时间频率</strong>：输出光累计获得两次同号频移。</li>
+</ul>
+<p>这里的方向关系忽略了频移引起的微小光波数变化，是几何光学近似；$2f_{\mathrm{RF}}$ 的频率记账则不需要忽略这一变化。对于具体各向异性器件，还要检查两程是否都满足相应偏振分支的相位匹配。</p>
+<p>这也解释了为什么“经过晶体两次”还不够。返回零级、错误衍射级或杂散反射都可能产生不同的频率链，必须在空间和偏振上选出真正的目标输出。</p>
+<h2 id="3-为什么常用猫眼，而不是直接放一面镜子？"><a href="#3-为什么常用猫眼，而不是直接放一面镜子？" class="headerlink" title="3. 为什么常用猫眼，而不是直接放一面镜子？"></a>3. 为什么常用猫眼，而不是直接放一面镜子？</h2><h3 id="3-1-平面镜能在一个频率点对准"><a href="#3-1-平面镜能在一个频率点对准" class="headerlink" title="3.1 平面镜能在一个频率点对准"></a>3.1 平面镜能在一个频率点对准</h3><p>把一面镜子放在第一程一级光后方，调整到正入射，可以让中心 RF 频率的那束光沿原路返回。</p>
+<p>但 RF 改变后，一级光的入射角也改变。固定的平面镜只对原来那个方向严格回射，新方向的光通常会以不同位置和角度回到 AOM。再经过第二次衍射，输出指向和模式重合就可能随频率变化。</p>
+<p>对于很小的扫频范围，平面镜方案可能已经足够。是否需要猫眼，应根据最终输出的指向、功率和光纤耦合测量判断。</p>
+<h3 id="3-2-猫眼把角度变化转成横向位置变化"><a href="#3-2-猫眼把角度变化转成横向位置变化" class="headerlink" title="3.2 猫眼把角度变化转成横向位置变化"></a>3.2 猫眼把角度变化转成横向位置变化</h3><p>常见的猫眼由一片正透镜和一面平面镜组成。设</p>
+<ul>
+<li>AOM 有效相互作用位置到透镜主平面的距离为 $d$；</li>
+<li>透镜主平面到反射镜的距离为 $s$；</li>
+<li>透镜焦距为 $f_L$。</li>
+</ul>
+<p>一个便于理解和调试的近轴起点是</p>
+<div class="math-display">
+$$
+\boxed{d\simeq f_L,\qquad s\simeq f_L.}
+$$
+</div>
+
+<p><img src="/img/aom-double-pass/03-cat-eye.svg" alt="三种射频频率对应的主光线从 AOM 出发，经猫眼透镜后平行传播，在反射镜上落在不同位置并沿原路返回"></p>
+<p><em>图 3｜当 AOM 位于透镜前焦面附近时，扫频主要改变主光线在镜面上的位置。图中画的是主光线，不是整个光束的包络，也不是说透镜后的有限光束处处准直。</em></p>
+<p>令某条主光线从 AOM 中心以小角度 $\theta$ 出发。传播一个焦距后，到达透镜时的横向高度约为</p>
+<div class="math-display">
+$$
+h\simeq f_L\theta.
+$$
+</div>
+
+<p>薄透镜改变它的斜率，出射角为</p>
+<div class="math-display">
+$$
+\theta'=\theta-\frac{h}{f_L}\simeq 0.
+$$
+</div>
+
+<p>这样，不同 RF 对应的主光线在透镜之后可以近似平行，只是横向位置不同。把镜面法线对准这一共同方向，它们就都能近似沿原路径返回。第二次声光衍射再完成第 2 节所述的方向补偿。</p>
+<p>经典猫眼双程结构及其距离选择可参见 <a target="_blank" rel="noopener" href="https://tf.nist.gov/general/pdf/2071.pdf">Donley 等的论文第 IV.B 节</a>。下面进一步用近轴矩阵解释两个距离各自的作用。</p>
+<h3 id="3-3-为什么透镜到镜面的距离也重要？"><a href="#3-3-为什么透镜到镜面的距离也重要？" class="headerlink" title="3.3 为什么透镜到镜面的距离也重要？"></a>3.3 为什么透镜到镜面的距离也重要？</h3><p>上面的推导只跟踪了从同一个点出发的主光线。真实激光束具有有限宽度、发散角和波前曲率，镜距还会影响整个空间模式能否复原。</p>
+<p>采用把反射后的传播方向“展开”为继续向前的近轴坐标约定，自由传播与薄透镜矩阵为</p>
+<div class="math-display">
+$$
+P(l)=\begin{pmatrix}1&l\\0&1\end{pmatrix},\qquad
+L(f_L)=\begin{pmatrix}1&0\\-1/f_L&1\end{pmatrix}.
+$$
+</div>
+
+<p>从 AOM 平面出发，经过透镜、镜面并返回 AOM 平面的矩阵为</p>
+<div class="math-display">
+$$
+M=P(d)L(f_L)P(2s)L(f_L)P(d).
+$$
+</div>
+
+<p>在 $s&#x3D;f_L$ 时，可以直接相乘得到</p>
+<div class="math-display">
+$$
+M=\begin{pmatrix}-1&2(f_L-d)\\0&-1\end{pmatrix}.
+$$
+</div>
+
+<p>若进一步令 $d&#x3D;f_L$，便有 $M&#x3D;-I$。在该展开坐标中，横向光线坐标反号；对居中高斯模式，复光束参数满足</p>
+<div class="math-display">
+$$
+q_{\mathrm{return}}=\frac{Aq+B}{Cq+D}=q.
+$$
+</div>
+
+<p>也就是说，理想往返既补偿主光线方向，也恢复高斯模式的波前参数。</p>
+<p>如果 $d$ 偏离焦距，矩阵中的非零 $B$ 项会让不同入射角产生不同返回位置。这给出一个实用判断：<strong>中心频率回得来，不代表整个扫频范围都回得好。</strong></p>
+<p>实际距离还会受到透镜厚度、晶体折射、波片和机械基准的影响。$f_L$ 应作为光学设计起点，而非用尺子量两个外壳边缘后就可以结束调试的硬性尺寸。</p>
+<h2 id="4-如何选择透镜、孔径和挡光位置？"><a href="#4-如何选择透镜、孔径和挡光位置？" class="headerlink" title="4. 如何选择透镜、孔径和挡光位置？"></a>4. 如何选择透镜、孔径和挡光位置？</h2><h3 id="4-1-焦距会同时影响分离距离和体积"><a href="#4-1-焦距会同时影响分离距离和体积" class="headerlink" title="4.1 焦距会同时影响分离距离和体积"></a>4.1 焦距会同时影响分离距离和体积</h3><p>在简化模型下，镜面附近一级与零级主光线的分离距离约为</p>
+<div class="math-display">
+$$
+x_1\simeq f_L\theta_{\mathrm{sep}}
+\simeq f_L\frac{\lambda_0f_{\mathrm{RF}}}{v_s}.
+$$
+</div>
+
+<p>继续使用 $780\ \mathrm{nm}$、$v_s&#x3D;4.0\ \mathrm{km&#x2F;s}$ 的假设参数，取 $f_{\mathrm{RF}}&#x3D;80\ \mathrm{MHz}$、$f_L&#x3D;75\ \mathrm{mm}$，可得</p>
+<div class="math-display">
+$$
+\theta_{\mathrm{sep}}\simeq15.6\ \mathrm{mrad},\qquad
+x_1\simeq1.17\ \mathrm{mm}.
+$$
+</div>
+
+<p>若 RF 在中心附近变化 $\pm10\ \mathrm{MHz}$，主光线在镜面附近还会扫过约 $\pm0.146\ \mathrm{mm}$。设计光束挡时，要同时容纳光斑半径、扫频位移和对准余量。</p>
+<p>较长焦距通常更容易拉开衍射级，但光路变长、镜面上光斑位置的扫描范围也增大。较短焦距适合紧凑布局，但可能使挡光、像差控制和机械调节更困难。因此，不能只按“越短越紧凑”选择猫眼透镜。</p>
+<h3 id="4-2-优先阻断不需要返回的零级光"><a href="#4-2-优先阻断不需要返回的零级光" class="headerlink" title="4.2 优先阻断不需要返回的零级光"></a>4.2 优先阻断不需要返回的零级光</h3><p>如果第一程零级也被反射回 AOM，它可能在第二程再次衍射，形成额外频率分量或背景光。通常应在零级与目标一级充分分离的位置放置光束挡，让目标一级的整个扫频轨迹都能通过。</p>
+<p>不要在中心频率把光阑收得刚好贴住光斑。扫到边缘后，截光会伪装成“带宽不足”，也可能让输出光斑形状发生变化。</p>
+<p>镜面附近可能存在较小光斑，光束挡、镜片和镀膜的选择应匹配实际功率密度；这同样影响回反射与散射背景。</p>
+<h2 id="5-PBS-和-QWP-怎样分离去程与回程？"><a href="#5-PBS-和-QWP-怎样分离去程与回程？" class="headerlink" title="5. PBS 和 QWP 怎样分离去程与回程？"></a>5. PBS 和 QWP 怎样分离去程与回程？</h2><h3 id="5-1-典型偏振过程"><a href="#5-1-典型偏振过程" class="headerlink" title="5.1 典型偏振过程"></a>5.1 典型偏振过程</h3><p>假设输入线偏振被 PBS 透射，且第一程 AOM 保持这里所讨论的线偏振类型。把 QWP 放在 AOM 后面，使其快轴与入射线偏振约成 $45^\circ$：</p>
+<ol>
+<li>去程线偏振经过 QWP 后变为近似圆偏振。</li>
+<li>光由镜面反射并返回。</li>
+<li>回程再次经过同一 QWP，变为与原输入正交的线偏振。</li>
+<li>目标光第二次通过 AOM 后到达 PBS，由另一端口输出。</li>
+</ol>
+<p><img src="/img/aom-double-pass/04-polarization.svg" alt="双程光路中线偏振经四分之一波片、镜面和四分之一波片后，变为正交线偏振并由 PBS 分离"></p>
+<p><em>图 4｜理想波片与近法向反射条件下的偏振演化。圆偏振手性的名称取决于观察方向，因此图中只标示横向电场轨迹。</em></p>
+<p>QWP 往返的净效应相当于适当取向的半波延迟，并非“单次过 QWP 就把线偏振转过 45°”。这一正交返回现象也可见 <a target="_blank" rel="noopener" href="https://www2.oberlin.edu/physics/catalog/demonstrations/optics/quarterwave.html">Oberlin College 的四分之一波片实验说明</a>。</p>
+<h3 id="5-2-这套偏振布局有一个必须检查的条件"><a href="#5-2-这套偏振布局有一个必须检查的条件" class="headerlink" title="5.2 这套偏振布局有一个必须检查的条件"></a>5.2 这套偏振布局有一个必须检查的条件</h3><p>在图 1 的布局中，<strong>回程进入 AOM 的线偏振与去程正交</strong>。如果器件只对一个线偏振方向有较高衍射效率，或者采用会改变偏振的各向异性衍射，第二程就可能很弱，甚至不能按图中的假设工作。</p>
+<p>因此，要先核对器件资料中的输入偏振、输出偏振、声学模式与晶体方向，再决定波片位置和分光方案。需要时重新设计偏振补偿或采用适合该器件的非偏振分光布局；不能以“这张图很常见”作为兼容性依据。</p>
+<p>把 QWP 随意移到 AOM 前面也不自动解决问题，因为这可能使 AOM 看到椭圆偏振或圆偏振。应逐段追踪实际偏振，并分别测量两程效率。</p>
+<p>输入端的 HWP（半波片）可用于调整送入 PBS 的偏振；输出端的 HWP 可用于匹配保偏光纤轴。它们与回射臂中 QWP 的任务不同。</p>
+<h2 id="6-双程效率为什么通常低于单程？"><a href="#6-双程效率为什么通常低于单程？" class="headerlink" title="6. 双程效率为什么通常低于单程？"></a>6. 双程效率为什么通常低于单程？</h2><h3 id="6-1-使用功率预算，而不是只说“效率平方”"><a href="#6-1-使用功率预算，而不是只说“效率平方”" class="headerlink" title="6.1 使用功率预算，而不是只说“效率平方”"></a>6.1 使用功率预算，而不是只说“效率平方”</h3><p>若 $\eta_1$、$\eta_2$ 表示每次到达 AOM 的功率中进入选定输出级的比例，其他光学元件的总传输因子为 $T_{\mathrm{other}}$，最终光纤耦合效率为 $\eta_{\mathrm{fiber}}$，则</p>
+<div class="math-display">
+$$
+\frac{P_{\mathrm{fiber}}}{P_{\mathrm{in}}}
+=\eta_1\eta_2T_{\mathrm{other}}\eta_{\mathrm{fiber}}.
+$$
+</div>
+
+<p>其中 $T_{\mathrm{other}}$ 可以包括 PBS 的透射与反射、波片往返透过率、透镜往返透过率和镜面反射率。若 $\eta_i$ 已按 AOM 入射功率定义，就不要把已经包含的晶体插入损耗再乘一次；若厂商采用“扣除插损后的衍射效率”，则需要另行计入插损。</p>
+<p>只有两程条件近似相同时，才可用</p>
+<div class="math-display">
+$$
+\eta_{\mathrm{DP}}\approx\eta_{\mathrm{SP}}^2
+$$
+</div>
+
+<p>来估算。第二程的偏振、光斑位置、入射角和声场采样都可能不同，$\eta_2$ 不一定等于 $\eta_1$。</p>
+<h3 id="6-2-一个完整的功率算例"><a href="#6-2-一个完整的功率算例" class="headerlink" title="6.2 一个完整的功率算例"></a>6.2 一个完整的功率算例</h3><p>假设模块输入为 10 mW，两次有效衍射比例都为 0.85，其余光学传输为 0.92，光纤耦合为 0.80：</p>
+<div class="math-display">
+$$
+P_{\mathrm{fiber}}
+=10\times0.85^2\times0.92\times0.80
+\simeq5.32\ \mathrm{mW}.
+$$
+</div>
+
+<table>
+<thead>
+<tr>
+<th>预算阶段</th>
+<th align="right">剩余功率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入</td>
+<td align="right">10.00 mW</td>
+</tr>
+<tr>
+<td>计入第一次衍射</td>
+<td align="right">8.50 mW</td>
+</tr>
+<tr>
+<td>再计入第二次衍射</td>
+<td align="right">7.23 mW</td>
+</tr>
+<tr>
+<td>再计入其他光学传输</td>
+<td align="right">6.65 mW</td>
+</tr>
+<tr>
+<td>再计入光纤耦合</td>
+<td align="right">5.32 mW</td>
+</tr>
+</tbody></table>
+<p>这是把乘法因子分组的预算表，不代表器件的实际摆放顺序。记录实测效率时，应写清楚测量平面：AOM 后、PBS 输出口、光纤前，还是光纤后。</p>
+<h3 id="6-3-RF-功率并不是越大越好"><a href="#6-3-RF-功率并不是越大越好" class="headerlink" title="6.3 RF 功率并不是越大越好"></a>6.3 RF 功率并不是越大越好</h3><p>声光衍射效率对 RF 功率通常是非线性的。一个理想相位匹配耦合模型可以写成 $\eta\sim\sin^2(C\sqrt{P_{\mathrm{RF}}})$，其中 $C$ 汇集材料和几何参数。低效率区才近似正比于 RF 功率。</p>
+<p>如果两次衍射都处于该低效率区，则双程输出近似满足 $P_{\mathrm{out}}\propto P_{\mathrm{RF}}^2$。因此，模拟调幅电压、RF 功率和最终光功率之间通常需要单独标定；把控制电压乘二，并不意味着光功率乘二。<a target="_blank" rel="noopener" href="https://www.rp-photonics.com/acousto_optic_modulators.html">RP Photonics 的 AOM 条目</a>讨论了效率非线性与驱动功率的关系。</p>
+<p>调节应以器件规定的 RF 范围、散热条件和测得的光学输出为依据，不要用增加功率来掩盖 Bragg 角或回程模式不匹配。</p>
+<h2 id="7-“双程带宽更大”与“效率平方后更窄”矛盾吗？"><a href="#7-“双程带宽更大”与“效率平方后更窄”矛盾吗？" class="headerlink" title="7. “双程带宽更大”与“效率平方后更窄”矛盾吗？"></a>7. “双程带宽更大”与“效率平方后更窄”矛盾吗？</h2><p>这两个说法可能同时成立，因为它们往往使用不同的横轴。</p>
+<p>先区分三个概念：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>问的是哪件事？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RF 调谐带宽</td>
+<td>RF 载频变化多大时，选定输出仍达到功率或效率要求？</td>
+</tr>
+<tr>
+<td>光学频率扫描范围</td>
+<td>输出光的频率实际变化了多少？</td>
+</tr>
+<tr>
+<td>强度调制带宽</td>
+<td>在给定载频附近，输出光强能多快跟随调制信号？</td>
+</tr>
+</tbody></table>
+<p>前两者涉及载频扫描，第三者涉及时间响应，不能混用。</p>
+<h3 id="7-1-在-RF-横轴上，双程效率曲线可能更窄"><a href="#7-1-在-RF-横轴上，双程效率曲线可能更窄" class="headerlink" title="7.1 在 RF 横轴上，双程效率曲线可能更窄"></a>7.1 在 RF 横轴上，双程效率曲线可能更窄</h3><p>用一个明确的假设模型说明。设单程效率为高斯形状：</p>
+<div class="math-display">
+$$
+\eta_{\mathrm{SP}}(f)=\eta_0
+\exp\!\left[-4\ln2\left(\frac{f-f_c}{B_{\mathrm{SP,RF}}}\right)^2\right],
+$$
+</div>
+
+<p>其中 $B_{\mathrm{SP,RF}}$ 是 RF 横轴上的半高全宽（FWHM）。两程相同、其他损耗与频率无关时，输出与 $\eta_{\mathrm{SP}}^2$ 成正比。按双程自身峰值取半高，有</p>
+<div class="math-display">
+$$
+B_{\mathrm{DP,RF}}=\frac{B_{\mathrm{SP,RF}}}{\sqrt2}.
+$$
+</div>
+
+<h3 id="7-2-换成光频横轴，还要乘上双程因子-2"><a href="#7-2-换成光频横轴，还要乘上双程因子-2" class="headerlink" title="7.2 换成光频横轴，还要乘上双程因子 2"></a>7.2 换成光频横轴，还要乘上双程因子 2</h3><p>同号双程的输出频率变化为 $\delta\nu&#x3D;\pm2\delta f_{\mathrm{RF}}$，所以这个模型的光学扫描半高全宽为</p>
+<div class="math-display">
+$$
+B_{\mathrm{DP,opt}}
+=2B_{\mathrm{DP,RF}}
+=\sqrt2\,B_{\mathrm{SP,RF}}.
+$$
+</div>
+
+<p><img src="/img/aom-double-pass/05-bandwidth.svg" alt="同一高斯模型在射频横轴和光频横轴上的单程、双程效率比较"></p>
+<p><em>图 5｜计算示例：单程 RF FWHM 为 40 MHz，双程 RF FWHM 为 28.3 MHz，换成光频横轴后为 56.6 MHz。左图保留绝对效率，右图按各自峰值归一化。</em></p>
+<p>这里的 $\sqrt2$ 来自“高斯形状 + 两程相同”等假设，不是通用器件定律。如果比较的是同一个绝对输出功率门槛，而不是各自峰值的一半，结论也会不同。</p>
+<p>实际输出还受到换能器频响、RF 放大器增益、固定入射角的 Bragg 失配、光阑截光、波前变化和光纤耦合影响。<strong>猫眼补偿的是几何回射问题，不会把 AOM 本身变成无限带宽器件，也不会自动保持功率恒定。</strong></p>
+<p>做数据图时，横轴应明确标注为“RF 频率 &#x2F; MHz”或“相对光学频移 &#x2F; MHz”，纵轴注明是绝对效率、归一化功率，还是光纤输出功率。</p>
+<h2 id="8-光束越细，双程切换就越快吗？"><a href="#8-光束越细，双程切换就越快吗？" class="headerlink" title="8. 光束越细，双程切换就越快吗？"></a>8. 光束越细，双程切换就越快吗？</h2><h3 id="8-1-声波需要时间穿过光束"><a href="#8-1-声波需要时间穿过光束" class="headerlink" title="8.1 声波需要时间穿过光束"></a>8.1 声波需要时间穿过光束</h3><p>RF 电信号改变后，新声场先传播到光束所在位置，再扫过整个光束截面。对高斯光束，常用的 10%–90% 上升时间估算是</p>
+<div class="math-display">
+$$
+t_r\simeq0.65\frac{d_b}{v_s},
+$$
+</div>
+
+<p>其中 $d_b$ 是沿声传播方向的光束强度 $1&#x2F;e^2$ 直径。不同定义和器件资料中系数可能略有差别，应核对厂家所用约定。<a target="_blank" rel="noopener" href="https://acoustooptic.com/wp-content/uploads/2025/04/AAOPTO-Theory2013-4-1.pdf">AA Opto-Electronic 的原理说明</a>给出了相应的声渡越时间关系。</p>
+<p>若 $d_b&#x3D;0.50\ \mathrm{mm}$、$v_s&#x3D;4.0\ \mathrm{km&#x2F;s}$，则 $t_r\approx81\ \mathrm{ns}$。如果声学模式更慢，即使光斑相同，切换也会更慢。</p>
+<p>此外，从换能器到光束的距离 $x_a$ 还带来约 $x_a&#x2F;v_s$ 的响应延迟。<strong>延迟是信号何时开始变化，上升时间是变化过程有多长，二者不是一个量。</strong></p>
+<h3 id="8-2-聚焦会增加入射角的分布"><a href="#8-2-聚焦会增加入射角的分布" class="headerlink" title="8.2 聚焦会增加入射角的分布"></a>8.2 聚焦会增加入射角的分布</h3><p>缩小光束可以减小声波渡越时间，但高斯光束的远场半发散角约为</p>
+<div class="math-display">
+$$
+\theta_{\mathrm{div}}\simeq\frac{M^2\lambda_0}{\pi w_0}.
+$$
+</div>
+
+<p>$w_0$ 是腰斑强度 $1&#x2F;e^2$ 半径。当角谱宽度接近或超过 AOM 的角接受范围，光束中就有更多分量偏离最佳相位匹配，效率和光斑质量可能下降。此处是自由空间高斯束的估算；晶体内的角度还要计入折射和器件结构。</p>
+<p><img src="/img/aom-double-pass/06-speed-tradeoff.svg" alt="光束直径与声渡越上升时间、高斯光束发散角的计算关系"></p>
+<p><em>图 6｜同一组假设参数下，小光束的声学切换更快，但发散角更大。最优光束尺寸需要结合速度、效率、角接受度和损伤阈值选择。</em></p>
+<h3 id="8-3-双程不意味着响应时间机械地翻倍"><a href="#8-3-双程不意味着响应时间机械地翻倍" class="headerlink" title="8.3 双程不意味着响应时间机械地翻倍"></a>8.3 双程不意味着响应时间机械地翻倍</h3><p>两次通过 AOM 并不等于两只独立串联的慢电子开关。输出包络更接近</p>
+<div class="math-display">
+$$
+P_{\mathrm{out}}(t)\propto
+\eta_1(t-\tau_1)\eta_2(t-\tau_2),
+$$
+</div>
+
+<p>其中延迟汇集光学传播和各程采样声场的时刻。双程会改变脉冲边沿形状；最终上升、下降时间需要在输出端用合适带宽的光电探测器测量。</p>
+<p>若脉冲很短或扫频很快，两次相互作用看到的 RF 频率未必相同。此时更一般地有</p>
+<div class="math-display">
+$$
+\nu_{\mathrm{out}}(t)-\nu_0
+\simeq s_1 f_{\mathrm{RF}}(t-\tau_1)
++s_2 f_{\mathrm{RF}}(t-\tau_2).
+$$
+</div>
+
+<p>只有 RF 在相关时间尺度上近似不变时，才可直接用瞬时的 $\pm2f_{\mathrm{RF}}(t)$ 代替。快速 chirp 还可能使光束不同横向位置看到不同声频，产生瞬态波前变化；这一问题超出了静态主光线补偿模型。<a target="_blank" rel="noopener" href="https://www.rp-photonics.com/acousto_optic_deflectors.html">RP Photonics 的声光偏转器说明</a>讨论了快速扫频中的声学透镜效应。</p>
+<h2 id="9-双程怎样传递-RF-相位与噪声？"><a href="#9-双程怎样传递-RF-相位与噪声？" class="headerlink" title="9. 双程怎样传递 RF 相位与噪声？"></a>9. 双程怎样传递 RF 相位与噪声？</h2><p>对只关心平均光功率的实验，这一节可以后读；对 Raman 操作、相干操控和干涉测量，它很重要。</p>
+<p>在适当的复振幅约定下，一级衍射会把带符号的 RF 相位写入光场。对两次同号衍射，附加光学相位的变化可写成</p>
+<div class="math-display">
+$$
+\delta\phi_{\mathrm{out}}(t)
+\simeq s\,\delta\phi_{\mathrm{RF}}(t-\tau_1)
++s\,\delta\phi_{\mathrm{RF}}(t-\tau_2)
++\delta\phi_{\mathrm{path}}(t).
+$$
+</div>
+
+<p>这里 $s&#x3D;\pm1$，最后一项包括光路长度和器件扰动。若 RF 相位变化缓慢，两程采样的相位近似相同，则 RF 引起的相位波动近似加倍。只针对这一相关 RF 噪声分量，相位噪声功率谱密度在低傅里叶频率处约增加 4 倍，也就是 6 dB。</p>
+<p>更一般地，RF 相位到输出相位的传递因子为</p>
+<div class="math-display">
+$$
+H(f_m)=e^{-i2\pi f_m\tau_1}+e^{-i2\pi f_m\tau_2},\qquad
+|H(f_m)|^2=4\cos^2\!\bigl[\pi f_m(\tau_1-\tau_2)\bigr],
+$$
+</div>
+
+<p>其中 $f_m$ 是相位噪声的傅里叶频率，与 RF 载频区分。这是从上式直接得到的延迟模型，不表示整套系统的总噪声一定增加 6 dB。</p>
+<p>双程的指向补偿也不等于光程噪声补偿。近法向移动返回镜时，单次往返光程变化约为 $2\delta L$，可带来约 $4\pi\delta L&#x2F;\lambda_0$ 的附加相位。相干实验仍需考虑机械稳定性、RF 相位连续性、触发时序，以及必要的光程稳定措施。</p>
+<h2 id="10-一套可执行的搭建与调试顺序"><a href="#10-一套可执行的搭建与调试顺序" class="headerlink" title="10. 一套可执行的搭建与调试顺序"></a>10. 一套可执行的搭建与调试顺序</h2><p>以下顺序适合图 1 所示的典型布局。具体光学元件仍应匹配波长、功率、偏振和 AOM 数据手册。</p>
+<h3 id="第一步：先写下需要达到的指标"><a href="#第一步：先写下需要达到的指标" class="headerlink" title="第一步：先写下需要达到的指标"></a>第一步：先写下需要达到的指标</h3><p>至少记录输入波长与功率、目标频移及符号、RF 扫描区间、所需输出功率、是否进单模光纤、允许的功率起伏，以及脉冲边沿或相位稳定要求。</p>
+<p>如果需要光学扫描 $\pm20\ \mathrm{MHz}$，同号双程对应 RF 扫描 $\pm10\ \mathrm{MHz}$；但还要确认这个区间确实落在器件和驱动器的可用范围内。</p>
+<h3 id="第二步：先把第一程调好"><a href="#第二步：先把第一程调好" class="headerlink" title="第二步：先把第一程调好"></a>第二步：先把第一程调好</h3><p>建立稳定的输入方向和合适的束径，在中心 RF 附近工作。调节 AOM 的角度与光束穿过声光作用区的位置，优化选定一级光，同时记录输入功率和一级输出功率。</p>
+<p>若第一程效率低，先检查偏振、Bragg 角、通光位置、RF 频率和功率。此时尚未加入回射系统，更容易定位原因。</p>
+<p>对于不可见光，应使用适合波长的探测卡、相机或功率计，并截断已识别的杂散路径；避免用目视寻找回射光。</p>
+<h3 id="第三步：区分零级、一级与扫描轨迹"><a href="#第三步：区分零级、一级与扫描轨迹" class="headerlink" title="第三步：区分零级、一级与扫描轨迹"></a>第三步：区分零级、一级与扫描轨迹</h3><p>小幅改变 RF，观察选定一级的位置变化。在不会截住整个目标扫频轨迹的位置放置零级光束挡。记录光斑是否已经存在明显截光、椭圆化或多瓣结构。</p>
+<h3 id="第四步：加入猫眼，先建立中心频率的回射"><a href="#第四步：加入猫眼，先建立中心频率的回射" class="headerlink" title="第四步：加入猫眼，先建立中心频率的回射"></a>第四步：加入猫眼，先建立中心频率的回射</h3><p>以 $d\approx f_L$、$s\approx f_L$ 为起点放置透镜和镜子。先让目标光在中心 RF 频率返回 AOM，再检查其与输入方向的重合。</p>
+<p>不要只用一个观察平面判断重合：两条不同方向的光可以在一个平面交叉。用近处和远处两个参考位置，才能区分位置误差与角度误差。</p>
+<h3 id="第五步：调偏振并寻找真正的双程输出"><a href="#第五步：调偏振并寻找真正的双程输出" class="headerlink" title="第五步：调偏振并寻找真正的双程输出"></a>第五步：调偏振并寻找真正的双程输出</h3><p>在确认器件偏振兼容后，调 QWP，使目标回程从 PBS 的预期输出口出现。检查输出是否来自“两次目标一级衍射”，而不是第一程零级回返、PBS 漏光或表面反射。</p>
+<p>可以通过暂时阻挡回射臂、改变 RF 和观察不同空间路径来确认信号来源。每次只改变一个条件，避免同时调镜子、波片、AOM 和 RF 后无法判断改善来自哪里。</p>
+<h3 id="第六步：扫-RF，优化整个区间"><a href="#第六步：扫-RF，优化整个区间" class="headerlink" title="第六步：扫 RF，优化整个区间"></a>第六步：扫 RF，优化整个区间</h3><p>在目标 RF 区间内扫描，记录 PBS 输出功率、近场光斑和远场位置。微调猫眼的轴向位置、透镜位置和反射镜角度，寻找整个区间都稳定的状态。</p>
+<p>中心点最亮与全区间最平坦可能对应不同设置。应根据实际实验指标决定取舍，避免只追求单点峰值。</p>
+<h3 id="第七步：再耦合单模光纤"><a href="#第七步：再耦合单模光纤" class="headerlink" title="第七步：再耦合单模光纤"></a>第七步：再耦合单模光纤</h3><p>先在中心频率完成耦合，再保持耦合镜固定扫描 RF。分别测量光纤前后的功率，计算</p>
+<div class="math-display">
+$$
+\eta_{\mathrm{fiber}}(f)
+=\frac{P_{\mathrm{after\ fiber}}(f)}{P_{\mathrm{before\ fiber}}(f)}.
+$$
+</div>
+
+<p>如果光纤前后功率同步下降，主要问题可能来自 AOM 频响；如果自由空间功率较稳定而耦合比例下降，则应优先排查指向、位置或波前变化。</p>
+<h3 id="第八步：热稳定后保存基线"><a href="#第八步：热稳定后保存基线" class="headerlink" title="第八步：热稳定后保存基线"></a>第八步：热稳定后保存基线</h3><p>待 RF 驱动与 AOM 热状态稳定，保存最终的扫频曲线、功率、光斑图和关键器件位置。再次开机后比较相同指标，才能判断系统是否可重复。</p>
+<h2 id="11-如何证明双程系统确实工作正常？"><a href="#11-如何证明双程系统确实工作正常？" class="headerlink" title="11. 如何证明双程系统确实工作正常？"></a>11. 如何证明双程系统确实工作正常？</h2><h3 id="11-1-用拍频检验频移"><a href="#11-1-用拍频检验频移" class="headerlink" title="11.1 用拍频检验频移"></a>11.1 用拍频检验频移</h3><p>从移频前的激光取一小部分作为参考，与双程输出在合适带宽的光电探测器上重合。空间模式与偏振合适时，探测信号含有</p>
+<div class="math-display">
+$$
+i_{\mathrm{beat}}(t)\propto
+2\sqrt{P_{\mathrm{ref}}P_{\mathrm{DP}}}
+\cos\!\left[2\pi(\nu_{\mathrm{DP}}-\nu_0)t+\phi\right].
+$$
+</div>
+
+<p>对于 80 MHz RF 的同号双程，预期拍频大小为 160 MHz。探测器、放大器和频谱仪都要能覆盖该频段，并避免因总光功率过大而饱和。</p>
+<p><strong>普通拍频频谱只给出频差的绝对值，不能单凭一个 160 MHz 峰区分升频与降频。</strong> 要确定符号，可引入已知偏置参考、使用合适的相干 I&#x2F;Q 测量，或结合已知谱线与可追踪的频率变化判断。</p>
+<h3 id="11-2-用两个距离测残余角度漂移"><a href="#11-2-用两个距离测残余角度漂移" class="headerlink" title="11.2 用两个距离测残余角度漂移"></a>11.2 用两个距离测残余角度漂移</h3><p>若两个观察平面间隔 $\Delta z$，扫频造成的光斑质心变化分别为 $\Delta x_1$、$\Delta x_2$，则角度变化近似为</p>
+<div class="math-display">
+$$
+\delta\theta\simeq\frac{\Delta x_2-\Delta x_1}{\Delta z}.
+$$
+</div>
+
+<p>在两个正交方向都这样测量，比“看起来光斑没怎么动”更有说服力。应同时观察模式形状，因为质心稳定仍可能伴随波前或高阶模式变化。</p>
+<h3 id="11-3-在最终使用端测脉冲和消光"><a href="#11-3-在最终使用端测脉冲和消光" class="headerlink" title="11.3 在最终使用端测脉冲和消光"></a>11.3 在最终使用端测脉冲和消光</h3><p>对选定输出口定义开关消光比</p>
+<div class="math-display">
+$$
+\mathrm{ER}_{\mathrm{dB}}
+=10\log_{10}\left(\frac{P_{\mathrm{on}}}{P_{\mathrm{off}}}\right).
+$$
+</div>
+
+<p>理想乘法模型中，两程的残余衍射比例相乘，消光比的 dB 数值可能相加。但实际 PBS 泄漏、零级回返、散射光和探测器本底不一定经过两次相同的抑制，常常决定最后能达到的消光水平。</p>
+<p>应测量最终光纤输出或实验使用端的开态功率、关态背景、上升与下降时间、触发延迟和重复性。若关态读数落到仪器噪声底，只能报告消光比的下限；不能把噪声底以下的值当作精确测量。</p>
+<h2 id="12-常见问题与排查方向"><a href="#12-常见问题与排查方向" class="headerlink" title="12. 常见问题与排查方向"></a>12. 常见问题与排查方向</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>优先怀疑</th>
+<th>有区分力的检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一程很弱</td>
+<td>偏振、Bragg 角、RF 频率或声光作用区位置不合适</td>
+<td>暂不加入回射，单独优化第一程并测功率</td>
+</tr>
+<tr>
+<td>第一程好，第二程很弱</td>
+<td>回程位置或角度不对；正交偏振不兼容</td>
+<td>分别检查回射重合与两程偏振条件</td>
+</tr>
+<tr>
+<td>中心频率好，扫到两端迅速变差</td>
+<td>猫眼距离、截光、器件频响</td>
+<td>同时测自由空间功率、两平面位置和光纤耦合比例</td>
+</tr>
+<tr>
+<td>扫频时镜面上的光点移动</td>
+<td>猫眼把扫角转成了位置变化，也可能属正常现象</td>
+<td>看回到 AOM 后的最终输出是否稳定，勿仅凭镜面光点判断</td>
+</tr>
+<tr>
+<td>自由空间功率稳，光纤后变化大</td>
+<td>残余指向、位置或波前变化</td>
+<td>固定耦合光学件，扫描并计算耦合比例</td>
+</tr>
+<tr>
+<td>PBS 输出方向不对或出现多个亮点</td>
+<td>QWP 角度、偏振演化或杂散路径</td>
+<td>逐段挡光并追踪偏振，确认目标输出来源</td>
+</tr>
+<tr>
+<td>RF 关闭后仍有明显光</td>
+<td>零级回返、散射、PBS 泄漏或 RF 关断不足</td>
+<td>挡住回射臂对比背景，并测 RF 关断状态</td>
+</tr>
+<tr>
+<td>功率几分钟内缓慢漂移</td>
+<td>温升、输入漂移或安装应力</td>
+<td>同时记录输入功率与输出比值，比较热稳定前后</td>
+</tr>
+<tr>
+<td>频谱出现 $f_{\mathrm{RF}}$ 附近杂峰</td>
+<td>一次衍射光与其他频率分量混合，或电子串扰</td>
+<td>遮断对应光路；再遮断全部光，检查是否仍有电信号</td>
+</tr>
+<tr>
+<td>扫频后原子信号变了，但原因不清</td>
+<td>真正的失谐效应与光功率变化混合</td>
+<td>独立记录实验端光功率，并校准频移符号和双程倍数</td>
+</tr>
+</tbody></table>
+<p>这张表用于缩小排查范围，并不意味着某个现象只对应一种原因。尤其应避免把所有扫频功率下降都归因于“没调好猫眼”。</p>
+<h2 id="13-哪些实验特别适合使用双程？"><a href="#13-哪些实验特别适合使用双程？" class="headerlink" title="13. 哪些实验特别适合使用双程？"></a>13. 哪些实验特别适合使用双程？</h2><p><strong>激光冷却与精细光谱。</strong> 需要改变失谐，同时保持照射区域和模式重合时，双程可以减轻光束扫描带来的附加变化。若实验要求恒定强度，还要另外测量并补偿 AOM 的频率响应。</p>
+<p><strong>单模光纤之前的频率调节。</strong> 单模光纤对模式重合敏感，适合用作双程输出稳定性的严格检查。光纤后的模式较稳定，也不表示光纤前的耦合功率不会随频率变化。</p>
+<p><strong>干涉与相干操控。</strong> 双程能提供可编程频移，但 RF 相位、光程和延迟必须纳入相位预算。例如，两束光分别经过同号双程 AOM，频差中的声光贡献可写为 $2f_A-2f_B$；若某一支使用降频路径，就要改变相应符号。</p>
+<p><strong>固定光路中的快速切换与功率控制。</strong> 双程的额外损耗与可能改善的杂光抑制需要一起评估。并不是所有场景都值得增加回射光学件；如果只做固定频移、功率预算紧张，单程也可能更合适。</p>
+<table>
+<thead>
+<tr>
+<th>比较项目</th>
+<th>单程</th>
+<th>典型同号双程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>频移</td>
+<td>$\pm f_{\mathrm{RF}}$</td>
+<td>$\pm2f_{\mathrm{RF}}$</td>
+</tr>
+<tr>
+<td>扫频引起的指向变化</td>
+<td>通常需要处理</td>
+<td>正确回射时显著减小</td>
+</tr>
+<tr>
+<td>光学损耗</td>
+<td>较少</td>
+<td>两次衍射与更多光学元件</td>
+</tr>
+<tr>
+<td>调节重点</td>
+<td>Bragg 匹配和输入模式</td>
+<td>还包括回射、偏振分离与全范围稳定性</td>
+</tr>
+<tr>
+<td>对 RF 的频率灵敏度</td>
+<td>系数 1</td>
+<td>同号路径系数 2</td>
+</tr>
+<tr>
+<td>光功率是否天然恒定</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否自动消除相位噪声</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<h2 id="14-建议保存的一页实验记录"><a href="#14-建议保存的一页实验记录" class="headerlink" title="14. 建议保存的一页实验记录"></a>14. 建议保存的一页实验记录</h2><p>完成搭建后，可以按以下字段保存系统状态，方便复现与故障定位。</p>
+<table>
+<thead>
+<tr>
+<th>记录项</th>
+<th>应记录的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>光与器件</td>
+<td>波长、输入功率、AOM 型号、声学模式、偏振要求</td>
+</tr>
+<tr>
+<td>RF 链路</td>
+<td>信号源、放大器、载频范围、功率范围、调幅接口</td>
+</tr>
+<tr>
+<td>频率约定</td>
+<td>两程各自的频移符号、最终频移公式、拍频验证结果</td>
+</tr>
+<tr>
+<td>模式与几何</td>
+<td>AOM 处束径、透镜焦距、轴向位置、挡光位置</td>
+</tr>
+<tr>
+<td>功率预算</td>
+<td>第一程、双程自由空间、光纤前后功率与测量位置</td>
+</tr>
+<tr>
+<td>扫描性能</td>
+<td>RF 范围、光学范围、输出功率起伏、两方向角度漂移</td>
+</tr>
+<tr>
+<td>时域性能</td>
+<td>上升&#x2F;下降时间、触发延迟、脉冲宽度、消光比与噪声底</td>
+</tr>
+<tr>
+<td>运行状态</td>
+<td>热稳定时间、冷机与热机差异、固定后的参考光斑图</td>
+</tr>
+</tbody></table>
+<p>一套好的双程系统，应能用这些记录回答具体问题：在规定的 RF 区间内，输出频率是否正确、功率是否足够、指向是否稳定、脉冲与相位表现是否满足实验要求。</p>
+<h2 id="参考资料与配图代码"><a href="#参考资料与配图代码" class="headerlink" title="参考资料与配图代码"></a>参考资料与配图代码</h2><ol>
+<li>E. A. Donley, T. P. Heavner, F. Levi, M. O. Tataw, S. R. Jefferts, <strong>Double-pass acousto-optic modulator system</strong>, <em>Review of Scientific Instruments</em> <strong>76</strong>, 063112 (2005). <a target="_blank" rel="noopener" href="https://tf.nist.gov/general/pdf/2071.pdf">论文 PDF</a>；<a target="_blank" rel="noopener" href="https://doi.org/10.1063/1.1930095">DOI</a>。本文猫眼与双程结构的主要实验参考。</li>
+<li>ISOMET, <strong>Acousto-Optic Modulation, AN0510</strong>。<a target="_blank" rel="noopener" href="https://isomet.com/App-Manual_pdf/AO%20Modulation.pdf">厂商应用说明</a>。声光作用、调制和实际器件参数。</li>
+<li>ISOMET, <strong>RFA200 Series — Basic AO Modulator Parameters</strong>。<a target="_blank" rel="noopener" href="https://isomet.com/App-Manual_pdf/RFA200-series-inst.pdf">参数与角度定义</a>。其中的具体声速与频率属于对应型号，不能直接移用于其他器件。</li>
+<li>AA Opto-Electronic, <strong>Acousto-Optic Modulators — Theory</strong>。<a target="_blank" rel="noopener" href="https://acoustooptic.com/wp-content/uploads/2025/04/AAOPTO-Theory2013-4-1.pdf">原理说明 PDF</a>。声渡越时间与调制响应。</li>
+<li>Oberlin College, <strong>Quarter Wave Plate</strong>。<a target="_blank" rel="noopener" href="https://www2.oberlin.edu/physics/catalog/demonstrations/optics/quarterwave.html">偏振实验说明</a>。波片往返后正交线偏振的演示。</li>
+<li>Rüdiger Paschotta, RP Photonics Encyclopedia, <a target="_blank" rel="noopener" href="https://www.rp-photonics.com/acousto_optic_modulators.html">Acousto-optic Modulators</a> 与 <a target="_blank" rel="noopener" href="https://www.rp-photonics.com/acousto_optic_deflectors.html">Acousto-optic Deflectors</a>。效率、时间响应与扫频效应的补充说明。</li>
+</ol>
+<p>六幅配图的源代码可<a href="/downloads/aom-double-pass/generate_figures.py">下载：generate_figures.py</a>。运行环境需要 Python、NumPy、Matplotlib 和 Pillow；脚本会生成 SVG 与 PNG。图中参数均在代码中明示，便于替换为实验设备的实际参数。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/">http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%BF%80%E5%85%89/">激光</a><a class="post-meta__tags" href="/tags/AOM/">AOM</a><a class="post-meta__tags" href="/tags/%E5%AE%9E%E9%AA%8C%E5%85%89%E5%AD%A6/">实验光学</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔"><img class="cover" src="/img/ray-transfer-matrix/00-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">如何在线性刀片阱中测量离子囚禁频率</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/laser-history/" title="激光发展史：交互知识图谱与讲解视频"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-10</div><div class="title">激光发展史：交互知识图谱与讲解视频</div></div></a></div><div><a href="/2025/09/18/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A3%B0%E5%85%89%E8%B0%83%E5%88%B6%E5%99%A8%20(AOM)%20%E8%AF%A6%E8%A7%A3/" title="声光调制器 (AOM) 详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-18</div><div class="title">声光调制器 (AOM) 详解</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">67</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8D%95%E7%A8%8B-AOM-%E6%94%B9%E5%8F%98%E4%BA%86%E5%85%89%E7%9A%84%E5%93%AA%E4%BA%9B%E5%B1%9E%E6%80%A7%EF%BC%9F"><span class="toc-text">1. 单程 AOM 改变了光的哪些属性？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%99%B6%E4%BD%93%E4%B8%AD%E7%9A%84%E5%A3%B0%E6%B3%A2%E6%98%AF%E4%B8%80%E5%89%AF%E7%A7%BB%E5%8A%A8%E7%9A%84%E5%85%89%E6%A0%85"><span class="toc-text">1.1 晶体中的声波是一副移动的光栅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%AB%E9%A2%91%E4%BC%9A%E5%BC%95%E8%B5%B7%E5%85%89%E6%9D%9F%E5%81%8F%E8%BD%AC%EF%BC%9F"><span class="toc-text">1.2 为什么扫频会引起光束偏转？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8F%8C%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E5%BE%97%E5%88%B0%E4%B8%A4%E5%80%8D%E9%A2%91%E7%A7%BB%EF%BC%9F"><span class="toc-text">2. 双程为什么可以得到两倍频移？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%85%88%E5%88%86%E5%88%AB%E8%AE%B0%E5%BD%95%E4%B8%A4%E6%AC%A1%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8"><span class="toc-text">2.1 先分别记录两次相互作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%9B%9E%E6%9D%A5%E7%9A%84%E5%85%89%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E8%83%BD%E7%BB%A7%E7%BB%AD%E5%8D%87%E9%A2%91%EF%BC%9F"><span class="toc-text">2.2 回来的光为什么还能继续升频？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B8%B8%E7%94%A8%E7%8C%AB%E7%9C%BC%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%9B%B4%E6%8E%A5%E6%94%BE%E4%B8%80%E9%9D%A2%E9%95%9C%E5%AD%90%EF%BC%9F"><span class="toc-text">3. 为什么常用猫眼，而不是直接放一面镜子？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B9%B3%E9%9D%A2%E9%95%9C%E8%83%BD%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%A2%91%E7%8E%87%E7%82%B9%E5%AF%B9%E5%87%86"><span class="toc-text">3.1 平面镜能在一个频率点对准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%8C%AB%E7%9C%BC%E6%8A%8A%E8%A7%92%E5%BA%A6%E5%8F%98%E5%8C%96%E8%BD%AC%E6%88%90%E6%A8%AA%E5%90%91%E4%BD%8D%E7%BD%AE%E5%8F%98%E5%8C%96"><span class="toc-text">3.2 猫眼把角度变化转成横向位置变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%8F%E9%95%9C%E5%88%B0%E9%95%9C%E9%9D%A2%E7%9A%84%E8%B7%9D%E7%A6%BB%E4%B9%9F%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-text">3.3 为什么透镜到镜面的距离也重要？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E9%80%8F%E9%95%9C%E3%80%81%E5%AD%94%E5%BE%84%E5%92%8C%E6%8C%A1%E5%85%89%E4%BD%8D%E7%BD%AE%EF%BC%9F"><span class="toc-text">4. 如何选择透镜、孔径和挡光位置？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%84%A6%E8%B7%9D%E4%BC%9A%E5%90%8C%E6%97%B6%E5%BD%B1%E5%93%8D%E5%88%86%E7%A6%BB%E8%B7%9D%E7%A6%BB%E5%92%8C%E4%BD%93%E7%A7%AF"><span class="toc-text">4.1 焦距会同时影响分离距离和体积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BC%98%E5%85%88%E9%98%BB%E6%96%AD%E4%B8%8D%E9%9C%80%E8%A6%81%E8%BF%94%E5%9B%9E%E7%9A%84%E9%9B%B6%E7%BA%A7%E5%85%89"><span class="toc-text">4.2 优先阻断不需要返回的零级光</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-PBS-%E5%92%8C-QWP-%E6%80%8E%E6%A0%B7%E5%88%86%E7%A6%BB%E5%8E%BB%E7%A8%8B%E4%B8%8E%E5%9B%9E%E7%A8%8B%EF%BC%9F"><span class="toc-text">5. PBS 和 QWP 怎样分离去程与回程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%85%B8%E5%9E%8B%E5%81%8F%E6%8C%AF%E8%BF%87%E7%A8%8B"><span class="toc-text">5.1 典型偏振过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%BF%99%E5%A5%97%E5%81%8F%E6%8C%AF%E5%B8%83%E5%B1%80%E6%9C%89%E4%B8%80%E4%B8%AA%E5%BF%85%E9%A1%BB%E6%A3%80%E6%9F%A5%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-text">5.2 这套偏振布局有一个必须检查的条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%8F%8C%E7%A8%8B%E6%95%88%E7%8E%87%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E5%B8%B8%E4%BD%8E%E4%BA%8E%E5%8D%95%E7%A8%8B%EF%BC%9F"><span class="toc-text">6. 双程效率为什么通常低于单程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E4%BD%BF%E7%94%A8%E5%8A%9F%E7%8E%87%E9%A2%84%E7%AE%97%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%8F%AA%E8%AF%B4%E2%80%9C%E6%95%88%E7%8E%87%E5%B9%B3%E6%96%B9%E2%80%9D"><span class="toc-text">6.1 使用功率预算，而不是只说“效率平方”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%8A%9F%E7%8E%87%E7%AE%97%E4%BE%8B"><span class="toc-text">6.2 一个完整的功率算例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-RF-%E5%8A%9F%E7%8E%87%E5%B9%B6%E4%B8%8D%E6%98%AF%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%A5%BD"><span class="toc-text">6.3 RF 功率并不是越大越好</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E2%80%9C%E5%8F%8C%E7%A8%8B%E5%B8%A6%E5%AE%BD%E6%9B%B4%E5%A4%A7%E2%80%9D%E4%B8%8E%E2%80%9C%E6%95%88%E7%8E%87%E5%B9%B3%E6%96%B9%E5%90%8E%E6%9B%B4%E7%AA%84%E2%80%9D%E7%9F%9B%E7%9B%BE%E5%90%97%EF%BC%9F"><span class="toc-text">7. “双程带宽更大”与“效率平方后更窄”矛盾吗？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%9C%A8-RF-%E6%A8%AA%E8%BD%B4%E4%B8%8A%EF%BC%8C%E5%8F%8C%E7%A8%8B%E6%95%88%E7%8E%87%E6%9B%B2%E7%BA%BF%E5%8F%AF%E8%83%BD%E6%9B%B4%E7%AA%84"><span class="toc-text">7.1 在 RF 横轴上，双程效率曲线可能更窄</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%8D%A2%E6%88%90%E5%85%89%E9%A2%91%E6%A8%AA%E8%BD%B4%EF%BC%8C%E8%BF%98%E8%A6%81%E4%B9%98%E4%B8%8A%E5%8F%8C%E7%A8%8B%E5%9B%A0%E5%AD%90-2"><span class="toc-text">7.2 换成光频横轴，还要乘上双程因子 2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%85%89%E6%9D%9F%E8%B6%8A%E7%BB%86%EF%BC%8C%E5%8F%8C%E7%A8%8B%E5%88%87%E6%8D%A2%E5%B0%B1%E8%B6%8A%E5%BF%AB%E5%90%97%EF%BC%9F"><span class="toc-text">8. 光束越细，双程切换就越快吗？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%A3%B0%E6%B3%A2%E9%9C%80%E8%A6%81%E6%97%B6%E9%97%B4%E7%A9%BF%E8%BF%87%E5%85%89%E6%9D%9F"><span class="toc-text">8.1 声波需要时间穿过光束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E8%81%9A%E7%84%A6%E4%BC%9A%E5%A2%9E%E5%8A%A0%E5%85%A5%E5%B0%84%E8%A7%92%E7%9A%84%E5%88%86%E5%B8%83"><span class="toc-text">8.2 聚焦会增加入射角的分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E5%8F%8C%E7%A8%8B%E4%B8%8D%E6%84%8F%E5%91%B3%E7%9D%80%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E6%9C%BA%E6%A2%B0%E5%9C%B0%E7%BF%BB%E5%80%8D"><span class="toc-text">8.3 双程不意味着响应时间机械地翻倍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%8F%8C%E7%A8%8B%E6%80%8E%E6%A0%B7%E4%BC%A0%E9%80%92-RF-%E7%9B%B8%E4%BD%8D%E4%B8%8E%E5%99%AA%E5%A3%B0%EF%BC%9F"><span class="toc-text">9. 双程怎样传递 RF 相位与噪声？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%80%E5%A5%97%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%95%E9%A1%BA%E5%BA%8F"><span class="toc-text">10. 一套可执行的搭建与调试顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%85%88%E5%86%99%E4%B8%8B%E9%9C%80%E8%A6%81%E8%BE%BE%E5%88%B0%E7%9A%84%E6%8C%87%E6%A0%87"><span class="toc-text">第一步：先写下需要达到的指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%85%88%E6%8A%8A%E7%AC%AC%E4%B8%80%E7%A8%8B%E8%B0%83%E5%A5%BD"><span class="toc-text">第二步：先把第一程调好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%8C%BA%E5%88%86%E9%9B%B6%E7%BA%A7%E3%80%81%E4%B8%80%E7%BA%A7%E4%B8%8E%E6%89%AB%E6%8F%8F%E8%BD%A8%E8%BF%B9"><span class="toc-text">第三步：区分零级、一级与扫描轨迹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%8A%A0%E5%85%A5%E7%8C%AB%E7%9C%BC%EF%BC%8C%E5%85%88%E5%BB%BA%E7%AB%8B%E4%B8%AD%E5%BF%83%E9%A2%91%E7%8E%87%E7%9A%84%E5%9B%9E%E5%B0%84"><span class="toc-text">第四步：加入猫眼，先建立中心频率的回射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%B0%83%E5%81%8F%E6%8C%AF%E5%B9%B6%E5%AF%BB%E6%89%BE%E7%9C%9F%E6%AD%A3%E7%9A%84%E5%8F%8C%E7%A8%8B%E8%BE%93%E5%87%BA"><span class="toc-text">第五步：调偏振并寻找真正的双程输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E6%89%AB-RF%EF%BC%8C%E4%BC%98%E5%8C%96%E6%95%B4%E4%B8%AA%E5%8C%BA%E9%97%B4"><span class="toc-text">第六步：扫 RF，优化整个区间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5%EF%BC%9A%E5%86%8D%E8%80%A6%E5%90%88%E5%8D%95%E6%A8%A1%E5%85%89%E7%BA%A4"><span class="toc-text">第七步：再耦合单模光纤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E6%AD%A5%EF%BC%9A%E7%83%AD%E7%A8%B3%E5%AE%9A%E5%90%8E%E4%BF%9D%E5%AD%98%E5%9F%BA%E7%BA%BF"><span class="toc-text">第八步：热稳定后保存基线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%A6%82%E4%BD%95%E8%AF%81%E6%98%8E%E5%8F%8C%E7%A8%8B%E7%B3%BB%E7%BB%9F%E7%A1%AE%E5%AE%9E%E5%B7%A5%E4%BD%9C%E6%AD%A3%E5%B8%B8%EF%BC%9F"><span class="toc-text">11. 如何证明双程系统确实工作正常？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E7%94%A8%E6%8B%8D%E9%A2%91%E6%A3%80%E9%AA%8C%E9%A2%91%E7%A7%BB"><span class="toc-text">11.1 用拍频检验频移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E7%94%A8%E4%B8%A4%E4%B8%AA%E8%B7%9D%E7%A6%BB%E6%B5%8B%E6%AE%8B%E4%BD%99%E8%A7%92%E5%BA%A6%E6%BC%82%E7%A7%BB"><span class="toc-text">11.2 用两个距离测残余角度漂移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E5%9C%A8%E6%9C%80%E7%BB%88%E4%BD%BF%E7%94%A8%E7%AB%AF%E6%B5%8B%E8%84%89%E5%86%B2%E5%92%8C%E6%B6%88%E5%85%89"><span class="toc-text">11.3 在最终使用端测脉冲和消光</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E6%9F%A5%E6%96%B9%E5%90%91"><span class="toc-text">12. 常见问题与排查方向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%93%AA%E4%BA%9B%E5%AE%9E%E9%AA%8C%E7%89%B9%E5%88%AB%E9%80%82%E5%90%88%E4%BD%BF%E7%94%A8%E5%8F%8C%E7%A8%8B%EF%BC%9F"><span class="toc-text">13. 哪些实验特别适合使用双程？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%BB%BA%E8%AE%AE%E4%BF%9D%E5%AD%98%E7%9A%84%E4%B8%80%E9%A1%B5%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95"><span class="toc-text">14. 建议保存的一页实验记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E4%B8%8E%E9%85%8D%E5%9B%BE%E4%BB%A3%E7%A0%81"><span class="toc-text">参考资料与配图代码</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试">AOM 双程（Double Pass）光路详解：原理、搭建与调试</a><time datetime="2026-09-19T15:06:09.000Z" title="发表于 2026-09-19 23:06:09">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率">如何在线性刀片阱中测量离子囚禁频率</a><time datetime="2026-09-19T10:30:41.000Z" title="发表于 2026-09-19 18:30:41">2026-09-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</a><time datetime="2026-09-12T06:22:09.000Z" title="发表于 2026-09-12 14:22:09">2026-09-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/12/%E5%AD%A6%E4%B9%A0/rabi-oscillations/" title="Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导">Rabi 振荡：从二能级哈密顿量到 Bloch 球的完整推导</a><time datetime="2026-09-12T06:14:35.000Z" title="发表于 2026-09-12 14:14:35">2026-09-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
