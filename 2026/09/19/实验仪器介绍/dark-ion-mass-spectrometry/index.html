@@ -1,0 +1,520 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>离子变暗之后：用囚禁频率鉴别 172Yb⁺ 阱中的分子离子 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="面向 172Yb⁺ 线性刀片阱，分别讨论单离子、双离子和多离子变暗后，如何通过亮探针离子、轴向正常模、频率比和误差预算测量暗离子质量，并筛选 YbH⁺、YbO⁺、YbOH⁺ 等分子候选。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="离子变暗之后：用囚禁频率鉴别 172Yb⁺ 阱中的分子离子">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/dark-ion-mass-spectrometry/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="面向 172Yb⁺ 线性刀片阱，分别讨论单离子、双离子和多离子变暗后，如何通过亮探针离子、轴向正常模、频率比和误差预算测量暗离子质量，并筛选 YbH⁺、YbO⁺、YbOH⁺ 等分子候选。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-09-19T15:00:34.000Z">
+<meta property="article:modified_time" content="2026-09-19T15:00:34.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="离子阱">
+<meta property="article:tag" content="镱离子">
+<meta property="article:tag" content="分子离子">
+<meta property="article:tag" content="暗离子">
+<meta property="article:tag" content="质谱">
+<meta property="article:tag" content="世俗频率">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/dark-ion-mass-spectrometry/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '离子变暗之后：用囚禁频率鉴别 172Yb⁺ 阱中的分子离子',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-19 23:00:34'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="b89a270bc05fa974904be9f2f7afd42afff00ccdf786749d267b257d68e7cbe1";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">离子变暗之后：用囚禁频率鉴别 172Yb⁺ 阱中的分子离子</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-19T15:00:34.000Z" title="发表于 2026-09-19 23:00:34">2026-09-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/">实验仪器介绍</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>29分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="离子变暗之后：用囚禁频率鉴别 172Yb⁺ 阱中的分子离子"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>实验中，一个原本正常散射 369 nm 荧光的 $^{172}\mathrm{Yb}^{+}$ 突然变暗，可能意味着离子进入了未被有效回泵的内部态，也可能意味着离子被加热、离开探测区域或已经丢失。本文集中研究一个明确的假设：<strong>离子与背景气体反应后，形成了仍被阱束缚的分子离子。怎样通过囚禁频率测出它的质量，并判断它可能是什么分子？</strong></p>
+<p>这个思路可行，但实验链条必须完整：先建立暗粒子仍被囚禁的证据，再通过可见的探针离子读出运动，最后用正确的耦合模型把共振频率换算成质量。电场运动主要测量的是质量与电荷的关系；只有明确电荷态并结合化学背景，才能把一个质量峰关联到具体分子。</p>
+<p>本文以实验常用的 $^{172}\mathrm{Yb}^{+}$ 为亮离子，分别讨论单离子、双离子和多离子变暗。文中的 200 kHz 轴向频率、1 MHz 径向频率和示例数据均为演算设置，<strong>不是对本实验装置的实测结果</strong>。电激励接线和常规扫频方法可先参阅<a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/">《如何在线性刀片阱中测量离子囚禁频率》</a>。</p>
+<span id="more"></span>
+
+<h2 id="1-阱频能告诉我们什么"><a href="#1-阱频能告诉我们什么" class="headerlink" title="1. 阱频能告诉我们什么"></a>1. 阱频能告诉我们什么</h2><p>分子离子的质心仍是一个带电粒子。只要其运动幅度足够小、外场可以局部近似为二次势，其质心振动频率由质量、电荷、阱的曲率及库仑耦合决定。分子内部的振动、转动频率与这里的 kHz–MHz 质心世俗频率是不同的物理量。</p>
+<p>假设反应保持单电荷，并保留原来的镱核，则</p>
+<p>$$<br>^{172}\mathrm{Yb}^{+}\longrightarrow {}^{172}\mathrm{Yb}X^{+}<br>$$</p>
+<p>会使质量增加，而电荷仍为 $+e$。在固定的阱参数下，相应运动频率通常下降。可是“频率降低了百分之几”并没有通用的质量换算：单离子轴向、RF 主导的单离子径向、双离子的集体模，具有不同的质量依赖。</p>
+<p>建议把结论分成三个层次：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>所需证据</th>
+<th>可以写出的结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>暗带电粒子仍存在</td>
+<td>亮探针的位置、晶体构型和运动谱支持额外电荷存在</td>
+<td>阱中保留了一个暗离子</td>
+</tr>
+<tr>
+<td>测得质量</td>
+<td>已知电荷态、已校准的势阱、正确的正常模模型及误差预算</td>
+<td>暗离子质量为 $M\pm\sigma_M$</td>
+</tr>
+<tr>
+<td>关联到分子</td>
+<td>质量与候选相容，并有同位素、反应物或解离证据</td>
+<td>质量与某分子相容；证据充分时再作具体归属</td>
+</tr>
+</tbody></table>
+<p>例如，质量增加约 1 u 与形成氢化物相容，但也可能与误装载其他镱同位素混淆。相同质量的异构体不会因为化学结构不同，就自动在世俗频率中产生可辨认的特征。即使已按题设接受“发生了分子形成”，也应保留多个质量相近的分子候选。</p>
+<h2 id="2-对-172Yb⁺，应该列出哪些候选"><a href="#2-对-172Yb⁺，应该列出哪些候选" class="headerlink" title="2. 对 172Yb⁺，应该列出哪些候选"></a>2. 对 172Yb⁺，应该列出哪些候选</h2><p>优先讨论 $^{172}\mathrm{YbH}^{+}$、$^{172}\mathrm{Yb}^{16}\mathrm{O}^{+}$ 和 $^{172}\mathrm{Yb}^{16}\mathrm{OH}^{+}$，分别对应约 1、16、17 u 的质量增量。它们的作用首先是提供可检验的候选质量，而不是预先认定某一种反应一定发生。</p>
+<p>YbH⁺ 在镱离子阱中的形成和光解离已有直接研究。Hoang 等研究的是含缓冲气体的 $^{171}\mathrm{Yb}^{+}$ 装置，讨论了暗内部态与氢化物的联系，并观察到光解离；这支持“镱离子变暗可能与分子形成有关”，但不能把该装置的反应速率、激发态布居或光解离效率原样搬到超高真空刀片阱。<a target="_blank" rel="noopener" href="https://doi.org/10.1103/PhysRevA.101.022705">Hoang 等，PRA 101, 022705 (2020)</a></p>
+<p>对于羟基候选，Parker 等在四极离子阱质谱仪中研究了 Yb⁺ 与水生成 YbOH⁺ 的反应，同时指出反应能量与键能解释存在不确定性。因此，残余水可以成为调查线索，但“有水背景”不能单独证明本装置中已经生成 YbOH⁺。YbO⁺ 也应作为含氧候选接受质量检验，而不能仅由氧相关残余气体峰直接指定。<a target="_blank" rel="noopener" href="https://doi.org/10.1039/D1CP01362A">Parker 等，PCCP 23, 11314–11326 (2021)</a></p>
+<p>为避免把同位素平均原子量用于单同位素实验，下面采用 NIST 的中性同位素质量，并对每个单电荷离子减去一个电子质量。化学结合能和电离能带来的质量修正在本文约 0.1 u 的目标精度下可以忽略。<a target="_blank" rel="noopener" href="https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=Yb">NIST：Yb 同位素质量</a>、<a target="_blank" rel="noopener" href="https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ascii=ascii&ele=H">H 同位素质量</a>、<a target="_blank" rel="noopener" href="https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ascii=ascii&ele=O">O 同位素质量</a></p>
+<table>
+<thead>
+<tr>
+<th>候选</th>
+<th align="right">离子质量近似值 &#x2F; u</th>
+<th align="right">相对 $^{172}$Yb⁺ 的增量 &#x2F; u</th>
+<th>使用方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$^{172}\mathrm{Yb}^{+}$</td>
+<td align="right">171.93584</td>
+<td align="right">0</td>
+<td>无质量改变的对照；可能仍处于暗内部态</td>
+</tr>
+<tr>
+<td>$^{172}\mathrm{YbH}^{+}$</td>
+<td align="right">172.94366</td>
+<td align="right">1.00783</td>
+<td>氢化物候选</td>
+</tr>
+<tr>
+<td>$^{172}\mathrm{Yb}^{16}\mathrm{O}^{+}$</td>
+<td align="right">187.93075</td>
+<td align="right">15.99491</td>
+<td>氧化物候选</td>
+</tr>
+<tr>
+<td>$^{172}\mathrm{Yb}^{16}\mathrm{OH}^{+}$</td>
+<td align="right">188.93858</td>
+<td align="right">17.00274</td>
+<td>氢氧化物候选</td>
+</tr>
+</tbody></table>
+<p>如果测得增量接近 18、28、32 或 44 u，可以扩大候选表，但不要把这些整数分别直接等同于“加了水、CO、氧或 CO₂”。是否存在可稳定囚禁的对应产物，需要反应通道和能量条件支持；碎裂、电荷转移或不同元素组合也可能给出相近质量。</p>
+<h2 id="3-为什么暗离子需要一个亮探针"><a href="#3-为什么暗离子需要一个亮探针" class="headerlink" title="3. 为什么暗离子需要一个亮探针"></a>3. 为什么暗离子需要一个亮探针</h2><p>对发光原子离子，可以扫描电激励频率并观察荧光变化。分子离子通常不再与原来的 369&#x2F;935 nm 冷却闭环共振，直接扫电极并不会凭空产生可见的分子荧光。</p>
+<p>最实用的方案是保留或加入一个能持续散射荧光的 $^{172}\mathrm{Yb}^{+}$。两个带电粒子通过库仑力耦合；激发某个集体振动模时，亮离子也参与运动。于是能够从亮离子的荧光调制、光斑展宽或光谱边带中读出暗离子的质量信息。亮离子同时提供共感冷却，但这只保证质心运动可以冷却，并不自动保证分子内部转动、振动状态已被制备。</p>
+<p>这种方法已有单分子实验验证：Goeders 等通过共囚禁 Ca⁺ 的分辨边带测出双离子正常模，并据此测量 CaH⁺、CaO⁺ 的质量。这里借用的是读出和建模方法，不是其钙离子的数值参数。<a target="_blank" rel="noopener" href="https://doi.org/10.1021/jp312368a">Goeders 等，J. Phys. Chem. A 117, 9725–9731 (2013)</a></p>
+<h3 id="3-1-原来只有一个离子，随后完全变暗"><a href="#3-1-原来只有一个离子，随后完全变暗" class="headerlink" title="3.1 原来只有一个离子，随后完全变暗"></a>3.1 原来只有一个离子，随后完全变暗</h3><p>此时只有“相机上没有亮点”这条信息，无法直接区分原离子丢失与暗分子仍在。</p>
+<p>在尽量保持原 RF&#x2F;DC 工作点的条件下，尝试受控装载<strong>恰好一个</strong>亮 Yb⁺ 探针。若暗粒子仍在，经过共感冷却后应形成一亮一暗的双离子晶体；若原粒子已经丢失，通常只剩新装载的一个亮离子。比较亮点相对已标定阱中心的位置、总构型和运动谱，可以区分这两种模型。</p>
+<p>在对称、同电荷、纯轴向谐势中，双离子的亮粒子应位于距阱中心约 $d&#x2F;2$ 的一侧，而单个亮粒子在中心。位置偏移是有用线索，但光压、杂散电场和电极充电也能移动亮点，必须与运动谱交叉验证。没有观察到暗伙伴只能说明本次检测未发现；热暗离子未结晶、装载过程将其排出或额外装载了其他粒子，都可能破坏这次判断。</p>
+<p>如果装置无法补充探针、无法做其他电荷探测，也没有针对候选的解离读出，那么“一个完全不发光的单离子”不能只靠现有荧光计数完成阱频测量。后文的反演需要先解决这个读出条件。</p>
+<h3 id="3-2-原来是两个亮离子，其中一个变暗"><a href="#3-2-原来是两个亮离子，其中一个变暗" class="headerlink" title="3.2 原来是两个亮离子，其中一个变暗"></a>3.2 原来是两个亮离子，其中一个变暗</h3><p>这是最直接的测量对象。剩下的亮离子就是探针，可以在事件前记录双亮晶体的频率，在事件后记录亮—暗晶体的频率。</p>
+<p>在理想谐势、同质量、同电荷的双亮晶体中，低频轴向模恰好等于单个 Yb⁺ 的轴向频率 $f_0$。因此变暗前的低频模可以提供紧邻事件的参考。变暗后若形成较重的分子，低频模一般下移；若只是同一个原子离子进入暗内部态，两种轴向模的本征频率应基本不变，但因为少了一个被直接冷却的粒子，阻尼和荧光响应的形状可能变化。</p>
+<p>若两个离子都变暗，则需要引入亮探针，并按实际的总粒子数建模，不能自动使用下面的双离子公式。</p>
+<h3 id="3-3-原来是多个亮离子，一个或多个变暗"><a href="#3-3-原来是多个亮离子，一个或多个变暗" class="headerlink" title="3.3 原来是多个亮离子，一个或多个变暗"></a>3.3 原来是多个亮离子，一个或多个变暗</h3><p>只要仍有亮离子，通常还能进行间接读出。但此时测到的是整条链的集体模，频率同时依赖暗离子的质量、数量和在链中的位置。可以在保留目标的前提下将体系整理成“一亮一暗”，也可以对完整晶体做多模拟合。整理离子链可能丢失目标，所以不宜把未经验证的移除步骤设为每次测量的默认操作。</p>
+<h2 id="4-单离子的频率—质量关系：先建立直觉"><a href="#4-单离子的频率—质量关系：先建立直觉" class="headerlink" title="4. 单离子的频率—质量关系：先建立直觉"></a>4. 单离子的频率—质量关系：先建立直觉</h2><h3 id="4-1-轴向静电束缚：频率与质量平方根成反比"><a href="#4-1-轴向静电束缚：频率与质量平方根成反比" class="headerlink" title="4.1 轴向静电束缚：频率与质量平方根成反比"></a>4.1 轴向静电束缚：频率与质量平方根成反比</h3><p>设轴向电势在平衡点附近为</p>
+<p>$$<br>\Phi(z)&#x3D;\Phi(0)+\frac{1}{2}\kappa_z z^2,<br>\qquad<br>\omega_z^2&#x3D;\frac{Q\kappa_z}{m}.<br>$$</p>
+<p>这里 $\kappa_z$ 是电势曲率，不是力常数；对固定电荷 $Q$，力常数为 $k_z&#x3D;Q\kappa_z$。在电荷和势阱完全相同的条件下，参考质量为 $m$，待测质量为 $M$：</p>
+<p>$$<br>\frac{f_{z,M}}{f_{z,m}}&#x3D;\sqrt{\frac{m}{M}},<br>\qquad<br>M&#x3D;m\left(\frac{f_{z,m}}{f_{z,M}}\right)^2.<br>$$</p>
+<p>如果电荷未知，这个关系测的是 $M&#x2F;Q$。例如电荷加倍的原子离子不能被当作“质量减半的同电荷离子”作化学归属。</p>
+<h3 id="4-2-RF-主导的径向束缚：频率近似与质量成反比"><a href="#4-2-RF-主导的径向束缚：频率近似与质量成反比" class="headerlink" title="4.2 RF 主导的径向束缚：频率近似与质量成反比"></a>4.2 RF 主导的径向束缚：频率近似与质量成反比</h3><p>赝势能含有 $Q^2|\mathbf E_{\rm rf}|^2&#x2F;(4m\Omega_{\rm rf}^2)$，除以质量后，RF 径向频率平方与 $(Q&#x2F;m)^2$ 成正比。在 DC 去聚焦可以忽略、Mathieu 参数较小且几何不变时，</p>
+<p>$$<br>\frac{f_{r,M}}{f_{r,m}}\simeq\frac{m}{M}.<br>$$</p>
+<p>因此约 1 u 的质量增加，在 172 u 附近会使单离子轴向频率降低约 0.29%，RF 主导的径向频率降低约 0.58%。频率下降并不总是服从同一个比例。</p>
+<p>实际线性阱还含有径向 DC 去聚焦。若局部 DC 势轴对称，且比较的是单离子在同一工作点的频率，令 $\mu&#x3D;M&#x2F;m$，则</p>
+<p>$$<br>f_{r,M}^2\simeq<br>\frac{f_{r,m}^2+f_{z,m}^2&#x2F;2}{\mu^2}<br>-\frac{f_{z,m}^2}{2\mu}.<br>$$</p>
+<p>这里 $f_{r,m}$ 是参考离子的总径向频率。定义 $A&#x3D;f_{r,m}^2+f_{z,m}^2&#x2F;2$、$B&#x3D;f_{z,m}^2&#x2F;2$ 和 $y&#x3D;f_{r,M}^2$，正质量根可写为</p>
+<p>$$<br>\mu&#x3D;\frac{2A}{B+\sqrt{B^2+4Ay}}.<br>$$</p>
+<p>补偿四极场造成不对称时，两个径向方向必须分别使用实际曲率。较大的 Mathieu 参数、主轴耦合或高精度要求下，应使用完整 Mathieu&#x2F;Floquet 模型。尤其不能拿离子链中某个径向峰，直接代入以上单离子公式。</p>
+<p><img src="/img/dark-ion-mass/mass-frequency-map.png" alt="单离子与双离子测量中不同的频率质量关系"></p>
+<p>图中曲线为理想模型计算。左图每条曲线都相对于其对应的变暗前频率归一化；蓝线表示一个质量固定的亮探针与一个变重的暗离子组成的双离子体系。</p>
+<h2 id="5-核心推导：一个亮离子和一个暗分子的轴向模"><a href="#5-核心推导：一个亮离子和一个暗分子的轴向模" class="headerlink" title="5. 核心推导：一个亮离子和一个暗分子的轴向模"></a>5. 核心推导：一个亮离子和一个暗分子的轴向模</h2><p>这是本文优先推荐的质量测量模型。设亮 Yb⁺ 质量为 $m$，暗粒子质量为 $M$，两者电荷均为 $+e$，在同一个轴向谐势中排成直线；径向足够强，且没有显著的轴向 RF 赝势。令</p>
+<p>$$<br>\mu&#x3D;\frac{M}{m},\qquad<br>\omega_0^2&#x3D;\frac{k_z}{m},\qquad<br>C&#x3D;\frac{e^2}{4\pi\varepsilon_0}.<br>$$</p>
+<h3 id="5-1-为什么静态间距不能直接称量这个暗分子"><a href="#5-1-为什么静态间距不能直接称量这个暗分子" class="headerlink" title="5.1 为什么静态间距不能直接称量这个暗分子"></a>5.1 为什么静态间距不能直接称量这个暗分子</h3><p>势能为</p>
+<p>$$<br>U&#x3D;\frac{k_z}{2}(z_1^2+z_2^2)+\frac{C}{|z_2-z_1|}.<br>$$</p>
+<p>平衡位置是 $z_1&#x3D;-d&#x2F;2$、$z_2&#x3D;d&#x2F;2$，满足</p>
+<p>$$<br>\frac{k_zd}{2}&#x3D;\frac{C}{d^2},<br>\qquad d^3&#x3D;\frac{2C}{k_z}.<br>$$</p>
+<p>这里没有质量。<strong>在同电荷、轴向静电谐势模型下，改变质量不改变平衡间距。</strong> 双离子间距可以标定势阱曲率，也可帮助确认暗电荷存在，却不能仅凭“距离变大或变小”推断其分子质量。</p>
+<p>前一篇文章用两个已知质量原子的间距反推出轴向频率，与这里并不矛盾：那里质量已经知道；这里要测的恰好是未知质量。径向 RF 赝势具有质量依赖，多维或非线性构型另当别论。</p>
+<h3 id="5-2-由小振动方程求两个频率"><a href="#5-2-由小振动方程求两个频率" class="headerlink" title="5.2 由小振动方程求两个频率"></a>5.2 由小振动方程求两个频率</h3><p>令 $u_1,u_2$ 是相对平衡位置的小位移。库仑相互作用展开到二阶后，有</p>
+<p>$$<br>m\ddot u_1&#x3D;-2k_z u_1+k_z u_2,<br>$$</p>
+<p>$$<br>M\ddot u_2&#x3D;k_z u_1-2k_z u_2.<br>$$</p>
+<p>代入 $u_i\propto e^{i\omega t}$，非零解的条件为</p>
+<p>$$<br>(2k_z-m\omega^2)(2k_z-M\omega^2)-k_z^2&#x3D;0.<br>$$</p>
+<p>解得两种轴向正常模：</p>
+<p>$$<br>f_-^2&#x3D;f_0^2\left(1+\frac{1}{\mu}-\sqrt{1-\frac{1}{\mu}+\frac{1}{\mu^2}}\right),<br>$$</p>
+<p>$$<br>f_+^2&#x3D;f_0^2\left(1+\frac{1}{\mu}+\sqrt{1-\frac{1}{\mu}+\frac{1}{\mu^2}}\right).<br>$$</p>
+<p>低频模 $f_-$ 是同相运动，高频模 $f_+$ 是反相运动。只有等质量时，低频模才是两个离子等幅运动的纯质心模；混合质量时称“低频同相模”更准确。这个双离子模型和利用正常模推断质量的方法也可见 Leibfried 的分子离子控制论文。<a target="_blank" rel="noopener" href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909579">Leibfried，New J. Phys. 14, 023029 (2012)</a></p>
+<p>令 $\mu&#x3D;1$，得到一个必要的校准检查：</p>
+<p>$$<br>f_-&#x3D;f_0,\qquad f_+&#x3D;\sqrt{3}f_0.<br>$$</p>
+<p>如果同种双亮离子不满足这个关系，应先检查峰的指认、激励引入的位移、非谐性和方向耦合，再用它称量暗离子。</p>
+<h3 id="5-3-只测低频模也能反演质量"><a href="#5-3-只测低频模也能反演质量" class="headerlink" title="5.3 只测低频模也能反演质量"></a>5.3 只测低频模也能反演质量</h3><p>定义</p>
+<p>$$<br>\lambda&#x3D;\left(\frac{f_-}{f_0}\right)^2.<br>$$</p>
+<p>特征方程变成 $\mu\lambda^2-2(1+\mu)\lambda+3&#x3D;0$。整理后得到</p>
+<p>$$<br>\boxed{M&#x3D;m\frac{3-2\lambda}{\lambda(2-\lambda)}}.<br>$$</p>
+<p>这就是“一亮一暗、同电荷、轴向谐势”情况下最方便的质量反演公式。对比探针更重的暗离子，低频分支有 $0&lt;\lambda\leq1$。如果测到 $f_-&gt;f_0$，在模型成立的前提下指向更轻的粒子；但必须先排除模式指认和阱漂移问题。</p>
+<p>当 $M&#x3D;m+\Delta m$ 且 $|\Delta m|\ll m$ 时，展开得到</p>
+<p>$$<br>\frac{f_–f_0}{f_0}\simeq-\frac{\Delta m}{4m}.<br>$$</p>
+<p>这个系数是 $1&#x2F;4$，而单离子轴向是 $1&#x2F;2$。因此把双离子低频模误当成暗离子的单粒子轴向频率，会明显低估质量增量。</p>
+<h3 id="5-4-同时测到两个模时怎样交叉验证"><a href="#5-4-同时测到两个模时怎样交叉验证" class="headerlink" title="5.4 同时测到两个模时怎样交叉验证"></a>5.4 同时测到两个模时怎样交叉验证</h3><p>两根频率满足</p>
+<p>$$<br>f_+^2+f_-^2&#x3D;2f_0^2\left(1+\frac{1}{\mu}\right),<br>\qquad<br>f_+^2f_-^2&#x3D;\frac{3f_0^4}{\mu}.<br>$$</p>
+<p>因此还可以使用</p>
+<p>$$<br>M&#x3D;\frac{2mf_0^2}{f_+^2+f_-^2-2f_0^2}.<br>$$</p>
+<p>但“频率平方和给出正质量”不是充分条件：反演出的质量还应同时预测两个实测模，或满足上面的乘积关系。实际分析建议对 $f_-$、$f_+$ 联合拟合，把 $f_0$ 的校准误差作为共同的不确定因素。</p>
+<p>只用 $f_+&#x2F;f_-$ 确实能够消去公共势阱尺度，但结果存在 $\mu$ 与 $1&#x2F;\mu$ 的互换歧义，而且接近等质量时，这个比值对小质量变化只有二阶灵敏度。它适合作为一致性检查，不适合在没有参考频率的情况下，强行区分 Yb⁺ 和仅重约 1 u 的 YbH⁺。</p>
+<h2 id="6-对你们的-172Yb⁺，预期频移有多大"><a href="#6-对你们的-172Yb⁺，预期频移有多大" class="headerlink" title="6. 对你们的 172Yb⁺，预期频移有多大"></a>6. 对你们的 172Yb⁺，预期频移有多大</h2><p>取亮探针的单离子轴向频率 $f_0&#x3D;200.000$ kHz，并另取一个理想 RF 主导、忽略 DC 去聚焦的单离子径向参考频率 1000.000 kHz。用第 2 节的同位素质量计算：</p>
+<table>
+<thead>
+<tr>
+<th>暗粒子候选</th>
+<th align="right">假想单离子轴向 &#x2F; kHz</th>
+<th align="right">假想单离子 RF 径向 &#x2F; kHz</th>
+<th align="right">一亮一暗轴向 $f_-$ &#x2F; kHz</th>
+<th align="right">一亮一暗轴向 $f_+$ &#x2F; kHz</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$^{172}\mathrm{Yb}^{+}$</td>
+<td align="right">200.000</td>
+<td align="right">1000.000</td>
+<td align="right">200.000</td>
+<td align="right">346.410</td>
+</tr>
+<tr>
+<td>$^{172}\mathrm{YbH}^{+}$</td>
+<td align="right">199.416</td>
+<td align="right">994.173</td>
+<td align="right">199.707</td>
+<td align="right">345.906</td>
+</tr>
+<tr>
+<td>$^{172}\mathrm{Yb}^{16}\mathrm{O}^{+}$</td>
+<td align="right">191.300</td>
+<td align="right">914.889</td>
+<td align="right">195.408</td>
+<td align="right">339.126</td>
+</tr>
+<tr>
+<td>$^{172}\mathrm{Yb}^{16}\mathrm{OH}^{+}$</td>
+<td align="right">190.789</td>
+<td align="right">910.009</td>
+<td align="right">195.124</td>
+<td align="right">338.715</td>
+</tr>
+</tbody></table>
+<p>前两列只说明单离子模型的质量依赖，不表示可以直接观察一个完全不发光的孤立分子。实际用亮探针读出时，应对照后两列。所有数字都是模型预测，显示到 1 Hz 仅为了方便比较，不代表实验已经达到 1 Hz 精度。</p>
+<p><img src="/img/dark-ion-mass/candidate-frequency-separation.png" alt="氢化物与原子离子、氧化物与氢氧化物的双离子共振间隔"></p>
+<p>在这个例子中：</p>
+<ul>
+<li>Yb⁺ 与 YbH⁺ 的双离子低频模相差约 <strong>293 Hz</strong>；</li>
+<li>YbO⁺ 与 YbOH⁺ 的双离子低频模相差约 <strong>285 Hz</strong>；</li>
+<li>氢化物与含氧候选之间相差数 kHz，初步筛选相对容易。</li>
+</ul>
+<p>若你的 $f_0$ 是 100 kHz，表中两个轴向模及其频率间隔都减半。是否能区分相邻候选，必须结合实际轴向频率、峰中心重复性和势阱漂移判断。</p>
+<h2 id="7-实验步骤：从变暗事件到可用于反演的频率"><a href="#7-实验步骤：从变暗事件到可用于反演的频率" class="headerlink" title="7. 实验步骤：从变暗事件到可用于反演的频率"></a>7. 实验步骤：从变暗事件到可用于反演的频率</h2><h3 id="7-1-事先建立参考"><a href="#7-1-事先建立参考" class="headerlink" title="7.1 事先建立参考"></a>7.1 事先建立参考</h3><p>在正常工作点记录一个亮 Yb⁺ 的 $f_0$；条件允许时再记录两个亮 Yb⁺ 的 $f_-$ 和 $f_+$。保存 RF 频率及幅度监测值、DC 电压、补偿电压、离子位置、激光失谐和功率。参考应尽量靠近变暗事件的时间，尤其要控制装载时原子炉加热、介质充电和电源缓慢漂移。</p>
+<p>对于双亮或多亮晶体，事件前后的光子计数、图像和短时运动谱都值得保留。多离子事件前的最低模只有在相应模型下才能用作 $f_0$；不要把“最低的那个峰”一概当成单离子参考。</p>
+<h3 id="7-2-事件发生后先保存构型"><a href="#7-2-事件发生后先保存构型" class="headerlink" title="7.2 事件发生后先保存构型"></a>7.2 事件发生后先保存构型</h3><p>记录哪个位置变暗、剩下几个亮点、链是否重排以及原冷却设置。随后按第 3 节决定保留现有亮探针，还是补装一个探针。若已无法确定总粒子数，应先比较不同粒子数的构型模型；把两个暗粒子误当作一个较重暗粒子，是严重的质量归属错误。</p>
+<p>尽量先完成低幅度质量测量，再进行可能改变候选的强光解离或强电激励。针对已知原子暗态的回泵检查可以作为辅助对照，但应记录光照条件及先后顺序，以免恢复荧光后失去原始质量信息。</p>
+<h3 id="7-3-激励轴向运动，读出亮离子"><a href="#7-3-激励轴向运动，读出亮离子" class="headerlink" title="7.3 激励轴向运动，读出亮离子"></a>7.3 激励轴向运动，读出亮离子</h3><p>向能产生轴向交变电场的端帽、分段或辅助电极叠加小信号。必须检查传输链路的带宽和电极处幅度；同相驱动两个完全对称端帽可能主要改变曲率，而不是提供所需的位移驱动力。选定接线后先用已知亮离子验证响应。</p>
+<p>对本表中的近质量候选，可围绕 $f_0$ 下方数个百分点到 $f_0$ 附近扫描低频模。200 kHz 示例可先试 190–202 kHz，再在候选共振附近细扫；这是针对本候选集合的起始范围，不是未知离子的通用搜索范围。粗扫步长必须足以覆盖预计峰宽，窄峰可能被过大的步长跳过。</p>
+<p>读出方式有三种：</p>
+<table>
+<thead>
+<tr>
+<th>装置现有能力</th>
+<th>可用信号</th>
+<th>实际注意点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通相机或慢光子计数</td>
+<td>激励期间亮离子光斑展宽、积分荧光变化</td>
+<td>相机曝光跨越很多周期，通常看不到实时质心振荡；光斑宽度需扣除成像点扩散和漂移</td>
+</tr>
+<tr>
+<td>PMT&#x2F;APD 与光子时间标记</td>
+<td>与驱动同步的荧光振幅、相位；脉冲后的振铃或相关谱</td>
+<td>冷却光要沿轴向有投影，时间分辨率和计数率要支持目标频段</td>
+</tr>
+<tr>
+<td>窄线光谱或 Raman 操控</td>
+<td>亮离子载波两侧的正常模边带</td>
+<td>测的是共享模；$^{172}$Yb⁺ 没有 $^{171}$Yb⁺ 的基态超精细双态，不能直接照搬其微波方案</td>
+</tr>
+</tbody></table>
+<p>激励期间同步读出，或者激励结束后立即记录再冷却瞬态。等离子已经完全冷却后再计数，运动信号可能消失。每个频点完成读出后，再等待体系恢复到相同冷却基线，才开始下一个频点。荧光变化的符号取决于失谐、功率和读出方式，不必一定是一个向下的谷。</p>
+<h3 id="7-4-怎样提高近质量候选的分辨能力"><a href="#7-4-怎样提高近质量候选的分辨能力" class="headerlink" title="7.4 怎样提高近质量候选的分辨能力"></a>7.4 怎样提高近质量候选的分辨能力</h3><p>接近等质量时，均匀电场主要激励低频同相模；高频反相模在等质量极限下与均匀驱动力解耦，少量质量差只提供很弱的耦合。因此看不到高频峰不意味着暗离子不存在，也不值得单纯用很大的电压强行“找出来”。需要第二个模时，可以改变空间驱动分布，或用只作用于亮离子的光学激励、边带谱。</p>
+<p>低频峰找到后，缩小范围并用约 20–50 Hz 的步进作为精扫起点，重复正反向或打乱顺序扫描，交错测量无驱动基线。步进只是采样设置，最终精度由信噪比、线形、漂移和模型决定。对接近 300 Hz 的候选频差，目标应是把频率比对应的总质量标准不确定度压到约 0.1–0.15 u，而不是仅把信号源显示位数调得足够多。</p>
+<p>若只有宽而浅的积分荧光响应，可以采用低幅度驱动的同步相位检测或光子相关谱。Sheridan 和 Keller 已在刀片式线性阱上利用脉冲激励及荧光相关分析进行质量测量；其结果支持这条实验路线，但论文中的精度不等于本装置自动可达的精度。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1106.2771">Sheridan 与 Keller，New J. Phys. 13, 123002 (2011)</a></p>
+<h3 id="7-5-参数激励适合放在什么位置"><a href="#7-5-参数激励适合放在什么位置" class="headerlink" title="7.5 参数激励适合放在什么位置"></a>7.5 参数激励适合放在什么位置</h3><p>参数调制常在两倍正常模频率附近产生强响应，也可能通过模间耦合出现和频等共振。在一个冷的双离子晶体里，它仍然驱动集体模；把某个参数峰除以二后，不能直接套孤立分子的 $1&#x2F;M$ 公式。</p>
+<p>此外，强参数激励可能导致熔化、非线性频移或选择性排出粒子。用于未知暗分子的首轮称量时，弱位移激励通常更便于保持原构型；参数激励更适合作为已建立模型后的辅助验证，而不是仅凭一个“突然消失的峰”完成分子指认。</p>
+<h2 id="8-线形、误差和一组完整演算"><a href="#8-线形、误差和一组完整演算" class="headerlink" title="8. 线形、误差和一组完整演算"></a>8. 线形、误差和一组完整演算</h2><h3 id="8-1-先判断拟合量是不是本征频率"><a href="#8-1-先判断拟合量是不是本征频率" class="headerlink" title="8.1 先判断拟合量是不是本征频率"></a>8.1 先判断拟合量是不是本征频率</h3><p>弱驱动下，一个孤立正常模的响应可用受驱动阻尼振子的形式表示：</p>
+<p>$$<br>\chi_j(\omega)\propto<br>\frac{1}{\omega_j^2-\omega^2-i\gamma_j\omega}.<br>$$</p>
+<p>相机展宽、平均荧光和相位锁定信号并不是同一个函数，不能不加判断地共用一个峰形。多模接近时，应同时拟合多个响应及背景。</p>
+<p>按照这个阻尼约定，位移幅度的峰位为 $\sqrt{\omega_j^2-\gamma_j^2&#x2F;2}$，脉冲后自由振铃频率为 $\sqrt{\omega_j^2-\gamma_j^2&#x2F;4}$；它们与用于质量公式的无阻尼本征频率 $\omega_j$ 并非严格相同。目标达到几十 Hz 时，应检验冷却功率和失谐的变化是否移动拟合中心，必要时直接拟合动力学响应或外推到弱扰动极限。</p>
+<h3 id="8-2-误差怎么传到质量"><a href="#8-2-误差怎么传到质量" class="headerlink" title="8.2 误差怎么传到质量"></a>8.2 误差怎么传到质量</h3><p>对于 $M&#x3D;m g(\lambda)$，其中</p>
+<p>$$<br>g(\lambda)&#x3D;\frac{3-2\lambda}{\lambda(2-\lambda)},<br>$$</p>
+<p>误差传播可以写为</p>
+<p>$$<br>\sigma_M\simeq m|g^{\prime}(\lambda)|\sigma_\lambda,<br>$$</p>
+<p>$$<br>\sigma_\lambda^2&#x3D;4\lambda^2\left[<br>\frac{\sigma_-^2}{f_-^2}+\frac{\sigma_0^2}{f_0^2}<br>-\frac{2\operatorname{Cov}(f_-,f_0)}{f_-f_0}<br>\right].<br>$$</p>
+<p>这包含频率参考与待测值之间的相关性。接近等质量时，简化为</p>
+<p>$$<br>\sigma_M\simeq4m\sigma_{f_-&#x2F;f_0}.<br>$$</p>
+<p>若 $f_0\simeq200$ kHz，约 30 Hz 的等效频率比误差对应约 0.10 u 的质量标准不确定度。若参考漂移到 300 Hz，氢化物所造成的信号就可能被它淹没。</p>
+<p>误差预算至少应包括：重复拟合与光子噪声、参考势阱漂移、驱动导致的非谐频移、冷却阻尼造成的中心偏移、残余轴向 RF 曲率，以及错误构型或模式指认。统计误差、慢漂移和模型误差应分别评估；同一效应不能重复计入。</p>
+<h3 id="8-3-数值例子：与-YbOH⁺-质量相容的一次模拟测量"><a href="#8-3-数值例子：与-YbOH⁺-质量相容的一次模拟测量" class="headerlink" title="8.3 数值例子：与 YbOH⁺ 质量相容的一次模拟测量"></a>8.3 数值例子：与 YbOH⁺ 质量相容的一次模拟测量</h3><p>假设已经确认是一个亮 $^{172}$Yb⁺ 加一个单电荷暗离子，得到下列<strong>假设读数</strong>：</p>
+<p>$$<br>f_0&#x3D;200.000\pm0.020\ \mathrm{kHz},<br>\qquad<br>f_-&#x3D;195.122\pm0.025\ \mathrm{kHz}.<br>$$</p>
+<p>把两个误差当作独立的一倍标准差，代入低频模公式得到</p>
+<p>$$<br>M&#x3D;188.944\pm0.112\ \mathrm{u}<br>\quad\text{（这里只计统计和参考读数误差）}.<br>$$</p>
+<p>模型同时预测 $f_+\simeq338.712$ kHz。若另测到 $f_+&#x3D;338.713\pm0.040$ kHz，则与该预测一致；频率平方和公式给出的质量约为 188.943 u。两个结果共用了部分数据，不能把它们当成完全独立的证据再重复缩小误差条。</p>
+<p>该质量与 $^{172}\mathrm{Yb}^{16}\mathrm{OH}^{+}$ 的约 188.93858 u 相容；在理想模型及上述误差范围内，它与约 187.93075 u 的 YbO⁺ 相差约 9 个统计标准差。实际报告还需要加入前述系统误差，不能直接照抄这个“9 倍”判断。</p>
+<p>若错误使用单离子轴向公式 $M&#x3D;m(f_0&#x2F;f_-)^2$，同一组数据会给出约 180.6 u，导致完全不同的候选判断。这说明模型选择比增加小数位更重要。</p>
+<h2 id="9-多离子情况：把全链作为耦合振子拟合"><a href="#9-多离子情况：把全链作为耦合振子拟合" class="headerlink" title="9. 多离子情况：把全链作为耦合振子拟合"></a>9. 多离子情况：把全链作为耦合振子拟合</h2><p>对于 $N$ 个同电荷离子，先由静电势和库仑排斥求平衡位置，再构造势能 Hessian。纯轴向谐势中，记离子间距为 $d_{ij}$：</p>
+<p>$$<br>K_{ii}&#x3D;k_z+\sum_{j\ne i}\frac{2C}{d_{ij}^3},<br>\qquad<br>K_{ij}&#x3D;-\frac{2C}{d_{ij}^3}\quad(i\ne j).<br>$$</p>
+<p>将各粒子质量组成对角矩阵 $\mathsf M$，质量归一化动力学矩阵为</p>
+<p>$$<br>\mathsf D&#x3D;\mathsf M^{-1&#x2F;2}\mathsf K\mathsf M^{-1&#x2F;2}.<br>$$</p>
+<p>$\mathsf D$ 的本征值是 $\omega_j^2$，本征向量描述各离子在各模中的参与程度。真正有三维耦合时，应使用完整的 $3N\times3N$ Hessian；赝势不充分时再升级到时周期动力学模型。</p>
+<p>实际拟合可按以下顺序实施：</p>
+<ol>
+<li>从事件前图像和变暗后的构型约束总粒子数、暗粒子数及可能位置，必要时保留多个假设；</li>
+<li>对每种质量与构型计算正常模，同时计算驱动场与模的耦合、亮离子的探测投影；</li>
+<li>对可观测的多个峰联合拟合，并纳入参考校准的共同漂移；</li>
+<li>检验同一个质量方案能否解释不同弱驱动强度、重复测量和小幅改变 DC 束缚后的频率。</li>
+</ol>
+<p>可使用的目标函数为</p>
+<p>$$<br>\chi^2&#x3D;(\mathbf f_{\rm obs}-\mathbf f_{\rm model})^{\mathsf T}<br>\mathsf C_f^{-1}<br>(\mathbf f_{\rm obs}-\mathbf f_{\rm model}),<br>$$</p>
+<p>其中 $\mathsf C_f$ 是频率误差的协方差矩阵，而非只含单点拟合误差的对角表。</p>
+<p>同一质量的暗离子位于链中央或链端，可能产生不同的可见运动谱；镜面对称位置也可能产生相同频率，不能强行区分。少量可见峰还可能被“一个较重暗离子”和“多个稍轻暗离子”等不同模型同时解释。因此，多离子的一个最低频峰一般不够唯一称量，更不能简单等同于平均质量。关于利用亮离子的空间展宽和集体共振测量暗组分，可参阅 Rajagopal 等的实验。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1408.1415">Rajagopal 等，Trapped Ion Chain Thermometry and Mass Spectrometry through Imaging</a></p>
+<h2 id="10-从质量归属到分子归属，还差哪些证据"><a href="#10-从质量归属到分子归属，还差哪些证据" class="headerlink" title="10. 从质量归属到分子归属，还差哪些证据"></a>10. 从质量归属到分子归属，还差哪些证据</h2><p>测到一个与 188.94 u 相符的单电荷暗粒子，是很有价值的结果，但最稳妥的表述是“与 $^{172}$YbOH⁺ 的质量相容”。进一步的鉴别可以来自：</p>
+<p><strong>同位素来源。</strong> 如果原粒子确定来自纯 $^{172}$Yb⁺ 且没有重新装载污染，候选范围会显著缩小。反之，$^{172}$YbH⁺ 与 $^{173}$Yb⁺ 的质量仅相差约 0.006 u；约 0.1 u 的称量不足以把二者分开。含氧候选也应考虑少量 $^{17}$O、$^{18}$O 同位素造成的邻近质量。这里的限制是分辨率，不是两者精确质量完全相同。</p>
+<p><strong>残余气体和事件统计。</strong> 同步记录 RGA 的相关峰、总压、原子炉状态和变暗时间，检查事件率与背景变化是否相关。RGA 峰可能是碎片，同一个名义质量不一定代表一种气体；例如 28 附近不能仅凭一个峰区分 CO 与 N₂。相关性帮助排序候选，不能代替单粒子的质量结果，也不必为了首轮判断主动引入气体。</p>
+<p><strong>解离前后的质量与荧光闭环。</strong> 在合适且已有依据的光解离条件下，若暗粒子恢复成可冷却的原子离子，并且运动谱返回双 Yb⁺ 基准，就同时支持“原来存在分子”和“其产物含 Yb⁺”。不同分子可能共享解离通道，恢复荧光本身仍不是唯一结构指纹；光照不恢复也不能直接排除某分子。需要把实际波长、功率、照射时间和事件概率一起记录。</p>
+<p><strong>进一步的分子谱。</strong> 若研究目标是确定结构、同分异构体或内部态，应结合转动、振动或电子光谱等信息。已有光学质量测量工作把暗离子先称量、再用于分子研究，体现的正是这两个阶段的分工。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.11614">Fan 等，PRL 126, 023002 (2021)</a></p>
+<h2 id="11-面向当前装置的实施建议与记录模板"><a href="#11-面向当前装置的实施建议与记录模板" class="headerlink" title="11. 面向当前装置的实施建议与记录模板"></a>11. 面向当前装置的实施建议与记录模板</h2><p>对你们使用的 $^{172}$Yb⁺，可先把“双亮离子中一个变暗”的事件作为第一批验证样本：事件前的低频轴向模提供参考，事件后的一个亮点负责读出，粒子数和初始同位素也最容易追踪。建立这条流程后，再把它扩展到单离子变暗后的探针装载，以及多离子链的正常模拟合。</p>
+<p>建议为每次事件保留以下记录：</p>
+<table>
+<thead>
+<tr>
+<th>数据组</th>
+<th>必需内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事件与构型</td>
+<td>时间、事件前粒子数、事件后亮点数、图像、是否补装载、是否重排</td>
+</tr>
+<tr>
+<td>势阱与参考</td>
+<td>RF 频率与幅度监测、全部 DC&#x2F;补偿电压、参考 $f_0$、参考时间和重复性</td>
+</tr>
+<tr>
+<td>激励与读出</td>
+<td>电极及信号传输、驱动幅度、频率、持续时间、冷却光参数、读出时间窗</td>
+</tr>
+<tr>
+<td>原始信号</td>
+<td>各频点原始光子数、光子时间标记或图像，未作拟合的原始扫描</td>
+</tr>
+<tr>
+<td>反演</td>
+<td>使用单离子&#x2F;双离子&#x2F;多离子模型、模式指认、质量、统计误差、系统误差</td>
+</tr>
+<tr>
+<td>归属</td>
+<td>电荷态假设、允许的同位素、未排除的候选、是否做过回泵或解离对照</td>
+</tr>
+</tbody></table>
+<p>一个合适的结果句式是：</p>
+<blockquote>
+<p>在假定暗粒子带单电荷、且与一个 $^{172}$Yb⁺ 探针组成轴向双离子晶体的条件下，由低频正常模及参考频率得到质量 $M$。第二个模与模型相容。在评估的总不确定度内，结果与某候选相容，并排除所列的其他候选；分子结构归属仍需指定的补充证据。</p>
+</blockquote>
+<h2 id="附：可复算的质量反演脚本"><a href="#附：可复算的质量反演脚本" class="headerlink" title="附：可复算的质量反演脚本"></a>附：可复算的质量反演脚本</h2><p>下载 <a href="/downloads/code/dark-ion-mass/dark_ion_mass.py">dark_ion_mass.py</a>。默认参考质量为上述 $^{172}$Yb⁺ 质量，所有输入频率单位为 <strong>Hz</strong>。脚本只适用于一个亮探针加一个单电荷暗粒子的轴向谐势模型，不会自动判断化学式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python dark_ion_mass.py --f0-hz 200000 --lower-hz 195122 --upper-hz 338713 --sigma-lower-hz 25 --sigma0-hz 20</span><br></pre></td></tr></table></figure>
+
+<p>输出低频模推断质量、独立读数假设下的标准不确定度、预测高频模及其残差。若两个频率误差相关，或包含额外系统漂移，应在正式分析中使用协方差传播或联合拟合，不能直接使用脚本的简化误差条。</p>
+<p>运行 <code>python dark_ion_mass.py --self-check</code> 可核验解析频率与独立的质量归一化 Hessian、本征频率的两个反演公式、等质量极限，以及线性误差传播与随机抽样的一致性；该校验需要 NumPy。基本反演只依赖 Python 标准库，生成本文配图还需要 NumPy 与 Matplotlib。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>T. M. Hoang, Y.-Y. Jau, R. Overstreet, P. D. D. Schwindt, “YbH⁺ formation in an ytterbium ion trap”, <em>Physical Review A</em> <strong>101</strong>, 022705 (2020). <a target="_blank" rel="noopener" href="https://doi.org/10.1103/PhysRevA.101.022705">DOI</a></li>
+<li>M. L. Parker, J. Jian, J. K. Gibson, “Bond dissociation energies of low-valent lanthanide hydroxides: lower limits from ion-molecule reactions and comparisons with fluorides”, <em>PCCP</em> <strong>23</strong>, 11314–11326 (2021). <a target="_blank" rel="noopener" href="https://doi.org/10.1039/D1CP01362A">DOI</a></li>
+<li>D. Leibfried, “Quantum state preparation and control of single molecular ions”, <em>New Journal of Physics</em> <strong>14</strong>, 023029 (2012). <a target="_blank" rel="noopener" href="https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909579">NIST 全文</a></li>
+<li>J. E. Goeders 等, “Identifying single molecular ions by resolved sideband measurements”, <em>Journal of Physical Chemistry A</em> <strong>117</strong>, 9725–9731 (2013). <a target="_blank" rel="noopener" href="https://doi.org/10.1021/jp312368a">DOI</a></li>
+<li>K. Sheridan, M. Keller, “Weighing of trapped ion crystals and its applications”, <em>New Journal of Physics</em> <strong>13</strong>, 123002 (2011). <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1106.2771">arXiv</a></li>
+<li>V. Rajagopal, J. P. Marler, M. G. Kokish, B. C. Odom, “Trapped Ion Chain Thermometry and Mass Spectrometry through Imaging”. <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1408.1415">作者预印本</a></li>
+<li>M. Fan 等, “Optical Mass Spectrometry of Cold RaOH⁺ and RaOCH₃⁺”, <em>Physical Review Letters</em> <strong>126</strong>, 023002 (2021). <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.11614">arXiv</a></li>
+<li>NIST, <em>Atomic Weights and Isotopic Compositions</em>. <a target="_blank" rel="noopener" href="https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=Yb">Yb</a>、<a target="_blank" rel="noopener" href="https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ascii=ascii&ele=H">H</a>、<a target="_blank" rel="noopener" href="https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ascii=ascii&ele=O">O</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/dark-ion-mass-spectrometry/">http://talescuber.github.io/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/dark-ion-mass-spectrometry/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A6%BB%E5%AD%90%E9%98%B1/">离子阱</a><a class="post-meta__tags" href="/tags/%E9%95%B1%E7%A6%BB%E5%AD%90/">镱离子</a><a class="post-meta__tags" href="/tags/%E5%88%86%E5%AD%90%E7%A6%BB%E5%AD%90/">分子离子</a><a class="post-meta__tags" href="/tags/%E6%9A%97%E7%A6%BB%E5%AD%90/">暗离子</a><a class="post-meta__tags" href="/tags/%E8%B4%A8%E8%B0%B1/">质谱</a><a class="post-meta__tags" href="/tags/%E4%B8%96%E4%BF%97%E9%A2%91%E7%8E%87/">世俗频率</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/AOM%E5%8F%8C%E7%A8%8B%E5%85%89%E8%B7%AF%E8%AF%A6%E8%A7%A3/" title="AOM 双程（Double Pass）光路详解：原理、搭建与调试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AOM 双程（Double Pass）光路详解：原理、搭建与调试</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">如何在线性刀片阱中测量离子囚禁频率</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/11/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/172Yb%E7%A6%BB%E5%AD%90%E9%98%B1%E5%AE%9E%E9%AA%8C%E7%9A%84%E6%BF%80%E5%85%89%E6%96%B9%E6%A1%88%E4%B8%8E%E9%A2%91%E7%8E%87%E8%AE%BE%E7%BD%AE/" title="172Yb⁺ 离子阱实验的激光方案与频率设置"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-11</div><div class="title">172Yb⁺ 离子阱实验的激光方案与频率设置</div></div></a></div><div><a href="/2026/09/19/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%88%80%E7%89%87%E9%98%B1%E4%B8%AD%E6%B5%8B%E9%87%8F%E7%A6%BB%E5%AD%90%E5%9B%9A%E7%A6%81%E9%A2%91%E7%8E%87/" title="如何在线性刀片阱中测量离子囚禁频率"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-19</div><div class="title">如何在线性刀片阱中测量离子囚禁频率</div></div></a></div><div><a href="/2026/09/12/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/%E5%88%80%E7%89%87%E7%A6%BB%E5%AD%90%E9%98%B1%E7%9A%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-12</div><div class="title">刀片离子阱的理论基础：从 Mathieu 方程到赝势、微运动与离子晶体</div></div></a></div><div><a href="/2026/05/19/%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/2026-05-19-%E8%AE%BA%E6%96%87%E6%8E%A8%E8%8D%90/" title="arXiv 论文推荐 | 2026 年 5 月 19 日"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-19</div><div class="title">arXiv 论文推荐 | 2026 年 5 月 19 日</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%98%B1%E9%A2%91%E8%83%BD%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%E4%BB%80%E4%B9%88"><span class="toc-text">1. 阱频能告诉我们什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AF%B9-172Yb%E2%81%BA%EF%BC%8C%E5%BA%94%E8%AF%A5%E5%88%97%E5%87%BA%E5%93%AA%E4%BA%9B%E5%80%99%E9%80%89"><span class="toc-text">2. 对 172Yb⁺，应该列出哪些候选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9A%97%E7%A6%BB%E5%AD%90%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E4%BA%AE%E6%8E%A2%E9%92%88"><span class="toc-text">3. 为什么暗离子需要一个亮探针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8E%9F%E6%9D%A5%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%E7%A6%BB%E5%AD%90%EF%BC%8C%E9%9A%8F%E5%90%8E%E5%AE%8C%E5%85%A8%E5%8F%98%E6%9A%97"><span class="toc-text">3.1 原来只有一个离子，随后完全变暗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8E%9F%E6%9D%A5%E6%98%AF%E4%B8%A4%E4%B8%AA%E4%BA%AE%E7%A6%BB%E5%AD%90%EF%BC%8C%E5%85%B6%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%8F%98%E6%9A%97"><span class="toc-text">3.2 原来是两个亮离子，其中一个变暗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%8E%9F%E6%9D%A5%E6%98%AF%E5%A4%9A%E4%B8%AA%E4%BA%AE%E7%A6%BB%E5%AD%90%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%8F%98%E6%9A%97"><span class="toc-text">3.3 原来是多个亮离子，一个或多个变暗</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8D%95%E7%A6%BB%E5%AD%90%E7%9A%84%E9%A2%91%E7%8E%87%E2%80%94%E8%B4%A8%E9%87%8F%E5%85%B3%E7%B3%BB%EF%BC%9A%E5%85%88%E5%BB%BA%E7%AB%8B%E7%9B%B4%E8%A7%89"><span class="toc-text">4. 单离子的频率—质量关系：先建立直觉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E8%BD%B4%E5%90%91%E9%9D%99%E7%94%B5%E6%9D%9F%E7%BC%9A%EF%BC%9A%E9%A2%91%E7%8E%87%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%B9%B3%E6%96%B9%E6%A0%B9%E6%88%90%E5%8F%8D%E6%AF%94"><span class="toc-text">4.1 轴向静电束缚：频率与质量平方根成反比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-RF-%E4%B8%BB%E5%AF%BC%E7%9A%84%E5%BE%84%E5%90%91%E6%9D%9F%E7%BC%9A%EF%BC%9A%E9%A2%91%E7%8E%87%E8%BF%91%E4%BC%BC%E4%B8%8E%E8%B4%A8%E9%87%8F%E6%88%90%E5%8F%8D%E6%AF%94"><span class="toc-text">4.2 RF 主导的径向束缚：频率近似与质量成反比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%A0%B8%E5%BF%83%E6%8E%A8%E5%AF%BC%EF%BC%9A%E4%B8%80%E4%B8%AA%E4%BA%AE%E7%A6%BB%E5%AD%90%E5%92%8C%E4%B8%80%E4%B8%AA%E6%9A%97%E5%88%86%E5%AD%90%E7%9A%84%E8%BD%B4%E5%90%91%E6%A8%A1"><span class="toc-text">5. 核心推导：一个亮离子和一个暗分子的轴向模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9D%99%E6%80%81%E9%97%B4%E8%B7%9D%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E7%A7%B0%E9%87%8F%E8%BF%99%E4%B8%AA%E6%9A%97%E5%88%86%E5%AD%90"><span class="toc-text">5.1 为什么静态间距不能直接称量这个暗分子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%94%B1%E5%B0%8F%E6%8C%AF%E5%8A%A8%E6%96%B9%E7%A8%8B%E6%B1%82%E4%B8%A4%E4%B8%AA%E9%A2%91%E7%8E%87"><span class="toc-text">5.2 由小振动方程求两个频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%8F%AA%E6%B5%8B%E4%BD%8E%E9%A2%91%E6%A8%A1%E4%B9%9F%E8%83%BD%E5%8F%8D%E6%BC%94%E8%B4%A8%E9%87%8F"><span class="toc-text">5.3 只测低频模也能反演质量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%90%8C%E6%97%B6%E6%B5%8B%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%A8%A1%E6%97%B6%E6%80%8E%E6%A0%B7%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"><span class="toc-text">5.4 同时测到两个模时怎样交叉验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AF%B9%E4%BD%A0%E4%BB%AC%E7%9A%84-172Yb%E2%81%BA%EF%BC%8C%E9%A2%84%E6%9C%9F%E9%A2%91%E7%A7%BB%E6%9C%89%E5%A4%9A%E5%A4%A7"><span class="toc-text">6. 对你们的 172Yb⁺，预期频移有多大</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4%EF%BC%9A%E4%BB%8E%E5%8F%98%E6%9A%97%E4%BA%8B%E4%BB%B6%E5%88%B0%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%8F%8D%E6%BC%94%E7%9A%84%E9%A2%91%E7%8E%87"><span class="toc-text">7. 实验步骤：从变暗事件到可用于反演的频率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E4%BA%8B%E5%85%88%E5%BB%BA%E7%AB%8B%E5%8F%82%E8%80%83"><span class="toc-text">7.1 事先建立参考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E4%BA%8B%E4%BB%B6%E5%8F%91%E7%94%9F%E5%90%8E%E5%85%88%E4%BF%9D%E5%AD%98%E6%9E%84%E5%9E%8B"><span class="toc-text">7.2 事件发生后先保存构型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E6%BF%80%E5%8A%B1%E8%BD%B4%E5%90%91%E8%BF%90%E5%8A%A8%EF%BC%8C%E8%AF%BB%E5%87%BA%E4%BA%AE%E7%A6%BB%E5%AD%90"><span class="toc-text">7.3 激励轴向运动，读出亮离子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E6%80%8E%E6%A0%B7%E6%8F%90%E9%AB%98%E8%BF%91%E8%B4%A8%E9%87%8F%E5%80%99%E9%80%89%E7%9A%84%E5%88%86%E8%BE%A8%E8%83%BD%E5%8A%9B"><span class="toc-text">7.4 怎样提高近质量候选的分辨能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E5%8F%82%E6%95%B0%E6%BF%80%E5%8A%B1%E9%80%82%E5%90%88%E6%94%BE%E5%9C%A8%E4%BB%80%E4%B9%88%E4%BD%8D%E7%BD%AE"><span class="toc-text">7.5 参数激励适合放在什么位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%BA%BF%E5%BD%A2%E3%80%81%E8%AF%AF%E5%B7%AE%E5%92%8C%E4%B8%80%E7%BB%84%E5%AE%8C%E6%95%B4%E6%BC%94%E7%AE%97"><span class="toc-text">8. 线形、误差和一组完整演算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%85%88%E5%88%A4%E6%96%AD%E6%8B%9F%E5%90%88%E9%87%8F%E6%98%AF%E4%B8%8D%E6%98%AF%E6%9C%AC%E5%BE%81%E9%A2%91%E7%8E%87"><span class="toc-text">8.1 先判断拟合量是不是本征频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E8%AF%AF%E5%B7%AE%E6%80%8E%E4%B9%88%E4%BC%A0%E5%88%B0%E8%B4%A8%E9%87%8F"><span class="toc-text">8.2 误差怎么传到质量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E6%95%B0%E5%80%BC%E4%BE%8B%E5%AD%90%EF%BC%9A%E4%B8%8E-YbOH%E2%81%BA-%E8%B4%A8%E9%87%8F%E7%9B%B8%E5%AE%B9%E7%9A%84%E4%B8%80%E6%AC%A1%E6%A8%A1%E6%8B%9F%E6%B5%8B%E9%87%8F"><span class="toc-text">8.3 数值例子：与 YbOH⁺ 质量相容的一次模拟测量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%A4%9A%E7%A6%BB%E5%AD%90%E6%83%85%E5%86%B5%EF%BC%9A%E6%8A%8A%E5%85%A8%E9%93%BE%E4%BD%9C%E4%B8%BA%E8%80%A6%E5%90%88%E6%8C%AF%E5%AD%90%E6%8B%9F%E5%90%88"><span class="toc-text">9. 多离子情况：把全链作为耦合振子拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%BB%8E%E8%B4%A8%E9%87%8F%E5%BD%92%E5%B1%9E%E5%88%B0%E5%88%86%E5%AD%90%E5%BD%92%E5%B1%9E%EF%BC%8C%E8%BF%98%E5%B7%AE%E5%93%AA%E4%BA%9B%E8%AF%81%E6%8D%AE"><span class="toc-text">10. 从质量归属到分子归属，还差哪些证据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E9%9D%A2%E5%90%91%E5%BD%93%E5%89%8D%E8%A3%85%E7%BD%AE%E7%9A%84%E5%AE%9E%E6%96%BD%E5%BB%BA%E8%AE%AE%E4%B8%8E%E8%AE%B0%E5%BD%95%E6%A8%A1%E6%9D%BF"><span class="toc-text">11. 面向当前装置的实施建议与记录模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E5%8F%AF%E5%A4%8D%E7%AE%97%E7%9A%84%E8%B4%A8%E9%87%8F%E5%8F%8D%E6%BC%94%E8%84%9A%E6%9C%AC"><span class="toc-text">附：可复算的质量反演脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</a><time datetime="2026-09-22T10:08:22.000Z" title="发表于 2026-09-22 18:08:22">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</a><time datetime="2026-09-21T16:18:21.000Z" title="发表于 2026-09-22 00:18:21">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/" title="PDH 激光稳频详解：从边带干涉到闭环噪声">PDH 激光稳频详解：从边带干涉到闭环噪声</a><time datetime="2026-09-21T16:03:06.000Z" title="发表于 2026-09-22 00:03:06">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

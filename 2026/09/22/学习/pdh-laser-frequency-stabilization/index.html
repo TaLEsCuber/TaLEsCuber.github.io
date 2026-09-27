@@ -1,0 +1,827 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>PDH 激光稳频详解：从边带干涉到闭环噪声 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从参考腔反射场和相位调制出发，推导 Pound–Drever–Hall 误差信号，解释实验光路、解调相位、反馈带宽、残余幅度调制和环外测量，附五组原理图、数值算例与可复算代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PDH 激光稳频详解：从边带干涉到闭环噪声">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从参考腔反射场和相位调制出发，推导 Pound–Drever–Hall 误差信号，解释实验光路、解调相位、反馈带宽、残余幅度调制和环外测量，附五组原理图、数值算例与可复算代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/pdh/00-cover.png">
+<meta property="article:published_time" content="2026-09-21T16:03:06.000Z">
+<meta property="article:modified_time" content="2026-09-21T16:03:06.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="激光物理">
+<meta property="article:tag" content="PDH">
+<meta property="article:tag" content="光学谐振腔">
+<meta property="article:tag" content="稳频">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/pdh/00-cover.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PDH 激光稳频详解：从边带干涉到闭环噪声',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-22 00:03:06'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="b89a270bc05fa974904be9f2f7afd42afff00ccdf786749d267b257d68e7cbe1";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">PDH 激光稳频详解：从边带干涉到闭环噪声</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-21T16:03:06.000Z" title="发表于 2026-09-22 00:03:06">2026-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>31分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="PDH 激光稳频详解：从边带干涉到闭环噪声"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>把激光照进一个高精细度光学腔，调到透射最亮，再让它一直保持在那里——这个想法很直观，却藏着两个困难：<strong>频率偏高与偏低，可能给出相同的透射光强；光强变化，又不一定来自频率变化。</strong></p>
+<p>Pound–Drever–Hall 稳频，通常简称 <strong>PDH 稳频</strong>，解决的正是“如何获得一个有方向、灵敏且适合反馈的频率误差信号”。它先给激光加上相位调制，再利用载波与边带在参考腔反射后发生的干涉，通过同步解调读出频率失谐的符号，最后反馈到激光器或外部频率执行器。</p>
+<p><img src="/img/pdh/00-cover.png" alt="PDH 激光稳频概念封面：参考腔与激光"></p>
+<p><em>封面为内置生图工具制作的概念插画，不表示实验接线、尺寸或实测结果。图 1–5 由本文明确给出的模型和参数绘制，计算脚本在文末提供。</em></p>
+<p>本文面向学过基础干涉和复数表示法、希望理解或搭建 PDH 系统的读者。第 1–6 节解释物理原理与推导，第 7–10 节连接器件、算例和闭环设计，第 11–14 节讨论噪声、调试与性能验证。读者不必先掌握完整的控制理论，但需要始终区分三个频率：<strong>光学载频、RF 调制频率、噪声或反馈的傅里叶频率。</strong></p>
+<span id="more"></span>
+
+<h2 id="1-PDH-锁定的究竟是什么？"><a href="#1-PDH-锁定的究竟是什么？" class="headerlink" title="1. PDH 锁定的究竟是什么？"></a>1. PDH 锁定的究竟是什么？</h2><h3 id="1-1-参考腔把长度变成频率参考"><a href="#1-1-参考腔把长度变成频率参考" class="headerlink" title="1.1 参考腔把长度变成频率参考"></a>1.1 参考腔把长度变成频率参考</h3><p>先考虑真空中长度为 <script type="math/tex">L</script> 的理想两镜 Fabry–Pérot 腔，暂时忽略镜面色散和横模的附加相位。纵模共振频率与自由光谱范围为</p>
+<div class="math-display">
+$$
+\nu_q=\frac{qc}{2L},\qquad \nu_{\mathrm{FSR}}=\frac{c}{2L}.
+$$
+</div>
+
+<p>对某个选定的基横模共振，记其频率为 <script type="math/tex">\nu_c</script>，激光频率为 <script type="math/tex">\nu_L</script>，定义失谐</p>
+<div class="math-display">
+$$
+\Delta\nu=\nu_L-\nu_c.
+$$
+</div>
+
+<p>PDH 鉴频器把这个失谐转换成电压。闭环再调节激光，使它在一定带宽内跟随参考腔。</p>
+<p>这意味着，<strong>参考腔自己也必须足够稳定。</strong> 在简单真空腔模型中，固定纵模序号时有</p>
+<div class="math-display">
+$$
+\frac{\delta\nu_c}{\nu_c}\simeq-\frac{\delta L}{L}.
+$$
+</div>
+
+<p>腔长受温度、振动、压力、镜面形变或材料热噪声影响，锁定后的激光也会继承其中一部分变化。对有介质或明显色散的腔，应改用光学程及其频率导数，而不能把所有变化都归结为几何长度。</p>
+<h3 id="1-2-稳频、窄线宽和绝对准确度是不同指标"><a href="#1-2-稳频、窄线宽和绝对准确度是不同指标" class="headerlink" title="1.2 稳频、窄线宽和绝对准确度是不同指标"></a>1.2 稳频、窄线宽和绝对准确度是不同指标</h3><table>
+<thead>
+<tr>
+<th>目标</th>
+<th>关心的问题</th>
+<th>常见评价方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>稳定锁定</td>
+<td>能否保持在指定腔模附近？</td>
+<td>透射、误差、执行器余量和失锁率</td>
+</tr>
+<tr>
+<td>抑制频率噪声</td>
+<td>哪些时间尺度的抖动被压低？</td>
+<td>频率噪声功率谱密度</td>
+</tr>
+<tr>
+<td>获得窄线宽</td>
+<td>光谱在指定观测条件下有多窄？</td>
+<td>环外拍频谱、相位噪声分析</td>
+</tr>
+<tr>
+<td>长期频率稳定</td>
+<td>秒、分钟、小时尺度漂移多少？</td>
+<td>拍频时间序列、Allan 偏差</td>
+</tr>
+<tr>
+<td>绝对频率准确</td>
+<td>与定义频率或跃迁中心相差多少？</td>
+<td>可溯源频率梳、原子或分子参考</td>
+</tr>
+</tbody></table>
+<p>锁到一个高精细度腔，并不自动知道激光的绝对频率；反过来，绝对频率准确也不保证短时间内的噪声很低。</p>
+<p>PDH 光学稳频的经典工作可参见 <a target="_blank" rel="noopener" href="https://doi.org/10.1007/BF00702605">Drever 等的原始论文</a>。<a target="_blank" rel="noopener" href="https://doi.org/10.1119/1.1286663">Black 的教学论文</a>适合作为物理图像的补充阅读；下文固定一套符号，从场叠加独立展开计算。</p>
+<h2 id="2-为什么只看透射峰不够？"><a href="#2-为什么只看透射峰不够？" class="headerlink" title="2. 为什么只看透射峰不够？"></a>2. 为什么只看透射峰不够？</h2><p>单个孤立共振附近，理想腔的归一化透射功率近似为洛伦兹线型：</p>
+<div class="math-display">
+$$
+\frac{P_t(\Delta\nu)}{P_{t,\max}}
+\simeq\frac{1}{1+(2\Delta\nu/\delta\nu_c)^2}.
+$$
+</div>
+
+<p>这里的 <script type="math/tex">\delta\nu_c</script> 始终指<strong>腔功率共振的半高全宽 FWHM</strong>，不是激光线宽。</p>
+<p>在峰顶两侧，等大的正负失谐产生相同光强。更麻烦的是，峰顶处导数为零：激光刚偏离共振时，光强对频率的一阶敏感度恰好消失。</p>
+<p>可以把激光锁在峰的一侧，利用非零斜率把频率变化变成强度变化，称为侧边锁定。但此时激光功率、光路透过率或模式匹配效率变化，也会改变探测电压。反馈难以判断“是频率漂了，还是光变暗了”。</p>
+<p>PDH 转而读取<strong>反射光场中的相位信息</strong>。参考腔的反射光包含两部分：输入镜的直接反射，以及腔内建立的光场从输入镜泄漏出来的部分。它们的相对相位随失谐变化，因此复反射系数保留了“在共振左边还是右边”的信息。</p>
+<p>问题随之变成：探测器只直接测强度，怎样把这份场的相位信息读出来？答案是给它一个与载波相干的参考——调制边带。</p>
+<h2 id="3-一套-PDH-系统由哪些部分组成？"><a href="#3-一套-PDH-系统由哪些部分组成？" class="headerlink" title="3. 一套 PDH 系统由哪些部分组成？"></a>3. 一套 PDH 系统由哪些部分组成？</h2><p><img src="/img/pdh/01-system.png" alt="图1：PDH 光学与电学闭环功能框图"></p>
+<p><em>图 1｜红色表示光路，绿色表示 RF 与解调电信号，蓝色虚线表示反馈。反射光分离组件是功能框图，实际可用合适的偏振分光方案或分光器实现；图中没有规定 PBS 与波片的几何朝向。</em></p>
+<p>主光路是：激光器 → 隔离器 → 相位 EOM → 模式匹配透镜 → 参考腔。反射光送到能够响应调制频率的光电探测器 RF-PD，透射光送到另一只 PD 辅助判断腔是否共振、是否锁在目标模式上。</p>
+<p>RF 源分成两路：一路驱动 EOM，产生光学边带；另一路经过移相后作为混频器的本振 LO。反射探测信号进入混频器 RF 端，输出经过低通滤波后成为误差电压。伺服控制器再驱动激光电流、PZT 或其他执行器。</p>
+<p>需要区分两个可能都叫 EOM 的器件：<strong>调制 EOM 用于生成鉴频边带；执行 EOM 若被采用，则用于施加反馈相位校正。</strong> 两者承担不同任务。外部相位执行器也不能无限积累直流频移，通常需要慢路卸载长期漂移。</p>
+<p>若采用 PBS 与四分之一波片分离返光，应根据输入偏振、腔镜偏振特性和双程波片作用实测返光端口；不能只照着功能框图认定某个端口必然是反射端。</p>
+<h2 id="4-相位调制为什么会产生载波和边带？"><a href="#4-相位调制为什么会产生载波和边带？" class="headerlink" title="4. 相位调制为什么会产生载波和边带？"></a>4. 相位调制为什么会产生载波和边带？</h2><h3 id="4-1-先统一符号"><a href="#4-1-先统一符号" class="headerlink" title="4.1 先统一符号"></a>4.1 先统一符号</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义与单位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">\nu_L,\nu_c,\Delta\nu</script></td>
+<td>激光频率、腔共振频率、失谐，单位 Hz</td>
+</tr>
+<tr>
+<td><script type="math/tex">\omega_L=2\pi\nu_L</script></td>
+<td>光学角频率，单位 rad&#x2F;s</td>
+</tr>
+<tr>
+<td><script type="math/tex">f_m,\Omega=2\pi f_m</script></td>
+<td>RF 调制频率及角频率</td>
+</tr>
+<tr>
+<td><script type="math/tex">f</script></td>
+<td>噪声或小信号响应的傅里叶频率，单位 Hz</td>
+</tr>
+<tr>
+<td><script type="math/tex">\beta</script></td>
+<td>相位调制指数，无量纲，通常用 rad 表述</td>
+</tr>
+<tr>
+<td><script type="math/tex">\delta\nu_c,\mathcal F</script></td>
+<td>腔功率 FWHM 与精细度</td>
+</tr>
+<tr>
+<td><script type="math/tex">r(\Delta\nu)</script></td>
+<td>腔对光场的复反射系数</td>
+</tr>
+<tr>
+<td><script type="math/tex">D</script></td>
+<td>共振零点附近的鉴频斜率，单位 V&#x2F;Hz</td>
+</tr>
+</tbody></table>
+<p>采用随时间变化的因子 <script type="math/tex">e^{i\omega t}</script>，对应前向传播相位 <script type="math/tex">e^{-ikz}</script>。EOM 后的复光场写成</p>
+<div class="math-display">
+$$
+E_{\mathrm{in}}(t)=E_0e^{i\omega_Lt+i\beta\sin\Omega t}.
+$$
+</div>
+
+<p>利用 Jacobi–Anger 展开，</p>
+<div class="math-display">
+$$
+e^{i\beta\sin\Omega t}=\sum_{n=-\infty}^{\infty}J_n(\beta)e^{in\Omega t}.
+$$
+</div>
+
+<p>当调制指数较小时，保留载波和一阶边带：</p>
+<div class="math-display">
+$$
+E_{\mathrm{in}}(t)\simeq E_0\left[
+J_0e^{i\omega_Lt}+J_1e^{i(\omega_L+\Omega)t}
+-J_1e^{i(\omega_L-\Omega)t}\right].
+$$
+</div>
+
+<p>为简洁起见，这里的 <script type="math/tex">J_0,J_1</script> 都在 <script type="math/tex">\beta</script> 处取值。<strong>下边带前的负号不能删掉</strong>，它来自 <script type="math/tex">J_{-1}=-J_1</script>，是相位调制与幅度调制在场结构上的重要区别。</p>
+<p>设 EOM 后总入射功率为 <script type="math/tex">P_0</script>，则载波与每个一阶边带的功率为</p>
+<div class="math-display">
+$$
+P_c=P_0J_0^2(\beta),\qquad P_s=P_0J_1^2(\beta).
+$$
+</div>
+
+<p>完整展开满足 <script type="math/tex">\sum_n J_n^2(\beta)=1</script>。相位调制重新分配频谱，却不使理想入射光的总瞬时功率随时间振荡。</p>
+<h3 id="4-2-为什么入射光没有强度调制，反射光却有-RF-信号？"><a href="#4-2-为什么入射光没有强度调制，反射光却有-RF-信号？" class="headerlink" title="4.2 为什么入射光没有强度调制，反射光却有 RF 信号？"></a>4.2 为什么入射光没有强度调制，反射光却有 RF 信号？</h3><p>纯相位调制的不同拍频项在入射光中恰好相消。腔分别对载波、上边带和下边带施加不同的复反射系数，打破这种相消，于是反射光强中出现随 <script type="math/tex">f_m</script> 振荡的分量。</p>
+<p>它携带的并不是“光学频率本身的振荡”，而是两个光学分量的<strong>差频拍频</strong>。普通电子学无法直接跟随数百 THz 的光场，但可以处理 MHz 量级的差频。</p>
+<p><img src="/img/pdh/02-sidebands-reflection.png" alt="图2：相位调制边带、腔反射功率与复反射系数"></p>
+<p><em>图 2｜左：β &#x3D; 0.30 时约 95.58% 的功率在载波，每个一阶边带约占 2.20%；谱线高度表示功率，不显示下边带的场负号。中：反射功率近似偶对称，反射场虚部为奇对称。右：同一复反射系数在复平面上的轨迹。</em></p>
+<h2 id="5-从反射光场推导-PDH-误差信号"><a href="#5-从反射光场推导-PDH-误差信号" class="headerlink" title="5. 从反射光场推导 PDH 误差信号"></a>5. 从反射光场推导 PDH 误差信号</h2><h3 id="5-1-腔的复反射系数"><a href="#5-1-腔的复反射系数" class="headerlink" title="5.1 腔的复反射系数"></a>5.1 腔的复反射系数</h3><p>设输入镜和端镜的实振幅反射率为 <script type="math/tex">r_1,r_2</script>，输入镜无吸收，<script type="math/tex">a</script> 为额外的腔内往返振幅存活因子。选取与前述传播约定一致的相位参考，可写成</p>
+<div class="math-display">
+$$
+r(\Delta\nu)=
+\frac{r_1-r_2a\,e^{-i2\pi\Delta\nu/\nu_{\mathrm{FSR}}}}
+{1-r_1r_2a\,e^{-i2\pi\Delta\nu/\nu_{\mathrm{FSR}}}}.
+$$
+</div>
+
+<p>这里没有把振幅反射率与功率反射率混为一谈；后者是 <script type="math/tex">R_i=r_i^2</script>。共振时</p>
+<div class="math-display">
+$$
+r(0)=\frac{r_1-r_2a}{1-r_1r_2a}.
+$$
+</div>
+
+<p>只有在临界耦合条件 <script type="math/tex">r_1=r_2a</script> 下，共振载波的反射才可完全相消。理想无损对称两镜腔属于这个情况。真实的欠耦合、过耦合、模式失配以及调制边带，都会使锁定时探测器上仍有反射光。</p>
+<p>对高精细度、临界耦合、孤立共振，令</p>
+<div class="math-display">
+$$
+x=\frac{2\Delta\nu}{\delta\nu_c},\qquad
+r(\Delta\nu)\simeq\frac{ix}{1+ix}=
+\frac{x^2+ix}{1+x^2}.
+$$
+</div>
+
+<p>于是</p>
+<div class="math-display">
+$$
+|r|^2\simeq\frac{x^2}{1+x^2},\qquad
+\operatorname{Im}r\simeq\frac{x}{1+x^2}.
+$$
+</div>
+
+<p>前者不能区分正负失谐，后者可以。严格在反射场为零处，其相位本身没有定义，因此“测共振点的相位”更准确的理解是：利用参考边带读取共振附近的场正交分量。</p>
+<h3 id="5-2-探测器保留了哪些拍频项？"><a href="#5-2-探测器保留了哪些拍频项？" class="headerlink" title="5.2 探测器保留了哪些拍频项？"></a>5.2 探测器保留了哪些拍频项？</h3><p>定义</p>
+<div class="math-display">
+$$
+r_0=r(\Delta\nu),\qquad
+r_+=r(\Delta\nu+f_m),\qquad
+r_-=r(\Delta\nu-f_m).
+$$
+</div>
+
+<p>反射场是</p>
+<div class="math-display">
+$$
+E_r=E_0e^{i\omega_Lt}
+\left[J_0r_0+J_1r_+e^{i\Omega t}-J_1r_-e^{-i\Omega t}\right].
+$$
+</div>
+
+<p>将其乘以自身的复共轭。直流项对应平均功率，上下边带互拍给出 <script type="math/tex">2\Omega</script> 项，而载波与两个边带互拍给出</p>
+<div class="math-display">
+$$
+P_{r,\Omega}(t)=2P_0J_0J_1\operatorname{Re}
+\left[B(\Delta\nu)e^{i\Omega t}\right],
+\qquad B=r_+r_0^*-r_0r_-^*.
+$$
+</div>
+
+<p>这里的两个拍频项有相对负号。因此纯相位调制的三频结构、参考腔的复反射响应与探测器的平方律，缺少其中任意一环都无法得到正确的误差信号。</p>
+<h3 id="5-3-混频和低通怎样取出误差？"><a href="#5-3-混频和低通怎样取出误差？" class="headerlink" title="5.3 混频和低通怎样取出误差？"></a>5.3 混频和低通怎样取出误差？</h3><p>把反射光功率对应的电信号乘以归一化本振 <script type="math/tex">2\cos(\Omega t+\phi)</script>，并滤去高频项，得到</p>
+<div class="math-display">
+$$
+V_\phi=2GP_0J_0J_1
+\operatorname{Re}\left[B(\Delta\nu)e^{-i\phi}\right].
+$$
+</div>
+
+<script type="math/tex">G</script> 的单位为 V/W，包含光电响应度、RF 增益、实际混频与基带增益，以及传播到探测器的光学损耗。这里的“乘 2”只是为了明确解调归一化；商用混频器不会天然执行这个精确数学乘法，应将实际转换系数纳入 <script type="math/tex">G</script>，或直接标定 <script type="math/tex">D</script>。
+
+<p>当载波靠近共振，且边带远离所有相关腔模时，可近似认为 <script type="math/tex">r_+\simeq r_-\simeq1</script>。于是</p>
+<div class="math-display">
+$$
+B\simeq r_0^*-r_0=-2i\operatorname{Im}r_0.
+$$
+</div>
+
+<p>选择 <script type="math/tex">\phi=-\pi/2</script>，即以 <script type="math/tex">2\sin\Omega t</script> 解调，便得到</p>
+<div class="math-display">
+$$
+V_{\mathrm{err}}\simeq4GP_0J_0J_1\operatorname{Im}r_0
+\simeq4GP_0J_0J_1\frac{x}{1+x^2}.
+$$
+</div>
+
+<p>这是熟悉的中央色散形 PDH 信号。若改变场的时间相位约定、混频相位或接线极性，整条曲线可以上下翻转；实际调试必须测清执行器方向，不能从别人的图上照搬反馈符号。</p>
+<h3 id="5-4-零点斜率与线性范围"><a href="#5-4-零点斜率与线性范围" class="headerlink" title="5.4 零点斜率与线性范围"></a>5.4 零点斜率与线性范围</h3><p>在 <script type="math/tex">|\Delta\nu|\ll\delta\nu_c/2</script> 内，</p>
+<div class="math-display">
+$$
+V_{\mathrm{err}}\simeq D\Delta\nu,\qquad
+D=\left.\frac{dV_{\mathrm{err}}}{d\Delta\nu}\right|_0
+\simeq\frac{8GP_0J_0(\beta)J_1(\beta)}{\delta\nu_c}.
+$$
+</div>
+
+<p>这个系数适用于本文的临界耦合、模式完全匹配和解调归一化。实际模式重叠、腔耦合条件、RF 相位、光学损耗与器件响应会改变斜率。</p>
+<p>线性范围不能简单等同于“整条 S 形曲线”。以理想式为例，实际曲线与零点切线的比值为 <script type="math/tex">1/(1+x^2)</script>。在失谐达到半高全宽的 0.1 倍时，线性近似已高估信号约 4%（相对于切线，实际信号低约 3.85%）；若要求相对切线的偏差低于 1%，应约束 <script type="math/tex">|\Delta\nu|\lesssim0.05\delta\nu_c</script>。</p>
+<p><img src="/img/pdh/03-error-signal.png" alt="图3：PDH 大范围扫描与中央误差信号"></p>
+<p><em>图 3｜使用完整腔反射系数，并对 −8 至 +8 阶边带求和。左：载波扫过 ±20 MHz 时，边带也会扫到腔共振，产生额外结构。右：放大中央共振；阴影对应 ±0.1 倍腔 FWHM。所有曲线均为模型结果。</em></p>
+<h2 id="6-三个容易混淆的设计参数"><a href="#6-三个容易混淆的设计参数" class="headerlink" title="6. 三个容易混淆的设计参数"></a>6. 三个容易混淆的设计参数</h2><h3 id="6-1-调制频率：既要离开主共振，也要避开其他腔模"><a href="#6-1-调制频率：既要离开主共振，也要避开其他腔模" class="headerlink" title="6.1 调制频率：既要离开主共振，也要避开其他腔模"></a>6.1 调制频率：既要离开主共振，也要避开其他腔模</h3><p>常用的高频 PDH 工作条件是</p>
+<div class="math-display">
+$$
+\delta\nu_c\ll f_m\ll\nu_{\mathrm{FSR}}.
+$$
+</div>
+
+<p>第一项保证载波在主共振附近变化时，边带仍主要被反射，可充当相位参考；第二项是避免接近相邻纵模的常见充分设计选择，并非对所有扩展 PDH 方案的严格定义。</p>
+<p>还必须检查横模、偏振分裂模以及高阶边带。只核对 FSR 而忽略这些模式，仍可能得到畸变误差、额外零点或对准敏感的锁定频率。</p>
+<p>不要把 <script type="math/tex">f_m</script> 当作反馈带宽。20 MHz 调制不代表能实现 20 MHz 的稳频闭环；环路能跑多快，还由执行器、腔响应、滤波器和延迟决定。</p>
+<h3 id="6-2-调制指数：边带不是越强越好"><a href="#6-2-调制指数：边带不是越强越好" class="headerlink" title="6.2 调制指数：边带不是越强越好"></a>6.2 调制指数：边带不是越强越好</h3><p>在上述简化模型、固定入射总功率下，鉴频斜率正比于 <script type="math/tex">J_0(\beta)J_1(\beta)</script>。<script type="math/tex">\beta</script> 很小时边带太弱；<script type="math/tex">\beta</script> 很大时，功率又被分散到更多高阶边带。</p>
+<p>单看这个乘积，其最大值出现在约 <script type="math/tex">\beta=1.08</script> 附近，但此时三频近似已不适合描述全部光功率。最大斜率也不等于整套系统最优：需要同时考虑探测噪声、RAM、可用载波功率、EOM 驱动和高阶边带与腔模的接近程度。本文取 <script type="math/tex">\beta=0.30</script>，便于清楚展示三频图像。</p>
+<p>若 EOM 的标称 <script type="math/tex">V_\pi</script> 对应峰值驱动电压，可用 <script type="math/tex">\beta\simeq\pi V_{\mathrm{pk}}/V_\pi</script> 作初步估计，但共振型 EOM、阻抗匹配和厂家电压定义都会影响换算。实际可以借助扫描腔测量边带&#x2F;载波功率比，并用 <script type="math/tex">P_s/P_c=J_1^2/J_0^2</script> 拟合。</p>
+<h3 id="6-3-解调相位：选择正确的信号正交分量"><a href="#6-3-解调相位：选择正确的信号正交分量" class="headerlink" title="6.3 解调相位：选择正确的信号正交分量"></a>6.3 解调相位：选择正确的信号正交分量</h3><p>在边带远离共振的理想极限，偏离最佳解调相位 <script type="math/tex">\theta</script> 后，斜率约乘上 <script type="math/tex">\cos\theta</script>。偏差 90° 时，中央鉴频信号几乎消失；偏差 180° 时，反馈极性反转。</p>
+<p>真实装置还存在有限边带响应、RF 延迟、寄生干涉与 RAM。调相位的目的不只是让波形“最高”，还要观察零点、对称性、斜率及其随功率或温度的变化。必要时同时记录 I&#x2F;Q 两个正交分量。</p>
+<p><img src="/img/pdh/04-phase-offset.png" alt="图4：解调相位与电压偏置对 PDH 信号的影响"></p>
+<p><em>图 4｜左图采用理想正交解调模型；右图在色散信号上加入恒定偏置。偏置足以移动误差零点，图中信号没有直接等同于某个具体 EOM 的 RAM 参数。</em></p>
+<h2 id="7-器件选择：每个元件都影响最终噪声"><a href="#7-器件选择：每个元件都影响最终噪声" class="headerlink" title="7. 器件选择：每个元件都影响最终噪声"></a>7. 器件选择：每个元件都影响最终噪声</h2><table>
+<thead>
+<tr>
+<th>部件</th>
+<th>主要任务</th>
+<th>应核对的量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>光隔离器</td>
+<td>减少不受控返光进入激光器</td>
+<td>隔离度、插损、波长与偏振适配</td>
+</tr>
+<tr>
+<td>相位 EOM</td>
+<td>在已知 RF 频率生成边带</td>
+<td>调制效率、驱动阻抗、温漂、偏振与 RAM</td>
+</tr>
+<tr>
+<td>模式匹配透镜</td>
+<td>让入射高斯束与目标腔模重叠</td>
+<td>束腰位置与大小、对准、透射模式形状</td>
+</tr>
+<tr>
+<td>参考腔</td>
+<td>提供频率鉴别基准</td>
+<td>FSR、线宽、镜损耗、横模、热&#x2F;振动响应</td>
+</tr>
+<tr>
+<td>RF-PD</td>
+<td>测量载波与边带拍频</td>
+<td>在 <script type="math/tex">f_m</script> 及邻域的响应、饱和功率、噪声和相位</td>
+</tr>
+<tr>
+<td>RF 源与分配网络</td>
+<td>提供一致的调制&#x2F;解调参考</td>
+<td>相噪、幅噪、端口隔离、阻抗与线缆稳定性</td>
+</tr>
+<tr>
+<td>混频器与低通</td>
+<td>提取基带误差</td>
+<td>LO 驱动要求、转换增益、偏置、低通相位延迟</td>
+</tr>
+<tr>
+<td>执行器与伺服</td>
+<td>改变激光频率并补偿动态响应</td>
+<td>Hz&#x2F;V、动态范围、机械共振、延迟、积分饱和</td>
+</tr>
+</tbody></table>
+<p><strong>RF-PD 能看到调制频率只是最低条件。</strong> 若希望处理傅里叶频率为 <script type="math/tex">f</script> 的频率扰动，探测与 RF 链路在 <script type="math/tex">f_m\pm f</script> 附近的幅相响应都会影响解调后的动态响应。</p>
+<p>低通也有双重任务：抑制混频残余高频，并保留反馈所需的基带。截止频率过低会拖慢环路，过高则可能留下 RF 泄漏和额外噪声；需要把真实滤波器放进环路测量，而不能只按“能滤掉 20 MHz”来选择。</p>
+<p>模式匹配效率与腔耦合不是同一个概念。前者描述空间模式重叠，后者描述输入耦合与腔内总损耗之间的关系。很深的反射谷通常是好迹象，但仅凭谷深不能把二者完全分开，更不能把边带背景忽略后直接读成耦合效率。</p>
+<h2 id="8-一组可复算的参数实例"><a href="#8-一组可复算的参数实例" class="headerlink" title="8. 一组可复算的参数实例"></a>8. 一组可复算的参数实例</h2><p>下面全部是<strong>用于理解量级的设计示例，不是某套仪器的实测性能</strong>。取真空对称无损参考腔，模式完全匹配，参数为：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>腔长 <script type="math/tex">L</script></td>
+<td>0.10 m</td>
+</tr>
+<tr>
+<td>精细度 <script type="math/tex">\mathcal F</script></td>
+<td>100 000</td>
+</tr>
+<tr>
+<td>调制频率 <script type="math/tex">f_m</script></td>
+<td>20 MHz</td>
+</tr>
+<tr>
+<td>调制指数 <script type="math/tex">\beta</script></td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>到达参考腔的总入射功率 <script type="math/tex">P_0</script></td>
+<td>0.20 mW</td>
+</tr>
+<tr>
+<td>本文归一化下的总转换系数 <script type="math/tex">G</script></td>
+<td><script type="math/tex">10^4\ \mathrm{V/W}</script></td>
+</tr>
+</tbody></table>
+<p>腔参数为</p>
+<div class="math-display">
+$$
+\nu_{\mathrm{FSR}}=1.49896229\ \mathrm{GHz},\qquad
+\delta\nu_c=\frac{\nu_{\mathrm{FSR}}}{\mathcal F}
+=14.9896\ \mathrm{kHz}.
+$$
+</div>
+
+<p>由贝塞尔函数得到 <script type="math/tex">J_0(0.30)\simeq0.97763</script>、<script type="math/tex">J_1(0.30)\simeq0.14832</script>，故</p>
+<div class="math-display">
+$$
+D\simeq1.54774\times10^{-4}\ \mathrm{V/Hz}
+=0.154774\ \mathrm{V/kHz}.
+$$
+</div>
+
+<p>这说明在足够靠近零点时，100 Hz 失谐产生约 15.5 mV 的误差。如果解调链路额外产生 1 mV 直流偏置，闭环会把激光推离真实腔共振约</p>
+<div class="math-display">
+$$
+\Delta\nu_{\mathrm{offset}}=-\frac{V_{\mathrm{offset}}}{D}
+\simeq-6.46\ \mathrm{Hz}.
+$$
+</div>
+
+<p>这个算例也解释了为什么不能只追求漂亮的误差信号：当斜率已很高时，很小的慢漂电压、RAM 或热漂都可能成为真实频率漂移的来源。</p>
+<p>上述 <script type="math/tex">G</script> 已经包含本例假设的整个测量链路。真实装置中，最可靠的办法是扫描得到已知频率刻度，直接拟合零点附近的 V&#x2F;Hz，而不是逐项相乘后相信每个器件的标称增益。</p>
+<h2 id="9-闭环怎样压低频率噪声？"><a href="#9-闭环怎样压低频率噪声？" class="headerlink" title="9. 闭环怎样压低频率噪声？"></a>9. 闭环怎样压低频率噪声？</h2><h3 id="9-1-先写清楚信号和单位"><a href="#9-1-先写清楚信号和单位" class="headerlink" title="9.1 先写清楚信号和单位"></a>9.1 先写清楚信号和单位</h3><p>在锁定点附近线性化，令 <script type="math/tex">H(f)</script> 是鉴频器的动态响应，单位 V&#x2F;Hz；<script type="math/tex">C(f)</script> 是控制器；<script type="math/tex">A(f)</script> 是执行器响应，单位 Hz&#x2F;V。定义负反馈极性后，开环传递函数为</p>
+<div class="math-display">
+$$
+\mathcal L(f)=A(f)C(f)H(f).
+$$
+</div>
+
+<p>静态时 <script type="math/tex">H(0)=D</script>。为说明噪声路径，设 <script type="math/tex">n_{\nu,L}</script> 是自由激光频率噪声，<script type="math/tex">n_{\nu,c}</script> 是腔共振频率噪声，<script type="math/tex">n_V</script> 是叠加在鉴频器输出处的测量电压噪声。反馈关系写成</p>
+<div class="math-display">
+$$
+V_e=H(\delta\nu_L-n_{\nu,c})+n_V,
+\qquad
+\delta\nu_L=n_{\nu,L}-ACV_e.
+$$
+</div>
+
+<p>代入整理可得</p>
+<div class="math-display">
+$$
+\delta\nu_L=
+\underbrace{\frac{1}{1+\mathcal L}}_{S}\,n_{\nu,L}
++\underbrace{\frac{\mathcal L}{1+\mathcal L}}_{T}\,n_{\nu,c}
+-\frac{T}{H}\,n_V.
+$$
+</div>
+
+<p>因此，大环路增益同时带来三件事：压低自由激光噪声，使激光跟随腔，并把测量噪声通过反馈写入真实光频率。<strong>增加增益只能改善其中一些噪声路径，无法让所有噪声一起消失。</strong></p>
+<p>若三种噪声互不相关，频率噪声 PSD 可写为</p>
+<div class="math-display">
+$$
+S_{\nu,\mathrm{out}}=
+|S|^2S_{\nu,L}+|T|^2S_{\nu,c}
++\left|\frac{T}{H}\right|^2S_V.
+$$
+</div>
+
+<p>若噪声相关，例如激光电流同时改变频率与功率，则要考虑交叉谱项。这也提醒我们：把不同来源的幅度谱直接相加通常不对；独立噪声应先按功率谱相加。</p>
+<h3 id="9-2-单位增益频率与相位裕度"><a href="#9-2-单位增益频率与相位裕度" class="headerlink" title="9.2 单位增益频率与相位裕度"></a>9.2 单位增益频率与相位裕度</h3><p>令 <script type="math/tex">|\mathcal L(f_u)|=1</script>，定义单位增益频率 <script type="math/tex">f_u</script>。在常见稳定开环、单一主要交越的条件下，相位裕度为</p>
+<div class="math-display">
+$$
+\mathrm{PM}=180^\circ+\arg\mathcal L(f_u).
+$$
+</div>
+
+<p>若交越附近相位已接近 −180°，本想纠正的反馈会接近增强扰动，产生很高的伺服凸起、振铃，甚至自激。多交越、机械共振或非最小相位系统需要更完整的稳定性分析，不能只看某一个相位裕度数值。</p>
+<p>例如纯延迟 <script type="math/tex">\tau_d</script> 带来</p>
+<div class="math-display">
+$$
+\mathcal L_{\mathrm{delay}}(f)=e^{-i2\pi f\tau_d},\qquad
+\phi_{\mathrm{delay}}=-360^\circ f\tau_d.
+$$
+</div>
+
+<p>200 ns 延迟在 1 MHz 就产生 72° 相位滞后。缩短信号路径、选择更快的电子学和减少数字处理延迟，有时比继续加控制器增益更有效。</p>
+<p>关于实测传递函数、VNA 测量与环路调节，可参见 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2412.04635">Wang、Subhankar 与 Britton 的反馈实践论文</a>。它适合在理解本节反馈方程后阅读。</p>
+<h2 id="10-腔线宽是否限制反馈带宽？"><a href="#10-腔线宽是否限制反馈带宽？" class="headerlink" title="10. 腔线宽是否限制反馈带宽？"></a>10. 腔线宽是否限制反馈带宽？</h2><h3 id="10-1-腔有存储时间，也有动态极点"><a href="#10-1-腔有存储时间，也有动态极点" class="headerlink" title="10.1 腔有存储时间，也有动态极点"></a>10.1 腔有存储时间，也有动态极点</h3><p>对单模高精细度腔，若关断入射光后腔内功率以 <script type="math/tex">P(t)\propto e^{-t/\tau_P}</script> 衰减，则</p>
+<div class="math-display">
+$$
+\tau_P=\frac{1}{2\pi\delta\nu_c}.
+$$
+</div>
+
+<p>光场振幅的衰减时间为 <script type="math/tex">2\tau_P</script>。对应于频率扰动的 PDH 小信号响应，在适用的高频调制、近共振模型下含有一个腔极点：</p>
+<div class="math-display">
+$$
+H(f)\simeq\frac{D}{1+if/f_p}\,H_{\mathrm{el}}(f),
+\qquad f_p=\frac{\delta\nu_c}{2}.
+$$
+</div>
+
+<script type="math/tex">H_{\mathrm{el}}</script> 包含探测、解调与基带电子学，归一化为 <script type="math/tex">H_{\mathrm{el}}(0)=1</script>。本文算例中，<script type="math/tex">\tau_P\simeq10.62\ \mu\mathrm{s}</script>，<script type="math/tex">f_p\simeq7.495\ \mathrm{kHz}</script>。
+
+<p>注意区分<strong>功率衰减时间、场衰减时间、功率谱 FWHM、角频率衰减率</strong>。很多看起来差两倍或差 <script type="math/tex">2\pi</script> 的公式，其实是定义不同。</p>
+<h3 id="10-2-超过腔极点不代表完全失去信息"><a href="#10-2-超过腔极点不代表完全失去信息" class="headerlink" title="10.2 超过腔极点不代表完全失去信息"></a>10.2 超过腔极点不代表完全失去信息</h3><p>腔极点以上，鉴频响应幅度下降并增加相位滞后，但并非突然变成零。恰当的相位超前补偿和高速执行器可以使单位增益频率超过腔极点。代价是测量噪声、增益和稳定性设计变得更苛刻。</p>
+<p>为了直观看到增益与稳定性的取舍，图 5 使用以下<strong>教学模型</strong>：积分控制项、在腔极点处的补偿零点、200 kHz 补偿极点、500 kHz 电子学极点，以及 200 ns 延迟。</p>
+<div class="math-display">
+$$
+\mathcal L(f)=\frac{K}{if}
+\frac{1+if/f_p}{1+if/(200\,\mathrm{kHz})}
+\frac{1}{1+if/f_p}
+\frac{e^{-i2\pi f(200\,\mathrm{ns})}}{1+if/(500\,\mathrm{kHz})}.
+$$
+</div>
+
+<p>这里 <script type="math/tex">K</script> 的单位为 Hz，分别归一化使单位增益频率为 80 kHz 和 180 kHz。理想模型中的腔极点被精确补偿；实际装置的参数误差和附加极点会破坏这一理想抵消。</p>
+<p><img src="/img/pdh/05-servo.png" alt="图5：PDH 开环幅相响应及自由激光噪声抑制曲线"></p>
+<p><em>图 5｜80 kHz 情况的相位裕度约 53.35°；提高增益到 180 kHz 后降到约 15.25°，单位增益附近出现更强噪声放大。底图只表示自由激光噪声路径的幅度传递函数，不是包括参考腔与测量噪声在内的总频率噪声谱。</em></p>
+<h3 id="10-3-快慢两路反馈如何分工？"><a href="#10-3-快慢两路反馈如何分工？" class="headerlink" title="10.3 快慢两路反馈如何分工？"></a>10.3 快慢两路反馈如何分工？</h3><p>快路负责中高频扰动，常用激光电流或外部快速执行器；慢路负责长期漂移与工作点回中，常用 PZT 或温控。它们的增益、交接频段和积分器状态需要协调。</p>
+<p>两个执行器的 Hz&#x2F;V、符号、频率响应往往不同。PZT 可能存在尖锐机械共振；电流调谐可能伴随强度调制及热&#x2F;载流子响应交叉；AOM 的频率控制则有声波传播延迟、有限扫描范围和可能的光束指向变化。</p>
+<p>若 AOM 只在送入参考腔的取样支路内，它调节的是“被探测的那束光”。要判断实验使用的光是否也得到校正，必须追踪取光点与执行器位置。例如单程加频 AOM 锁定时有 <script type="math/tex">\nu_L+f_{\mathrm{AOM}}=\nu_c</script>，未经过 AOM 的光频率便是 <script type="math/tex">\nu_c-f_{\mathrm{AOM}}</script>。</p>
+<h2 id="11-限制稳频性能的主要噪声"><a href="#11-限制稳频性能的主要噪声" class="headerlink" title="11. 限制稳频性能的主要噪声"></a>11. 限制稳频性能的主要噪声</h2><h3 id="11-1-残余幅度调制-RAM"><a href="#11-1-残余幅度调制-RAM" class="headerlink" title="11.1 残余幅度调制 RAM"></a>11.1 残余幅度调制 RAM</h3><p>EOM 本意是纯相位调制，但偏振未沿晶体合适轴、双折射随温度变化、晶体与窗口形成寄生 etalon、散射和后续偏振光学，都可能让光功率在 <script type="math/tex">f_m</script> 上带有一小部分调制。这称为残余幅度调制（RAM）。</p>
+<p>RAM 经过同一条解调链路后，可能成为误差电压中的偏置。局部可以表示为</p>
+<div class="math-display">
+$$
+V_{\mathrm{err}}\simeq D\Delta\nu+V_{\mathrm{RAM}}+V_{\mathrm{elec}},
+\qquad
+\Delta\nu_{\mathrm{lock}}\simeq-
+\frac{V_{\mathrm{RAM}}+V_{\mathrm{elec}}}{D}.
+$$
+</div>
+
+<p>因此，误差被反馈压到零时，激光仍可能偏离真实腔中心。RAM 转换成频移的效率还依赖腔的耦合状态和空间模式匹配，并没有一个对所有系统通用的“RAM 百分比 → Hz”系数。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.08575">Shi 等的研究</a>专门分析并测量了这些耦合因素。</p>
+<p>处理方法包括优化 EOM 输入偏振、降低寄生反射、稳定 EOM 温度，以及设置独立 RAM 探测和偏置控制。调解调相位有时能减小某个 RAM 投影，但可能同时牺牲鉴频斜率，也不能保证温漂后仍有效。</p>
+<h3 id="11-2-光电散粒噪声与电子学噪声"><a href="#11-2-光电散粒噪声与电子学噪声" class="headerlink" title="11.2 光电散粒噪声与电子学噪声"></a>11.2 光电散粒噪声与电子学噪声</h3><p>平均光电流为 <script type="math/tex">\bar I</script> 时，理想泊松探测的单边电流散粒噪声幅度谱密度为</p>
+<div class="math-display">
+$$
+i_{\mathrm{shot}}=\sqrt{2e\bar I}
+\quad[\mathrm{A}/\sqrt{\mathrm{Hz}}].
+$$
+</div>
+
+<p>但 RF 噪声经过混频后会折叠到基带，数值因子取决于单双边谱、混频归一化和噪声在 RF 两侧的相关性。不能把上式随意乘一个跨阻，再除以某本书中的鉴频系数，就声称得到了准确的 PDH 散粒噪声极限。</p>
+<p>对于已经在基带实测的电压噪声幅度谱密度 <script type="math/tex">e_n(f)</script>，一个更直接的等效输入频率噪声表达式是</p>
+<div class="math-display">
+$$
+\sqrt{S_{\nu,\mathrm{meas}}(f)}=\frac{e_n(f)}{|H(f)|}
+\simeq\frac{e_n(f)}{|D|}\quad(f\ll f_p).
+$$
+</div>
+
+<p>例如在本例低频极限，若基带噪声为 <script type="math/tex">10\ \mathrm{nV}/\sqrt{\mathrm{Hz}}</script>，等效频率噪声约为 <script type="math/tex">6.46\times10^{-5}\ \mathrm{Hz}/\sqrt{\mathrm{Hz}}</script>。这只是指定噪声电平的换算，既不是本文系统实测值，也没有证明实际装置能达到这个电压底噪。</p>
+<p>增加光功率通常能改善探测受限的信噪比，但可能引起 PD&#x2F;RF 饱和、腔镜吸收加热和光热频移。应记录噪声和零点随光功率的变化，寻找真正限制项。</p>
+<h3 id="11-3-参考腔噪声与传输路径噪声"><a href="#11-3-参考腔噪声与传输路径噪声" class="headerlink" title="11.3 参考腔噪声与传输路径噪声"></a>11.3 参考腔噪声与传输路径噪声</h3><p>温度扰动、机械振动、空气折射率变化和腔内光功率变化都会移动参考频率。即使工程隔离做得很好，镜面、镀膜和支撑材料的热涨落仍可能构成底噪；例如 <a target="_blank" rel="noopener" href="https://www.nist.gov/publications/compact-portable-thermal-noise-limited-optical-cavity-low-acceleration-sensitivity">NIST 的紧凑参考腔研究</a>展示了热噪声与加速度敏感度在实际参考腔设计中的重要性。</p>
+<p>此外，取样光路、光纤与自由空间传播中的光程变化会带来相位噪声。PDH 回路看不到的实验输出路径，也不会因为“激光已经锁定”就自动安静。必要时应把路径噪声计入预算或另行补偿。</p>
+<h2 id="12-从扫描腔到可靠锁定的调试顺序"><a href="#12-从扫描腔到可靠锁定的调试顺序" class="headerlink" title="12. 从扫描腔到可靠锁定的调试顺序"></a>12. 从扫描腔到可靠锁定的调试顺序</h2><ol>
+<li><strong>先确定目标模式。</strong> 保持反馈断开，慢扫激光或腔长，同时记录透射和反射；调整入射位置、角度及高斯束参数，识别基横模与高阶模式。避免 PD 饱和后把削平峰误认为正常线型。</li>
+<li><strong>建立频率刻度。</strong> 使用已知 FSR，或利用载波与边带依次入腔时的间隔 <script type="math/tex">f_m</script> 标定扫描横轴。PZT 扫描存在迟滞和非线性，不应把整段时间轴默认成严格线性频率轴。</li>
+<li><strong>检查准静态条件。</strong> 过快扫腔会产生动态振铃；若想拟合静态线宽或斜率，需要让扫过一个线宽的时间足够长于腔响应时间。必要时用 ring-down 独立测腔线宽。</li>
+<li><strong>检查调制与 RF 链。</strong> 核实 EOM 工作、RF-PD 有足够响应、混频器端口正确、本振达到器件要求；区分 RF 直串到探测电路与真实光学拍频。</li>
+<li><strong>调整解调相位。</strong> 在主共振处获得清晰、近似奇对称的中央误差信号，同时记录透射峰。零点应与目标共振对应，而不是偶然落在相邻结构上。</li>
+<li><strong>标定斜率和偏置。</strong> 对中央足够窄的区间拟合 <script type="math/tex">D</script>，检查暗电偏置、RF 开关引起的偏置、功率和偏振变化引起的零点漂移。</li>
+<li><strong>确认反馈方向。</strong> 测定执行器电压增加时频率向哪个方向变化，再以低增益接入反馈。如果靠近零点反而被推出，应检查总极性；只在可控的小范围内验证。</li>
+<li><strong>建立慢路捕获，再优化快路。</strong> 扫到目标共振附近后闭环，逐步加入积分与快路增益；观察是否出现振铃、执行器饱和或跳到别的模式。</li>
+<li><strong>测量环路与环外噪声。</strong> 小信号注入时保证系统在线性区，建立正确的注入&#x2F;读出模型；调整补偿后再验证单位增益、相位裕度和拍频噪声。</li>
+<li><strong>验证长时间运行。</strong> 记录透射、误差、快慢控制电压和独立频率测量。检查热漂后的工作余量、失锁恢复以及积分器 anti-windup（防止饱和时继续积分）行为。</li>
+</ol>
+<p>PDH 中央线性区通常很窄。自由激光如果在建立反馈前就快速跑出这个区域，仅有一条理论上很陡的误差曲线并不足以可靠捕获。粗预稳频、扫描捕获和自动重锁应根据激光本身的噪声与漂移设计。</p>
+<h2 id="13-看见这些现象，优先排查什么？"><a href="#13-看见这些现象，优先排查什么？" class="headerlink" title="13. 看见这些现象，优先排查什么？"></a>13. 看见这些现象，优先排查什么？</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>常见原因</th>
+<th>有区分力的检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>透射有共振，误差几乎没有</td>
+<td>调制太弱、PD&#x2F;RF 链不通、解调落在正交方向</td>
+<td>测 RF 拍频，转解调相位并观察 I&#x2F;Q</td>
+</tr>
+<tr>
+<td>波形偏斜、零点离开透射峰</td>
+<td>RAM、电子学偏置、邻近模式、扫速过快</td>
+<td>改变功率&#x2F;偏振&#x2F;扫速，比较零点与线型</td>
+</tr>
+<tr>
+<td>刚接反馈就远离共振</td>
+<td>执行器与解调的总极性错误</td>
+<td>独立测 Hz&#x2F;V 的符号，用低增益验证</td>
+</tr>
+<tr>
+<td>加大增益后出现尖峰或振铃</td>
+<td>相位裕度不足、机械共振、延迟</td>
+<td>测开环幅相，检查伺服凸起的位置</td>
+</tr>
+<tr>
+<td>误差很小但透射也很低</td>
+<td>激光远离共振、无光、锁到其他零点或电子学异常</td>
+<td>联合看透射、RF 功率、误差和执行器</td>
+</tr>
+<tr>
+<td>短时能锁，几分钟后失锁</td>
+<td>慢漂超出范围、积分饱和、RAM&#x2F;模式匹配漂移</td>
+<td>记录慢路电压与温度，检查工作点回中</td>
+</tr>
+<tr>
+<td>改光功率后频率变了</td>
+<td>RAM 转换、偏置相对权重、光热效应、饱和</td>
+<td>在无饱和区扫描功率并做环外拍频</td>
+</tr>
+<tr>
+<td>环内谱很好，环外谱仍差</td>
+<td>测量噪声被反馈写入、腔噪声、输出路径噪声</td>
+<td>用独立参考测量，并分别改变探测功率与路径</td>
+</tr>
+</tbody></table>
+<p><strong>误差为零不是充分的“锁定证明”。</strong> 没有光时误差也可能接近零；远离共振时色散信号会变小；边带与其他腔模还能产生额外零点。可靠判锁至少要结合透射门限、误差信号和执行器状态。</p>
+<h2 id="14-如何证明稳频真的有效？"><a href="#14-如何证明稳频真的有效？" class="headerlink" title="14. 如何证明稳频真的有效？"></a>14. 如何证明稳频真的有效？</h2><h3 id="14-1-环内误差信号有什么局限？"><a href="#14-1-环内误差信号有什么局限？" class="headerlink" title="14.1 环内误差信号有什么局限？"></a>14.1 环内误差信号有什么局限？</h3><p>由第 9 节的反馈方程，测得的环内误差为</p>
+<div class="math-display">
+$$
+V_e=\frac{H(n_{\nu,L}-n_{\nu,c})+n_V}{1+\mathcal L}.
+$$
+</div>
+
+<p>大增益可以把它压得很小，包括把传感器噪声在这一路读数中的表现一起压低。然而真实输出里仍存在 <script type="math/tex">-Tn_V/H</script> 项。这种相关反馈导致的环内“噪声压低”不能直接当作光频率本身的噪声底。</p>
+<p>把环内电压除以静态斜率，只有在低频、标定可靠且传感器噪声可忽略时，才适合估算对应的残余失谐。超过腔极点必须使用完整 <script type="math/tex">H(f)</script>，更不能据此替代独立性能测量。</p>
+<h3 id="14-2-环外测量与线宽"><a href="#14-2-环外测量与线宽" class="headerlink" title="14.2 环外测量与线宽"></a>14.2 环外测量与线宽</h3><p>常见做法是把锁定激光与独立参考激光拍频，测量拍频的频率噪声、相位噪声与随时间漂移。也可以使用独立腔或其他经过标定的鉴频手段。</p>
+<p>若两台激光噪声独立，拍频频率噪声 PSD 为两者之和；只有知道另一台参考的贡献，才可推断待测激光的单独性能。两束光共用同一参考腔或共用某些路径时，公共噪声可能相消，不能把这种拍频直接解释为各自绝对频率稳定度。</p>
+<p>线宽是光谱指标，不能把整个误差电压 RMS 除以斜率就宣布得到“激光线宽”。在理想白频率噪声、采用单边 PSD <script type="math/tex">S_\nu(f)=h_0</script> 的条件下，光谱为洛伦兹型且有</p>
+<div class="math-display">
+$$
+\Delta\nu_{L,\mathrm{FWHM}}=\pi h_0.
+$$
+</div>
+
+<p>这里的 <script type="math/tex">\Delta\nu_L</script> 是<strong>激光光谱线宽</strong>，与腔线宽 <script type="math/tex">\delta\nu_c</script> 不同。存在低频漂移、闪烁噪声或明显伺服边峰时，必须说明测量时长、处理方式和频谱分辨率；一个线宽数字不足以描述全部性能。</p>
+<h3 id="14-3-长期稳定度"><a href="#14-3-长期稳定度" class="headerlink" title="14.3 长期稳定度"></a>14.3 长期稳定度</h3><p>令分数频率偏差 <script type="math/tex">y(t)=[\nu(t)-\nu_0]/\nu_0</script>，在长度为 <script type="math/tex">\tau</script> 的时间窗内平均得到 <script type="math/tex">\bar y_k</script>。基本 Allan 方差定义为</p>
+<div class="math-display">
+$$
+\sigma_y^2(\tau)=\frac12
+\left\langle(\bar y_{k+1}-\bar y_k)^2\right\rangle.
+$$
+</div>
+
+<p>实际报告应说明采样间隔、死时间、是否去线性漂移、使用何种估计器与不确定度。对有明显漂移的腔，去漂移与不去漂移的曲线回答不同问题，宜清楚区分。</p>
+<h2 id="15-计算代码、适用边界与参考资料"><a href="#15-计算代码、适用边界与参考资料" class="headerlink" title="15. 计算代码、适用边界与参考资料"></a>15. 计算代码、适用边界与参考资料</h2><p>本文给出一套贯穿频谱、反射、解调和控制的可复算示例：</p>
+<ul>
+<li><a href="/downloads/pdh/figures-and-checks.py">下载绘图与数值检查脚本</a></li>
+<li><a href="/downloads/pdh/validation.json">查看数值验证结果</a></li>
+<li><a href="/downloads/pdh/imagegen-prompts.json">查看封面生图提示词与制作说明</a></li>
+</ul>
+<p>脚本依赖 Python、NumPy、SciPy 和 Matplotlib。它会生成图 1–5 的 PNG&#x2F;SVG，并检查贝塞尔展开的功率守恒、腔的半高宽、误差信号奇对称性、零点斜率，以及时域光场平方后同步解调与频域相邻边带求和是否一致。</p>
+<p>本文数值曲线采用孤立的基横模、对称无损腔和理想相位调制，不模拟具体装置的偏振模分裂、散射、RF 饱和及实际激光执行器。图 5 进一步采用明确写出的理想控制模型。搭建真实装置时，应以实测腔参数、鉴频斜率和执行器传递函数替换这些假设。</p>
+<p>推荐按以下顺序延伸阅读：</p>
+<ol>
+<li><strong>E. D. Black</strong>, “An introduction to Pound–Drever–Hall laser frequency stabilization,” <em>American Journal of Physics</em> <strong>69</strong>, 79–87 (2001). <a target="_blank" rel="noopener" href="https://doi.org/10.1119/1.1286663">DOI</a> · <a target="_blank" rel="noopener" href="https://www.agpohl.physik.uni-mainz.de/files/2023/06/AmJPhys69_79_2001_Black_Intro_PDH.pdf">高校托管全文</a>。用于建立反射场、边带与解调的物理图像。</li>
+<li><strong>R. W. P. Drever et al.</strong>, “Laser phase and frequency stabilization using an optical resonator,” <em>Applied Physics B</em> <strong>31</strong>, 97–105 (1983). <a target="_blank" rel="noopener" href="https://doi.org/10.1007/BF00702605">DOI</a>。追溯光学 PDH 方法的经典研究。</li>
+<li><strong>W. Wang, S. Subhankar and J. W. Britton</strong>, “A practical guide to feedback control for Pound-Drever-Hall laser linewidth narrowing.” <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2412.04635">arXiv:2412.04635</a> · <a target="_blank" rel="noopener" href="https://arxiv.org/html/2412.04635v2">本文核对的 v2 全文</a>。连接器件、传递函数和反馈调试。</li>
+<li><strong>X. Shi et al.</strong>, “Suppression of residual amplitude modulation effect in the Pound-Drever-Hall locking.” <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.08575">arXiv:1710.08575</a>。讨论 RAM、模式匹配和腔耦合如何共同影响锁定频率。</li>
+<li><strong>M. Kelleher et al.</strong>, “Compact, portable, thermal-noise-limited optical cavity with low acceleration sensitivity,” <em>Optics Express</em> <strong>31</strong> (2023). <a target="_blank" rel="noopener" href="https://www.nist.gov/publications/compact-portable-thermal-noise-limited-optical-cavity-low-acceleration-sensitivity">NIST 论文页面</a> · <a target="_blank" rel="noopener" href="https://doi.org/10.1364/OE.486087">DOI</a>。了解参考腔热噪声与机械敏感度的实际研究。</li>
+</ol>
+<p>PDH 系统能达到的稳定性，最终来自整条链路的共同表现：边带提供相干参考，参考腔把失谐写入反射场，解调器读出方向，伺服在可控的带宽内纠正频率，而独立测量负责验证这份稳定是否真正出现在实验使用的光上。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/">http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%BF%80%E5%85%89%E7%89%A9%E7%90%86/">激光物理</a><a class="post-meta__tags" href="/tags/PDH/">PDH</a><a class="post-meta__tags" href="/tags/%E5%85%89%E5%AD%A6%E8%B0%90%E6%8C%AF%E8%85%94/">光学谐振腔</a><a class="post-meta__tags" href="/tags/%E7%A8%B3%E9%A2%91/">稳频</a></div><div class="post_share"><div class="social-share" data-image="/img/pdh/00-cover.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解"><img class="cover" src="/img/rcwa/01-geometry.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔"><img class="cover" src="/img/ray-transfer-matrix/00-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔"><img class="cover" src="/img/ray-transfer-matrix/00-cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-21</div><div class="title">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-PDH-%E9%94%81%E5%AE%9A%E7%9A%84%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">1. PDH 锁定的究竟是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%8F%82%E8%80%83%E8%85%94%E6%8A%8A%E9%95%BF%E5%BA%A6%E5%8F%98%E6%88%90%E9%A2%91%E7%8E%87%E5%8F%82%E8%80%83"><span class="toc-text">1.1 参考腔把长度变成频率参考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%A8%B3%E9%A2%91%E3%80%81%E7%AA%84%E7%BA%BF%E5%AE%BD%E5%92%8C%E7%BB%9D%E5%AF%B9%E5%87%86%E7%A1%AE%E5%BA%A6%E6%98%AF%E4%B8%8D%E5%90%8C%E6%8C%87%E6%A0%87"><span class="toc-text">1.2 稳频、窄线宽和绝对准确度是不同指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E7%9C%8B%E9%80%8F%E5%B0%84%E5%B3%B0%E4%B8%8D%E5%A4%9F%EF%BC%9F"><span class="toc-text">2. 为什么只看透射峰不够？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%80%E5%A5%97-PDH-%E7%B3%BB%E7%BB%9F%E7%94%B1%E5%93%AA%E4%BA%9B%E9%83%A8%E5%88%86%E7%BB%84%E6%88%90%EF%BC%9F"><span class="toc-text">3. 一套 PDH 系统由哪些部分组成？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%9B%B8%E4%BD%8D%E8%B0%83%E5%88%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%BA%A7%E7%94%9F%E8%BD%BD%E6%B3%A2%E5%92%8C%E8%BE%B9%E5%B8%A6%EF%BC%9F"><span class="toc-text">4. 相位调制为什么会产生载波和边带？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%85%88%E7%BB%9F%E4%B8%80%E7%AC%A6%E5%8F%B7"><span class="toc-text">4.1 先统一符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%85%A5%E5%B0%84%E5%85%89%E6%B2%A1%E6%9C%89%E5%BC%BA%E5%BA%A6%E8%B0%83%E5%88%B6%EF%BC%8C%E5%8F%8D%E5%B0%84%E5%85%89%E5%8D%B4%E6%9C%89-RF-%E4%BF%A1%E5%8F%B7%EF%BC%9F"><span class="toc-text">4.2 为什么入射光没有强度调制，反射光却有 RF 信号？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BB%8E%E5%8F%8D%E5%B0%84%E5%85%89%E5%9C%BA%E6%8E%A8%E5%AF%BC-PDH-%E8%AF%AF%E5%B7%AE%E4%BF%A1%E5%8F%B7"><span class="toc-text">5. 从反射光场推导 PDH 误差信号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%85%94%E7%9A%84%E5%A4%8D%E5%8F%8D%E5%B0%84%E7%B3%BB%E6%95%B0"><span class="toc-text">5.1 腔的复反射系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%8E%A2%E6%B5%8B%E5%99%A8%E4%BF%9D%E7%95%99%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8B%8D%E9%A2%91%E9%A1%B9%EF%BC%9F"><span class="toc-text">5.2 探测器保留了哪些拍频项？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%B7%B7%E9%A2%91%E5%92%8C%E4%BD%8E%E9%80%9A%E6%80%8E%E6%A0%B7%E5%8F%96%E5%87%BA%E8%AF%AF%E5%B7%AE%EF%BC%9F"><span class="toc-text">5.3 混频和低通怎样取出误差？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E9%9B%B6%E7%82%B9%E6%96%9C%E7%8E%87%E4%B8%8E%E7%BA%BF%E6%80%A7%E8%8C%83%E5%9B%B4"><span class="toc-text">5.4 零点斜率与线性范围</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%89%E4%B8%AA%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8F%82%E6%95%B0"><span class="toc-text">6. 三个容易混淆的设计参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E8%B0%83%E5%88%B6%E9%A2%91%E7%8E%87%EF%BC%9A%E6%97%A2%E8%A6%81%E7%A6%BB%E5%BC%80%E4%B8%BB%E5%85%B1%E6%8C%AF%EF%BC%8C%E4%B9%9F%E8%A6%81%E9%81%BF%E5%BC%80%E5%85%B6%E4%BB%96%E8%85%94%E6%A8%A1"><span class="toc-text">6.1 调制频率：既要离开主共振，也要避开其他腔模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%B0%83%E5%88%B6%E6%8C%87%E6%95%B0%EF%BC%9A%E8%BE%B9%E5%B8%A6%E4%B8%8D%E6%98%AF%E8%B6%8A%E5%BC%BA%E8%B6%8A%E5%A5%BD"><span class="toc-text">6.2 调制指数：边带不是越强越好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E8%A7%A3%E8%B0%83%E7%9B%B8%E4%BD%8D%EF%BC%9A%E9%80%89%E6%8B%A9%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BF%A1%E5%8F%B7%E6%AD%A3%E4%BA%A4%E5%88%86%E9%87%8F"><span class="toc-text">6.3 解调相位：选择正确的信号正交分量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%99%A8%E4%BB%B6%E9%80%89%E6%8B%A9%EF%BC%9A%E6%AF%8F%E4%B8%AA%E5%85%83%E4%BB%B6%E9%83%BD%E5%BD%B1%E5%93%8D%E6%9C%80%E7%BB%88%E5%99%AA%E5%A3%B0"><span class="toc-text">7. 器件选择：每个元件都影响最终噪声</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%80%E7%BB%84%E5%8F%AF%E5%A4%8D%E7%AE%97%E7%9A%84%E5%8F%82%E6%95%B0%E5%AE%9E%E4%BE%8B"><span class="toc-text">8. 一组可复算的参数实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%97%AD%E7%8E%AF%E6%80%8E%E6%A0%B7%E5%8E%8B%E4%BD%8E%E9%A2%91%E7%8E%87%E5%99%AA%E5%A3%B0%EF%BC%9F"><span class="toc-text">9. 闭环怎样压低频率噪声？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%85%88%E5%86%99%E6%B8%85%E6%A5%9A%E4%BF%A1%E5%8F%B7%E5%92%8C%E5%8D%95%E4%BD%8D"><span class="toc-text">9.1 先写清楚信号和单位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%8D%95%E4%BD%8D%E5%A2%9E%E7%9B%8A%E9%A2%91%E7%8E%87%E4%B8%8E%E7%9B%B8%E4%BD%8D%E8%A3%95%E5%BA%A6"><span class="toc-text">9.2 单位增益频率与相位裕度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%85%94%E7%BA%BF%E5%AE%BD%E6%98%AF%E5%90%A6%E9%99%90%E5%88%B6%E5%8F%8D%E9%A6%88%E5%B8%A6%E5%AE%BD%EF%BC%9F"><span class="toc-text">10. 腔线宽是否限制反馈带宽？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E8%85%94%E6%9C%89%E5%AD%98%E5%82%A8%E6%97%B6%E9%97%B4%EF%BC%8C%E4%B9%9F%E6%9C%89%E5%8A%A8%E6%80%81%E6%9E%81%E7%82%B9"><span class="toc-text">10.1 腔有存储时间，也有动态极点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E8%B6%85%E8%BF%87%E8%85%94%E6%9E%81%E7%82%B9%E4%B8%8D%E4%BB%A3%E8%A1%A8%E5%AE%8C%E5%85%A8%E5%A4%B1%E5%8E%BB%E4%BF%A1%E6%81%AF"><span class="toc-text">10.2 超过腔极点不代表完全失去信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E5%BF%AB%E6%85%A2%E4%B8%A4%E8%B7%AF%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E5%88%86%E5%B7%A5%EF%BC%9F"><span class="toc-text">10.3 快慢两路反馈如何分工？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E9%99%90%E5%88%B6%E7%A8%B3%E9%A2%91%E6%80%A7%E8%83%BD%E7%9A%84%E4%B8%BB%E8%A6%81%E5%99%AA%E5%A3%B0"><span class="toc-text">11. 限制稳频性能的主要噪声</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E6%AE%8B%E4%BD%99%E5%B9%85%E5%BA%A6%E8%B0%83%E5%88%B6-RAM"><span class="toc-text">11.1 残余幅度调制 RAM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E5%85%89%E7%94%B5%E6%95%A3%E7%B2%92%E5%99%AA%E5%A3%B0%E4%B8%8E%E7%94%B5%E5%AD%90%E5%AD%A6%E5%99%AA%E5%A3%B0"><span class="toc-text">11.2 光电散粒噪声与电子学噪声</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E5%8F%82%E8%80%83%E8%85%94%E5%99%AA%E5%A3%B0%E4%B8%8E%E4%BC%A0%E8%BE%93%E8%B7%AF%E5%BE%84%E5%99%AA%E5%A3%B0"><span class="toc-text">11.3 参考腔噪声与传输路径噪声</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BB%8E%E6%89%AB%E6%8F%8F%E8%85%94%E5%88%B0%E5%8F%AF%E9%9D%A0%E9%94%81%E5%AE%9A%E7%9A%84%E8%B0%83%E8%AF%95%E9%A1%BA%E5%BA%8F"><span class="toc-text">12. 从扫描腔到可靠锁定的调试顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E7%9C%8B%E8%A7%81%E8%BF%99%E4%BA%9B%E7%8E%B0%E8%B1%A1%EF%BC%8C%E4%BC%98%E5%85%88%E6%8E%92%E6%9F%A5%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">13. 看见这些现象，优先排查什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%A6%82%E4%BD%95%E8%AF%81%E6%98%8E%E7%A8%B3%E9%A2%91%E7%9C%9F%E7%9A%84%E6%9C%89%E6%95%88%EF%BC%9F"><span class="toc-text">14. 如何证明稳频真的有效？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-%E7%8E%AF%E5%86%85%E8%AF%AF%E5%B7%AE%E4%BF%A1%E5%8F%B7%E6%9C%89%E4%BB%80%E4%B9%88%E5%B1%80%E9%99%90%EF%BC%9F"><span class="toc-text">14.1 环内误差信号有什么局限？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-%E7%8E%AF%E5%A4%96%E6%B5%8B%E9%87%8F%E4%B8%8E%E7%BA%BF%E5%AE%BD"><span class="toc-text">14.2 环外测量与线宽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-3-%E9%95%BF%E6%9C%9F%E7%A8%B3%E5%AE%9A%E5%BA%A6"><span class="toc-text">14.3 长期稳定度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E8%AE%A1%E7%AE%97%E4%BB%A3%E7%A0%81%E3%80%81%E9%80%82%E7%94%A8%E8%BE%B9%E7%95%8C%E4%B8%8E%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">15. 计算代码、适用边界与参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</a><time datetime="2026-09-22T10:08:22.000Z" title="发表于 2026-09-22 18:08:22">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</a><time datetime="2026-09-21T16:18:21.000Z" title="发表于 2026-09-22 00:18:21">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/" title="PDH 激光稳频详解：从边带干涉到闭环噪声">PDH 激光稳频详解：从边带干涉到闭环噪声</a><time datetime="2026-09-21T16:03:06.000Z" title="发表于 2026-09-22 00:03:06">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

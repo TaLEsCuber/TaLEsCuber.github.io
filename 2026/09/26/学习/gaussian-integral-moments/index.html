@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>高斯积分 I_n 的计算：从收敛性到奇偶项闭式 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="逐步计算从 0 到无穷大的 x^n e^(-x^2) 积分，说明收敛条件、Gamma 函数换元、分部积分递推，以及奇偶整数阶的闭式结果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="逐步计算从 0 到无穷大的 x^n e^(-x^2) 积分，说明收敛条件、Gamma 函数换元、分部积分递推，以及奇偶整数阶的闭式结果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg">
+<meta property="article:published_time" content="2026-09-26T14:52:35.000Z">
+<meta property="article:modified_time" content="2026-09-26T14:52:35.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="高等数学">
+<meta property="article:tag" content="积分">
+<meta property="article:tag" content="Gamma函数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '高斯积分 I_n 的计算：从收敛性到奇偶项闭式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-26 22:52:35'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="b89a270bc05fa974904be9f2f7afd42afff00ccdf786749d267b257d68e7cbe1";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>考虑一族积分</p>
+<div class="math-display">
+$$
+I_n=\int_0^\infty x^n e^{-x^2}\,\mathrm dx.
+$$
+</div>
+
+<p>当 <script type="math/tex">n=0</script> 时，它是经典的<strong>半轴高斯积分</strong>；当 <script type="math/tex">n</script> 是正整数时，它是高斯函数的各阶矩。这一族积分看似每增加一次幂都要重新计算，实际上只需弄清两个起点，再用一个递推式就能得到所有非负整数阶的答案。本文先允许 <script type="math/tex">n</script> 为实数，得到统一公式；之后再把整数阶写成更直观的阶乘形式。</p>
+<span id="more"></span>
+
+<h2 id="1-先判断什么时候收敛"><a href="#1-先判断什么时候收敛" class="headerlink" title="1. 先判断什么时候收敛"></a>1. 先判断什么时候收敛</h2><p>积分区间两端都要检查。在 <script type="math/tex">x\to0^+</script> 时，<script type="math/tex">e^{-x^2}\to1</script>，因此被积函数的行为与 <script type="math/tex">x^n</script> 相同。由</p>
+<div class="math-display">
+$$
+\int_0^1x^n\,\mathrm dx<\infty
+\quad\Longleftrightarrow\quad n>-1,
+$$
+</div>
+
+<p>可知原点处要求 <script type="math/tex">n>-1</script>。特别地，<script type="math/tex">n=-1</script> 会出现对数发散；更小的 <script type="math/tex">n</script> 也发散。</p>
+<p>在无穷远处，<script type="math/tex">e^{-x^2}</script> 比任何固定幂次的 <script type="math/tex">x</script> 衰减得都快，所以对任意固定实数 <script type="math/tex">n</script>，尾部积分都收敛。合起来得到</p>
+<div class="math-display">
+$$
+\boxed{I_n\text{ 收敛当且仅当 }n>-1.}
+$$
+</div>
+
+<p>接下来的等式都在这个条件下成立。</p>
+<h2 id="2-一次换元得到统一公式"><a href="#2-一次换元得到统一公式" class="headerlink" title="2. 一次换元得到统一公式"></a>2. 一次换元得到统一公式</h2><p>令 <script type="math/tex">t=x^2</script>。因为积分只取 <script type="math/tex">x\geqslant0</script>，所以 <script type="math/tex">x=\sqrt t</script>，且</p>
+<div class="math-display">
+$$
+\mathrm dx=\frac{1}{2\sqrt t}\,\mathrm dt,
+\qquad x^n=t^{n/2}.
+$$
+</div>
+
+<p>代回原积分，逐步合并幂次：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+I_n
+&=\int_0^\infty t^{n/2}e^{-t}\frac{\mathrm dt}{2\sqrt t}\\
+&=\frac12\int_0^\infty t^{(n-1)/2}e^{-t}\,\mathrm dt.
+\end{aligned}
+$$
+</div>
+
+<p>Gamma 函数的定义是</p>
+<div class="math-display">
+$$
+\Gamma(s)=\int_0^\infty t^{s-1}e^{-t}\,\mathrm dt,
+\qquad s>0.
+$$
+</div>
+
+<p>对照指数 <script type="math/tex">s-1=(n-1)/2</script>，即 <script type="math/tex">s=(n+1)/2</script>，立刻得到本文的总公式：</p>
+<div class="math-display">
+$$
+\boxed{I_n=\frac12\Gamma\!\left(\frac{n+1}{2}\right),\qquad n>-1.}
+$$
+</div>
+
+<p>这一步也解释了为什么定义域恰好是 <script type="math/tex">n>-1</script>：Gamma 积分要求 <script type="math/tex">(n+1)/2>0</script>。</p>
+<h2 id="3-不预先知道-Gamma-函数，怎样求出起点？"><a href="#3-不预先知道-Gamma-函数，怎样求出起点？" class="headerlink" title="3. 不预先知道 Gamma 函数，怎样求出起点？"></a>3. 不预先知道 Gamma 函数，怎样求出起点？</h2><p>若只关心非负整数 <script type="math/tex">n</script>，可以绕开 Gamma 函数，从 <script type="math/tex">I_0</script> 和 <script type="math/tex">I_1</script> 开始递推。</p>
+<h3 id="3-1-半轴高斯积分-I-0"><a href="#3-1-半轴高斯积分-I-0" class="headerlink" title="3.1 半轴高斯积分 I_0"></a>3.1 半轴高斯积分 <script type="math/tex">I_0</script></h3><p>记 <script type="math/tex">G=I_0=\int_0^\infty e^{-x^2},\mathrm dx</script>。这个积分不能用通常的初等原函数直接求值，但可以<strong>先平方，再改用极坐标</strong>：</p>
+<div class="math-display">
+$$
+G^2
+=\left(\int_0^\infty e^{-x^2}\,\mathrm dx\right)
+ \left(\int_0^\infty e^{-y^2}\,\mathrm dy\right)
+=\int_0^\infty\!\int_0^\infty e^{-(x^2+y^2)}\,\mathrm dx\,\mathrm dy.
+$$
+</div>
+
+<p>由于被积函数非负，这里可以把两个一维积分合并为第一象限的二重积分。设 <script type="math/tex">x=r\cos\theta</script>、<script type="math/tex">y=r\sin\theta</script>，第一象限对应 <script type="math/tex">0\leqslant\theta\leqslant\pi/2</script>、<script type="math/tex">r\geqslant0</script>，面积元为 <script type="math/tex">r,\mathrm dr,\mathrm d\theta</script>。因此</p>
+<div class="math-display">
+$$
+\begin{aligned}
+G^2
+&=\int_0^{\pi/2}\!\int_0^\infty e^{-r^2}r\,\mathrm dr\,\mathrm d\theta\\
+&=\int_0^{\pi/2}\frac12\,\mathrm d\theta
+=\frac\pi4.
+\end{aligned}
+$$
+</div>
+
+<p>因为 <script type="math/tex">G>0</script>，所以</p>
+<div class="math-display">
+$$
+\boxed{I_0=\frac{\sqrt\pi}{2}.}
+$$
+</div>
+
+<p>注意积分只覆盖正半轴，因此它是全轴高斯积分 <script type="math/tex">\int_{-\infty}^{\infty}e^{-x^2},\mathrm dx=\sqrt\pi</script> 的一半。</p>
+<h3 id="3-2-另一个起点-I-1"><a href="#3-2-另一个起点-I-1" class="headerlink" title="3.2 另一个起点 I_1"></a>3.2 另一个起点 <script type="math/tex">I_1</script></h3><p>由于 <script type="math/tex">\mathrm d(e^{-x^2})=-2xe^{-x^2},\mathrm dx</script>，有</p>
+<div class="math-display">
+$$
+I_1=\int_0^\infty xe^{-x^2}\,\mathrm dx
+=\left[-\frac12e^{-x^2}\right]_0^\infty
+=\boxed{\frac12}.
+$$
+</div>
+
+<p>这两个起点不同：偶数阶最终带有 <script type="math/tex">\sqrt\pi</script>，奇数阶最终只含阶乘和有理数。</p>
+<h2 id="4-分部积分得到递推关系"><a href="#4-分部积分得到递推关系" class="headerlink" title="4. 分部积分得到递推关系"></a>4. 分部积分得到递推关系</h2><p>对整数 <script type="math/tex">n\geqslant2</script>，把被积函数写成 <script type="math/tex">x^{n-1}(xe^{-x^2})</script>，取</p>
+<div class="math-display">
+$$
+u=x^{n-1},\qquad
+\mathrm dv=xe^{-x^2}\,\mathrm dx,
+\qquad
+\mathrm du=(n-1)x^{n-2}\,\mathrm dx,
+\qquad
+v=-\frac12e^{-x^2}.
+$$
+</div>
+
+<p>分部积分给出</p>
+<div class="math-display">
+$$
+I_n
+=\left[-\frac12x^{n-1}e^{-x^2}\right]_0^\infty
++\frac{n-1}{2}\int_0^\infty x^{n-2}e^{-x^2}\,\mathrm dx.
+$$
+</div>
+
+<p>边界项为零：在 <script type="math/tex">x=0</script>，<script type="math/tex">n-1>0</script>；在无穷远处，指数衰减压过多项式增长。因此</p>
+<div class="math-display">
+$$
+\boxed{I_n=\frac{n-1}{2}I_{n-2},\qquad n=2,3,4,\ldots.}
+$$
+</div>
+
+<p>递推每次降低 <strong>2</strong> 阶，所以偶数阶最终到达 <script type="math/tex">I_0</script>，奇数阶最终到达 <script type="math/tex">I_1</script>。不能把这个分部积分式直接用于 <script type="math/tex">n=1</script>：此时 <script type="math/tex">x^{n-1}</script> 在原点不为零，而且形式上的 <script type="math/tex">I_{-1}</script> 本身发散。</p>
+<p>从 Gamma 公式也能检查递推：对 <script type="math/tex">n>1</script>，利用 <script type="math/tex">\Gamma(s+1)=s\Gamma(s)</script>，同样得到 <script type="math/tex">I_n=(n-1)I_{n-2}/2</script>。</p>
+<h2 id="5-整数阶的闭式答案"><a href="#5-整数阶的闭式答案" class="headerlink" title="5. 整数阶的闭式答案"></a>5. 整数阶的闭式答案</h2><p>设 <script type="math/tex">m=0,1,2,\ldots</script>。</p>
+<h3 id="5-1-偶数阶"><a href="#5-1-偶数阶" class="headerlink" title="5.1 偶数阶"></a>5.1 偶数阶</h3><p>从 <script type="math/tex">I_0=\sqrt\pi/2</script> 出发，依次应用递推式：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+I_{2m}
+&=\frac{2m-1}{2}I_{2m-2}\\
+&=\frac{(2m-1)(2m-3)\cdots3\cdot1}{2^m}I_0\\
+&=\boxed{\frac{(2m-1)!!}{2^{m+1}}\sqrt\pi}.
+\end{aligned}
+$$
+</div>
+
+<p>其中 <script type="math/tex">(2m-1)!!</script> 表示奇数的连乘，约定 <script type="math/tex">(-1)!!=1</script>，这样 <script type="math/tex">m=0</script> 也适用。利用 <script type="math/tex">(2m-1)!!=(2m)!/(2^m m!)</script>，还可写成</p>
+<div class="math-display">
+$$
+\boxed{I_{2m}=\frac{(2m)!}{2^{2m+1}m!}\sqrt\pi.}
+$$
+</div>
+
+<h3 id="5-2-奇数阶"><a href="#5-2-奇数阶" class="headerlink" title="5.2 奇数阶"></a>5.2 奇数阶</h3><p>从 <script type="math/tex">I_1=1/2</script> 出发：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+I_{2m+1}
+&=mI_{2m-1}\\
+&=m(m-1)\cdots2\cdot1\,I_1\\
+&=\boxed{\frac{m!}{2}}.
+\end{aligned}
+$$
+</div>
+
+<p>当 <script type="math/tex">m=0</script> 时，取 <script type="math/tex">0!=1</script>，便回到 <script type="math/tex">I_1=1/2</script>。</p>
+<p>把前几项列出来，便于检查下标和系数：</p>
+<table>
+<thead>
+<tr>
+<th align="right"><script type="math/tex">n</script></th>
+<th align="right"><script type="math/tex">I_n</script></th>
+<th>由递推得到</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td align="right"><script type="math/tex">\sqrt\pi/2</script></td>
+<td>高斯积分</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right"><script type="math/tex">1/2</script></td>
+<td>直接换元</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right"><script type="math/tex">\sqrt\pi/4</script></td>
+<td><script type="math/tex">I_0/2</script></td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right"><script type="math/tex">1/2</script></td>
+<td><script type="math/tex">I_1</script></td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right"><script type="math/tex">3\sqrt\pi/8</script></td>
+<td><script type="math/tex">3I_2/2</script></td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right"><script type="math/tex">1</script></td>
+<td><script type="math/tex">2I_3</script></td>
+</tr>
+</tbody></table>
+<p>例如，<script type="math/tex">I_4=(3/2)I_2=3\sqrt\pi/8</script>，而 <script type="math/tex">I_5=2I_3=1</script>。表中的 <script type="math/tex">I_1=I_3=1/2</script> 只是这两个值恰好相等，并不表示积分随 <script type="math/tex">n</script> 始终单调。</p>
+<h2 id="6-非整数指数与参数推广"><a href="#6-非整数指数与参数推广" class="headerlink" title="6. 非整数指数与参数推广"></a>6. 非整数指数与参数推广</h2><p>Gamma 公式的价值在于不必要求指数是整数。例如，<script type="math/tex">n=1/2</script> 时，答案自然写成</p>
+<div class="math-display">
+$$
+I_{1/2}=\frac12\Gamma\!\left(\frac34\right).
+$$
+</div>
+
+<p>更一般地，若高斯指数中带正参数 <script type="math/tex">a>0</script>，令 <script type="math/tex">t=ax^2</script> 可得</p>
+<div class="math-display">
+$$
+\boxed{
+\int_0^\infty x^n e^{-ax^2}\,\mathrm dx
+=\frac{1}{2a^{(n+1)/2}}
+\Gamma\!\left(\frac{n+1}{2}\right),
+\qquad a>0,\ n>-1.
+}
+$$
+</div>
+
+<p>其中 <script type="math/tex">a^{-(n+1)/2}</script> 也可以由尺度变换 <script type="math/tex">u=\sqrt a,x</script> 预先看出来：高斯峰越窄，积分按这一幂次缩小。</p>
+<p>如果积分改为整个实轴，需要另外注意奇偶性。对非负整数 <script type="math/tex">n</script>，</p>
+<div class="math-display">
+$$
+\int_{-\infty}^{\infty}x^n e^{-x^2}\,\mathrm dx
+=\begin{cases}
+2I_n,&n\text{ 为偶数},\\
+0,&n\text{ 为奇数}.
+\end{cases}
+$$
+</div>
+
+<p><strong>半轴上的奇数阶积分并不为零</strong>；“奇函数积分为零”只适用于关于原点对称的积分区间。</p>
+<h2 id="7-核心结论"><a href="#7-核心结论" class="headerlink" title="7. 核心结论"></a>7. 核心结论</h2><p>对题目中的积分，先检查 <script type="math/tex">n>-1</script>，再选合适的计算路径：</p>
+<div class="math-display">
+$$
+\boxed{
+I_n=\int_0^\infty x^n e^{-x^2}\,\mathrm dx
+=\frac12\Gamma\!\left(\frac{n+1}{2}\right),
+\qquad n>-1.
+}
+$$
+</div>
+
+<p>对于非负整数，记住两个起点和一个递推即可：</p>
+<div class="math-display">
+$$
+\boxed{
+I_0=\frac{\sqrt\pi}{2},\qquad
+I_1=\frac12,\qquad
+I_n=\frac{n-1}{2}I_{n-2}\quad(n\geqslant2).
+}
+$$
+</div>
+
+<p>于是偶数阶给出 <script type="math/tex">I_{2m}=(2m-1)!!\sqrt\pi/2^{m+1}</script>，奇数阶给出 <script type="math/tex">I_{2m+1}=m!/2</script>。整个计算的关键是：<strong>平方求出高斯积分，换元识别 Gamma 函数，分部积分连接相隔两阶的项。</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/">http://talescuber.github.io/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a><a class="post-meta__tags" href="/tags/%E7%A7%AF%E5%88%86/">积分</a><a class="post-meta__tags" href="/tags/Gamma%E5%87%BD%E6%95%B0/">Gamma函数</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真"><img class="cover" src="/img/fdtd-algorithm-metalens/00-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%94%B6%E6%95%9B"><span class="toc-text">1. 先判断什么时候收敛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%80%E6%AC%A1%E6%8D%A2%E5%85%83%E5%BE%97%E5%88%B0%E7%BB%9F%E4%B8%80%E5%85%AC%E5%BC%8F"><span class="toc-text">2. 一次换元得到统一公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%8D%E9%A2%84%E5%85%88%E7%9F%A5%E9%81%93-Gamma-%E5%87%BD%E6%95%B0%EF%BC%8C%E6%80%8E%E6%A0%B7%E6%B1%82%E5%87%BA%E8%B5%B7%E7%82%B9%EF%BC%9F"><span class="toc-text">3. 不预先知道 Gamma 函数，怎样求出起点？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8D%8A%E8%BD%B4%E9%AB%98%E6%96%AF%E7%A7%AF%E5%88%86-I-0"><span class="toc-text">3.1 半轴高斯积分 I_0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%B5%B7%E7%82%B9-I-1"><span class="toc-text">3.2 另一个起点 I_1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%88%86%E9%83%A8%E7%A7%AF%E5%88%86%E5%BE%97%E5%88%B0%E9%80%92%E6%8E%A8%E5%85%B3%E7%B3%BB"><span class="toc-text">4. 分部积分得到递推关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B4%E6%95%B0%E9%98%B6%E7%9A%84%E9%97%AD%E5%BC%8F%E7%AD%94%E6%A1%88"><span class="toc-text">5. 整数阶的闭式答案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%81%B6%E6%95%B0%E9%98%B6"><span class="toc-text">5.1 偶数阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%A5%87%E6%95%B0%E9%98%B6"><span class="toc-text">5.2 奇数阶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%9D%9E%E6%95%B4%E6%95%B0%E6%8C%87%E6%95%B0%E4%B8%8E%E5%8F%82%E6%95%B0%E6%8E%A8%E5%B9%BF"><span class="toc-text">6. 非整数指数与参数推广</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA"><span class="toc-text">7. 核心结论</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</a><time datetime="2026-09-22T10:08:22.000Z" title="发表于 2026-09-22 18:08:22">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</a><time datetime="2026-09-21T16:18:21.000Z" title="发表于 2026-09-22 00:18:21">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/" title="PDH 激光稳频详解：从边带干涉到闭环噪声">PDH 激光稳频详解：从边带干涉到闭环噪声</a><time datetime="2026-09-21T16:03:06.000Z" title="发表于 2026-09-22 00:03:06">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

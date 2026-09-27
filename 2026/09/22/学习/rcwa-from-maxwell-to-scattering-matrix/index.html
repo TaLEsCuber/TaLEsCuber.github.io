@@ -1,0 +1,943 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从麦克斯韦方程、傅里叶展开与 Bloch 条件出发，推导一维 TE&#x2F;TM RCWA，解释傅里叶因子分解、散射矩阵和收敛验证，附六组配图与可运行 Python 算例，并延伸到超构透镜单元库、相位匹配和色散设计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从麦克斯韦方程、傅里叶展开与 Bloch 条件出发，推导一维 TE&#x2F;TM RCWA，解释傅里叶因子分解、散射矩阵和收敛验证，附六组配图与可运行 Python 算例，并延伸到超构透镜单元库、相位匹配和色散设计。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/rcwa/01-geometry.png">
+<meta property="article:published_time" content="2026-09-21T16:18:21.000Z">
+<meta property="article:modified_time" content="2026-09-21T16:33:52.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="计算电磁学">
+<meta property="article:tag" content="超构透镜">
+<meta property="article:tag" content="RCWA">
+<meta property="article:tag" content="衍射光学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/rcwa/01-geometry.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-22 00:33:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="b89a270bc05fa974904be9f2f7afd42afff00ccdf786749d267b257d68e7cbe1";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-21T16:18:21.000Z" title="发表于 2026-09-22 00:18:21">2026-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>一束光照到周期光栅上，哪些方向会出现衍射光？每个方向分走多少能量？把光栅换成一层纳米柱，透射光又会获得怎样的相位？</p>
+<p>光栅方程可以给出允许的传播方向，却不能独自回答各级衍射效率和相位。要回答这些问题，需要在实际材料分布中求解麦克斯韦方程。<strong>严格耦合波分析</strong>（Rigorous Coupled-Wave Analysis，<strong>RCWA</strong>）利用结构的横向周期性，把这个电磁边值问题转化成有限维的矩阵问题。</p>
+<p>它的主线可以概括为：<strong>横向用傅里叶谐波表示，纵向用层内本征模传播，层间用电磁边界条件连接，再由散射振幅计算功率与相位。</strong></p>
+<p><img src="/img/rcwa/01-geometry.png" alt="周期光栅、入射波与反射透射衍射级的示意图"></p>
+<p><em>图 1｜RCWA 的几何与端口。图中箭头用于说明方向和衍射级，不代表后文算例的定量角度或能量。本文六组图均由明确几何、公式或实际数值计算绘制，绘图与计算源码见文末。</em></p>
+<p>本文面向学过电磁学、复数波动表示和线性代数的读者。第 1–5 节建立一维 TE 推导，第 6–9 节讨论稳定算法、TM 偏振和二维扩展，第 10–12 节给出实现与验证，第 13–15 节把这些工具连接到超构透镜设计。</p>
+<span id="more"></span>
+
+<h2 id="1-RCWA-在求解什么问题？"><a href="#1-RCWA-在求解什么问题？" class="headerlink" title="1. RCWA 在求解什么问题？"></a>1. RCWA 在求解什么问题？</h2><h3 id="1-1-“严格”指的是方程层面"><a href="#1-1-“严格”指的是方程层面" class="headerlink" title="1.1 “严格”指的是方程层面"></a>1.1 “严格”指的是方程层面</h3><p>RCWA 也常称为傅里叶模态法（Fourier Modal Method，FMM）。对于线性、时间不变的周期分层结构，它直接处理频域麦克斯韦方程，没有预先采用标量衍射、近轴传播或只保留两束耦合波的近似。早期经典工作已经把光栅衍射写成了可计算的矩阵边值问题。<a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSA.71.000811">Moharam 与 Gaylord，1981</a></p>
+<p>但“严格”不意味着电脑输出自动精确。实际计算仍然受到傅里叶截断、几何分层、材料数据、数值精度和边界建模的限制。更准确的说法是：<strong>在所选物理模型下，通过增加展开自由度和改善离散表示，可以检验解是否趋于稳定。</strong></p>
+<h3 id="1-2-最适合的结构形态"><a href="#1-2-最适合的结构形态" class="headerlink" title="1.2 最适合的结构形态"></a>1.2 最适合的结构形态</h3><p>典型模型包含：上方均匀半空间、若干周期图案层、下方均匀半空间。每层内部允许介电常数随横向位置变化，但沿厚度方向保持不变。</p>
+<p>矩形条纹光栅可以直接用一层表示；圆柱纳米柱在固定高度范围内也可直接用二维周期图案表示。斜侧壁、锥形柱或曲面则需要沿厚度切片，每片用不同横截面近似。<strong>沿厚度分层和横向傅里叶截断是两种独立的误差来源。</strong></p>
+<p>RCWA 的标准模型在横向是无限周期延拓。把有限透镜放进大超胞，计算的仍然是周期重复的透镜阵列；如果希望用它逼近孤立器件，还要检查超胞尺寸和重复像之间的耦合。</p>
+<h2 id="2-先把坐标、材料和相位约定说清楚"><a href="#2-先把坐标、材料和相位约定说清楚" class="headerlink" title="2. 先把坐标、材料和相位约定说清楚"></a>2. 先把坐标、材料和相位约定说清楚</h2><p>本文先讨论一维光栅：沿 <script type="math/tex">x</script> 以周期 <script type="math/tex">\Lambda</script> 重复，沿 <script type="math/tex">y</script> 不变，层叠方向取 <script type="math/tex">+z</script>，入射光从上方向下传播。</p>
+<p>采用时间因子 <script type="math/tex">e^{-i\omega t}</script>，于是无自由电荷和电流的频域麦克斯韦方程为</p>
+<div class="math-display">
+$$
+\nabla\times\mathbf E=i\omega\mu_0\mathbf H,
+\qquad
+\nabla\times\mathbf H=-i\omega\varepsilon_0\varepsilon_r\mathbf E.
+$$
+</div>
+
+<p>这里假设材料线性、局域、各向同性且非磁性，<script type="math/tex">\varepsilon_r</script> 为相对介电常数。对采用本时间约定的普通无源材料，损耗对应 <script type="math/tex">\operatorname{Im}\varepsilon_r>0</script>。下面的标量推导还要求 <script type="math/tex">k_y=0</script>，也就是入射面为 <script type="math/tex">xz</script> 平面。</p>
+<table>
+<thead>
+<tr>
+<th>记号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">\lambda_0</script>、<script type="math/tex">k_0=2\pi/\lambda_0</script></td>
+<td>真空波长、真空波数</td>
+</tr>
+<tr>
+<td><script type="math/tex">n_i,n_t</script></td>
+<td>均匀入射区与出射区的折射率</td>
+</tr>
+<tr>
+<td><script type="math/tex">\theta_i</script></td>
+<td>入射波与 <script type="math/tex">+z</script> 方向的夹角</td>
+</tr>
+<tr>
+<td><script type="math/tex">G=2\pi/\Lambda</script></td>
+<td>一维倒格矢基本量</td>
+</tr>
+<tr>
+<td><script type="math/tex">m=-M,\ldots,M</script></td>
+<td>保留的傅里叶级次，数量 <script type="math/tex">N=2M+1</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">Z_0=\sqrt{\mu_0/\varepsilon_0}</script></td>
+<td>真空波阻抗</td>
+</tr>
+<tr>
+<td>TE</td>
+<td><script type="math/tex">\mathbf E</script> 沿 <script type="math/tex">y</script>，非零分量为 <script type="math/tex">E_y,H_x,H_z</script></td>
+</tr>
+<tr>
+<td>TM</td>
+<td><script type="math/tex">\mathbf H</script> 沿 <script type="math/tex">y</script>，非零分量为 <script type="math/tex">H_y,E_x,E_z</script></td>
+</tr>
+</tbody></table>
+<p>注意三种不同对象：<script type="math/tex">m</script> 是傅里叶谐波编号；层内本征模通常是多个谐波的叠加；只有在均匀外部区域，单个谐波才对应一个独立的平面波衍射级。</p>
+<h2 id="3-周期性怎样变成矩阵？"><a href="#3-周期性怎样变成矩阵？" class="headerlink" title="3. 周期性怎样变成矩阵？"></a>3. 周期性怎样变成矩阵？</h2><h3 id="3-1-Bloch-条件决定允许的横向波矢"><a href="#3-1-Bloch-条件决定允许的横向波矢" class="headerlink" title="3.1 Bloch 条件决定允许的横向波矢"></a>3.1 Bloch 条件决定允许的横向波矢</h3><p>平面波入射时，场满足准周期条件</p>
+<div class="math-display">
+$$
+E_y(x+\Lambda,z)=e^{ik_{x,0}\Lambda}E_y(x,z),
+\qquad k_{x,0}=k_0n_i\sin\theta_i.
+$$
+</div>
+
+<p>因此可以写成 Bloch 相位乘上周期函数，即</p>
+<div class="math-display">
+$$
+E_y(x,z)=\sum_{m=-\infty}^{\infty}e_m(z)e^{ik_{x,m}x},
+\qquad k_{x,m}=k_{x,0}+mG.
+$$
+</div>
+
+<p>这并不是假定场在每个周期完全相同；斜入射时，相邻周期之间带有确定的相位差。</p>
+<p>在折射率为 <script type="math/tex">n_j</script> 的均匀、无损外部区域，</p>
+<div class="math-display">
+$$
+k_{z,jm}=k_0q_{jm},\qquad
+q_{jm}=\sqrt{n_j^2-(k_{x,m}/k_0)^2}.
+$$
+</div>
+
+<p>对向 <script type="math/tex">+z</script> 的出射波，选取传播时 <script type="math/tex">q_{jm}>0</script>、倏逝时 <script type="math/tex">\operatorname{Im}q_{jm}>0</script> 的分支。<script type="math/tex">q_{jm}</script> 为正实数的级次可以把能量带到远处；纯正虚数对应随距离衰减的倏逝波。等号 <script type="math/tex">q_{jm}=0</script> 是级次开启或关闭的截止点。</p>
+<p>由横向动量关系可直接得到</p>
+<div class="math-display">
+$$
+n_j\sin\theta_{jm}=n_i\sin\theta_i+m\frac{\lambda_0}{\Lambda}.
+$$
+</div>
+
+<p>这个式子回答“往哪里走”；RCWA 接下来求解“每个方向的复振幅是多少”。</p>
+<h3 id="3-2-介电常数的乘法变成卷积"><a href="#3-2-介电常数的乘法变成卷积" class="headerlink" title="3.2 介电常数的乘法变成卷积"></a>3.2 介电常数的乘法变成卷积</h3><p>每层内的周期介电常数展开为</p>
+<div class="math-display">
+$$
+\varepsilon_r(x)=\sum_{p=-\infty}^{\infty}\varepsilon_p e^{ipGx},
+\qquad
+\varepsilon_p=\frac{1}{\Lambda}\int_{-\Lambda/2}^{\Lambda/2}
+\varepsilon_r(x)e^{-ipGx}\,dx.
+$$
+</div>
+
+<p>空间中的乘积 <script type="math/tex">\varepsilon_r E_y</script> 对应傅里叶系数之间的卷积：</p>
+<div class="math-display">
+$$
+(\varepsilon_rE_y)_m=\sum_n\varepsilon_{m-n}e_n.
+$$
+</div>
+
+<p>截断后，定义</p>
+<div class="math-display">
+$$
+\mathbf e=(e_{-M},\ldots,e_M)^\mathsf T,
+\qquad
+\mathcal E_{mn}=\varepsilon_{m-n},
+\qquad
+K_x=\operatorname{diag}\left(\frac{k_{x,m}}{k_0}\right).
+$$
+</div>
+
+<script type="math/tex">\mathcal E</script> 是 Toeplitz 卷积矩阵，对角线相同位置差的元素相等。材料均匀时，只有零阶介电系数非零，谐波彼此解耦；材料有横向变化时，非对角元素把不同谐波连接起来。这就是“耦合波”的矩阵来源。
+
+<p>实现时有一个常见细节：场只保留 <script type="math/tex">-M</script> 到 <script type="math/tex">M</script>，但索引差 <script type="math/tex">m-n</script> 会覆盖 <script type="math/tex">-2M</script> 到 <script type="math/tex">2M</script>。<strong>构造卷积矩阵所需的材料傅里叶系数范围，比场的级次范围更宽。</strong></p>
+<h3 id="3-3-矩形条纹的解析系数"><a href="#3-3-矩形条纹的解析系数" class="headerlink" title="3.3 矩形条纹的解析系数"></a>3.3 矩形条纹的解析系数</h3><p>设一个周期内，居中的高折射率条纹宽度为 <script type="math/tex">F\Lambda</script>，占空比为 <script type="math/tex">F</script>，条纹和间隙介电常数分别为 <script type="math/tex">\varepsilon_a,\varepsilon_b</script>。则</p>
+<div class="math-display">
+$$
+\varepsilon_p=\varepsilon_b\delta_{p0}
++(\varepsilon_a-\varepsilon_b)F\,\operatorname{sinc}(pF),
+\qquad
+\operatorname{sinc}(u)=\frac{\sin(\pi u)}{\pi u}.
+$$
+</div>
+
+<p>这里的 sinc 与 NumPy 的 <code>np.sinc</code> 定义一致。条纹中心若平移到 <script type="math/tex">x_c</script>，非均匀部分还要乘 <script type="math/tex">e^{-ipGx_c}</script>。只改变单元坐标原点就可能改变某些衍射振幅的相位，因此比较两套程序时必须对齐几何和相位参考。</p>
+<p><img src="/img/rcwa/02-fourier-coupling.png" alt="矩形介电常数的傅里叶截断与卷积矩阵"></p>
+<p><em>图 2｜左：不连续函数的傅里叶重建在界面附近出现 Gibbs 振荡，增加阶数主要使振荡区域变窄。右：介电卷积矩阵的非对角元素体现谐波耦合。图示采用占空比 0.45、介电常数 4 和 1。</em></p>
+<h2 id="4-从麦克斯韦方程推导-TE-层内本征问题"><a href="#4-从麦克斯韦方程推导-TE-层内本征问题" class="headerlink" title="4. 从麦克斯韦方程推导 TE 层内本征问题"></a>4. 从麦克斯韦方程推导 TE 层内本征问题</h2><h3 id="4-1-把标量波动方程投影到傅里叶基底"><a href="#4-1-把标量波动方程投影到傅里叶基底" class="headerlink" title="4.1 把标量波动方程投影到傅里叶基底"></a>4.1 把标量波动方程投影到傅里叶基底</h3><p>在当前 TE 条件下，由麦克斯韦方程消去磁场，得到</p>
+<div class="math-display">
+$$
+\frac{\partial^2E_y}{\partial x^2}
++\frac{\partial^2E_y}{\partial z^2}
++k_0^2\varepsilon_r(x)E_y=0.
+$$
+</div>
+
+<p>对 <script type="math/tex">x</script> 求导等价于给第 <script type="math/tex">m</script> 个谐波乘 <script type="math/tex">ik_{x,m}</script>，材料乘法则变成卷积。逐项比较相同谐波的系数：</p>
+<div class="math-display">
+$$
+\frac{d^2e_m}{dz^2}-k_{x,m}^2e_m
++k_0^2\sum_n\varepsilon_{m-n}e_n=0.
+$$
+</div>
+
+<p>收集成矩阵形式：</p>
+<div class="math-display">
+$$
+\frac{d^2\mathbf e}{dz^2}
++k_0^2\underbrace{(\mathcal E-K_x^2)}_{\mathcal A}\mathbf e=0.
+$$
+</div>
+
+<p>原本同时依赖 <script type="math/tex">x,z</script> 的偏微分方程，变成了仅依赖 <script type="math/tex">z</script> 的常系数耦合常微分方程。</p>
+<h3 id="4-2-对角化后，每个模态独立传播"><a href="#4-2-对角化后，每个模态独立传播" class="headerlink" title="4.2 对角化后，每个模态独立传播"></a>4.2 对角化后，每个模态独立传播</h3><p>求解</p>
+<div class="math-display">
+$$
+\mathcal A W=WQ^2,
+\qquad Q=\operatorname{diag}(q_1,\ldots,q_N).
+$$
+</div>
+
+<script type="math/tex">W</script> 的每一列是一个层内模态在傅里叶基底中的权重；<script type="math/tex">k_0q_\nu</script> 是该模态的纵向传播常数。
+
+<p>若当前层顶部为 <script type="math/tex">z=0</script>，则形式解为</p>
+<div class="math-display">
+$$
+\mathbf e(z)=W\left[e^{ik_0Qz}\mathbf a^+
++e^{-ik_0Qz}\mathbf a^-\right].
+$$
+</div>
+
+<p>这一步说明：层内不必再沿 <script type="math/tex">z</script> 用许多小步做数值积分，传播可以通过矩阵指数的对角元素直接计算。RCWA 因而常被称作半解析方法。</p>
+<h3 id="4-3-磁场不是额外猜出来的"><a href="#4-3-磁场不是额外猜出来的" class="headerlink" title="4.3 磁场不是额外猜出来的"></a>4.3 磁场不是额外猜出来的</h3><p>由旋度关系</p>
+<div class="math-display">
+$$
+H_x=-\frac{1}{i\omega\mu_0}\frac{\partial E_y}{\partial z}.
+$$
+</div>
+
+<p>定义与电场同单位的切向磁场变量 <script type="math/tex">\mathbf v=-Z_0\mathbf H_x</script>，则</p>
+<div class="math-display">
+$$
+\mathbf v(z)=WQ\left[e^{ik_0Qz}\mathbf a^+
+-e^{-ik_0Qz}\mathbf a^-\right].
+$$
+</div>
+
+<p>记 <script type="math/tex">V=WQ</script>，在同一个参考面上有</p>
+<div class="math-display">
+$$
+\begin{pmatrix}\mathbf e\\\mathbf v\end{pmatrix}
+=
+\begin{pmatrix}W&W\\V&-V\end{pmatrix}
+\begin{pmatrix}\mathbf a^+\\\mathbf a^-\end{pmatrix}.
+$$
+</div>
+
+<p>这个矩阵把“模态振幅”转成可以直接应用边界条件的“切向场”。负号来自反向传播波的电磁场关系，不能因为只关心强度就省略。</p>
+<h2 id="5-层间边界条件如何求出反射和透射？"><a href="#5-层间边界条件如何求出反射和透射？" class="headerlink" title="5. 层间边界条件如何求出反射和透射？"></a>5. 层间边界条件如何求出反射和透射？</h2><p>在没有自由表面电流的水平界面上，切向 <script type="math/tex">E_y</script> 和 <script type="math/tex">H_x</script> 连续。设界面左、右两侧的正反向模态幅度分别为 <script type="math/tex">\mathbf a_L,\mathbf b_L</script> 和 <script type="math/tex">\mathbf a_R,\mathbf b_R</script>，则</p>
+<div class="math-display">
+$$
+W_L(\mathbf a_L+\mathbf b_L)=W_R(\mathbf a_R+\mathbf b_R),
+$$
+</div>
+
+<div class="math-display">
+$$
+V_L(\mathbf a_L-\mathbf b_L)=V_R(\mathbf a_R-\mathbf b_R).
+$$
+</div>
+
+<p>把输入端口 <script type="math/tex">(\mathbf a_L,\mathbf b_R)</script> 与输出端口 <script type="math/tex">(\mathbf b_L,\mathbf a_R)</script> 分开，可以写成线性方程：</p>
+<div class="math-display">
+$$
+\begin{pmatrix}W_L&-W_R\\V_L&V_R\end{pmatrix}
+\begin{pmatrix}\mathbf b_L\\\mathbf a_R\end{pmatrix}
+=
+\begin{pmatrix}-W_L&W_R\\V_L&V_R\end{pmatrix}
+\begin{pmatrix}\mathbf a_L\\\mathbf b_R\end{pmatrix}.
+$$
+</div>
+
+<p>求解这个矩阵方程，就得到界面的散射矩阵。外部均匀区域可以直接使用平面波基底，即 <script type="math/tex">W=I</script>；TE 情况下 <script type="math/tex">V=\operatorname{diag}(q_m)</script>。</p>
+<p>从上方以零级单位振幅入射、下方没有入射时，输入向量只在 <script type="math/tex">m=0</script> 位置取 1。整叠结构的解会返回所有保留级次的 <script type="math/tex">r_m,t_m</script>，其中既包含传播级，也包含倏逝级。</p>
+<p><strong>即使最终只想要零级透射，也通常不能只保留零级谐波。</strong> 近场中的高阶和倏逝分量会参与边界匹配，再通过耦合影响零级结果。</p>
+<h2 id="6-为什么需要散射矩阵，而不是一路乘传输矩阵？"><a href="#6-为什么需要散射矩阵，而不是一路乘传输矩阵？" class="headerlink" title="6. 为什么需要散射矩阵，而不是一路乘传输矩阵？"></a>6. 为什么需要散射矩阵，而不是一路乘传输矩阵？</h2><h3 id="6-1-倏逝模带来的指数放大"><a href="#6-1-倏逝模带来的指数放大" class="headerlink" title="6.1 倏逝模带来的指数放大"></a>6.1 倏逝模带来的指数放大</h3><p>设某个模态 <script type="math/tex">q=i\beta</script>，<script type="math/tex">\beta>0</script>。穿过厚度 <script type="math/tex">d</script> 后，两个形式上的传播因子为</p>
+<div class="math-display">
+$$
+e^{ik_0qd}=e^{-k_0\beta d},
+\qquad
+e^{-ik_0qd}=e^{+k_0\beta d}.
+$$
+</div>
+
+<p>后者并不意味着无源结构凭空放大能量，而是同一个倏逝解被从不合适的端面反向外推。在多层矩阵连乘时，同时携带极大和极小的数字会使条件数恶化，甚至溢出。</p>
+<p>稳定 RCWA 的关键之一，就是重新组织未知量。经典文献讨论过增强透射矩阵等稳定实现；本文使用适合逐层组合的散射矩阵方法。它们都是对数值稳定性的处理，不应把某一种实现技巧和 RCWA 本身等同起来。<a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSAA.12.001077">Moharam 等，1995</a></p>
+<h3 id="6-2-把两个方向的幅度分别参考到两端"><a href="#6-2-把两个方向的幅度分别参考到两端" class="headerlink" title="6.2 把两个方向的幅度分别参考到两端"></a>6.2 把两个方向的幅度分别参考到两端</h3><p>对于顶部为 <script type="math/tex">0</script>、底部为 <script type="math/tex">d</script> 的一层，更适合数值计算的场表达是</p>
+<div class="math-display">
+$$
+\mathbf e(z)=W\left[e^{ik_0Qz}\mathbf a_L
++e^{ik_0Q(d-z)}\mathbf b_R\right].
+$$
+</div>
+
+<p>这里的 <script type="math/tex">\mathbf a_L</script> 参考到顶部，<script type="math/tex">\mathbf b_R</script> 参考到底部。对普通无源介质选好模态分支后，这两个传播因子都沿相应方向衰减。</p>
+<p>定义</p>
+<div class="math-display">
+$$
+\begin{pmatrix}\mathbf b_L\\\mathbf a_R\end{pmatrix}
+=
+\underbrace{\begin{pmatrix}S_{11}&S_{12}\\S_{21}&S_{22}\end{pmatrix}}_S
+\begin{pmatrix}\mathbf a_L\\\mathbf b_R\end{pmatrix}.
+$$
+</div>
+
+<p>没有内部界面的均匀图案层，其传播散射矩阵为</p>
+<div class="math-display">
+$$
+S_{\mathrm{prop}}=
+\begin{pmatrix}0&P\\P&0\end{pmatrix},
+\qquad P=e^{ik_0Qd}.
+$$
+</div>
+
+<p><img src="/img/rcwa/03-scattering.png" alt="散射矩阵端口与倏逝传播因子对比"></p>
+<p><em>图 3｜左：散射矩阵把两端输入映射到两端输出。右：指数增长与衰减因子说明朴素传输矩阵为什么可能病态；曲线为解析函数，不是结构的增益谱。</em></p>
+<h3 id="6-3-用-Redheffer-星积连接两段结构"><a href="#6-3-用-Redheffer-星积连接两段结构" class="headerlink" title="6.3 用 Redheffer 星积连接两段结构"></a>6.3 用 Redheffer 星积连接两段结构</h3><p>设结构 <script type="math/tex">A</script> 在前，结构 <script type="math/tex">B</script> 在后，内部相连端口使用同一个模态基底和参考面。消去内部往返波后得到合成矩阵 <script type="math/tex">C</script>。为避免矩阵乘法次序混乱，先定义</p>
+<div class="math-display">
+$$
+D=I-B_{11}A_{22},\qquad
+X=D^{-1}B_{11}A_{21},\qquad Y=D^{-1}B_{12}.
+$$
+</div>
+
+<p>那么</p>
+<div class="math-display">
+$$
+\begin{aligned}
+C_{11}&=A_{11}+A_{12}X, & C_{12}&=A_{12}Y,\\
+C_{21}&=B_{21}(A_{21}+A_{22}X), & C_{22}&=B_{22}+B_{21}A_{22}Y.
+\end{aligned}
+$$
+</div>
+
+<p>这就是一组与本文端口约定一致的 Redheffer 星积公式。<script type="math/tex">D</script> 描述两段结构之间的多次反射；它接近奇异时，可能对应真实的强共振，也可能暴露数值问题，需要结合收敛和条件数判断。</p>
+<p>公式写成逆矩阵便于理解，代码中应使用 <code>solve(D, rhs)</code> 求解线性方程，避免显式计算逆矩阵。散射矩阵能显著改善厚层和倏逝模造成的不稳定，但不能消除所有截止、模态简并和病态共振问题。</p>
+<h2 id="7-TM-偏振为什么更容易收敛缓慢？"><a href="#7-TM-偏振为什么更容易收敛缓慢？" class="headerlink" title="7. TM 偏振为什么更容易收敛缓慢？"></a>7. TM 偏振为什么更容易收敛缓慢？</h2><h3 id="7-1-差别来自材料边界条件"><a href="#7-1-差别来自材料边界条件" class="headerlink" title="7.1 差别来自材料边界条件"></a>7.1 差别来自材料边界条件</h3><p>对于竖直的条纹侧壁，TE 电场 <script type="math/tex">E_y</script> 沿界面切向，因而连续。TM 的 <script type="math/tex">E_x</script> 是界面法向分量，会在介电常数跳变处发生跳变；连续的是法向电位移 <script type="math/tex">D_x=\varepsilon_0\varepsilon_rE_x</script>。</p>
+<p>无限傅里叶级数下，等价变形可以给出相同结果；但有限截断之后，<strong>先相乘再截断，与先截断再相乘，并不总能互换</strong>。尤其当两个不连续函数的乘积恰好连续时，直接卷积容易给出很慢的收敛。这是傅里叶因子分解规则要处理的问题。<a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSAA.13.001870">Li，1996</a></p>
+<p>定义第二个卷积矩阵</p>
+<div class="math-display">
+$$
+\mathcal B=\left[\!\left[ 1/\varepsilon_r\right]\!\right],
+\qquad \mathcal E=\left[\!\left[\varepsilon_r\right]\!\right].
+$$
+</div>
+
+<p>双括号表示“先对函数求傅里叶系数，再组装有限卷积矩阵”。一般有</p>
+<div class="math-display">
+$$
+\boxed{\mathcal B\ne\mathcal E^{-1}.}
+$$
+</div>
+
+<p>对侧壁的切向电场，可以按直接乘积规则使用 <script type="math/tex">\mathbf d_t/\varepsilon_0=\mathcal E\mathbf e_t</script>；对法向电场，更合适的截断关系是</p>
+<div class="math-display">
+$$
+\mathbf e_n=\mathcal B\frac{\mathbf d_n}{\varepsilon_0},
+\qquad
+\frac{\mathbf d_n}{\varepsilon_0}=\mathcal B^{-1}\mathbf e_n.
+$$
+</div>
+
+<p>因此不能在所有位置统一选 <script type="math/tex">\mathcal E</script>，也不能把所有 <script type="math/tex">\mathcal E</script> 都替换为 <script type="math/tex">\mathcal B^{-1}</script>。应先判断分量相对材料界面是法向还是切向。降低介电重建曲线的振铃，也不能代替正确的因子分解。</p>
+<h3 id="7-2-一维-TM-的可实现矩阵形式"><a href="#7-2-一维-TM-的可实现矩阵形式" class="headerlink" title="7.2 一维 TM 的可实现矩阵形式"></a>7.2 一维 TM 的可实现矩阵形式</h3><p>令 <script type="math/tex">u=Z_0H_y</script>。TM 的连续方程可写为</p>
+<div class="math-display">
+$$
+\frac{\partial}{\partial z}\left(\frac{1}{\varepsilon_r}\frac{\partial u}{\partial z}\right)
++\frac{\partial}{\partial x}\left(\frac{1}{\varepsilon_r}\frac{\partial u}{\partial x}\right)
++k_0^2u=0.
+$$
+</div>
+
+<p>对于层内沿 <script type="math/tex">z</script> 不变的一维条纹，采用与侧壁边界条件相容的因子分解后得到</p>
+<div class="math-display">
+$$
+\mathcal B\frac{d^2\mathbf u}{dz^2}
++k_0^2\left(I-K_x\mathcal E^{-1}K_x\right)\mathbf u=0.
+$$
+</div>
+
+<p>于是本征问题变为</p>
+<div class="math-display">
+$$
+\mathcal A_{\mathrm{TM}}W=WQ^2,
+\qquad
+\mathcal A_{\mathrm{TM}}=\mathcal B^{-1}
+\left(I-K_x\mathcal E^{-1}K_x\right).
+$$
+</div>
+
+<p>对应连续的第二个切向场变量取 <script type="math/tex">\mathbf v=\mathbf E_x</script>，由 <script type="math/tex">\partial_z u=ik_0\varepsilon_rE_x</script> 得到</p>
+<div class="math-display">
+$$
+V=\mathcal B WQ.
+$$
+</div>
+
+<p>后面的界面匹配与散射矩阵级联形式保持不变，只是 <script type="math/tex">W,V</script> 的构造不同。在均匀外部区域，TM 的导纳因子为 <script type="math/tex">q_m/\varepsilon_r</script>，与 TE 的 <script type="math/tex">q_m</script> 区别明显。</p>
+<p>一个有用的自检是把材料设为均匀：此时 <script type="math/tex">\mathcal E=\varepsilon_r I</script>、<script type="math/tex">\mathcal B=I/\varepsilon_r</script>，TE 和 TM 都恢复 <script type="math/tex">Q^2=\varepsilon_r I-K_x^2</script>。</p>
+<h2 id="8-从复振幅到衍射效率与吸收"><a href="#8-从复振幅到衍射效率与吸收" class="headerlink" title="8. 从复振幅到衍射效率与吸收"></a>8. 从复振幅到衍射效率与吸收</h2><p>反射率和透射率是功率比，并不总是等于复振幅的模平方。</p>
+<p>对本文限定的均匀、无损、非磁性外部介质，且仅有上方零级入射，统一定义</p>
+<div class="math-display">
+$$
+y_{jm}=\begin{cases}
+q_{jm},&\mathrm{TE},\\
+q_{jm}/\varepsilon_j,&\mathrm{TM}.
+\end{cases}
+$$
+</div>
+
+<p>其中 TE 的幅度变量是 <script type="math/tex">E_y</script>，TM 的幅度变量是 <script type="math/tex">Z_0H_y</script>。若入射幅度为 1，则每级效率为</p>
+<div class="math-display">
+$$
+R_m=\frac{\operatorname{Re}y_{im}}{\operatorname{Re}y_{i0}}|r_m|^2,
+\qquad
+T_m=\frac{\operatorname{Re}y_{tm}}{\operatorname{Re}y_{i0}}|t_m|^2.
+$$
+</div>
+
+<p>求和得到</p>
+<div class="math-display">
+$$
+R=\sum_{m\in\mathcal P_i}R_m,\qquad
+T=\sum_{m\in\mathcal P_t}T_m,\qquad A=1-R-T,
+$$
+</div>
+
+<script type="math/tex">\mathcal P_i,\mathcal P_t</script> 是两侧的传播级集合。无损外部中的单个纯倏逝波没有向远处输运的净法向功率，但它的场振幅可以非零，也会影响结构内部耦合。
+
+<p>例如正入射 TE 的零级透射，在两侧折射率不同时有 <script type="math/tex">T_0=(n_t/n_i)|t_0|^2</script>。若忘记这个因子，就可能误以为无源系统的“透射率”超过 1。</p>
+<p>更一般地，应从时间平均坡印廷矢量出发：</p>
+<div class="math-display">
+$$
+P_z=\frac12\operatorname{Re}\int_{\mathrm{cell}}
+(\mathbf E\times\mathbf H^*)\cdot\hat{\mathbf z}\,dA.
+$$
+</div>
+
+<p>外部介质有损、各向异性，或存在两侧相干入射时，功率定义需要重新检查，不能机械套用上面的独立级次公式。S⁴ 等成熟实现直接提供层内功率通量计算接口。<a target="_blank" rel="noopener" href="https://web.stanford.edu/group/fan/S4/python_api.html">S⁴ 功率接口文档</a></p>
+<p>另外，<script type="math/tex">A</script> 很小只能说明离散系统近似满足功率平衡，<strong>不能证明 <script type="math/tex">T_0</script>、相位或近场已经收敛</strong>。第 11 节会给出一个直接例子。</p>
+<h2 id="9-二维周期结构：纳米柱需要完整矢量-RCWA"><a href="#9-二维周期结构：纳米柱需要完整矢量-RCWA" class="headerlink" title="9. 二维周期结构：纳米柱需要完整矢量 RCWA"></a>9. 二维周期结构：纳米柱需要完整矢量 RCWA</h2><p>圆柱、方柱或旋转纳米鳍通常在 <script type="math/tex">x,y</script> 两个方向都有周期。此时使用二维倒格矢</p>
+<div class="math-display">
+$$
+\mathbf G_{mn}=m\mathbf b_1+n\mathbf b_2,
+\qquad
+\mathbf k_{\parallel,mn}=\mathbf k_{\parallel,0}+\mathbf G_{mn},
+$$
+</div>
+
+<p>并将每个场分量展开为</p>
+<div class="math-display">
+$$
+F(x,y,z)=\sum_{m,n}F_{mn}(z)
+e^{i\mathbf k_{\parallel,mn}\cdot\mathbf r_\parallel}.
+$$
+</div>
+
+<p>一般不能把两种偏振分别当成互不耦合的一维标量问题。消去纵向分量后，可用切向状态</p>
+<div class="math-display">
+$$
+\boldsymbol\Psi=
+(\mathbf E_x,\mathbf E_y,Z_0\mathbf H_x,Z_0\mathbf H_y)^\mathsf T,
+\qquad
+\frac{d\boldsymbol\Psi}{dz}=ik_0\mathcal M\boldsymbol\Psi
+$$
+</div>
+
+<p>构造一阶本征系统。若保留 <script type="math/tex">N_G</script> 个二维倒格矢，状态维数为 <script type="math/tex">4N_G</script>，通常可进一步整理为涉及 <script type="math/tex">2N_G</script> 阶矩阵的二阶问题。界面上同时匹配四个切向场分量。</p>
+<p>更难的一步是因子分解：曲线边界的法向会随位置改变，不能再全局地把某个笛卡尔分量认定为法向。实际实现常借助法向量场或局部偏振基底组织材料矩阵。S⁴ 的文档列出了几种不同构造方式，并说明它们在适用性和精度方面的差别。<a target="_blank" rel="noopener" href="https://web.stanford.edu/group/fan/S4/tutorial">S⁴ 傅里叶模态构造说明</a></p>
+<p>因此，本文的一维代码适合帮助理解条纹光栅；<strong>不能把它的占空比参数改名为“柱直径”，就当作二维纳米柱求解器。</strong></p>
+<h2 id="10-一份能够逐步实现的算法流程"><a href="#10-一份能够逐步实现的算法流程" class="headerlink" title="10. 一份能够逐步实现的算法流程"></a>10. 一份能够逐步实现的算法流程</h2><p>对于给定波长、入射角和偏振，可以按下面的顺序实现：</p>
+<ol>
+<li><strong>确定谐波集合。</strong> 建立级次到数组下标的映射，并计算所有横向波矢。</li>
+<li><strong>构造材料矩阵。</strong> 对每层求 <script type="math/tex">\varepsilon_r</script> 和必要的 <script type="math/tex">1/\varepsilon_r</script> 傅里叶系数，再按索引差组装矩阵。</li>
+<li><strong>求层内本征模。</strong> 得到 <script type="math/tex">Q,W,V</script>，按时间约定与辐射条件选取模态分支。</li>
+<li><strong>构造界面散射矩阵。</strong> 使用切向场连续条件求解线性方程。</li>
+<li><strong>构造层传播矩阵并级联。</strong> 按入射区、各层、出射区的顺序计算星积。</li>
+<li><strong>施加入射振幅。</strong> 读取反射与透射复系数，并按功率通量归一化。</li>
+<li><strong>重算目标量并检查收敛。</strong> 增加谐波、加密几何切片，并比较振幅、相位或其他真正关心的量。</li>
+</ol>
+<p>本文代码中最核心的层内步骤如下。<code>E</code> 表示 <script type="math/tex">\mathcal E</script>，<code>B</code> 表示 <script type="math/tex">\mathcal B</script>，<code>K</code> 表示 <script type="math/tex">K_x</script>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> pol == <span class="string">&quot;TE&quot;</span>:</span><br><span class="line">    A = E - K @ K</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    A = solve(B, I - K @ solve(E, K))</span><br><span class="line"></span><br><span class="line">eigenvalues, W = eig(A)</span><br><span class="line">q = outgoing_sqrt(eigenvalues)</span><br><span class="line">V = W * q[<span class="literal">None</span>, :]</span><br><span class="line"><span class="keyword">if</span> pol == <span class="string">&quot;TM&quot;</span>:</span><br><span class="line">    V = B @ V</span><br></pre></td></tr></table></figure>
+
+<p>完整脚本还包含界面求解、星积、功率提取、验证和绘图：<a href="/downloads/rcwa/rcwa_demo.py">下载 rcwa_demo.py</a>。运行环境需要 Python、NumPy、SciPy；绘图另需 Matplotlib。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python rcwa_demo.py --output-dir results --figures-dir figures</span><br></pre></td></tr></table></figure>
+
+<p>也可以把它作为模块使用。长度统一用微米：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rcwa_demo <span class="keyword">import</span> rcwa</span><br><span class="line"></span><br><span class="line">result = rcwa(</span><br><span class="line">    wavelength=<span class="number">0.633</span>,</span><br><span class="line">    period=<span class="number">0.8</span>,</span><br><span class="line">    layers=[(<span class="number">0.35</span>, <span class="number">0.45</span>, <span class="number">2.0</span>**<span class="number">2</span>, <span class="number">1.0</span>)],</span><br><span class="line">    M=<span class="number">35</span>, n_in=<span class="number">1.0</span>, n_out=<span class="number">1.45</span>,</span><br><span class="line">    theta_deg=<span class="number">0.0</span>, pol=<span class="string">&quot;TE&quot;</span>,</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(result[<span class="string">&quot;R&quot;</span>], result[<span class="string">&quot;T&quot;</span>], result[<span class="string">&quot;A&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<p><code>layers</code> 中每个元组依次为厚度、占空比、条纹相对介电常数、间隙相对介电常数，按从上到下排列。复介电常数允许描述层内吸收。</p>
+<p>这份教学实现限定为一维条纹、普通各向同性介质以及无损外部区域；它会拒绝精确的模态截止点，未处理二维图案、一般各向异性和近简并模态的高级数值问题。生产计算应使用经过充分验证的求解器；例如 S⁴ 明确采用了傅里叶模态展开与散射矩阵连接层结构。<a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.cpc.2012.04.026">Liu 与 Fan，2012</a></p>
+<h2 id="11-实际算例：总透射很高，零级却很低"><a href="#11-实际算例：总透射很高，零级却很低" class="headerlink" title="11. 实际算例：总透射很高，零级却很低"></a>11. 实际算例：总透射很高，零级却很低</h2><h3 id="11-1-参数与衍射级"><a href="#11-1-参数与衍射级" class="headerlink" title="11.1 参数与衍射级"></a>11.1 参数与衍射级</h3><p>以下是便于教学的无色散介质算例，不对应某种材料的实验光学常数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>真空波长</td>
+<td>633 nm</td>
+</tr>
+<tr>
+<td>周期</td>
+<td>800 nm</td>
+</tr>
+<tr>
+<td>条纹厚度</td>
+<td>350 nm</td>
+</tr>
+<tr>
+<td>占空比</td>
+<td>0.45</td>
+</tr>
+<tr>
+<td>条纹 &#x2F; 间隙折射率</td>
+<td>2.0 &#x2F; 1.0</td>
+</tr>
+<tr>
+<td>入射区 &#x2F; 出射区折射率</td>
+<td>1.0 &#x2F; 1.45</td>
+</tr>
+<tr>
+<td>入射方式</td>
+<td>正入射，分别计算 TE 和 TM</td>
+</tr>
+</tbody></table>
+<p>根据光栅方程，反射和透射侧都只有 <script type="math/tex">m=-1,0,+1</script> 能传播；其他保留级次是倏逝波。比如透射侧一级衍射满足 <script type="math/tex">|\sin\theta|=633/(800\times1.45)</script>，而二级已经超过 1。</p>
+<p>保留 <script type="math/tex">M=35</script>、即 <script type="math/tex">N=71</script> 个谐波，运行本文脚本得到：</p>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th align="right">TE</th>
+<th align="right">TM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总反射率 <script type="math/tex">R</script></td>
+<td align="right">0.05748508</td>
+<td align="right">0.03652440</td>
+</tr>
+<tr>
+<td>总透射率 <script type="math/tex">T</script></td>
+<td align="right">0.94251492</td>
+<td align="right">0.96347560</td>
+</tr>
+<tr>
+<td>零级透射率 <script type="math/tex">T_0</script></td>
+<td align="right">0.00726361</td>
+<td align="right">0.01081522</td>
+</tr>
+<tr>
+<td><script type="math/tex">-1</script> 级透射率</td>
+<td align="right">0.46762565</td>
+<td align="right">0.47633019</td>
+</tr>
+<tr>
+<td><script type="math/tex">+1</script> 级透射率</td>
+<td align="right">0.46762565</td>
+<td align="right">0.47633019</td>
+</tr>
+<tr>
+<td>与 <script type="math/tex">M=50</script> 的总透射率差</td>
+<td align="right"><script type="math/tex">4.17\times10^{-6}</script></td>
+<td align="right"><script type="math/tex">2.15\times10^{-6}</script></td>
+</tr>
+</tbody></table>
+<p>由于几何和入射具有镜像对称性，两侧一级效率相同。这个例子也说明：<strong>“总透射接近 1”并不等于“光大部分沿零级透过”。</strong> 光栅把主要能量分配到了两个一级方向。</p>
+<p>表中小数用于复算核对，不表示这些位数都已达到连续问题的真实精度。<script type="math/tex">M=50</script> 是更高截断的比较基准，也不是严格误差上界。</p>
+<h3 id="11-2-守恒与收敛要同时看"><a href="#11-2-守恒与收敛要同时看" class="headerlink" title="11.2 守恒与收敛要同时看"></a>11.2 守恒与收敛要同时看</h3><p><img src="/img/rcwa/04-convergence.png" alt="TE 和 TM 透射率随傅里叶谐波数变化的收敛图"></p>
+<p><em>图 4｜同一结构的真实计算结果。左：总透射率随谐波数变化。右：相对 <script type="math/tex">M=50</script> 结果的差，与能量残差作比较。曲线不必单调收敛；接近机器精度的能量残差也不能替代截断收敛。</em></p>
+<p>即使只保留 <script type="math/tex">M=0</script>，离散系统也可以很好地满足 <script type="math/tex">R+T=1</script>，但此时根本没有表示真实存在的 <script type="math/tex">\pm1</script> 衍射级。它的 TE 零级透射率约为 0.9512，与足够多谐波下约 0.00726 的零级透射相差极大。</p>
+<p>这比单看总透射更能揭示错误：一个“很守恒”的计算，也可能把能量分到了错误的通道。</p>
+<h3 id="11-3-代码做了哪些验证？"><a href="#11-3-代码做了哪些验证？" class="headerlink" title="11.3 代码做了哪些验证？"></a>11.3 代码做了哪些验证？</h3><p>脚本包含以下数值检查，详细结果保存在 <a href="/downloads/rcwa/validation.json">validation.json</a>：</p>
+<ul>
+<li><strong>均匀薄膜解析解：</strong> TE&#x2F;TM、3 个入射角、3 个厚度，共 18 组，与独立 Fresnel 薄膜公式比较复反射和复透射振幅，最大绝对差约 <script type="math/tex">1.75\times10^{-14}</script>。</li>
+<li><strong>裸界面极限：</strong> 去掉所有图案层，空气到折射率 1.45 介质的正入射反射率为 0.03373594。</li>
+<li><strong>分层一致性：</strong> 把一层分为两层相同材料、各一半厚度，反射复振幅差小于 <script type="math/tex">10^{-10}</script>。</li>
+<li><strong>镜像与功率检查：</strong> 正入射对称光栅的正负级次效率一致，无损算例满足 <script type="math/tex">|1-R-T|<10^{-9}</script>。</li>
+<li><strong>有损与厚层检查：</strong> 正虚部介电常数产生正吸收；将图案层加厚到 50 μm 后，计算仍得到有限且守恒的结果。</li>
+</ul>
+<p>这些检查能排除许多符号、参考面和级联错误，但不是与另一套完整 RCWA&#x2F;FEM&#x2F;FDTD 求解器的独立交叉验证。需要用于研究结果时，仍应增加与成熟求解器在同一模型、同一归一化下的比较。</p>
+<h2 id="12-怎样判断-RCWA-结果值得相信？"><a href="#12-怎样判断-RCWA-结果值得相信？" class="headerlink" title="12. 怎样判断 RCWA 结果值得相信？"></a>12. 怎样判断 RCWA 结果值得相信？</h2><h3 id="12-1-对真正关心的量做收敛"><a href="#12-1-对真正关心的量做收敛" class="headerlink" title="12.1 对真正关心的量做收敛"></a>12.1 对真正关心的量做收敛</h3><p>若任务是求某一级效率，就监测该级效率；若要建立超构透镜相位库，就同时监测复透射振幅与相位。两次结果的相位差可以写成</p>
+<div class="math-display">
+$$
+\Delta\phi=\arg\left(t^{(N_2)}[t^{(N_1)}]^*\right),
+$$
+</div>
+
+<p>这样可以避免直接相减跨越 <script type="math/tex">-\pi/\pi</script> 时造成的假跳变。当 <script type="math/tex">|t|</script> 接近零，相位对微小误差极其敏感，此时应优先比较复数本身和透射功率，而不是硬给出相位精度。</p>
+<p>还应分别加密横向谐波、纵向切片以及用 FFT 构造材料系数时的几何采样网格。金属、狭缝、尖角、高折射率反差和界面近场通常更难收敛。远场效率已稳定，并不意味着界面附近的点值场已经稳定。</p>
+<h3 id="12-2-截止与共振附近需要额外采样"><a href="#12-2-截止与共振附近需要额外采样" class="headerlink" title="12.2 截止与共振附近需要额外采样"></a>12.2 截止与共振附近需要额外采样</h3><p>当某级 <script type="math/tex">q_m\to0</script> 时，系统接近 Rayleigh 截止，某些模态表示和导纳矩阵会退化。应检查截止两侧，避免把恰好落在奇点上的数值失败解释成物理发散。</p>
+<p>窄共振也需要足够细的波长网格。RCWA 是频域算法，每个频点单独求解；扫得很稀时可能直接跳过窄线宽特征。增加傅里叶阶数与加密频率采样解决的是不同问题。</p>
+<h3 id="12-3-计算量为什么会增长得很快？"><a href="#12-3-计算量为什么会增长得很快？" class="headerlink" title="12.3 计算量为什么会增长得很快？"></a>12.3 计算量为什么会增长得很快？</h3><p>对直接使用稠密线性代数的实现，本征分解和矩阵求解通常具有近似立方时间复杂度、平方存储复杂度。对一维结构，矩阵维度随 <script type="math/tex">N</script> 增长；对二维矩形截断，倒格矢数量为</p>
+<div class="math-display">
+$$
+N_G=(2M_x+1)(2M_y+1).
+$$
+</div>
+
+<p>如果同时把两个方向的截断尺度约翻倍，<script type="math/tex">N_G</script> 约变为原来的 4 倍，单次稠密操作的时间可能接近 64 倍。实际比例还受对称性、求解器实现和硬件影响。</p>
+<p>实践中可以缓存相同层的模态，复用同一结构对不同输入偏振的散射矩阵；但改变波长、材料或入射横向波矢之后，通常需要更新本征问题。</p>
+<table>
+<thead>
+<tr>
+<th>计算任务</th>
+<th>RCWA 的特点</th>
+<th>建模时重点检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>周期光栅、薄膜与周期超表面</td>
+<td>傅里叶基底直接适配横向周期性</td>
+<td>截断、因子分解和截止点</td>
+</tr>
+<tr>
+<td>多波长宽带响应</td>
+<td>每个频点单独求解，材料色散容易逐点代入</td>
+<td>扫频采样、窄共振</td>
+</tr>
+<tr>
+<td>有限器件与任意三维曲面</td>
+<td>通常需超胞或较多切片</td>
+<td>周期重复影响、几何逼近</td>
+</tr>
+<tr>
+<td>FDTD&#x2F;FEM 交叉验证</td>
+<td>可比较同一周期单元或有限器件模型</td>
+<td>边界、材料、源、参考面和功率定义必须一致</td>
+</tr>
+</tbody></table>
+<p>方法选择取决于问题结构，而不是某个算法名称是否听起来更“严格”。</p>
+<h2 id="13-用-RCWA-建立超构透镜的单元响应库"><a href="#13-用-RCWA-建立超构透镜的单元响应库" class="headerlink" title="13. 用 RCWA 建立超构透镜的单元响应库"></a>13. 用 RCWA 建立超构透镜的单元响应库</h2><p>超构透镜由许多不同几何尺寸或朝向的亚波长单元构成。常见设计路线是：先模拟一个单元被无限重复排列时的响应，再把这个响应作为实际透镜局部的近似。这个步骤称为<strong>局部周期近似</strong>（Locally Periodic Approximation，LPA）。</p>
+<p>RCWA 很适合计算这种周期单元的复透射系数。已有超构透镜研究就使用 RCWA 单元库提取相位场，再以衍射传播估算聚焦表现。<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s42005-024-01598-6">单元库与透镜传播的研究实例</a></p>
+<h3 id="13-1-应保存复数响应，而不只是相位"><a href="#13-1-应保存复数响应，而不只是相位" class="headerlink" title="13.1 应保存复数响应，而不只是相位"></a>13.1 应保存复数响应，而不只是相位</h3><p>对单元几何参数 <script type="math/tex">\mathbf p</script>，记录</p>
+<div class="math-display">
+$$
+t_0(\mathbf p,\lambda,\theta,\mathrm{pol})
+=|t_0|e^{i\phi}.
+$$
+</div>
+
+<p>除了复透射系数，数据库还应包含周期、厚度、材料色散、入射角、偏振、参考面、谐波集合和收敛信息。必要时保存反射、吸收和其他衍射级。</p>
+<p>如果结构具有偏振转换，响应应写成 Jones 矩阵，例如固定线偏振基底下</p>
+<div class="math-display">
+$$
+\begin{pmatrix}E_{x,\mathrm{out}}\\E_{y,\mathrm{out}}\end{pmatrix}
+=
+\begin{pmatrix}t_{xx}&t_{xy}\\t_{yx}&t_{yy}\end{pmatrix}
+\begin{pmatrix}E_{x,\mathrm{in}}\\E_{y,\mathrm{in}}\end{pmatrix}.
+$$
+</div>
+
+<p>旋转纳米鳍的几何相位设计，需要同时关注目标偏振通道的转换效率；仅有正确的相位关系，还不足以保证高聚焦效率。</p>
+<h3 id="13-2-周期“亚波长”要相对于两侧介质判断"><a href="#13-2-周期“亚波长”要相对于两侧介质判断" class="headerlink" title="13.2 周期“亚波长”要相对于两侧介质判断"></a>13.2 周期“亚波长”要相对于两侧介质判断</h3><p>对正入射、正方晶格、无损均匀两侧介质，如果希望两侧只有零级可传播，一个简单条件是</p>
+<div class="math-display">
+$$
+\Lambda<\frac{\lambda_0}{\max(n_i,n_t)}.
+$$
+</div>
+
+<p>只满足 <script type="math/tex">\Lambda<\lambda_0</script>，不能保证高折射率基底内没有高阶传播通道。斜入射和一般晶格应直接用 <script type="math/tex">|\mathbf k_\parallel+\mathbf G|<n_jk_0</script> 检查所有候选级次。</p>
+<h3 id="13-3-一个真实的一维响应扫描"><a href="#13-3-一个真实的一维响应扫描" class="headerlink" title="13.3 一个真实的一维响应扫描"></a>13.3 一个真实的一维响应扫描</h3><p>为了展示“参数—相位—效率”的关系，本文继续使用一维 TE 程序，另取周期 280 nm、厚度 600 nm、条纹折射率 2.4、间隙 1、基底 1.45，在 633 nm 正入射下扫描占空比 0.08–0.90，保留 <script type="math/tex">M=18</script>。</p>
+<p><img src="/img/rcwa/05-unit-cell-scan.png" alt="一维周期条纹的相位与透射率扫描"></p>
+<p><em>图 5｜由附带 RCWA 程序实际计算。展开相位的扫描范围约为 6.66 rad，零级透射率约在 0.697–0.995 之间。这里的幅相对应固定顶部与底部参考面，材料折射率为教学常数。该扫描展示单元库的组织方法，不是二维圆柱超构透镜的设计结果，也未逐个参数完成高阶收敛认证。</em></p>
+<p>扫描结果见 <a href="/downloads/rcwa/unit_cell_scan.json">unit_cell_scan.json</a>。相位覆盖超过 <script type="math/tex">2\pi</script> 是有用的设计条件，但还要检查相位覆盖区域是否同时具备足够高的透射、制造可行性和对尺寸误差的容忍度。</p>
+<p>比较不同单元时，应统一入射与输出参考面。单独给某些单元增加一段均匀介质传播，会改变它们的相位，进而污染相位匹配。还要区分软件输出的模态系数、切向电场系数和功率归一化系数；它们不应未经转换就混用。</p>
+<h2 id="14-从单元库到有限孔径超构透镜"><a href="#14-从单元库到有限孔径超构透镜" class="headerlink" title="14. 从单元库到有限孔径超构透镜"></a>14. 从单元库到有限孔径超构透镜</h2><h3 id="14-1-推导目标聚焦相位"><a href="#14-1-推导目标聚焦相位" class="headerlink" title="14.1 推导目标聚焦相位"></a>14.1 推导目标聚焦相位</h3><p>考虑平面波正入射，透镜位于 <script type="math/tex">z=0</script>，希望在均匀出射介质中聚焦到 <script type="math/tex">z=f</script>。半径 <script type="math/tex">r</script> 处到焦点的路径为 <script type="math/tex">\sqrt{f^2+r^2}</script>。为了让不同位置的场到达焦点时同相，需要透镜提供补偿相位</p>
+<div class="math-display">
+$$
+\phi_{\mathrm{target}}(r,\lambda_0)
+=-\frac{2\pi n_t}{\lambda_0}
+\left(\sqrt{f^2+r^2}-f\right)+\phi_0
+\pmod{2\pi}.
+$$
+</div>
+
+<p>负号与本文 <script type="math/tex">e^{-i\omega t}</script>、沿正方向传播使用 <script type="math/tex">e^{+ikz}</script> 的约定一致。<script type="math/tex">\phi_0</script> 是空间统一的相位偏置，不改变单波长聚焦位置，却可能帮助找到整体透射更高的单元组合。</p>
+<h3 id="14-2-相位匹配要包含振幅与制造约束"><a href="#14-2-相位匹配要包含振幅与制造约束" class="headerlink" title="14.2 相位匹配要包含振幅与制造约束"></a>14.2 相位匹配要包含振幅与制造约束</h3><p>最直接的映射，是给每个位置选择相位最接近目标的单元。更实用的做法是最小化复响应距离，例如</p>
+<div class="math-display">
+$$
+\mathbf p^*(r)=\arg\min_{\mathbf p\in\mathcal C}
+\left|t_0(\mathbf p)-a_{\mathrm{target}}(r)
+e^{i\phi_{\mathrm{target}}(r)}\right|^2,
+$$
+</div>
+
+<p>其中 <script type="math/tex">\mathcal C</script> 只保留满足最小线宽、间距、纵横比和透射阈值的候选；<script type="math/tex">a_{\mathrm{target}}</script> 与库中的 <script type="math/tex">t_0</script> 使用相同振幅归一化。也可以把圆周相位误差、功率透射损失和尺寸敏感性分开加权。</p>
+<p>不要直接用未包裹的普通相位差作为代价。例如 <script type="math/tex">1^\circ</script> 与 <script type="math/tex">359^\circ</script> 的物理相位差只有 <script type="math/tex">2^\circ</script>，不是 <script type="math/tex">358^\circ</script>。</p>
+<p><img src="/img/rcwa/06-metalens-workflow.png" alt="超构透镜目标相位和从单元库到器件验证的流程图"></p>
+<p><em>图 6｜左：空气中波长 633 nm、焦距 10 μm 的目标相位截面，横向范围为 ±5 μm；这是解析相位需求，不是已经优化完成的透镜。右：RCWA 单元库到有限器件验证的设计流程。</em></p>
+<h3 id="14-3-局部周期近似什么时候需要警惕？"><a href="#14-3-局部周期近似什么时候需要警惕？" class="headerlink" title="14.3 局部周期近似什么时候需要警惕？"></a>14.3 局部周期近似什么时候需要警惕？</h3><p>周期单元仿真默认该单元的邻居与自己相同；真实透镜相邻单元常常不同。因此，LPA 忽略了环境变化带来的部分非局域耦合。</p>
+<p>对上述目标相位，边缘附近相邻单元的连续相位变化量可以估算为</p>
+<div class="math-display">
+$$
+|\Delta\phi|\approx\left|\frac{d\phi}{dr}\right|\Lambda
+=\frac{2\pi}{\lambda_0}\Lambda\,\mathrm{NA}_{\mathrm{local}},
+\qquad
+\mathrm{NA}_{\mathrm{local}}=\frac{n_t r}{\sqrt{f^2+r^2}}.
+$$
+</div>
+
+<p>它提示：高 NA、较大周期或更短波长会使局部相位变化更快。但这不是通用的误差上界，更不能给所有材料和单元设定一个固定的 NA 失效阈值。共振强度、场束缚、相邻几何差别和偏振都很重要。全波研究也展示了高 NA 设计中局部近似可能明显偏离实际器件响应。<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s43588-022-00370-6">大面积超表面的全波计算实例</a></p>
+<p>可以先选取中心、边缘、相位回绕附近和几何变化显著的位置做邻域验证；再用包含若干不同单元的超胞评估局部偏转效率。超胞 RCWA 仍有周期重复边界，需要检查超胞选择是否影响结论。关键设计最终应结合有限孔径全波仿真或实验验证。</p>
+<h3 id="14-4-单元透射率不是聚焦效率"><a href="#14-4-单元透射率不是聚焦效率" class="headerlink" title="14.4 单元透射率不是聚焦效率"></a>14.4 单元透射率不是聚焦效率</h3><p>在 LPA 下，可以先构造透镜出口的近似复场</p>
+<div class="math-display">
+$$
+E_{\mathrm{out}}(x,y)\approx
+t_0[\mathbf p(x,y)]E_{\mathrm{in}}(x,y),
+$$
+</div>
+
+<p>再采用角谱传播等方法估计焦场。高 NA 和显著偏振效应下，需要检查标量传播是否足够，必要时使用矢量传播或全波场。</p>
+<p>应分别报告总透射功率、目标偏振通道效率、焦距、焦斑宽度、旁瓣和聚焦效率。比如定义</p>
+<div class="math-display">
+$$
+\eta_{\mathrm{focus}}=
+\frac{\displaystyle\int_{\Omega_f}S_z(x,y,z_f)\,dA}
+{P_{\mathrm{inc,aperture}}}.
+$$
+</div>
+
+<p>必须明确焦点积分区域 <script type="math/tex">\Omega_f</script>、焦平面位置，以及分母是孔径上的入射功率还是总透射功率。两种分母衡量不同含义，不能在比较结果时混用。</p>
+<h2 id="15-再向前一步：多波长与消色差设计"><a href="#15-再向前一步：多波长与消色差设计" class="headerlink" title="15. 再向前一步：多波长与消色差设计"></a>15. 再向前一步：多波长与消色差设计</h2><p>单波长相位覆盖 <script type="math/tex">2\pi</script>，并不意味着不同波长能聚焦在同一位置。对固定焦距目标，在无色散出射介质的简化条件下，令</p>
+<div class="math-display">
+$$
+\Delta L(r)=\sqrt{f^2+r^2}-f,
+\qquad
+\phi(r,\omega)=-\frac{n_t\omega}{c}\Delta L(r)+\phi_0(\omega).
+$$
+</div>
+
+<p>按本文的时间约定，传递函数相位对角频率的导数对应群时延，所以</p>
+<div class="math-display">
+$$
+\tau_g(r)=\frac{\partial\phi}{\partial\omega}
+=-\frac{n_t}{c}\Delta L(r)+\phi_0'(\omega),
+\qquad
+\mathrm{GDD}(r)=\frac{\partial^2\phi}{\partial\omega^2}.
+$$
+</div>
+
+<p>相对中心，边缘需要的延迟较小，以补偿更长的后续传播路径；上式中的负相对值不表示器件必须具有负的绝对传播时间。空间统一的 <script type="math/tex">\phi_0'(\omega)</script> 提供整体延迟自由度。</p>
+<p>若出射介质有色散，第一项应改写为 <script type="math/tex">-k_t(\omega)\Delta L</script>，群时延中出现 <script type="math/tex">dk_t/d\omega=n_{g,t}/c</script>，二阶导数也不能忽略。真实单元库同样应输入随频率变化的复材料参数，不能用一个固定折射率代替整个波段。</p>
+<p>因此，消色差设计需要在一个固定结构上，同时满足多个频率的复振幅、相位以及必要的色散要求。连续宽带目标还要求检查频率采样是否足够密，而不仅是少数离散颜色的焦点重合。已有消色差超构透镜工作明确利用相位、群时延和更高阶色散控制来拓展工作带宽。<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41565-017-0034-6">Chen 等，2018</a></p>
+<p>计算群时延时，要先沿频率对相位合理展开，再对 <script type="math/tex">\omega</script> 求导；不能把对波长的导数直接当作群时延。若先得到 <script type="math/tex">d\phi/d\lambda_0</script>，则</p>
+<div class="math-display">
+$$
+\frac{d\phi}{d\omega}=-\frac{\lambda_0^2}{2\pi c}\frac{d\phi}{d\lambda_0}.
+$$
+</div>
+
+<p>共振附近和透射接近零的位置，数值微分尤其敏感，应加密采样并观察复透射轨迹。</p>
+<p>一个可执行的多波长设计流程是：建立同一组候选几何在所有目标频率的复响应库；联合选择满足各频率要求的单元；固定整片透镜的布局；最后在各频率上检查焦距、焦斑与效率。<strong>对每个波长分别重新选择一片不同布局，属于多次单波长设计，不能据此证明同一片透镜消色差。</strong></p>
+<p>RCWA 在这条流程中提供的是周期结构的电磁响应及其色散。将它用于超构透镜时，还需要把单元响应、局部近似、有限孔径传播和器件验证连接起来，才能从“每个单元有合适相位”走到“整片透镜达到目标性能”。</p>
+<h2 id="参考文献与可复算附件"><a href="#参考文献与可复算附件" class="headerlink" title="参考文献与可复算附件"></a>参考文献与可复算附件</h2><ol>
+<li>M. G. Moharam and T. K. Gaylord, “Rigorous coupled-wave analysis of planar-grating diffraction,” <em>JOSA</em> <strong>71</strong>, 811–818 (1981). <a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSA.71.000811">DOI</a>。经典耦合波矩阵建模。</li>
+<li>M. G. Moharam, E. B. Grann, D. A. Pommet and T. K. Gaylord, “Formulation for stable and efficient implementation of the rigorous coupled-wave analysis of binary gratings,” <em>JOSA A</em> <strong>12</strong>, 1068–1076 (1995). <a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSAA.12.001068">DOI</a>。二元光栅的稳定实现。</li>
+<li>M. G. Moharam, D. A. Pommet, E. B. Grann and T. K. Gaylord, “Stable implementation of the rigorous coupled-wave analysis for surface-relief gratings: enhanced transmittance matrix approach,” <em>JOSA A</em> <strong>12</strong>, 1077–1086 (1995). <a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSAA.12.001077">DOI</a>。倏逝模与数值稳定性。</li>
+<li>L. Li, “Use of Fourier series in the analysis of discontinuous periodic structures,” <em>JOSA A</em> <strong>13</strong>, 1870–1876 (1996). <a target="_blank" rel="noopener" href="https://doi.org/10.1364/JOSAA.13.001870">DOI</a>。不连续函数的傅里叶因子分解规则。</li>
+<li>V. Liu and S. Fan, “S⁴: A free electromagnetic solver for layered periodic structures,” <em>Computer Physics Communications</em> <strong>183</strong>, 2233–2244 (2012). <a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.cpc.2012.04.026">DOI</a>；<a target="_blank" rel="noopener" href="https://web.stanford.edu/group/fan/S4/">官方文档</a>。RCWA&#x2F;FMM 与散射矩阵的开源实现。</li>
+<li>“Nanoscale precision brings experimental metalens efficiencies on par with theoretical promises,” <em>Communications Physics</em> (2024). <a target="_blank" rel="noopener" href="https://www.nature.com/articles/s42005-024-01598-6">原文</a>。RCWA 单元库、出口场和聚焦效率的衔接。</li>
+<li>“Fast multi-source nanophotonic simulations using augmented partial factorization,” <em>Nature Computational Science</em> (2022). <a target="_blank" rel="noopener" href="https://www.nature.com/articles/s43588-022-00370-6">原文</a>。有限大面积超表面计算及局部周期近似的局限。</li>
+<li>W. T. Chen et al., “A broadband achromatic metalens for focusing and imaging in the visible,” <em>Nature Nanotechnology</em> <strong>13</strong>, 220–226 (2018). <a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41565-017-0034-6">原文</a>。相位、群时延和群时延色散的联合控制。</li>
+</ol>
+<p>本文推导和代码统一使用前述时间、坐标与端口约定；阅读不同文献时，应先转换这些约定，再比较矩阵中的符号。本文图示、条纹算例和一维单元扫描为原创教学材料，未复现某篇论文的器件性能。</p>
+<ul>
+<li><a href="/downloads/rcwa/rcwa_demo.py">计算与六组绘图源码 rcwa_demo.py</a></li>
+<li><a href="/downloads/rcwa/validation.json">数值验证、级次功率与收敛数据 validation.json</a></li>
+<li><a href="/downloads/rcwa/unit_cell_scan.json">一维周期单元复透射扫描 unit_cell_scan.json</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/">http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E7%94%B5%E7%A3%81%E5%AD%A6/">计算电磁学</a><a class="post-meta__tags" href="/tags/%E8%B6%85%E6%9E%84%E9%80%8F%E9%95%9C/">超构透镜</a><a class="post-meta__tags" href="/tags/RCWA/">RCWA</a><a class="post-meta__tags" href="/tags/%E8%A1%8D%E5%B0%84%E5%85%89%E5%AD%A6/">衍射光学</a></div><div class="post_share"><div class="social-share" data-image="/img/rcwa/01-geometry.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真"><img class="cover" src="/img/fdtd-algorithm-metalens/00-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/" title="PDH 激光稳频详解：从边带干涉到闭环噪声"><img class="cover" src="/img/pdh/00-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">PDH 激光稳频详解：从边带干涉到闭环噪声</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真"><img class="cover" src="/img/fdtd-algorithm-metalens/00-cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-22</div><div class="title">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-RCWA-%E5%9C%A8%E6%B1%82%E8%A7%A3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">1. RCWA 在求解什么问题？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E2%80%9C%E4%B8%A5%E6%A0%BC%E2%80%9D%E6%8C%87%E7%9A%84%E6%98%AF%E6%96%B9%E7%A8%8B%E5%B1%82%E9%9D%A2"><span class="toc-text">1.1 “严格”指的是方程层面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%9C%80%E9%80%82%E5%90%88%E7%9A%84%E7%BB%93%E6%9E%84%E5%BD%A2%E6%80%81"><span class="toc-text">1.2 最适合的结构形态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%88%E6%8A%8A%E5%9D%90%E6%A0%87%E3%80%81%E6%9D%90%E6%96%99%E5%92%8C%E7%9B%B8%E4%BD%8D%E7%BA%A6%E5%AE%9A%E8%AF%B4%E6%B8%85%E6%A5%9A"><span class="toc-text">2. 先把坐标、材料和相位约定说清楚</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%91%A8%E6%9C%9F%E6%80%A7%E6%80%8E%E6%A0%B7%E5%8F%98%E6%88%90%E7%9F%A9%E9%98%B5%EF%BC%9F"><span class="toc-text">3. 周期性怎样变成矩阵？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Bloch-%E6%9D%A1%E4%BB%B6%E5%86%B3%E5%AE%9A%E5%85%81%E8%AE%B8%E7%9A%84%E6%A8%AA%E5%90%91%E6%B3%A2%E7%9F%A2"><span class="toc-text">3.1 Bloch 条件决定允许的横向波矢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BB%8B%E7%94%B5%E5%B8%B8%E6%95%B0%E7%9A%84%E4%B9%98%E6%B3%95%E5%8F%98%E6%88%90%E5%8D%B7%E7%A7%AF"><span class="toc-text">3.2 介电常数的乘法变成卷积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%9F%A9%E5%BD%A2%E6%9D%A1%E7%BA%B9%E7%9A%84%E8%A7%A3%E6%9E%90%E7%B3%BB%E6%95%B0"><span class="toc-text">3.3 矩形条纹的解析系数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%8E%E9%BA%A6%E5%85%8B%E6%96%AF%E9%9F%A6%E6%96%B9%E7%A8%8B%E6%8E%A8%E5%AF%BC-TE-%E5%B1%82%E5%86%85%E6%9C%AC%E5%BE%81%E9%97%AE%E9%A2%98"><span class="toc-text">4. 从麦克斯韦方程推导 TE 层内本征问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%8A%8A%E6%A0%87%E9%87%8F%E6%B3%A2%E5%8A%A8%E6%96%B9%E7%A8%8B%E6%8A%95%E5%BD%B1%E5%88%B0%E5%82%85%E9%87%8C%E5%8F%B6%E5%9F%BA%E5%BA%95"><span class="toc-text">4.1 把标量波动方程投影到傅里叶基底</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%AF%B9%E8%A7%92%E5%8C%96%E5%90%8E%EF%BC%8C%E6%AF%8F%E4%B8%AA%E6%A8%A1%E6%80%81%E7%8B%AC%E7%AB%8B%E4%BC%A0%E6%92%AD"><span class="toc-text">4.2 对角化后，每个模态独立传播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E7%A3%81%E5%9C%BA%E4%B8%8D%E6%98%AF%E9%A2%9D%E5%A4%96%E7%8C%9C%E5%87%BA%E6%9D%A5%E7%9A%84"><span class="toc-text">4.3 磁场不是额外猜出来的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B1%82%E9%97%B4%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E5%A6%82%E4%BD%95%E6%B1%82%E5%87%BA%E5%8F%8D%E5%B0%84%E5%92%8C%E9%80%8F%E5%B0%84%EF%BC%9F"><span class="toc-text">5. 层间边界条件如何求出反射和透射？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%95%A3%E5%B0%84%E7%9F%A9%E9%98%B5%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E8%B7%AF%E4%B9%98%E4%BC%A0%E8%BE%93%E7%9F%A9%E9%98%B5%EF%BC%9F"><span class="toc-text">6. 为什么需要散射矩阵，而不是一路乘传输矩阵？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%80%8F%E9%80%9D%E6%A8%A1%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%8C%87%E6%95%B0%E6%94%BE%E5%A4%A7"><span class="toc-text">6.1 倏逝模带来的指数放大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%8A%8A%E4%B8%A4%E4%B8%AA%E6%96%B9%E5%90%91%E7%9A%84%E5%B9%85%E5%BA%A6%E5%88%86%E5%88%AB%E5%8F%82%E8%80%83%E5%88%B0%E4%B8%A4%E7%AB%AF"><span class="toc-text">6.2 把两个方向的幅度分别参考到两端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E7%94%A8-Redheffer-%E6%98%9F%E7%A7%AF%E8%BF%9E%E6%8E%A5%E4%B8%A4%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-text">6.3 用 Redheffer 星积连接两段结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-TM-%E5%81%8F%E6%8C%AF%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9B%B4%E5%AE%B9%E6%98%93%E6%94%B6%E6%95%9B%E7%BC%93%E6%85%A2%EF%BC%9F"><span class="toc-text">7. TM 偏振为什么更容易收敛缓慢？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%B7%AE%E5%88%AB%E6%9D%A5%E8%87%AA%E6%9D%90%E6%96%99%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6"><span class="toc-text">7.1 差别来自材料边界条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E4%B8%80%E7%BB%B4-TM-%E7%9A%84%E5%8F%AF%E5%AE%9E%E7%8E%B0%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F"><span class="toc-text">7.2 一维 TM 的可实现矩阵形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BB%8E%E5%A4%8D%E6%8C%AF%E5%B9%85%E5%88%B0%E8%A1%8D%E5%B0%84%E6%95%88%E7%8E%87%E4%B8%8E%E5%90%B8%E6%94%B6"><span class="toc-text">8. 从复振幅到衍射效率与吸收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E4%BA%8C%E7%BB%B4%E5%91%A8%E6%9C%9F%E7%BB%93%E6%9E%84%EF%BC%9A%E7%BA%B3%E7%B1%B3%E6%9F%B1%E9%9C%80%E8%A6%81%E5%AE%8C%E6%95%B4%E7%9F%A2%E9%87%8F-RCWA"><span class="toc-text">9. 二维周期结构：纳米柱需要完整矢量 RCWA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%80%E4%BB%BD%E8%83%BD%E5%A4%9F%E9%80%90%E6%AD%A5%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="toc-text">10. 一份能够逐步实现的算法流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%AE%9E%E9%99%85%E7%AE%97%E4%BE%8B%EF%BC%9A%E6%80%BB%E9%80%8F%E5%B0%84%E5%BE%88%E9%AB%98%EF%BC%8C%E9%9B%B6%E7%BA%A7%E5%8D%B4%E5%BE%88%E4%BD%8E"><span class="toc-text">11. 实际算例：总透射很高，零级却很低</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E5%8F%82%E6%95%B0%E4%B8%8E%E8%A1%8D%E5%B0%84%E7%BA%A7"><span class="toc-text">11.1 参数与衍射级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E5%AE%88%E6%81%92%E4%B8%8E%E6%94%B6%E6%95%9B%E8%A6%81%E5%90%8C%E6%97%B6%E7%9C%8B"><span class="toc-text">11.2 守恒与收敛要同时看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E4%BB%A3%E7%A0%81%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E9%AA%8C%E8%AF%81%EF%BC%9F"><span class="toc-text">11.3 代码做了哪些验证？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%80%8E%E6%A0%B7%E5%88%A4%E6%96%AD-RCWA-%E7%BB%93%E6%9E%9C%E5%80%BC%E5%BE%97%E7%9B%B8%E4%BF%A1%EF%BC%9F"><span class="toc-text">12. 怎样判断 RCWA 结果值得相信？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E5%AF%B9%E7%9C%9F%E6%AD%A3%E5%85%B3%E5%BF%83%E7%9A%84%E9%87%8F%E5%81%9A%E6%94%B6%E6%95%9B"><span class="toc-text">12.1 对真正关心的量做收敛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E6%88%AA%E6%AD%A2%E4%B8%8E%E5%85%B1%E6%8C%AF%E9%99%84%E8%BF%91%E9%9C%80%E8%A6%81%E9%A2%9D%E5%A4%96%E9%87%87%E6%A0%B7"><span class="toc-text">12.2 截止与共振附近需要额外采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-3-%E8%AE%A1%E7%AE%97%E9%87%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%A2%9E%E9%95%BF%E5%BE%97%E5%BE%88%E5%BF%AB%EF%BC%9F"><span class="toc-text">12.3 计算量为什么会增长得很快？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E7%94%A8-RCWA-%E5%BB%BA%E7%AB%8B%E8%B6%85%E6%9E%84%E9%80%8F%E9%95%9C%E7%9A%84%E5%8D%95%E5%85%83%E5%93%8D%E5%BA%94%E5%BA%93"><span class="toc-text">13. 用 RCWA 建立超构透镜的单元响应库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-%E5%BA%94%E4%BF%9D%E5%AD%98%E5%A4%8D%E6%95%B0%E5%93%8D%E5%BA%94%EF%BC%8C%E8%80%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E7%9B%B8%E4%BD%8D"><span class="toc-text">13.1 应保存复数响应，而不只是相位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-%E5%91%A8%E6%9C%9F%E2%80%9C%E4%BA%9A%E6%B3%A2%E9%95%BF%E2%80%9D%E8%A6%81%E7%9B%B8%E5%AF%B9%E4%BA%8E%E4%B8%A4%E4%BE%A7%E4%BB%8B%E8%B4%A8%E5%88%A4%E6%96%AD"><span class="toc-text">13.2 周期“亚波长”要相对于两侧介质判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-%E4%B8%80%E4%B8%AA%E7%9C%9F%E5%AE%9E%E7%9A%84%E4%B8%80%E7%BB%B4%E5%93%8D%E5%BA%94%E6%89%AB%E6%8F%8F"><span class="toc-text">13.3 一个真实的一维响应扫描</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E4%BB%8E%E5%8D%95%E5%85%83%E5%BA%93%E5%88%B0%E6%9C%89%E9%99%90%E5%AD%94%E5%BE%84%E8%B6%85%E6%9E%84%E9%80%8F%E9%95%9C"><span class="toc-text">14. 从单元库到有限孔径超构透镜</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-%E6%8E%A8%E5%AF%BC%E7%9B%AE%E6%A0%87%E8%81%9A%E7%84%A6%E7%9B%B8%E4%BD%8D"><span class="toc-text">14.1 推导目标聚焦相位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-%E7%9B%B8%E4%BD%8D%E5%8C%B9%E9%85%8D%E8%A6%81%E5%8C%85%E5%90%AB%E6%8C%AF%E5%B9%85%E4%B8%8E%E5%88%B6%E9%80%A0%E7%BA%A6%E6%9D%9F"><span class="toc-text">14.2 相位匹配要包含振幅与制造约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-3-%E5%B1%80%E9%83%A8%E5%91%A8%E6%9C%9F%E8%BF%91%E4%BC%BC%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E8%AD%A6%E6%83%95%EF%BC%9F"><span class="toc-text">14.3 局部周期近似什么时候需要警惕？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-4-%E5%8D%95%E5%85%83%E9%80%8F%E5%B0%84%E7%8E%87%E4%B8%8D%E6%98%AF%E8%81%9A%E7%84%A6%E6%95%88%E7%8E%87"><span class="toc-text">14.4 单元透射率不是聚焦效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E5%86%8D%E5%90%91%E5%89%8D%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%A4%9A%E6%B3%A2%E9%95%BF%E4%B8%8E%E6%B6%88%E8%89%B2%E5%B7%AE%E8%AE%BE%E8%AE%A1"><span class="toc-text">15. 再向前一步：多波长与消色差设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E4%B8%8E%E5%8F%AF%E5%A4%8D%E7%AE%97%E9%99%84%E4%BB%B6"><span class="toc-text">参考文献与可复算附件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</a><time datetime="2026-09-22T10:08:22.000Z" title="发表于 2026-09-22 18:08:22">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</a><time datetime="2026-09-21T16:18:21.000Z" title="发表于 2026-09-22 00:18:21">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/" title="PDH 激光稳频详解：从边带干涉到闭环噪声">PDH 激光稳频详解：从边带干涉到闭环噪声</a><time datetime="2026-09-21T16:03:06.000Z" title="发表于 2026-09-22 00:03:06">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

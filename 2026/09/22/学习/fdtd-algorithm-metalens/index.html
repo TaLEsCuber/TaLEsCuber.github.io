@@ -1,0 +1,943 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>FDTD 算法详解：从 Maxwell 方程到超构透镜仿真 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从 Maxwell 方程和 Yee 网格出发，推导时域有限差分更新方程，解释 CFL 稳定性、数值色散、色散材料、PML 与频域监视器，并结合超构透镜的单元库、完整器件仿真和收敛验证，附可运行的一维求解器与五张教学配图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真">
+<meta property="og:url" content="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从 Maxwell 方程和 Yee 网格出发，推导时域有限差分更新方程，解释 CFL 稳定性、数值色散、色散材料、PML 与频域监视器，并结合超构透镜的单元库、完整器件仿真和收敛验证，附可运行的一维求解器与五张教学配图。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/fdtd-algorithm-metalens/00-cover.png">
+<meta property="article:published_time" content="2026-09-22T10:08:22.000Z">
+<meta property="article:modified_time" content="2026-09-22T10:08:22.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="FDTD">
+<meta property="article:tag" content="计算电磁学">
+<meta property="article:tag" content="超构透镜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/fdtd-algorithm-metalens/00-cover.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'FDTD 算法详解：从 Maxwell 方程到超构透镜仿真',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-22 18:08:22'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="b89a270bc05fa974904be9f2f7afd42afff00ccdf786749d267b257d68e7cbe1";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-22T10:08:22.000Z" title="发表于 2026-09-22 18:08:22">2026-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>23分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>在几何光学中，我们追踪光线经过透镜后向哪里传播；在波动光学中，我们追踪振幅和相位如何衍射与干涉。可当一片透镜被替换成密密麻麻的亚波长纳米柱时，光还会在柱内形成模式、在界面上反射、在相邻结构之间耦合。此时，仅给每个位置指定一个理想相位，往往不足以回答“真实器件究竟能聚焦多少光”。</p>
+<p><strong>时域有限差分法（finite-difference time-domain，FDTD）直接离散 Maxwell 方程，在空间网格上逐步推进电场和磁场。</strong> 它既能描述传播，也能描述反射、干涉、衍射和材料响应。漂亮的场图只是其中一种输出；更有价值的是在明确误差范围内获得透射率、相位、焦斑、效率和光谱。</p>
+<p><img src="/img/fdtd-algorithm-metalens/00-cover.png" alt="FDTD 与介质超构透镜的概念封面"></p>
+<p><em>封面｜由生图工具生成的概念插画。网格、纳米柱和会聚波前仅用于引入主题，不代表精确结构、实际入射配置或仿真场分布。下文图 1–5 由代码按给定坐标、公式或求解器结果绘制。</em></p>
+<p>本文面向具备大学电磁学基础的读者。第 1–5 节讲算法，第 6–9 节讲材料、边界和输出，第 10–13 节结合超构透镜建立验证流程，第 14 节给出可运行代码。文中的器件参数是<strong>教学假设</strong>，没有把示意图当作已经完成的三维超构透镜仿真。</p>
+<span id="more"></span>
+
+<h2 id="1-FDTD-到底在求什么？"><a href="#1-FDTD-到底在求什么？" class="headerlink" title="1. FDTD 到底在求什么？"></a>1. FDTD 到底在求什么？</h2><h3 id="1-1-从旋度方程出发"><a href="#1-1-从旋度方程出发" class="headerlink" title="1.1 从旋度方程出发"></a>1.1 从旋度方程出发</h3><p>采用 SI 单位，记电场、磁场、电位移和磁感应强度为 <script type="math/tex">\mathbf E,\mathbf H,\mathbf D,\mathbf B</script>。没有磁流源时，</p>
+<div class="math-display">
+$$
+\frac{\partial\mathbf B}{\partial t}=-\nabla\times\mathbf E,\qquad
+\frac{\partial\mathbf D}{\partial t}=\nabla\times\mathbf H-\mathbf J.
+$$
+</div>
+
+<p>先考虑各向同性、线性、非色散介质：</p>
+<div class="math-display">
+$$
+\mathbf D=\varepsilon\mathbf E,\qquad
+\mathbf B=\mu\mathbf H,\qquad
+\mathbf J=\sigma\mathbf E+\mathbf J_{\mathrm{src}}.
+$$
+</div>
+
+<p>这里 <script type="math/tex">\varepsilon=\varepsilon_0\varepsilon_r</script>、<script type="math/tex">\mu=\mu_0\mu_r</script>，电导率 <script type="math/tex">\sigma</script> 表示欧姆损耗，<script type="math/tex">\mathbf J_{\mathrm{src}}</script> 表示外加激励。于是，</p>
+<div class="math-display">
+$$
+\mu\frac{\partial\mathbf H}{\partial t}=-\nabla\times\mathbf E,\qquad
+\varepsilon\frac{\partial\mathbf E}{\partial t}
+=\nabla\times\mathbf H-\sigma\mathbf E-\mathbf J_{\mathrm{src}}.
+$$
+</div>
+
+<p>这组方程天然适合“知道现在，计算下一刻”：已知电场的空间变化，就能更新磁场；已知磁场的空间变化，就能更新电场。FDTD 所做的，是把导数改写成附近几个采样值之间的差分。</p>
+<p>全文以标准显式、二阶 Yee 格式为主。高阶格式、隐式格式和非结构网格方法不在本文推导范围内。</p>
+<h3 id="1-2-散度方程去哪了？"><a href="#1-2-散度方程去哪了？" class="headerlink" title="1.2 散度方程去哪了？"></a>1.2 散度方程去哪了？</h3><p>Maxwell 方程还包含</p>
+<div class="math-display">
+$$
+\nabla\cdot\mathbf D=\rho,\qquad \nabla\cdot\mathbf B=0.
+$$
+</div>
+
+<p>它们是必须满足的约束。连续数学中，“旋度的散度为零”意味着：若初始场满足约束，而且电流与电荷满足连续性方程，后续旋度推进就会保持约束。</p>
+<p>Yee 网格具有相应的离散结构。不过，这并不意味着任意初始化、任意电流注入和任意插值都能自动正确。带电粒子耦合、复杂材料界面或自定义源仍需要检查离散电荷守恒。</p>
+<h3 id="1-3-“全波”意味着什么？"><a href="#1-3-“全波”意味着什么？" class="headerlink" title="1.3 “全波”意味着什么？"></a>1.3 “全波”意味着什么？</h3><p>全波表示求解电磁场的波动方程组，而不是仅追踪光线或套用近轴传播公式。它并不意味着没有近似：材料模型、几何离散、有限计算区域、有限时间和源的理想化仍然限制结果。</p>
+<p>对一个已定义的模型，FDTD 回答的是“这个离散模型会如何响应”，然后通过收敛与基准验证，逐步说明它与目标物理问题有多接近。</p>
+<h2 id="2-Yee-网格：为什么要把电场和磁场错开放？"><a href="#2-Yee-网格：为什么要把电场和磁场错开放？" class="headerlink" title="2. Yee 网格：为什么要把电场和磁场错开放？"></a>2. Yee 网格：为什么要把电场和磁场错开放？</h2><h3 id="2-1-中心差分的几何意义"><a href="#2-1-中心差分的几何意义" class="headerlink" title="2.1 中心差分的几何意义"></a>2.1 中心差分的几何意义</h3><p>将一个光滑函数在中心两侧展开相减，可以得到</p>
+<div class="math-display">
+$$
+\left.\frac{\partial F}{\partial x}\right|_{x}
+=\frac{F(x+\Delta x/2)-F(x-\Delta x/2)}{\Delta x}
++O(\Delta x^2).
+$$
+</div>
+
+<p>导数位于两个采样点的中间。如果电场存储在一组位置，更新磁场时需要的电场差分自然位于两点之间。因此，把磁场放到半格偏移的位置，能够让空间差分和场分量的位置对应起来。</p>
+<p>在三维中，一种常用坐标约定如下。表中坐标分别以 <script type="math/tex">\Delta x,\Delta y,\Delta z</script> 为单位：</p>
+<table>
+<thead>
+<tr>
+<th>场分量</th>
+<th>存储坐标</th>
+<th>时间层</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">E_x</script></td>
+<td><script type="math/tex">(i+\tfrac12,j,k)</script></td>
+<td><script type="math/tex">n\Delta t</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">E_y</script></td>
+<td><script type="math/tex">(i,j+\tfrac12,k)</script></td>
+<td><script type="math/tex">n\Delta t</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">E_z</script></td>
+<td><script type="math/tex">(i,j,k+\tfrac12)</script></td>
+<td><script type="math/tex">n\Delta t</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">H_x</script></td>
+<td><script type="math/tex">(i,j+\tfrac12,k+\tfrac12)</script></td>
+<td><script type="math/tex">(n+\tfrac12)\Delta t</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">H_y</script></td>
+<td><script type="math/tex">(i+\tfrac12,j,k+\tfrac12)</script></td>
+<td><script type="math/tex">(n+\tfrac12)\Delta t</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">H_z</script></td>
+<td><script type="math/tex">(i+\tfrac12,j+\tfrac12,k)</script></td>
+<td><script type="math/tex">(n+\tfrac12)\Delta t</script></td>
+</tr>
+</tbody></table>
+<p>电场可以看作位于单元边中点，磁场位于相应面的中心。整体平移半格，或交换整数与半整数时间层，也可以得到等价约定；关键是差分必须在正确的位置相遇。</p>
+<h3 id="2-2-空间交错，时间也交错"><a href="#2-2-空间交错，时间也交错" class="headerlink" title="2.2 空间交错，时间也交错"></a>2.2 空间交错，时间也交错</h3><p>推进顺序为</p>
+<div class="math-display">
+$$
+\left(\mathbf E^n,\mathbf H^{n-1/2}\right)
+\longrightarrow\mathbf H^{n+1/2}
+\longrightarrow\mathbf E^{n+1}.
+$$
+</div>
+
+<p>这称为<strong>蛙跳（leapfrog）更新</strong>。电场和磁场不是在同一时间点同时更新，而是交替跨过对方。</p>
+<p><img src="/img/fdtd-algorithm-metalens/01-yee-grid.png" alt="二维 Yee 网格与时间蛙跳推进"></p>
+<p><em>图 1｜左图采用二维 <script type="math/tex">E_z,H_x,H_y</script> 约定：圆点为出平面的电场，橙色和蓝色短线分别表示沿 x、y 方向的磁场。虚线框提示围绕中心 <script type="math/tex">E_z</script> 的磁场差分位置。右图给出更新时间顺序，箭头表示依赖关系。</em></p>
+<p>空间与时间的中心差分在光滑区域具有二阶精度，即误差的主导项通常随 <script type="math/tex">\Delta x^2</script> 和 <script type="math/tex">\Delta t^2</script> 缩小。界面、几何台阶和局部奇异场可能改变实际观测到的收敛阶，不能机械地把整个复杂器件都视为二阶收敛。</p>
+<p>Yee 的原始工作发表于 1966 年；交错离散的基础推导也可参阅 <a target="_blank" rel="noopener" href="https://eecs.wsu.edu/~schneidj/ufdtd/chap3.pdf">Schneider《Understanding the FDTD Method》第 3 章</a>。</p>
+<h2 id="3-先从一维推导出完整更新方程"><a href="#3-先从一维推导出完整更新方程" class="headerlink" title="3. 先从一维推导出完整更新方程"></a>3. 先从一维推导出完整更新方程</h2><p>令波沿 z 方向传播，仅保留 <script type="math/tex">E_x(z,t)</script> 和 <script type="math/tex">H_y(z,t)</script>，并暂时忽略损耗和源：</p>
+<div class="math-display">
+$$
+\frac{\partial H_y}{\partial t}
+=-\frac1\mu\frac{\partial E_x}{\partial z},\qquad
+\frac{\partial E_x}{\partial t}
+=-\frac1\varepsilon\frac{\partial H_y}{\partial z}.
+$$
+</div>
+
+<p>这里两个负号来自所选场方向和传播坐标。改用 <script type="math/tex">E_z(x,t),H_y(x,t)</script> 时符号会不同，不能只凭记忆抄写。</p>
+<p>设</p>
+<div class="math-display">
+$$
+E_i^n=E_x(i\Delta z,n\Delta t),\qquad
+H_{i+1/2}^{n+1/2}
+=H_y((i+\tfrac12)\Delta z,(n+\tfrac12)\Delta t).
+$$
+</div>
+
+<p>在磁场位置做中心差分：</p>
+<div class="math-display">
+$$
+\frac{H_{i+1/2}^{n+1/2}-H_{i+1/2}^{n-1/2}}{\Delta t}
+=-\frac1{\mu_{i+1/2}}\frac{E_{i+1}^n-E_i^n}{\Delta z}.
+$$
+</div>
+
+<p>移项后得到</p>
+<div class="math-display">
+$$
+\boxed{
+H_{i+1/2}^{n+1/2}
+=H_{i+1/2}^{n-1/2}
+-\frac{\Delta t}{\mu_{i+1/2}\Delta z}(E_{i+1}^n-E_i^n)
+}.
+$$
+</div>
+
+<p>随后在电场位置更新：</p>
+<div class="math-display">
+$$
+\boxed{
+E_i^{n+1}
+=E_i^n-\frac{\Delta t}{\varepsilon_i\Delta z}
+\left(H_{i+1/2}^{n+1/2}-H_{i-1/2}^{n+1/2}\right)
+}.
+$$
+</div>
+
+<p>这就是一个最小 FDTD 求解器的核心。每个场值只依赖相邻位置，既不需要在每一步求解全局线性方程组，也不需要提前假设波的形状。不过，边界和初始条件必须另行指定。</p>
+<p>若取归一化单位 <script type="math/tex">\varepsilon=\mu=c=1</script>，定义 <script type="math/tex">S=\Delta t/\Delta z</script>，核心循环只有两行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h -= S * (np.roll(e, -<span class="number">1</span>) - e)</span><br><span class="line">e -= S * (h - np.roll(h, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>np.roll</code> 把右端接回左端，<strong>实现的是周期边界</strong>。它并不吸收波；把这段代码用于自由空间脉冲时，波会从另一端重新进入。第 14 节会给它配上真正适合周期边界的解析基准。</p>
+<h2 id="4-从一维扩展到二维与三维"><a href="#4-从一维扩展到二维与三维" class="headerlink" title="4. 从一维扩展到二维与三维"></a>4. 从一维扩展到二维与三维</h2><p>若结构和场沿 z 不变，可取 <script type="math/tex">E_z,H_x,H_y</script> 三个非零分量，本文将其称为 TM<script type="math/tex">_z</script>。不同软件对 TE&#x2F;TM 的参照轴可能不同，交流模型时应同时给出非零分量。</p>
+<p>无损情况下，</p>
+<div class="math-display">
+$$
+\frac{\partial H_x}{\partial t}=-\frac1\mu\frac{\partial E_z}{\partial y},\qquad
+\frac{\partial H_y}{\partial t}=+\frac1\mu\frac{\partial E_z}{\partial x},
+$$
+</div>
+
+<div class="math-display">
+$$
+\frac{\partial E_z}{\partial t}
+=\frac1\varepsilon\left(
+\frac{\partial H_y}{\partial x}-\frac{\partial H_x}{\partial y}
+\right).
+$$
+</div>
+
+<p>图 1 的空间约定给出</p>
+<div class="math-display">
+$$
+H_{x,i,j+1/2}^{n+1/2}
+=H_{x,i,j+1/2}^{n-1/2}
+-\frac{\Delta t}{\mu\Delta y}(E_{z,i,j+1}^n-E_{z,i,j}^n),
+$$
+</div>
+
+<div class="math-display">
+$$
+H_{y,i+1/2,j}^{n+1/2}
+=H_{y,i+1/2,j}^{n-1/2}
++\frac{\Delta t}{\mu\Delta x}(E_{z,i+1,j}^n-E_{z,i,j}^n),
+$$
+</div>
+
+<div class="math-display">
+$$
+\begin{aligned}
+E_{z,i,j}^{n+1}=E_{z,i,j}^n+\frac{\Delta t}{\varepsilon}
+\bigg[&
+\frac{H_{y,i+1/2,j}^{n+1/2}-H_{y,i-1/2,j}^{n+1/2}}{\Delta x}\\
+&-\frac{H_{x,i,j+1/2}^{n+1/2}-H_{x,i,j-1/2}^{n+1/2}}{\Delta y}
+\bigg].
+\end{aligned}
+$$
+</div>
+
+<p>为简化书写，这里没有在 <script type="math/tex">\varepsilon,\mu</script> 上标出空间下标；实际程序必须读取各场分量所在位置的材料系数。</p>
+<p>三维算法沿同一逻辑更新六个分量。例如，</p>
+<div class="math-display">
+$$
+\frac{\partial E_x}{\partial t}
+=\frac1\varepsilon\left(
+\frac{\partial H_z}{\partial y}-\frac{\partial H_y}{\partial z}
+\right).
+$$
+</div>
+
+<p>其余分量按坐标循环置换得到。计算量增加主要来自网格体积和分量数量，而不是某个新的数学原理。</p>
+<p><strong>二维模型的适用条件是物理结构在省略方向上不变，或采用另一个经过说明的降维模型。</strong> 把一排纳米柱的截面做成二维模型，通常等价于沿省略方向无限延伸的条带，不能直接代表由有限圆柱构成的三维超构透镜。</p>
+<h2 id="5-CFL-条件保证稳定，网格收敛决定精度"><a href="#5-CFL-条件保证稳定，网格收敛决定精度" class="headerlink" title="5. CFL 条件保证稳定，网格收敛决定精度"></a>5. CFL 条件保证稳定，网格收敛决定精度</h2><h3 id="5-1-时间步不能随意增大"><a href="#5-1-时间步不能随意增大" class="headerlink" title="5.1 时间步不能随意增大"></a>5.1 时间步不能随意增大</h3><p>对于均匀正交网格上的标准显式 Yee 格式、正的非色散介电常数和磁导率，常用 CFL 上界为</p>
+<div class="math-display">
+$$
+\Delta t\le
+\frac{1}{
+v_{\max}\sqrt{\Delta x^{-2}+\Delta y^{-2}+\Delta z^{-2}}
+},
+$$
+</div>
+
+<p>其中 <script type="math/tex">v_{\max}</script> 是模型中最大的传播速度。二维和一维分别去掉不存在的空间项。三维等距网格、最快速度为真空光速 c 时，</p>
+<div class="math-display">
+$$
+\frac{c\Delta t}{\Delta}\le\frac1{\sqrt3}.
+$$
+</div>
+
+<p>实际常在理论上界内留一定余量。该公式不是所有材料模型的通用稳定性保证：色散辅助方程、增益、特殊网格或边界实现可能再施加约束。<a target="_blank" rel="noopener" href="https://meep.readthedocs.io/en/latest/Introduction/">Meep 的算法说明</a>也强调时间步与空间分辨率共同限制稳定性。</p>
+<p>例如，三维均匀网格 <script type="math/tex">\Delta=20\thinspace \mathrm{nm}</script>，取真空 CFL 上限的 0.95 倍，则</p>
+<div class="math-display">
+$$
+\Delta t=0.95\frac{20\,\mathrm{nm}}{c\sqrt3}
+\approx36.59\,\mathrm{as}.
+$$
+</div>
+
+<p>模拟 200 fs 至少约需 5466 步。这里 <script type="math/tex">1\thinspace \mathrm{as}=10^{-18}\thinspace \mathrm{s}</script>。这是给定网格的算术估计，不表示 200 fs 对所有超构透镜都足够。</p>
+<h3 id="5-2-为什么“没有发散”仍然可能算错？"><a href="#5-2-为什么“没有发散”仍然可能算错？" class="headerlink" title="5.2 为什么“没有发散”仍然可能算错？"></a>5.2 为什么“没有发散”仍然可能算错？</h3><p>在均匀无损介质中，将离散平面波代入更新式，可得到数值色散关系：</p>
+<div class="math-display">
+$$
+\left[\frac{\sin(\omega\Delta t/2)}{v\Delta t}\right]^2
+=
+\left[\frac{\sin(k_x\Delta x/2)}{\Delta x}\right]^2+
+\left[\frac{\sin(k_y\Delta y/2)}{\Delta y}\right]^2+
+\left[\frac{\sin(k_z\Delta z/2)}{\Delta z}\right]^2.
+$$
+</div>
+
+<p>网格无限细时，<script type="math/tex">\sin u\approx u</script>，它才还原成连续关系 <script type="math/tex">\omega^2=v^2|\mathbf k|^2</script>。有限网格下，数值相速度通常随波长和传播方向变化：即使物理材料没有色散，算法也可能产生<strong>数值色散</strong>。</p>
+<p><img src="/img/fdtd-algorithm-metalens/02-numerical-dispersion.png" alt="网格分辨率与传播方向导致的数值色散"></p>
+<p><em>图 2｜由离散色散关系直接求得。左图是一维真空情形，横轴按连续介质中的物理波长计数；右图是二维方格网格。二维曲线显示了网格引入的方向依赖。左图的 <script type="math/tex">S=0.9</script> 只用于一维，不能直接搬到二维或三维。</em></p>
+<p>对聚焦器件，相位差特别敏感。即使局部相速度偏差很小，传播距离较长时也会积累相位误差，改变焦点、焦斑和干涉结构。相关推导可参阅 <a target="_blank" rel="noopener" href="https://eecs.wsu.edu/~schneidj/ufdtd/chap7.pdf">Schneider 第 7 章</a>。</p>
+<h3 id="5-3-网格需要同时看波长和几何"><a href="#5-3-网格需要同时看波长和几何" class="headerlink" title="5.3 网格需要同时看波长和几何"></a>5.3 网格需要同时看波长和几何</h3><p>一个粗略起点是按高折射率区域内的最短波长估计：</p>
+<div class="math-display">
+$$
+\lambda_{\mathrm{mat}}\approx
+\frac{\lambda_0}{\operatorname{Re}n},\qquad
+\Delta\lesssim\frac{\lambda_{\mathrm{mat,min}}}{N_\lambda}.
+$$
+</div>
+
+<p>对于弱损耗介质，可以先尝试每个介质波长 10–20 个网格，再做收敛研究。这只是初值经验。若最小缝隙 20 nm，而网格也是 20 nm，即使“每波长网格数达标”，几何仍然几乎没有被解析。</p>
+<p>金属皮肤深度、纳米间隙、尖角附近的强场和高 Q 共振也可能提出更细要求。圆柱被台阶化后，等效直径与真实直径存在偏差；共形网格或亚像素材料平均可以改善误差，但其适用性应结合材料与求解器实现检查。</p>
+<h2 id="6-材料如何进入更新时间循环？"><a href="#6-材料如何进入更新时间循环？" class="headerlink" title="6. 材料如何进入更新时间循环？"></a>6. 材料如何进入更新时间循环？</h2><h3 id="6-1-电导损耗：对耗散项做时间中心平均"><a href="#6-1-电导损耗：对耗散项做时间中心平均" class="headerlink" title="6.1 电导损耗：对耗散项做时间中心平均"></a>6.1 电导损耗：对耗散项做时间中心平均</h3><p>将电场方程写为</p>
+<div class="math-display">
+$$
+\varepsilon\frac{E^{n+1}-E^n}{\Delta t}
+=C^{n+1/2}
+-\sigma\frac{E^{n+1}+E^n}{2},
+$$
+</div>
+
+<p>其中 <script type="math/tex">C^{n+1/2}</script> 表示该分量的磁场旋度减去外加电流。整理可得</p>
+<div class="math-display">
+$$
+E^{n+1}=C_aE^n+C_bC^{n+1/2},
+$$
+</div>
+
+<div class="math-display">
+$$
+C_a=\frac{1-\sigma\Delta t/(2\varepsilon)}
+{1+\sigma\Delta t/(2\varepsilon)},\qquad
+C_b=\frac{\Delta t/\varepsilon}
+{1+\sigma\Delta t/(2\varepsilon)}.
+$$
+</div>
+
+<p>损耗通过系数进入更新，仍可以预计算系数并显式推进。不过，常数电导率对应特定频率依赖，不能任意代替整个宽波段的实测吸收。</p>
+<h3 id="6-2-色散材料：需要记住材料的历史"><a href="#6-2-色散材料：需要记住材料的历史" class="headerlink" title="6.2 色散材料：需要记住材料的历史"></a>6.2 色散材料：需要记住材料的历史</h3><p>真实材料的极化不会总是瞬时跟随电场。可写为</p>
+<div class="math-display">
+$$
+\mathbf D=\varepsilon_0\varepsilon_\infty\mathbf E+
+\sum_m\mathbf P_m.
+$$
+</div>
+
+<p>一种 Lorentz 极化模型是</p>
+<div class="math-display">
+$$
+\frac{\mathrm d^2\mathbf P_m}{\mathrm dt^2}
++\gamma_m\frac{\mathrm d\mathbf P_m}{\mathrm dt}
++\omega_m^2\mathbf P_m
+=\varepsilon_0F_m\mathbf E.
+$$
+</div>
+
+<p>这里 <script type="math/tex">F_m</script> 具有角频率平方的量纲。全文频域采用 <script type="math/tex">e^{-i\omega t}</script> 约定，对应</p>
+<div class="math-display">
+$$
+\varepsilon_r(\omega)=\varepsilon_\infty+
+\sum_m\frac{F_m}{\omega_m^2-\omega^2-i\gamma_m\omega}.
+$$
+</div>
+
+<p>设置 <script type="math/tex">\omega_m=0</script> 且保留适当的 <script type="math/tex">F_m</script>，可得到 Drude 型项。一个中心差分的极化递推为</p>
+<div class="math-display">
+$$
+\mathbf P_m^{n+1}=
+\frac{
+(2-\omega_m^2\Delta t^2)\mathbf P_m^n
+-(1-\gamma_m\Delta t/2)\mathbf P_m^{n-1}
++\varepsilon_0F_m\Delta t^2\mathbf E^n
+}{
+1+\gamma_m\Delta t/2
+}.
+$$
+</div>
+
+<p>这称为辅助微分方程（ADE）思路。推进极化和 <script type="math/tex">\mathbf D</script> 后，再由本构关系求出 <script type="math/tex">\mathbf E</script>。程序需要额外保存极化历史，所以色散材料会增加内存和计算量。具体耦合格式的稳定范围必须另外验证。</p>
+<h3 id="6-3-从实测-n、k-到求解器材料"><a href="#6-3-从实测-n、k-到求解器材料" class="headerlink" title="6.3 从实测 n、k 到求解器材料"></a>6.3 从实测 n、k 到求解器材料</h3><p>对非磁材料，令复折射率为 <script type="math/tex">n+i\kappa</script>，则</p>
+<div class="math-display">
+$$
+\varepsilon_r=(n+i\kappa)^2
+=(n^2-\kappa^2)+i\,2n\kappa.
+$$
+</div>
+
+<p>在本文时间约定下，被动吸收材料通常具有正的 <script type="math/tex">\operatorname{Im}\varepsilon_r</script>。将实验表格用于时域仿真时，需要拟合为求解器支持的因果色散模型，而不是在一个宽带运行中把不同波长的 n 任意填进一个常数材料。</p>
+<p>实际应检查三件事：拟合频带是否覆盖源与监视器；实部和虚部是否都拟合合理；结构对象最终绑定的材料、各向异性轴和求解器读回曲线是否正确。材料名字正确并不足以证明物理参数正确。<a target="_blank" rel="noopener" href="https://meep.readthedocs.io/en/latest/Materials/">Meep 材料文档</a>给出了用 Lorentz 项拟合 n、k 数据及其稳定性限制。</p>
+<h2 id="7-边界条件决定你究竟模拟了哪个物理问题"><a href="#7-边界条件决定你究竟模拟了哪个物理问题" class="headerlink" title="7. 边界条件决定你究竟模拟了哪个物理问题"></a>7. 边界条件决定你究竟模拟了哪个物理问题</h2><h3 id="7-1-PML：让离开的波进入吸收层"><a href="#7-1-PML：让离开的波进入吸收层" class="headerlink" title="7.1 PML：让离开的波进入吸收层"></a>7.1 PML：让离开的波进入吸收层</h3><p>有限网格的最外层若直接设为零，通常会产生反射。开放辐射问题常在计算区外侧加入<strong>完全匹配层（PML）</strong>：它通过特殊的场方程或坐标伸缩，使出射波进入后衰减。</p>
+<p>连续理论中的理想匹配不等于离散实现绝对无反射。有限厚度、网格误差和大角度入射都可能留下残余反射。应分别检查 PML 厚度与结构到 PML 的距离，并把物理监视器放在 PML 之外；靠得过近的吸收层还可能干扰倏逝场或共振。</p>
+<p>基底等背景材料通常需要连续延伸到吸收边界，以免人为制造一个材料终止面；这与“让 PML 避开器件局域近场”并不矛盾。具体介质和传播方向还可能存在 PML 失效情形，参阅 <a target="_blank" rel="noopener" href="https://meep.readthedocs.io/en/latest/Perfectly_Matched_Layer/">Meep PML 说明</a>。</p>
+<h3 id="7-2-周期与-Bloch-边界：模拟无限重复"><a href="#7-2-周期与-Bloch-边界：模拟无限重复" class="headerlink" title="7.2 周期与 Bloch 边界：模拟无限重复"></a>7.2 周期与 Bloch 边界：模拟无限重复</h3><p>普通周期条件为</p>
+<div class="math-display">
+$$
+\mathbf F(\mathbf r+\mathbf a)=\mathbf F(\mathbf r).
+$$
+</div>
+
+<p>斜入射或一般 Bloch 问题则满足</p>
+<div class="math-display">
+$$
+\mathbf F(\mathbf r+\mathbf a)
+=e^{i\mathbf k_\parallel\cdot\mathbf a}\mathbf F(\mathbf r).
+$$
+</div>
+
+<p>一个周期单元的透射响应描述“该单元在无限重复阵列中的表现”。有限口径超构透镜的边缘、非均匀邻居和整体散射不会自动包含在里面。给整片透镜的侧面加周期条件，得到的也会是透镜阵列，而不是孤立透镜。</p>
+<p>宽带斜入射还需特别小心：固定切向波矢与固定物理入射角并非等价。软件如何实现角度随频率的关系，必须在源和边界配置中确认。</p>
+<h3 id="7-3-对称边界：结构对称还不够"><a href="#7-3-对称边界：结构对称还不够" class="headerlink" title="7.3 对称边界：结构对称还不够"></a>7.3 对称边界：结构对称还不够</h3><p>只有几何、材料、激励及场分量的奇偶性同时满足要求，才能用对称面缩小计算区域。电场是极向量，磁场是轴向量，镜像变换下各分量的奇偶性并不相同。</p>
+<p>圆形口径不自动意味着任意偏振、斜入射和纳米柱排布都可采用四分之一计算域。用小规模完整模型比较一次，通常比仅看几何图案更可靠。</p>
+<h2 id="8-光源与监视器：从时间波形得到频谱"><a href="#8-光源与监视器：从时间波形得到频谱" class="headerlink" title="8. 光源与监视器：从时间波形得到频谱"></a>8. 光源与监视器：从时间波形得到频谱</h2><h3 id="8-1-宽带脉冲和单频激励"><a href="#8-1-宽带脉冲和单频激励" class="headerlink" title="8.1 宽带脉冲和单频激励"></a>8.1 宽带脉冲和单频激励</h3><p>高斯包络脉冲可以写成</p>
+<div class="math-display">
+$$
+s(t)=\exp\left[-\frac{(t-t_0)^2}{2\tau^2}\right]
+\cos[\omega_0(t-t_0)].
+$$
+</div>
+
+<p>一次线性时不变系统的时域运行，可以在有效激励频带内提取多个频率响应。不过，源频谱尾部很弱时，除以源谱会放大噪声；宽带源不意味着所有频率都同样可靠。</p>
+<p>单频连续波激励适合少量目标频点，但要等待瞬态充分衰减。高 Q 共振的衰减时间可能远大于普通传播时间。停止条件应结合目标频率、监视位置和结果变化，而不是只看源已经关闭。</p>
+<p>源实现也有区别：硬源直接覆盖场值，可能干扰返回波；软源或电流源将激励加入更新方程；总场&#x2F;散射场（TFSF）方法通过边界修正分离入射场与散射场。选择哪种方式，应与反射或散射的提取方法配套。</p>
+<h3 id="8-2-在线傅里叶积累"><a href="#8-2-在线傅里叶积累" class="headerlink" title="8.2 在线傅里叶积累"></a>8.2 在线傅里叶积累</h3><p>采用 <script type="math/tex">e^{-i\omega t}</script> 约定，频域场可由</p>
+<div class="math-display">
+$$
+\widetilde{\mathbf E}(\omega)\approx
+\Delta t\sum_n w_n\mathbf E^n e^{+i\omega n\Delta t}
+$$
+</div>
+
+<p>提取。<script type="math/tex">w_n</script> 为时间窗；不必保存所有时刻，只需维护所需频点的复数累加器。若只有少数频点，这比保存整段四维场数据节省得多。上式给出傅里叶累积量，换成单频稳态相量或频谱功率时，需要采用相应的时间窗与源谱归一化；下文的功率公式使用已按一致约定归一化的场。</p>
+<p>有限观测时长 T 带来的直接傅里叶频率分辨尺度约为</p>
+<div class="math-display">
+$$
+\Delta f\sim\frac1T.
+$$
+</div>
+
+<p>窗函数、谱线形状和参数拟合会影响实际分辨能力；简单增加 FFT 补零只能让曲线插值更密，不能创造新的观测信息。</p>
+<p>磁场的真实采样时刻是 <script type="math/tex">(n+\tfrac12)\Delta t</script>，做傅里叶积累时应使用对应时间相位。计算功率前还需要把交错的场插值到共同空间位置。直接拿不同位置、不同时间层的 E 和 H 相乘，可能引入系统偏差。</p>
+<h3 id="8-3-透射相位与功率不是同一个量"><a href="#8-3-透射相位与功率不是同一个量" class="headerlink" title="8.3 透射相位与功率不是同一个量"></a>8.3 透射相位与功率不是同一个量</h3><p>在相同参考面和同一输出模式下，可以定义归一化复振幅</p>
+<div class="math-display">
+$$
+t(\omega)=\frac{a_{\mathrm{out}}(\omega)}
+{a_{\mathrm{ref}}(\omega)},\qquad
+\phi(\omega)=\arg t(\omega).
+$$
+</div>
+
+<p>对于周期单元，若关心零级透射，应提取相应衍射级次或模式振幅。结构附近某一点的电场同时含有近场和多个级次，不宜直接当作单元的远场透射系数。</p>
+<p>一般情况下，功率应由时间平均 Poynting 矢量积分：</p>
+<div class="math-display">
+$$
+P(\omega)=\frac12\operatorname{Re}
+\int_A
+\left(\widetilde{\mathbf E}\times\widetilde{\mathbf H}^{*}\right)
+\cdot\hat{\mathbf n}\,\mathrm dA.
+$$
+</div>
+
+<p>只有在相应归一化条件满足时，<script type="math/tex">|t|^2</script> 才直接等于功率透射率。例如，法向入射、两侧无损非磁介质、t 按电场振幅定义时，</p>
+<div class="math-display">
+$$
+T=\frac{n_{\mathrm{out}}}{n_{\mathrm{in}}}|t|^2.
+$$
+</div>
+
+<p>不同软件的模式振幅可能已经按功率归一化，使用时应确认其定义。</p>
+<h2 id="9-先算算：一次三维-FDTD-要付出多少代价？"><a href="#9-先算算：一次三维-FDTD-要付出多少代价？" class="headerlink" title="9. 先算算：一次三维 FDTD 要付出多少代价？"></a>9. 先算算：一次三维 FDTD 要付出多少代价？</h2><p>设均匀网格数为 <script type="math/tex">N_xN_yN_z</script>，固定物理时间内的步数为 <script type="math/tex">N_t</script>，则基本代价近似为</p>
+<div class="math-display">
+$$
+\text{内存}\sim O(N_xN_yN_z),\qquad
+\text{运算量}\sim O(N_xN_yN_zN_t).
+$$
+</div>
+
+<p>在固定物理区域和总仿真时间下，将三维网格间距全部减半，空间单元数约乘 8，CFL 时间步约减半，时间步数约乘 2，因此运算量约乘 16。实际耗时还受内存带宽、并行通信、GPU 数据搬运和监视器影响。</p>
+<p>例如，<script type="math/tex">12\times12\times8\thinspace \mathrm{\mu m^3}</script> 的均匀网格区域，若三个方向都采用 20 nm 间距，则有</p>
+<div class="math-display">
+$$
+600\times600\times400=1.44\times10^8
+$$
+</div>
+
+<p>个单元。若仅为六个场分量各存一个 32 位浮点数，就需要约 3.456 GB，约合 3.22 GiB。<strong>这只是场数组的简化下限估计</strong>：材料系数、色散变量、PML、复数频域监视器和运行开销还会继续增加内存。</p>
+<p>因此，设计超构透镜时常将“单元电磁响应”“有限区域验证”“器件外部传播”分层计算。能用受验证的传播算法完成的均匀空间，不必全部填满极细 FDTD 网格。</p>
+<h2 id="10-超构透镜设计：把目标波前变成纳米结构"><a href="#10-超构透镜设计：把目标波前变成纳米结构" class="headerlink" title="10. 超构透镜设计：把目标波前变成纳米结构"></a>10. 超构透镜设计：把目标波前变成纳米结构</h2><h3 id="10-1-理想聚焦相位从哪里来？"><a href="#10-1-理想聚焦相位从哪里来？" class="headerlink" title="10.1 理想聚焦相位从哪里来？"></a>10.1 理想聚焦相位从哪里来？</h3><p>设平面波从下方照亮位于 <script type="math/tex">z=0</script> 的薄相位面，目标焦点为 <script type="math/tex">(0,0,f)</script>。输出侧为均匀介质，波数</p>
+<div class="math-display">
+$$
+k_{\mathrm{out}}(\omega)=
+\frac{n_{\mathrm{out}}(\omega)\omega}{c}.
+$$
+</div>
+
+<p>半径 r 处到焦点的距离为 <script type="math/tex">\sqrt{f^2+r^2}</script>。为了让各位置到达焦点时同相，透镜提供的相位必须补偿额外传播相位：</p>
+<div class="math-display">
+$$
+\boxed{
+\phi(r,\omega)=
+-k_{\mathrm{out}}(\omega)
+\left(\sqrt{f^2+r^2}-f\right)+\phi_0(\omega)
+}.
+$$
+</div>
+
+<p>这里沿 +z 传播的相量带有 <script type="math/tex">e^{+ikz}</script>，因此补偿项取负号。<script type="math/tex">\phi_0</script> 为不影响单频聚焦的整体相位。若入射本身带有非均匀相位，还要减去入射波前在该平面上的相位分布。</p>
+<p><img src="/img/fdtd-algorithm-metalens/05-metalens-phase.png" alt="超构透镜的目标相位与等光程示意"></p>
+<p><em>图 3｜教学参数：真空波长 532 nm、空气中直径 10 μm、焦距 10 μm。左图由理想相位公式计算；右图仅画出通向目标焦点的几何路径，没有计算实际场强或聚焦效率。</em></p>
+<p>此例边缘比中心多传播约 <script type="math/tex">1.18034\thinspace \mathrm{\mu m}</script>，所以需要约 <script type="math/tex">-13.9404</script> rad 的相对补偿，约为 <script type="math/tex">-2.219</script> 个周期。实际选型通常使用包裹到一个 <script type="math/tex">2\pi</script> 区间内的相位。</p>
+<p>空气中的数值孔径为</p>
+<div class="math-display">
+$$
+\mathrm{NA}=\frac{D/2}{\sqrt{f^2+(D/2)^2}}
+\approx0.4472.
+$$
+</div>
+
+<p>该双曲相位公式本身没有使用近轴展开；但将其实现为局域薄相位面，以及后续采用标量传播，仍各自包含建模假设。</p>
+<h3 id="10-2-单元库：求的是复数响应"><a href="#10-2-单元库：求的是复数响应" class="headerlink" title="10.2 单元库：求的是复数响应"></a>10.2 单元库：求的是复数响应</h3><p>以介质纳米柱为例，固定周期 p、高度 h、材料和基底，扫描直径 d 或其他几何参数。每个周期单元计算</p>
+<div class="math-display">
+$$
+t(d,\lambda)=|t(d,\lambda)|e^{i\phi(d,\lambda)}.
+$$
+</div>
+
+<p>单元库应同时保存相位、透射功率、偏振转换和参数依赖。相位覆盖 <script type="math/tex">0</script> 到 <script type="math/tex">2\pi</script> 只是基本条件；若某一段相位只能由低透射的强共振单元提供，最终器件可能损失很多能量。</p>
+<p>两段接近 0 和 <script type="math/tex">2\pi</script> 的相位实际上很接近，因此匹配时可使用圆周相位误差</p>
+<div class="math-display">
+$$
+\delta\phi=
+\arg\!\left[e^{i(\phi_{\mathrm{cell}}-\phi_{\mathrm{target}})}\right].
+$$
+</div>
+
+<p>一种示例选型目标为</p>
+<div class="math-display">
+$$
+d_*=\arg\min_d
+\left[
+w_\phi\,\delta\phi^2+
+w_T(1-T)^2+
+w_{\mathrm{fab}}C_{\mathrm{fab}}(d)
+\right].
+$$
+</div>
+
+<p>权重需要结合设计任务归一化和选择；制造项可表示最小间隙、尺寸灵敏度等约束。这是设计策略示例，并非一套保证最优的通用公式。</p>
+<p>对双折射单元或偏振转换器件，应使用 Jones 矩阵或相应模式耦合矩阵。一个标量 t 无法描述完整偏振响应。</p>
+<h3 id="10-3-单元库的局域周期近似"><a href="#10-3-单元库的局域周期近似" class="headerlink" title="10.3 单元库的局域周期近似"></a>10.3 单元库的局域周期近似</h3><p>周期仿真假设每根纳米柱的周围都是相同单元。真实超构透镜中的相邻直径则不断变化，因此把周期库直接拼成器件，依赖<strong>局域周期近似（LPA）</strong>。</p>
+<p>这种近似可能在相位梯度大、相邻单元突变、强共振或高 NA 情况下变差。它忽略的部分包括非均匀邻域耦合及口径边缘影响。Ansys 的<a target="_blank" rel="noopener" href="https://optics.ansys.com/hc/en-us/articles/35797097445779-Introduction-to-metalens-workflows">超构透镜工作流介绍</a>区分了完整器件 FDTD、单元场拼接和光线传播等不同层级。</p>
+<p>一个有用的采样提醒来自空气中的边缘相位梯度：</p>
+<div class="math-display">
+$$
+\left|\frac{\mathrm d\phi}{\mathrm dr}\right|_{\mathrm{edge}}
+=k_0\mathrm{NA}.
+$$
+</div>
+
+<p>若希望相邻采样点的相位变化小于 <script type="math/tex">\pi</script>，可得到粗略条件 <script type="math/tex">p<\lambda_0/(2\mathrm{NA})</script>。它只约束目标相位的采样，不能替代对基底衍射级次、实际散射和单元耦合的检查。</p>
+<h2 id="11-从单元到整片透镜：边界、近场与传播"><a href="#11-从单元到整片透镜：边界、近场与传播" class="headerlink" title="11. 从单元到整片透镜：边界、近场与传播"></a>11. 从单元到整片透镜：边界、近场与传播</h2><p><img src="/img/fdtd-algorithm-metalens/04-boundary-models.png" alt="周期单元与有限口径透镜的计算区域对照"></p>
+<p><em>图 4｜横截面示意，不按实际尺度绘制。左侧侧边为周期边界，右侧侧边为 PML；两者求解的是不同物理问题。图中的监视面位于器件上方、PML 内缘以下。</em></p>
+<h3 id="11-1-一个可复现的工作流"><a href="#11-1-一个可复现的工作流" class="headerlink" title="11.1 一个可复现的工作流"></a>11.1 一个可复现的工作流</h3><ol>
+<li><strong>明确设计输入。</strong> 记录真空波长或频带、焦距、口径、入射方向与偏振、基底、材料来源及制造约束。</li>
+<li><strong>生成并验证单元库。</strong> 固定参考面和归一化方法；对候选尺寸检查网格、频带和材料拟合。</li>
+<li><strong>生成一次器件排布。</strong> 将每个位置、尺寸、旋转角和材料写成可读取的几何清单，保存版本或哈希。</li>
+<li><strong>做局部与完整器件验证。</strong> 可先模拟非均匀相邻单元的小簇或代表性子区域，再对可承受尺寸的有限口径器件做三维全波计算。</li>
+<li><strong>提取复数近场并传播。</strong> 在合适的均匀输出区域记录场，通过经过验证的近远场变换或传播算法得到焦域。</li>
+<li><strong>计算预先定义的指标。</strong> 保存原始功率、归一化分母、焦平面位置和积分半径，并完成数值收敛。</li>
+</ol>
+<p>Ansys 的<a target="_blank" rel="noopener" href="https://optics.ansys.com/hc/en-us/articles/360042097313-Small-Scale-Metalens-Field-Propagation">小尺度超构透镜示例</a>使用了直接器件仿真与重建场传播之间的比较。这类交叉检查能帮助界定简化模型可用的范围。</p>
+<h3 id="11-2-为什么可以不把焦点放进-FDTD-区域？"><a href="#11-2-为什么可以不把焦点放进-FDTD-区域？" class="headerlink" title="11.2 为什么可以不把焦点放进 FDTD 区域？"></a>11.2 为什么可以不把焦点放进 FDTD 区域？</h3><p>器件附近需要细网格来解析纳米结构；离开器件后的均匀空间主要发生传播。若已获得足够范围、足够采样的复数场，就可以把传播计算移交给其他方法。</p>
+<p>以均匀、各向同性、无损输出介质中的角谱法为例，</p>
+<div class="math-display">
+$$
+\widehat{\mathbf E}(k_x,k_y;z)
+=\widehat{\mathbf E}(k_x,k_y;z_0)
+e^{ik_z(z-z_0)},\qquad
+k_z=\sqrt{k_{\mathrm{out}}^2-k_x^2-k_y^2}.
+$$
+</div>
+
+<p>选取向 +z 出射且倏逝分量不增长的平方根分支。矢量传播还应满足横向性条件，并正确处理纵向分量及 E、H 的关系。</p>
+<p>这一步需要注意监视面截断、空间采样、传播时的 FFT 周期延拓以及倏逝分量。监视面过小会丢失大角度能量；简单补零可以减轻周期卷绕和改善插值，却不能补回已被截掉的场。</p>
+<p>若监视面和目标面之间还有分层介质或其他结构，不能直接套用单一均匀介质传播核。软件的“远场”命令也可能针对特定背景假设，应核对其适用条件。</p>
+<h3 id="11-3-对称计算能证明到什么程度？"><a href="#11-3-对称计算能证明到什么程度？" class="headerlink" title="11.3 对称计算能证明到什么程度？"></a>11.3 对称计算能证明到什么程度？</h3><p>在严格满足对称条件时，半域或四分之一域计算能够恢复相应完整解。但它并不是独立的完整口径交叉验证。若要研究偏心、制造不对称、斜入射或偏振变化，必须重新判断对称性，而不是沿用旧配置。</p>
+<h2 id="12-怎样定义“聚焦得好”？"><a href="#12-怎样定义“聚焦得好”？" class="headerlink" title="12. 怎样定义“聚焦得好”？"></a>12. 怎样定义“聚焦得好”？</h2><h3 id="12-1-焦距、焦斑与旁瓣"><a href="#12-1-焦距、焦斑与旁瓣" class="headerlink" title="12.1 焦距、焦斑与旁瓣"></a>12.1 焦距、焦斑与旁瓣</h3><p>可通过轴上强度最大值定义某种轴上焦点，也可按平面包围功率或其他任务指标寻找最佳焦平面；这些定义在存在多峰、像差时可能不一致，应明确说明。</p>
+<p>焦斑常报告 x、y 两方向的强度 FWHM。对于均匀照明圆孔径的标量衍射参考，中央 Airy 斑的 FWHM 全宽近似为</p>
+<div class="math-display">
+$$
+\mathrm{FWHM}\approx0.514\frac{\lambda_0}{\mathrm{NA}}.
+$$
+</div>
+
+<p>本例给出约 <script type="math/tex">0.611\thinspace \mathrm{\mu m}</script>。这是理想参考尺度，<strong>不是本文器件的 FDTD 预测值</strong>。高 NA 矢量效应、非均匀振幅、偏振和离散单元都会改变实际焦斑。</p>
+<p>只报很小的 FWHM 也不充分：能量可能转移到了强旁瓣。应同时报告二维分布、旁瓣和包围能量。</p>
+<h3 id="12-2-聚焦效率必须写清分母与积分区域"><a href="#12-2-聚焦效率必须写清分母与积分区域" class="headerlink" title="12.2 聚焦效率必须写清分母与积分区域"></a>12.2 聚焦效率必须写清分母与积分区域</h3><p>例如，可定义</p>
+<div class="math-display">
+$$
+\eta_{\mathrm{focus}}(a,z_f)
+=
+\frac{
+\displaystyle\int_{(x-x_f)^2+(y-y_f)^2\le a^2}
+\langle S_z(x,y,z_f)\rangle\,\mathrm dx\,\mathrm dy
+}{
+P_{\mathrm{inc,aperture}}
+}.
+$$
+</div>
+
+<p>这里 a 是明确指定的积分半径，<script type="math/tex">(x_f,y_f,z_f)</script> 是所选焦点，分母为参考入射场穿过设计口径的功率。若采用“半径为若干倍 FWHM”，需说明 FWHM 是哪一个方向的全宽，以及它如何换算成圆盘半径。</p>
+<p>另一个指标是</p>
+<div class="math-display">
+$$
+\eta_{\mathrm{enc}}
+=\frac{P_{\mathrm{focus}}}{P_{\mathrm{transmitted}}}.
+$$
+</div>
+
+<p>它衡量透射光中有多少集中到焦区，不能与以前述入射功率为分母的聚焦效率混用。若透射率和积分面也一致，两者满足 <script type="math/tex">\eta_{\mathrm{focus}}=T\eta_{\mathrm{enc}}</script>。</p>
+<p>对高斯照明，还应记录束腰、口径截断和器件位置。仿真源覆盖了多大区域，并不自动定义效率分母。</p>
+<h3 id="12-3-能量检查要覆盖所有出路"><a href="#12-3-能量检查要覆盖所有出路" class="headerlink" title="12.3 能量检查要覆盖所有出路"></a>12.3 能量检查要覆盖所有出路</h3><p>对被动稳态问题，在一致参考与完整功率通道下，应满足反射、透射和吸收之和接近入射功率：</p>
+<div class="math-display">
+$$
+R+T+A\approx1.
+$$
+</div>
+
+<p>但有限口径结构可能有大量侧向散射。如果 T、R 只在有限平面上积分，上式可能遗漏侧向通量；不能把所有未收集到的能量都叫作材料吸收。更可靠的检查是使用闭合通量面或明确列出所有功率通道。瞬态计算还要考虑计算区内部的储能变化。</p>
+<h2 id="13-多波长、消色差与数值收敛"><a href="#13-多波长、消色差与数值收敛" class="headerlink" title="13. 多波长、消色差与数值收敛"></a>13. 多波长、消色差与数值收敛</h2><h3 id="13-1-扫描一片固定器件，才是在研究它的色差"><a href="#13-1-扫描一片固定器件，才是在研究它的色差" class="headerlink" title="13.1 扫描一片固定器件，才是在研究它的色差"></a>13.1 扫描一片固定器件，才是在研究它的色差</h3><p>对一片设计好的透镜进行波长扫描时，应保持几何排布不变，仅改变光源、监视频点以及由同一物理材料模型给出的频率响应。</p>
+<p>如果每到一个波长就重新匹配一套纳米柱，那么得到的是多片分别优化的器件，无法由此说明原透镜的宽带性能。因此，应保存几何版本，同时读取各波长的焦点、FWHM、效率和旁瓣。</p>
+<h3 id="13-2-单频相位覆盖不等于消色差"><a href="#13-2-单频相位覆盖不等于消色差" class="headerlink" title="13.2 单频相位覆盖不等于消色差"></a>13.2 单频相位覆盖不等于消色差</h3><p>保持固定焦距 f 时，需要同时满足</p>
+<div class="math-display">
+$$
+\phi(r,\omega)
+=-k_{\mathrm{out}}(\omega)\Delta L(r)+\phi_0(\omega),
+\qquad
+\Delta L(r)=\sqrt{f^2+r^2}-f.
+$$
+</div>
+
+<p>对频率求导，</p>
+<div class="math-display">
+$$
+\frac{\partial\phi}{\partial\omega}
+=-\frac{\partial k_{\mathrm{out}}}{\partial\omega}
+\Delta L(r)+\frac{\mathrm d\phi_0}{\mathrm d\omega}.
+$$
+</div>
+
+<p>这表明宽带同焦还要求不同位置具有合适的相对群时延，更宽的频带可能继续约束高阶色散。在本文相位约定下，<script type="math/tex">\partial\phi/\partial\omega</script> 对应延迟；上式描述的是相对分布，公共相位项可改变整体延迟。</p>
+<p>计算相位斜率时，需要在透射振幅可靠的频段展开相位，并扣除一致参考面的传播贡献。透射零点附近的相位导数可能非常敏感。仅在若干离散波长发现一个亮斑，不足以宣称连续频带消色差。</p>
+<h3 id="13-3-收敛研究应该检查哪些量？"><a href="#13-3-收敛研究应该检查哪些量？" class="headerlink" title="13.3 收敛研究应该检查哪些量？"></a>13.3 收敛研究应该检查哪些量？</h3><p>不要只问“场图有没有变”，应预先指定可比较的指标。一个适合超构透镜的记录表如下：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>保持不变</th>
+<th>改变什么</th>
+<th>比较什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空间网格</td>
+<td>同一物理几何和材料</td>
+<td>网格间距、界面处理</td>
+<td>焦距、相位、效率、FWHM</td>
+</tr>
+<tr>
+<td>仿真时间</td>
+<td>网格与频带</td>
+<td>运行时长、终止阈值</td>
+<td>频谱及焦域指标</td>
+</tr>
+<tr>
+<td>PML</td>
+<td>器件与源</td>
+<td>厚度、参数</td>
+<td>反射、谱线、效率</td>
+</tr>
+<tr>
+<td>边界距离</td>
+<td>PML 设置</td>
+<td>空气缓冲区、侧向余量</td>
+<td>焦域与功率通量</td>
+</tr>
+<tr>
+<td>监视与传播</td>
+<td>同一器件响应</td>
+<td>监视面尺寸、采样、传播设置</td>
+<td>积分功率、焦斑与旁瓣</td>
+</tr>
+<tr>
+<td>对称性</td>
+<td>相同物理激励</td>
+<td>对称域与小型完整域</td>
+<td>场的奇偶性和器件指标</td>
+</tr>
+<tr>
+<td>材料</td>
+<td>相同实验数据来源</td>
+<td>拟合阶数与频带</td>
+<td>n、k 误差和最终光学响应</td>
+</tr>
+</tbody></table>
+<p>对非零指标 Q，可记录</p>
+<div class="math-display">
+$$
+\delta_Q=
+\frac{|Q_{\mathrm{fine}}-Q_{\mathrm{coarse}}|}
+{|Q_{\mathrm{fine}}|}.
+$$
+</div>
+
+<p>Q 接近零时用相对误差会失去意义，应改用绝对容差；相位使用圆周差或一致展开后的差。比如将“效率相差小于 1%”作为目标时，要区分相对百分比与效率的百分点。</p>
+<p>至少三档网格更有助于判断趋势。只有确认进入平滑的渐近收敛区，才适合做 Richardson 外推。界面重划分导致非单调变化时，不应为了得到一个外推数值而强行拟合。</p>
+<h2 id="14-可运行示例：用解析驻波检验一维-FDTD"><a href="#14-可运行示例：用解析驻波检验一维-FDTD" class="headerlink" title="14. 可运行示例：用解析驻波检验一维 FDTD"></a>14. 可运行示例：用解析驻波检验一维 FDTD</h2><p>先验证基本更新时间循环，再叠加 PML、材料和复杂几何，通常更容易定位错误。这里采用长度为 1 的周期区域、归一化单位 <script type="math/tex">c=\varepsilon=\mu=1</script>，选取解析解</p>
+<div class="math-display">
+$$
+E_x(z,t)=\sin(kz)\cos(kt),\qquad
+H_y(z,t)=-\cos(kz)\sin(kt),\qquad k=4\pi.
+$$
+</div>
+
+<p>电场从 <script type="math/tex">t=0</script> 开始，磁场必须初始化在 <script type="math/tex">t=-\Delta t/2</script>，并位于半格偏移位置。这同时检查时间和空间交错是否被正确实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">periodic_mode</span>(<span class="params">n, final_time=<span class="number">0.37</span>, max_courant=<span class="number">0.5</span></span>):</span><br><span class="line">    dz = <span class="number">1.0</span> / n</span><br><span class="line">    steps = <span class="built_in">int</span>(np.ceil(final_time / (max_courant * dz)))</span><br><span class="line">    dt = final_time / steps       <span class="comment"># 各网格严格比较同一个终止时刻</span></span><br><span class="line">    S = dt / dz</span><br><span class="line">    z = np.arange(n) * dz</span><br><span class="line">    k = <span class="number">4</span> * np.pi</span><br><span class="line">    e = np.sin(k * z)             <span class="comment"># E 位于 z_i，t = 0</span></span><br><span class="line">    h = np.cos(k * (z + dz/<span class="number">2</span>)) * np.sin(k * dt/<span class="number">2</span>)</span><br><span class="line">                                  <span class="comment"># H 位于 z_(i+1/2)，t = -dt/2</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(steps):</span><br><span class="line">        h -= S * (np.roll(e, -<span class="number">1</span>) - e)</span><br><span class="line">        e -= S * (h - np.roll(h, <span class="number">1</span>))</span><br><span class="line">    exact = np.sin(k * z) * np.cos(k * final_time)</span><br><span class="line">    <span class="keyword">return</span> np.sqrt(np.mean((e - exact)**<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">errors = [periodic_mode(n) <span class="keyword">for</span> n <span class="keyword">in</span> (<span class="number">40</span>, <span class="number">80</span>, <span class="number">160</span>, <span class="number">320</span>)]</span><br><span class="line">orders = np.log2(np.array(errors[:-<span class="number">1</span>]) / np.array(errors[<span class="number">1</span>:]))</span><br><span class="line"><span class="built_in">print</span>(errors)</span><br><span class="line"><span class="built_in">print</span>(orders)</span><br></pre></td></tr></table></figure>
+
+<p>本文配套脚本的实际运行结果为：</p>
+<table>
+<thead>
+<tr>
+<th>周期区域网格数</th>
+<th>电场 RMS 误差</th>
+<th>与上一档比较的收敛阶</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>40</td>
+<td><script type="math/tex">1.03897\times10^{-2}</script></td>
+<td>—</td>
+</tr>
+<tr>
+<td>80</td>
+<td><script type="math/tex">2.57430\times10^{-3}</script></td>
+<td>2.0129</td>
+</tr>
+<tr>
+<td>160</td>
+<td><script type="math/tex">6.37341\times10^{-4}</script></td>
+<td>2.0140</td>
+</tr>
+<tr>
+<td>320</td>
+<td><script type="math/tex">1.58553\times10^{-4}</script></td>
+<td>2.0071</td>
+</tr>
+</tbody></table>
+<p><img src="/img/fdtd-algorithm-metalens/03-solver-convergence.png" alt="实际运行的一维 Yee 求解器与二阶收敛验证"></p>
+<p><em>图 5｜左图比较数值场和连续方程解析解；右图显示网格加密后误差近似按二阶下降。它验证的是无损、均匀、周期一维基准，不包含 PML、色散材料或三维超构透镜。</em></p>
+<p>这组结果的意义是：代码实现了预期的交错更新，并在这个光滑基准上呈现二阶收敛。更完整的求解器仍应加入其他独立基准，例如介质平面界面的 Fresnel 反射、均匀层的传输矩阵解、散射体的解析解，以及 PML 残余反射测试。</p>
+<p>下载 <a href="/downloads/fdtd-algorithm-metalens/figures-and-checks.py">完整绘图与验证脚本</a> 和 <a href="/downloads/fdtd-algorithm-metalens/validation.json">本次运行数值记录</a>。安装 NumPy、Matplotlib 后，在脚本所在目录运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python figures-and-checks.py --output-dir figures</span><br></pre></td></tr></table></figure>
+
+<p>脚本会生成本文五张教学图和 <code>validation.json</code>。AI 概念封面独立于数值脚本生成；其<a href="/downloads/fdtd-algorithm-metalens/imagegen-prompt.json">生成提示词与来源记录</a>也一并提供。</p>
+<h2 id="15-从“会运行”走到“结果可信”"><a href="#15-从“会运行”走到“结果可信”" class="headerlink" title="15. 从“会运行”走到“结果可信”"></a>15. 从“会运行”走到“结果可信”</h2><p>FDTD 的核心并不复杂：用中心差分替代导数，将电场与磁场错开放置，再交替更新时间层。难点在于让材料、几何、激励、边界和测量定义共同对应同一个物理问题。</p>
+<p>在超构透镜中，目标相位给出设计方向，周期单元库提供局部响应，有限器件计算揭示耦合与边缘效应，传播与功率积分连接到焦斑和效率。每一步都有可以检验的假设，也有各自的误差来源。</p>
+<p>读一份仿真报告时，可以沿着五个问题检查它：实际求解的几何和材料是什么；电磁边界代表什么环境；输出量怎样归一化；结果是否随网格、时间和边界收敛；简化模型是否经过独立基准或更完整模型的比较。能够回答这些问题，场图中的亮点才有清楚的物理含义。</p>
+<h2 id="参考资料与进一步阅读"><a href="#参考资料与进一步阅读" class="headerlink" title="参考资料与进一步阅读"></a>参考资料与进一步阅读</h2><ol>
+<li>K. S. Yee, “Numerical solution of initial boundary value problems involving Maxwell’s equations in isotropic media,” <em>IEEE Transactions on Antennas and Propagation</em>, 14(3), 302–307 (1966). <a target="_blank" rel="noopener" href="https://doi.org/10.1109/TAP.1966.1138693">DOI: 10.1109&#x2F;TAP.1966.1138693</a>。交错网格 FDTD 的原始论文。</li>
+<li>John B. Schneider, <a target="_blank" rel="noopener" href="https://eecs.wsu.edu/~schneidj/ufdtd/">Understanding the FDTD Method</a>。开放教材；可重点阅读一维更新、数值色散、二维与三维算法等章节。</li>
+<li>Meep 文档：<a target="_blank" rel="noopener" href="https://meep.readthedocs.io/en/latest/Introduction/">Introduction</a>、<a target="_blank" rel="noopener" href="https://meep.readthedocs.io/en/latest/Materials/">Materials</a>、<a target="_blank" rel="noopener" href="https://meep.readthedocs.io/en/latest/Perfectly_Matched_Layer/">Perfectly Matched Layers</a>。用于理解实际求解器中的网格、色散材料与吸收层。</li>
+<li>Ansys Optics：<a target="_blank" rel="noopener" href="https://optics.ansys.com/hc/en-us/articles/35797097445779-Introduction-to-metalens-workflows">Introduction to metalens workflows</a>。比较不同尺度下的超构透镜建模方法。</li>
+<li>Ansys Optics：<a target="_blank" rel="noopener" href="https://optics.ansys.com/hc/en-us/articles/360042097313-Small-Scale-Metalens-Field-Propagation">Small-Scale Metalens – Field Propagation</a>。单元响应、场重建、有限器件仿真及传播的应用示例。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/">http://talescuber.github.io/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/FDTD/">FDTD</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E7%94%B5%E7%A3%81%E5%AD%A6/">计算电磁学</a><a class="post-meta__tags" href="/tags/%E8%B6%85%E6%9E%84%E9%80%8F%E9%95%9C/">超构透镜</a></div><div class="post_share"><div class="social-share" data-image="/img/fdtd-algorithm-metalens/00-cover.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解"><img class="cover" src="/img/rcwa/01-geometry.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解"><img class="cover" src="/img/rcwa/01-geometry.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-22</div><div class="title">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</div></div></a></div><div><a href="/2026/08/08/%E5%AD%A6%E4%B9%A0/AI%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0FDTD%E4%BB%BF%E7%9C%9F%E8%87%AA%E5%8A%A8%E5%8C%96/" title="让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-08</div><div class="title">让 AI 替你跑 FDTD 仿真：编程 Agent 全自动设计优化实战</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">80</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-FDTD-%E5%88%B0%E5%BA%95%E5%9C%A8%E6%B1%82%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">1. FDTD 到底在求什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%8E%E6%97%8B%E5%BA%A6%E6%96%B9%E7%A8%8B%E5%87%BA%E5%8F%91"><span class="toc-text">1.1 从旋度方程出发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%95%A3%E5%BA%A6%E6%96%B9%E7%A8%8B%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F"><span class="toc-text">1.2 散度方程去哪了？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E2%80%9C%E5%85%A8%E6%B3%A2%E2%80%9D%E6%84%8F%E5%91%B3%E7%9D%80%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">1.3 “全波”意味着什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Yee-%E7%BD%91%E6%A0%BC%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8A%8A%E7%94%B5%E5%9C%BA%E5%92%8C%E7%A3%81%E5%9C%BA%E9%94%99%E5%BC%80%E6%94%BE%EF%BC%9F"><span class="toc-text">2. Yee 网格：为什么要把电场和磁场错开放？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%AD%E5%BF%83%E5%B7%AE%E5%88%86%E7%9A%84%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="toc-text">2.1 中心差分的几何意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A9%BA%E9%97%B4%E4%BA%A4%E9%94%99%EF%BC%8C%E6%97%B6%E9%97%B4%E4%B9%9F%E4%BA%A4%E9%94%99"><span class="toc-text">2.2 空间交错，时间也交错</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%88%E4%BB%8E%E4%B8%80%E7%BB%B4%E6%8E%A8%E5%AF%BC%E5%87%BA%E5%AE%8C%E6%95%B4%E6%9B%B4%E6%96%B0%E6%96%B9%E7%A8%8B"><span class="toc-text">3. 先从一维推导出完整更新方程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%8E%E4%B8%80%E7%BB%B4%E6%89%A9%E5%B1%95%E5%88%B0%E4%BA%8C%E7%BB%B4%E4%B8%8E%E4%B8%89%E7%BB%B4"><span class="toc-text">4. 从一维扩展到二维与三维</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-CFL-%E6%9D%A1%E4%BB%B6%E4%BF%9D%E8%AF%81%E7%A8%B3%E5%AE%9A%EF%BC%8C%E7%BD%91%E6%A0%BC%E6%94%B6%E6%95%9B%E5%86%B3%E5%AE%9A%E7%B2%BE%E5%BA%A6"><span class="toc-text">5. CFL 条件保证稳定，网格收敛决定精度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%97%B6%E9%97%B4%E6%AD%A5%E4%B8%8D%E8%83%BD%E9%9A%8F%E6%84%8F%E5%A2%9E%E5%A4%A7"><span class="toc-text">5.1 时间步不能随意增大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E6%B2%A1%E6%9C%89%E5%8F%91%E6%95%A3%E2%80%9D%E4%BB%8D%E7%84%B6%E5%8F%AF%E8%83%BD%E7%AE%97%E9%94%99%EF%BC%9F"><span class="toc-text">5.2 为什么“没有发散”仍然可能算错？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%BD%91%E6%A0%BC%E9%9C%80%E8%A6%81%E5%90%8C%E6%97%B6%E7%9C%8B%E6%B3%A2%E9%95%BF%E5%92%8C%E5%87%A0%E4%BD%95"><span class="toc-text">5.3 网格需要同时看波长和几何</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9D%90%E6%96%99%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4%E5%BE%AA%E7%8E%AF%EF%BC%9F"><span class="toc-text">6. 材料如何进入更新时间循环？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E7%94%B5%E5%AF%BC%E6%8D%9F%E8%80%97%EF%BC%9A%E5%AF%B9%E8%80%97%E6%95%A3%E9%A1%B9%E5%81%9A%E6%97%B6%E9%97%B4%E4%B8%AD%E5%BF%83%E5%B9%B3%E5%9D%87"><span class="toc-text">6.1 电导损耗：对耗散项做时间中心平均</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%89%B2%E6%95%A3%E6%9D%90%E6%96%99%EF%BC%9A%E9%9C%80%E8%A6%81%E8%AE%B0%E4%BD%8F%E6%9D%90%E6%96%99%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="toc-text">6.2 色散材料：需要记住材料的历史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%BB%8E%E5%AE%9E%E6%B5%8B-n%E3%80%81k-%E5%88%B0%E6%B1%82%E8%A7%A3%E5%99%A8%E6%9D%90%E6%96%99"><span class="toc-text">6.3 从实测 n、k 到求解器材料</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E5%86%B3%E5%AE%9A%E4%BD%A0%E7%A9%B6%E7%AB%9F%E6%A8%A1%E6%8B%9F%E4%BA%86%E5%93%AA%E4%B8%AA%E7%89%A9%E7%90%86%E9%97%AE%E9%A2%98"><span class="toc-text">7. 边界条件决定你究竟模拟了哪个物理问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-PML%EF%BC%9A%E8%AE%A9%E7%A6%BB%E5%BC%80%E7%9A%84%E6%B3%A2%E8%BF%9B%E5%85%A5%E5%90%B8%E6%94%B6%E5%B1%82"><span class="toc-text">7.1 PML：让离开的波进入吸收层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%91%A8%E6%9C%9F%E4%B8%8E-Bloch-%E8%BE%B9%E7%95%8C%EF%BC%9A%E6%A8%A1%E6%8B%9F%E6%97%A0%E9%99%90%E9%87%8D%E5%A4%8D"><span class="toc-text">7.2 周期与 Bloch 边界：模拟无限重复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E5%AF%B9%E7%A7%B0%E8%BE%B9%E7%95%8C%EF%BC%9A%E7%BB%93%E6%9E%84%E5%AF%B9%E7%A7%B0%E8%BF%98%E4%B8%8D%E5%A4%9F"><span class="toc-text">7.3 对称边界：结构对称还不够</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%85%89%E6%BA%90%E4%B8%8E%E7%9B%91%E8%A7%86%E5%99%A8%EF%BC%9A%E4%BB%8E%E6%97%B6%E9%97%B4%E6%B3%A2%E5%BD%A2%E5%BE%97%E5%88%B0%E9%A2%91%E8%B0%B1"><span class="toc-text">8. 光源与监视器：从时间波形得到频谱</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%AE%BD%E5%B8%A6%E8%84%89%E5%86%B2%E5%92%8C%E5%8D%95%E9%A2%91%E6%BF%80%E5%8A%B1"><span class="toc-text">8.1 宽带脉冲和单频激励</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E5%9C%A8%E7%BA%BF%E5%82%85%E9%87%8C%E5%8F%B6%E7%A7%AF%E7%B4%AF"><span class="toc-text">8.2 在线傅里叶积累</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E9%80%8F%E5%B0%84%E7%9B%B8%E4%BD%8D%E4%B8%8E%E5%8A%9F%E7%8E%87%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%80%E4%B8%AA%E9%87%8F"><span class="toc-text">8.3 透射相位与功率不是同一个量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%85%88%E7%AE%97%E7%AE%97%EF%BC%9A%E4%B8%80%E6%AC%A1%E4%B8%89%E7%BB%B4-FDTD-%E8%A6%81%E4%BB%98%E5%87%BA%E5%A4%9A%E5%B0%91%E4%BB%A3%E4%BB%B7%EF%BC%9F"><span class="toc-text">9. 先算算：一次三维 FDTD 要付出多少代价？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%B6%85%E6%9E%84%E9%80%8F%E9%95%9C%E8%AE%BE%E8%AE%A1%EF%BC%9A%E6%8A%8A%E7%9B%AE%E6%A0%87%E6%B3%A2%E5%89%8D%E5%8F%98%E6%88%90%E7%BA%B3%E7%B1%B3%E7%BB%93%E6%9E%84"><span class="toc-text">10. 超构透镜设计：把目标波前变成纳米结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E7%90%86%E6%83%B3%E8%81%9A%E7%84%A6%E7%9B%B8%E4%BD%8D%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5%EF%BC%9F"><span class="toc-text">10.1 理想聚焦相位从哪里来？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%8D%95%E5%85%83%E5%BA%93%EF%BC%9A%E6%B1%82%E7%9A%84%E6%98%AF%E5%A4%8D%E6%95%B0%E5%93%8D%E5%BA%94"><span class="toc-text">10.2 单元库：求的是复数响应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E5%8D%95%E5%85%83%E5%BA%93%E7%9A%84%E5%B1%80%E5%9F%9F%E5%91%A8%E6%9C%9F%E8%BF%91%E4%BC%BC"><span class="toc-text">10.3 单元库的局域周期近似</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BB%8E%E5%8D%95%E5%85%83%E5%88%B0%E6%95%B4%E7%89%87%E9%80%8F%E9%95%9C%EF%BC%9A%E8%BE%B9%E7%95%8C%E3%80%81%E8%BF%91%E5%9C%BA%E4%B8%8E%E4%BC%A0%E6%92%AD"><span class="toc-text">11. 从单元到整片透镜：边界、近场与传播</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%A4%8D%E7%8E%B0%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">11.1 一个可复现的工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%B8%8D%E6%8A%8A%E7%84%A6%E7%82%B9%E6%94%BE%E8%BF%9B-FDTD-%E5%8C%BA%E5%9F%9F%EF%BC%9F"><span class="toc-text">11.2 为什么可以不把焦点放进 FDTD 区域？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E5%AF%B9%E7%A7%B0%E8%AE%A1%E7%AE%97%E8%83%BD%E8%AF%81%E6%98%8E%E5%88%B0%E4%BB%80%E4%B9%88%E7%A8%8B%E5%BA%A6%EF%BC%9F"><span class="toc-text">11.3 对称计算能证明到什么程度？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%80%8E%E6%A0%B7%E5%AE%9A%E4%B9%89%E2%80%9C%E8%81%9A%E7%84%A6%E5%BE%97%E5%A5%BD%E2%80%9D%EF%BC%9F"><span class="toc-text">12. 怎样定义“聚焦得好”？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E7%84%A6%E8%B7%9D%E3%80%81%E7%84%A6%E6%96%91%E4%B8%8E%E6%97%81%E7%93%A3"><span class="toc-text">12.1 焦距、焦斑与旁瓣</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E8%81%9A%E7%84%A6%E6%95%88%E7%8E%87%E5%BF%85%E9%A1%BB%E5%86%99%E6%B8%85%E5%88%86%E6%AF%8D%E4%B8%8E%E7%A7%AF%E5%88%86%E5%8C%BA%E5%9F%9F"><span class="toc-text">12.2 聚焦效率必须写清分母与积分区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-3-%E8%83%BD%E9%87%8F%E6%A3%80%E6%9F%A5%E8%A6%81%E8%A6%86%E7%9B%96%E6%89%80%E6%9C%89%E5%87%BA%E8%B7%AF"><span class="toc-text">12.3 能量检查要覆盖所有出路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%A4%9A%E6%B3%A2%E9%95%BF%E3%80%81%E6%B6%88%E8%89%B2%E5%B7%AE%E4%B8%8E%E6%95%B0%E5%80%BC%E6%94%B6%E6%95%9B"><span class="toc-text">13. 多波长、消色差与数值收敛</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-%E6%89%AB%E6%8F%8F%E4%B8%80%E7%89%87%E5%9B%BA%E5%AE%9A%E5%99%A8%E4%BB%B6%EF%BC%8C%E6%89%8D%E6%98%AF%E5%9C%A8%E7%A0%94%E7%A9%B6%E5%AE%83%E7%9A%84%E8%89%B2%E5%B7%AE"><span class="toc-text">13.1 扫描一片固定器件，才是在研究它的色差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-%E5%8D%95%E9%A2%91%E7%9B%B8%E4%BD%8D%E8%A6%86%E7%9B%96%E4%B8%8D%E7%AD%89%E4%BA%8E%E6%B6%88%E8%89%B2%E5%B7%AE"><span class="toc-text">13.2 单频相位覆盖不等于消色差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-%E6%94%B6%E6%95%9B%E7%A0%94%E7%A9%B6%E5%BA%94%E8%AF%A5%E6%A3%80%E6%9F%A5%E5%93%AA%E4%BA%9B%E9%87%8F%EF%BC%9F"><span class="toc-text">13.3 收敛研究应该检查哪些量？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%8F%AF%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B%EF%BC%9A%E7%94%A8%E8%A7%A3%E6%9E%90%E9%A9%BB%E6%B3%A2%E6%A3%80%E9%AA%8C%E4%B8%80%E7%BB%B4-FDTD"><span class="toc-text">14. 可运行示例：用解析驻波检验一维 FDTD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E4%BB%8E%E2%80%9C%E4%BC%9A%E8%BF%90%E8%A1%8C%E2%80%9D%E8%B5%B0%E5%88%B0%E2%80%9C%E7%BB%93%E6%9E%9C%E5%8F%AF%E4%BF%A1%E2%80%9D"><span class="toc-text">15. 从“会运行”走到“结果可信”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E4%B8%8E%E8%BF%9B%E4%B8%80%E6%AD%A5%E9%98%85%E8%AF%BB"><span class="toc-text">参考资料与进一步阅读</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/fdtd-algorithm-metalens/" title="FDTD 算法详解：从 Maxwell 方程到超构透镜仿真">FDTD 算法详解：从 Maxwell 方程到超构透镜仿真</a><time datetime="2026-09-22T10:08:22.000Z" title="发表于 2026-09-22 18:08:22">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/rcwa-from-maxwell-to-scattering-matrix/" title="从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解">从麦克斯韦方程到散射矩阵：RCWA 严格耦合波分析详解</a><time datetime="2026-09-21T16:18:21.000Z" title="发表于 2026-09-22 00:18:21">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/22/%E5%AD%A6%E4%B9%A0/pdh-laser-frequency-stabilization/" title="PDH 激光稳频详解：从边带干涉到闭环噪声">PDH 激光稳频详解：从边带干涉到闭环噪声</a><time datetime="2026-09-21T16:03:06.000Z" title="发表于 2026-09-22 00:03:06">2026-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/21/%E5%AD%A6%E4%B9%A0/ray-transfer-matrix/" title="光线传输矩阵：从近轴光线到成像系统与激光谐振腔">光线传输矩阵：从近轴光线到成像系统与激光谐振腔</a><time datetime="2026-09-21T11:18:03.000Z" title="发表于 2026-09-21 19:18:03">2026-09-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
