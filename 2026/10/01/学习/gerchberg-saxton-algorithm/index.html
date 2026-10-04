@@ -1,0 +1,627 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GS 算法详解：从相位恢复到纯相位全息图 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从光场与强度的区别出发，推导 Gerchberg–Saxton 算法的双平面振幅约束、复平面投影与误差下降性质，结合六组原创配图、九光斑全息图数值实验和完整 Python 代码，讨论采样、收敛、SLM 实现及改进方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GS 算法详解：从相位恢复到纯相位全息图">
+<meta property="og:url" content="http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从光场与强度的区别出发，推导 Gerchberg–Saxton 算法的双平面振幅约束、复平面投影与误差下降性质，结合六组原创配图、九光斑全息图数值实验和完整 Python 代码，讨论采样、收敛、SLM 实现及改进方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/gerchberg-saxton/01-two-planes.png">
+<meta property="article:published_time" content="2026-10-01T14:48:10.000Z">
+<meta property="article:modified_time" content="2026-10-01T16:54:50.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="傅里叶光学">
+<meta property="article:tag" content="相位恢复">
+<meta property="article:tag" content="计算全息">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/gerchberg-saxton/01-two-planes.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GS 算法详解：从相位恢复到纯相位全息图',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-02 00:54:50'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="e195196fd5c9b127fba05c90c26e674e0ec09983b3c7cb531c6a8edd6ce6c751";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">GS 算法详解：从相位恢复到纯相位全息图</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-01T16:54:50.000Z" title="更新于 2026-10-02 00:54:50">2026-10-02</time><span class="post-meta-separator">|</span><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-01T14:48:10.000Z" title="发表于 2026-10-01 22:48:10">2026-10-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>20分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GS 算法详解：从相位恢复到纯相位全息图"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>如果相机只能拍到光强，怎样知道光波的相位？反过来，如果一块空间光调制器只能改变相位，怎样让一束高斯光在远处形成指定的光强图案？</p>
+<p>这两个问题分别属于<strong>相位恢复</strong>与<strong>计算全息设计</strong>。它们都可以从同一个简单的迭代思想出发：<strong>在两个由传播关系连接的平面之间往返，每到一个平面，就把振幅改成已知值，同时保留当前估计的相位。</strong></p>
+<p>这就是本文讨论的 <strong>Gerchberg–Saxton 算法，简称 GS 算法</strong>。这里的 GS 不是数值线性代数中的 Gauss–Seidel 迭代。Gerchberg 与 Saxton 在 1972 年提出的方法针对成像面和衍射面强度已知时的相位问题；此后，这种迭代结构也成为计算全息的重要起点。早期工作的背景可参见 <a target="_blank" rel="noopener" href="https://www.nature.com/articles/240404a0">Gerchberg 的同期实验论文</a>。</p>
+<p><img src="/img/gerchberg-saxton/01-two-planes.png" alt="GS 的两个已知振幅平面，以及需要设计的输入相位"></p>
+<p><em>图 1｜已知两端的光强，中间缺少的是相位。中图是本文九光斑算例计算出的输入相位，左右分别为入射光强和目标光强。两张光强图分别按自身范围显示，不能凭颜色比较两平面的峰值；相位色标单位为弧度，孔径外振幅为零、相位无物理意义，统一用浅灰色遮罩。本文六组图均由明确的公式、几何或数值计算生成，源码见文末。</em></p>
+<p>本文先建立数学模型，再推导每一步为什么这样做，最后用可复现的九光斑算例解释算法的能力和局限。阅读时最需要分清三件事：<strong>振幅不等于强度、强制约束后的场不等于实际传播的场、误差下降不等于相位唯一或全局最优。</strong></p>
+<span id="more"></span>
+
+<h2 id="1-相机究竟丢掉了什么？"><a href="#1-相机究竟丢掉了什么？" class="headerlink" title="1. 相机究竟丢掉了什么？"></a>1. 相机究竟丢掉了什么？</h2><h3 id="1-1-复光场、振幅、相位与强度"><a href="#1-1-复光场、振幅、相位与强度" class="headerlink" title="1.1 复光场、振幅、相位与强度"></a>1.1 复光场、振幅、相位与强度</h3><p>在单色、标量模型下，一个横截面上的复光场可以写成</p>
+<div class="math-display">
+$$
+u(x,y)=a(x,y)e^{i\phi(x,y)},\qquad a(x,y)\geq0.
+$$
+</div>
+
+<p>其中 <script type="math/tex">a</script> 是振幅，<script type="math/tex">\phi</script> 是相位。省略介质阻抗等固定系数后，相机测到的强度是</p>
+<div class="math-display">
+$$
+I(x,y)=|u(x,y)|^2=a^2(x,y).
+$$
+</div>
+
+<p>因此，从强度得到振幅要取平方根：<script type="math/tex">a=\sqrt I</script>。如果把灰度图的像素值定义为目标强度，送入 GS 振幅约束的应当是灰度值的平方根。直接使用灰度值作为振幅，会把期望的强度轮廓再次平方。</p>
+<p>相位描述不同位置的波振动到哪一步。相机不能在一个像素的强度读数中直接给出这个信息，但相位会影响不同位置的光传播后如何相干叠加，所以会改变另一个平面的强度。<strong>GS 就是利用传播把相位信息间接编码到第二张强度图中的事实。</strong></p>
+<h3 id="1-2-为什么不是一次逆傅里叶变换就够了？"><a href="#1-2-为什么不是一次逆傅里叶变换就够了？" class="headerlink" title="1.2 为什么不是一次逆傅里叶变换就够了？"></a>1.2 为什么不是一次逆傅里叶变换就够了？</h3><p>设目标面复场为 <script type="math/tex">v=b e^{i\psi}</script>。如果振幅 <script type="math/tex">b</script> 和相位 <script type="math/tex">\psi</script> 都已知，那么 <script type="math/tex">u=\mathcal F^{-1}v</script> 就给出输入复场。但实验或设计任务通常只给出 <script type="math/tex">b</script>。</p>
+<p>直接计算 <script type="math/tex">\mathcal F^{-1}b</script>，实际上偷偷假设了目标面相位处处为零。得到的输入振幅通常既不等于测得的物面振幅，也不等于照射在 SLM 上的固定光束振幅。GS 的迭代，就是逐步调整这个未知目标相位，使反传结果更符合输入面的要求。</p>
+<h2 id="2-一个数学框架，两类不同任务"><a href="#2-一个数学框架，两类不同任务" class="headerlink" title="2. 一个数学框架，两类不同任务"></a>2. 一个数学框架，两类不同任务</h2><p>本文将离散输入场记为 <script type="math/tex">u</script>，输出场记为 <script type="math/tex">v</script>，并采用<strong>单位化二维离散傅里叶变换</strong>：</p>
+<div class="math-display">
+$$
+v=\mathcal Fu,\qquad u=\mathcal F^{-1}v,
+\qquad \|\mathcal Fu\|_2=\|u\|_2.
+$$
+</div>
+
+<p>最后一个等式是 Parseval 能量关系。这里的范数包含数组中全部像素。</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>输入面已知什么</th>
+<th>输出面已知什么</th>
+<th>最终想得到什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>双平面相位恢复</td>
+<td>测得的振幅 <script type="math/tex">a=\sqrt{I_{\mathrm{in}}}</script></td>
+<td>测得的振幅 <script type="math/tex">b=\sqrt{I_{\mathrm{out}}}</script></td>
+<td>与测量及先验相容的未知相位</td>
+</tr>
+<tr>
+<td>纯相位全息设计</td>
+<td>光束和孔径决定的振幅 <script type="math/tex">a</script></td>
+<td>人为设定的目标振幅 <script type="math/tex">b</script></td>
+<td>能产生接近目标强度的输入相位</td>
+</tr>
+</tbody></table>
+<p>相位恢复中，理想无噪声数据应来自同一个真实场；全息设计中，两个振幅往往是分别指定的，<strong>未必存在任何相位能同时精确满足它们</strong>。后者即使实现完全正确，也可能只能得到近似解。</p>
+<h3 id="2-1-先满足必要的功率条件"><a href="#2-1-先满足必要的功率条件" class="headerlink" title="2.1 先满足必要的功率条件"></a>2.1 先满足必要的功率条件</h3><p>在本文单位化、完整采样且无损的离散模型中，精确解必须满足</p>
+<div class="math-display">
+$$
+\sum_{m,n}a_{mn}^2=\sum_{p,q}b_{pq}^2.
+$$
+</div>
+
+<p>设计目标只指定形状时，可以先令 <script type="math/tex">b_0=\sqrt{I_{\mathrm{target}}}</script>，再统一缩放：</p>
+<div class="math-display">
+$$
+b=b_0\frac{\|a\|_2}{\|b_0\|_2}.
+$$
+</div>
+
+<p>这是功率匹配，不代表两个约束已经兼容。若功率没有匹配，反三角不等式直接给出</p>
+<div class="math-display">
+$$
+\big\||\mathcal Fu|-b\big\|_2
+\geq \left|\|a\|_2-\|b\|_2\right|.
+$$
+</div>
+
+<p>也就是说，单是总功率不一致，就已经规定了一个无法靠迭代消除的误差下限。</p>
+<p>真实测量要考虑像素面积、曝光时间、相机增益、光路损耗以及有限探测范围。不能将两幅未经标定、视场不同的相机照片简单归一化，就宣称它们构成一致的完整双平面数据。</p>
+<h2 id="3-为什么“保留相位、替换振幅”有道理？"><a href="#3-为什么“保留相位、替换振幅”有道理？" class="headerlink" title="3. 为什么“保留相位、替换振幅”有道理？"></a>3. 为什么“保留相位、替换振幅”有道理？</h2><p>暂时只看一个像素。当前复数为 <script type="math/tex">z=r e^{i\theta}</script>，已知这个像素应有振幅 <script type="math/tex">b</script>，所以允许的复数必须落在半径为 <script type="math/tex">b</script> 的圆周上。</p>
+<p>在这些允许点中，寻找离当前值最近的点：</p>
+<div class="math-display">
+$$
+\min_{\alpha}\left|r e^{i\theta}-b e^{i\alpha}\right|^2.
+$$
+</div>
+
+<p>将模平方展开：</p>
+<div class="math-display">
+$$
+\left|r e^{i\theta}-b e^{i\alpha}\right|^2
+=r^2+b^2-2rb\cos(\theta-\alpha).
+$$
+</div>
+
+<p>当 <script type="math/tex">r,b>0</script> 时，余弦取最大值，距离就最小，因此 <script type="math/tex">\alpha=\theta\pmod{2\pi}</script>。最小距离是 <script type="math/tex">|r-b|</script>。于是逐像素投影可以写成</p>
+<div class="math-display">
+$$
+P_b(z)=b e^{i\arg z}.
+$$
+</div>
+
+<p><img src="/img/gerchberg-saxton/02-amplitude-projection.png" alt="复平面上的振幅投影：保持相角，将半径改为目标振幅"></p>
+<p><em>图 2｜振幅替换是欧氏距离意义下的最近点投影。圆周上的每一点都满足振幅要求，但集合不是凸集：两个允许点的平均值一般不在圆周上。图中半径归一为 1。</em></p>
+<p>两个边界情况需要说清楚：当 <script type="math/tex">b=0</script> 时，投影就是零；当 <script type="math/tex">z=0</script> 而 <script type="math/tex">b>0</script> 时，相位没有定义，圆周上所有点都同样近。代码中使用 <code>np.angle(0)=0</code> 是一种确定性的选择，也可以采用已有相位等约定。</p>
+<p>不要不加区分地写成 <code>b * z / (abs(z) + eps)</code>：它避免了除零，却让非零点的输出振幅也偏离 <script type="math/tex">b</script>，在严格零点更无法产生目标非零振幅。若要实现数学上的精确振幅投影，显式处理相位或零点更清楚。</p>
+<h2 id="4-从初值到完整的一次迭代"><a href="#4-从初值到完整的一次迭代" class="headerlink" title="4. 从初值到完整的一次迭代"></a>4. 从初值到完整的一次迭代</h2><h3 id="4-1-初始化"><a href="#4-1-初始化" class="headerlink" title="4.1 初始化"></a>4.1 初始化</h3><p>给输入面一个相位初值 <script type="math/tex">\phi_0</script>，构造</p>
+<div class="math-display">
+$$
+u_0=a e^{i\phi_0}.
+$$
+</div>
+
+<p>常见选择是独立随机相位，也可以使用平滑相位、透镜相位或上一次优化结果。初值会影响迭代路径。零相位并非永远错误，但在对称目标上可能让迭代长时间停留在特殊的对称结构中。</p>
+<h3 id="4-2-正向传播，并观察当前误差"><a href="#4-2-正向传播，并观察当前误差" class="headerlink" title="4.2 正向传播，并观察当前误差"></a>4.2 正向传播，并观察当前误差</h3><div class="math-display">
+$$
+v_k=\mathcal Fu_k=|v_k|e^{i\psi_k}.
+$$
+</div>
+
+<p>此时 <script type="math/tex">|v_k|^2</script> 才是第 <script type="math/tex">k</script> 个输入相位实际产生的模拟强度。它通常不等于目标 <script type="math/tex">b^2</script>。</p>
+<h3 id="4-3-在目标面施加振幅约束"><a href="#4-3-在目标面施加振幅约束" class="headerlink" title="4.3 在目标面施加振幅约束"></a>4.3 在目标面施加振幅约束</h3><div class="math-display">
+$$
+\hat v_k=P_b(v_k)=b e^{i\psi_k}.
+$$
+</div>
+
+<p>帽子表示“施加约束后的场”。这一步人为使目标振幅正确，但 <script type="math/tex">\hat v_k</script> 不一定能由当前输入振幅和某个可加载相位实现。</p>
+<h3 id="4-4-反向传播，再施加输入振幅约束"><a href="#4-4-反向传播，再施加输入振幅约束" class="headerlink" title="4.4 反向传播，再施加输入振幅约束"></a>4.4 反向传播，再施加输入振幅约束</h3><div class="math-display">
+$$
+\tilde u_k=\mathcal F^{-1}\hat v_k,
+\qquad
+u_{k+1}=P_a(\tilde u_k)
+=a e^{i\arg\tilde u_k}.
+$$
+</div>
+
+<p>反传得到的振幅通常偏离 <script type="math/tex">a</script>。将它恢复为 <script type="math/tex">a</script> 后，保留下来的新相位就是下一轮使用的相位。两端约束互相影响，必须反复协调。</p>
+<p><img src="/img/gerchberg-saxton/03-iteration-loop.png" alt="GS 正向变换、目标振幅投影、逆向变换和输入振幅投影的完整流程"></p>
+<p><em>图 3｜每一轮由两次变换和两次振幅投影构成。每次计算质量指标，都要使用目标面投影前的传播场。</em></p>
+<p>将上述步骤合成一个式子：</p>
+<div class="math-display">
+$$
+\boxed{u_{k+1}=P_a\mathcal F^{-1}P_b\mathcal Fu_k.}
+$$
+</div>
+
+<p>结束迭代后，应重新从最后的 <script type="math/tex">u_K</script> 正向传播一次，计算 <script type="math/tex">v_K=\mathcal Fu_K</script>。如果输出了更新后的相位，却报告更新前的强度或误差，就会出现相位图与验证结果相差一轮的问题。</p>
+<h2 id="5-GS-的误差为什么会下降，又为什么仍会失败？"><a href="#5-GS-的误差为什么会下降，又为什么仍会失败？" class="headerlink" title="5. GS 的误差为什么会下降，又为什么仍会失败？"></a>5. GS 的误差为什么会下降，又为什么仍会失败？</h2><h3 id="5-1-将两个约束放进同一个空间"><a href="#5-1-将两个约束放进同一个空间" class="headerlink" title="5.1 将两个约束放进同一个空间"></a>5.1 将两个约束放进同一个空间</h3><p>定义输入振幅约束集合和傅里叶振幅约束集合：</p>
+<div class="math-display">
+$$
+\mathcal A=\{u:|u|=a\},\qquad
+\mathcal B=\{u:|\mathcal Fu|=b\}.
+$$
+</div>
+
+<p>因为 <script type="math/tex">\mathcal F</script> 是酉变换，所以 <script type="math/tex">P_{\mathcal B}=\mathcal F^{-1}P_b\mathcal F</script> 也是对应欧氏距离的最近点投影。GS 就是在 <script type="math/tex">\mathcal A</script> 和 <script type="math/tex">\mathcal B</script> 之间交替投影。</p>
+<h3 id="5-2-误差不增的简洁推导"><a href="#5-2-误差不增的简洁推导" class="headerlink" title="5.2 误差不增的简洁推导"></a>5.2 误差不增的简洁推导</h3><p>令 <script type="math/tex">w_k=P_{\mathcal B}u_k</script>，定义未归一化振幅误差</p>
+<div class="math-display">
+$$
+d_k=\big\||\mathcal Fu_k|-b\big\|_2
+=\|u_k-w_k\|_2.
+$$
+</div>
+
+<p>由于 <script type="math/tex">u_{k+1}</script> 是 <script type="math/tex">w_k</script> 在 <script type="math/tex">\mathcal A</script> 中的最近点，而旧点 <script type="math/tex">u_k</script> 本来就属于 <script type="math/tex">\mathcal A</script>，所以</p>
+<div class="math-display">
+$$
+\|u_{k+1}-w_k\|_2\leq\|u_k-w_k\|_2.
+$$
+</div>
+
+<p>下一轮中，<script type="math/tex">w_{k+1}</script> 是 <script type="math/tex">u_{k+1}</script> 在 <script type="math/tex">\mathcal B</script> 中的最近点，而 <script type="math/tex">w_k</script> 也属于 <script type="math/tex">\mathcal B</script>，所以</p>
+<div class="math-display">
+$$
+\begin{aligned}
+d_{k+1}
+&=\|u_{k+1}-w_{k+1}\|_2\\
+&\leq\|u_{k+1}-w_k\|_2\\
+&\leq d_k.
+\end{aligned}
+$$
+</div>
+
+<p>因此，在<strong>固定振幅约束、精确投影、酉传播算子</strong>这些条件下，目标面振幅误差不增加。这里将经典误差下降论证用统一范数和投影记号展开；相关算法比较与原始讨论见 <a target="_blank" rel="noopener" href="https://sites.rochester.edu/fienup/wp-content/uploads/2019/07/AO82_PRComparison.pdf">Fienup，1982</a>。</p>
+<h3 id="5-3-这个证明没有保证什么？"><a href="#5-3-这个证明没有保证什么？" class="headerlink" title="5.3 这个证明没有保证什么？"></a>5.3 这个证明没有保证什么？</h3><p>它保证非负标量序列 <script type="math/tex">d_k</script> 有极限，却没有证明这个极限为零，也没有证明复场序列一定收敛到唯一解。</p>
+<p>原因在于：两个约束是非凸的，可能不相交；即使存在交点，局部迭代也可能停在误差非零的停滞状态，或者很长时间只发生极小改进。于是“迭代 300 次后曲线平了”不能直接翻译为“求出了正确相位”。</p>
+<p>更不能把上述结论直接套到其他指标。<strong>振幅误差不增，并不保证强度误差、每个光斑的均匀性或某个区域内的效率逐轮改善。</strong> 对加权目标、量化相位、裁剪传播、多平面组合等修改，也必须重新检查相应的算子和目标函数。</p>
+<h3 id="5-4-相位本身可能不唯一"><a href="#5-4-相位本身可能不唯一" class="headerlink" title="5.4 相位本身可能不唯一"></a>5.4 相位本身可能不唯一</h3><p>如果 <script type="math/tex">u</script> 是一个解，那么 <script type="math/tex">u e^{i\theta_0}</script> 具有相同的输入、输出强度。因此，全局相位通常不可观测。只有单幅傅里叶强度时，还常有平移、共轭反演等歧义；增加已知输入振幅或其他先验后，这些变换未必仍然满足全部约束，不能一概保留或一概排除。</p>
+<p>比较恢复相位和真值时，需要先消除可接受的全局相位差，并用环绕相位差 <script type="math/tex">\arg(e^{i(\phi_{\mathrm{rec}}-\phi_{\mathrm{true}})})</script>，而不是直接相减。振幅为零的位置没有可比较的物理相位，应从相位误差统计中排除。</p>
+<h2 id="6-怎样评价一个-GS-结果？"><a href="#6-怎样评价一个-GS-结果？" class="headerlink" title="6. 怎样评价一个 GS 结果？"></a>6. 怎样评价一个 GS 结果？</h2><p>最基本的指标是实际传播场的相对振幅误差：</p>
+<div class="math-display">
+$$
+E_A(k)=\frac{\big\||v_k|-b\big\|_2}{\|b\|_2}.
+$$
+</div>
+
+<p>全息图的视觉效果直接对应强度，因此还应报告</p>
+<div class="math-display">
+$$
+E_I(k)=\frac{\big\||v_k|^2-b^2\big\|_2}{\|b^2\|_2}.
+$$
+</div>
+
+<p>这两个量都无量纲，但含义不同。由于 <script type="math/tex">I=a^2</script>，在较亮区域的小振幅偏差会变成更显著的强度偏差；不能将 <script type="math/tex">E_A=0.1</script> 直接称为“强度误差 10%”。</p>
+<p>如果关心目标区域 <script type="math/tex">\Omega</script> 内收集到多少光，可以定义</p>
+<div class="math-display">
+$$
+\eta_\Omega=\frac{\sum_{(p,q)\in\Omega}|v_{pq}|^2}
+{\sum_{p,q}|v_{pq}|^2}.
+$$
+</div>
+
+<p>对光斑阵列，还可先在每个光斑周围同样大小的窗口中积分，得到功率 <script type="math/tex">P_j</script>，再用 <script type="math/tex">\mathrm{CV}=\mathrm{std}(P_j)/\mathrm{mean}(P_j)</script> 衡量均匀性。窗口尺寸必须一起报告，否则不同算例的效率或均匀性无法直接比较。</p>
+<p><strong>最容易制造“完美结果”的错误</strong>，是拿 <script type="math/tex">\hat v_k</script> 算误差。因为它的振幅被强制设为 <script type="math/tex">b</script>，此时误差几乎必然是零。正确做法是用可实现输入场 <script type="math/tex">a e^{i\phi_k}</script> 再传播，评估得到的 <script type="math/tex">v_k</script>。</p>
+<p>停止条件可以结合最大迭代次数、目标误差阈值，以及若干轮内的相对改进量。只有“改进很小”而没有达到任务精度要求时，应称为停滞，不能称为任务已经达标。</p>
+<h2 id="7-可复现实验：让高斯光变成九个光斑"><a href="#7-可复现实验：让高斯光变成九个光斑" class="headerlink" title="7. 可复现实验：让高斯光变成九个光斑"></a>7. 可复现实验：让高斯光变成九个光斑</h2><h3 id="7-1-数值条件"><a href="#7-1-数值条件" class="headerlink" title="7.1 数值条件"></a>7.1 数值条件</h3><p>这里设计的是<strong>纯相位全息图</strong>，不假设存在一个等待恢复的真实相位。模型采用无损、单色、标量、理想傅里叶传播；以下像素坐标都是模拟网格坐标。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网格</td>
+<td><script type="math/tex">256\times256</script></td>
+</tr>
+<tr>
+<td>输入振幅</td>
+<td><script type="math/tex">a(x,y)\propto\exp[-(x^2+y^2)/65^2]</script></td>
+</tr>
+<tr>
+<td>输入圆孔径</td>
+<td>半径 100 像素，外部振幅为零</td>
+</tr>
+<tr>
+<td>目标</td>
+<td><script type="math/tex">3\times3</script> 个等强二维高斯光斑</td>
+</tr>
+<tr>
+<td>光斑中心</td>
+<td>横、纵坐标各取 <script type="math/tex">-28,0,28</script> 像素</td>
+</tr>
+<tr>
+<td>单光斑强度标准差</td>
+<td><script type="math/tex">\sigma=3.5</script> 像素</td>
+</tr>
+<tr>
+<td>总功率</td>
+<td>输入和目标均归一为 1</td>
+</tr>
+<tr>
+<td>初相位</td>
+<td>NumPy <code>default_rng(7)</code>，在 <script type="math/tex">[-\pi,\pi)</script> 均匀分布</td>
+</tr>
+<tr>
+<td>GS 更新次数</td>
+<td>300</td>
+</tr>
+</tbody></table>
+<p>输入高斯表达式中的 65 是<strong>振幅降到 <script type="math/tex">1/e</script> 的半径</strong>，也是强度降到 <script type="math/tex">1/e^2</script> 的半径。目标中的 3.5 则是<strong>强度高斯的标准差</strong>，两种参数定义不能混淆。</p>
+<p><img src="/img/gerchberg-saxton/04-reconstruction.png" alt="九光斑目标以及第 0、1、10、50、300 次更新后的真实模拟强度"></p>
+<p><em>图 4｜目标及迭代结果的中心区域，所有子图共享同一个线性色标；超过目标峰值的部分按色标上限饱和显示，峰值差异另见图 5 的定量截面。第 0 次是随机相位初始结果；后续每幅图都从满足输入振幅约束的相位重新传播得到。显示裁剪到中心区域，但迭代及全局误差使用完整的 <script type="math/tex">256\times256</script> 网格；初始随机场的大量功率分散在图框之外。</em></p>
+<p>第一轮更新就把能量明显集中到目标区域，但继续迭代后仍可看到背景、局部起伏和光斑形状误差。GS 很快产生“像目标的图”，精确逼近则困难得多。</p>
+<h3 id="7-2-实际计算结果"><a href="#7-2-实际计算结果" class="headerlink" title="7.2 实际计算结果"></a>7.2 实际计算结果</h3><table>
+<thead>
+<tr>
+<th>完成的更新次数</th>
+<th>相对振幅误差 <script type="math/tex">E_A</script></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1.277382</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.478160</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.353803</td>
+</tr>
+<tr>
+<td>50</td>
+<td>0.308642</td>
+</tr>
+<tr>
+<td>300</td>
+<td>0.288974</td>
+</tr>
+</tbody></table>
+<p>300 次更新后的相对强度误差为 <strong>0.209418</strong>。以九个光斑中心为圆心、半径 8 像素的九个不重叠圆盘作为信号区域，重建光的区域功率占比为 **84.02%**，九个圆盘积分功率的变异系数为 **4.21%**。</p>
+<p>同样的圆盘只包含目标高斯总功率的 **92.24%**，因为高斯本身有尾部。因此，84.02% 是针对该区域定义的模拟功率占比，不能直接等同于 SLM 的实验衍射效率，也不能把区域外所有光都算成算法产生的杂散光。</p>
+<p><img src="/img/gerchberg-saxton/05-error-and-profile.png" alt="四个随机初值的 GS 振幅误差曲线与最终强度横截面"></p>
+<p><em>图 5｜左：随机种子 1、7、11、23 的振幅误差都不增，但到达不同的最终值。右：种子 7 的中心横截面，直接比较实际强度与目标强度，未对两条曲线分别按峰值归一化。</em></p>
+<p>四个种子的最终振幅误差约为 <strong>0.295570、0.288974、0.291237、0.296787</strong>。这说明多初值比较有实际价值，但这四次计算既不是全局最优性证明，也不能证明目标绝对不可实现。</p>
+<h3 id="7-3-数值实现做了哪些检查？"><a href="#7-3-数值实现做了哪些检查？" class="headerlink" title="7.3 数值实现做了哪些检查？"></a>7.3 数值实现做了哪些检查？</h3><p>随文程序检查了奇数和偶数网格上的 FFT 往返、Parseval 关系、与显式 DFT 矩阵的独立比较、输入振幅约束、全局相位不改变强度，以及全部四条误差曲线的不增性质。</p>
+<p>本次计算中，FFT 往返相对误差小于 <script type="math/tex">4.4\times10^{-16}</script>，显式 DFT 与 FFT 的相对差为 <script type="math/tex">2.03\times10^{-15}</script> 以内，最终功率相对偏差小于 <script type="math/tex">2.3\times10^{-16}</script>。这些结果验证了离散实现内部的一致性，<strong>并不替代实验光路、像素标定或真实器件响应的验证</strong>。</p>
+<h2 id="8-Python-实现：核心并不长"><a href="#8-Python-实现：核心并不长" class="headerlink" title="8. Python 实现：核心并不长"></a>8. Python 实现：核心并不长</h2><p>下面代码给出与本文算例相同的核心算法。数组必须同形状、有限、非负且具有非零总功率；示例在进入迭代前完成统一归一化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ft</span>(<span class="params">u</span>):</span><br><span class="line">    <span class="keyword">return</span> np.fft.fftshift(</span><br><span class="line">        np.fft.fft2(np.fft.ifftshift(u), norm=<span class="string">&quot;ortho&quot;</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ift</span>(<span class="params">v</span>):</span><br><span class="line">    <span class="keyword">return</span> np.fft.fftshift(</span><br><span class="line">        np.fft.ifft2(np.fft.ifftshift(v), norm=<span class="string">&quot;ortho&quot;</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gs</span>(<span class="params">a, b, steps=<span class="number">300</span>, seed=<span class="number">7</span></span>):</span><br><span class="line">    rng = np.random.default_rng(seed)</span><br><span class="line">    phi = rng.uniform(-np.pi, np.pi, a.shape)</span><br><span class="line">    u = a * np.exp(<span class="number">1j</span> * phi)</span><br><span class="line">    errors = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(steps + <span class="number">1</span>):</span><br><span class="line">        v = ft(u)</span><br><span class="line">        <span class="comment"># Measure BEFORE imposing the target amplitude.</span></span><br><span class="line">        errors.append(np.linalg.norm(np.<span class="built_in">abs</span>(v) - b)</span><br><span class="line">                      / np.linalg.norm(b))</span><br><span class="line">        <span class="keyword">if</span> k == steps:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        v_projected = b * np.exp(<span class="number">1j</span> * np.angle(v))</span><br><span class="line">        u_back = ift(v_projected)</span><br><span class="line">        u = a * np.exp(<span class="number">1j</span> * np.angle(u_back))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># v corresponds to exactly the returned phase.</span></span><br><span class="line">    <span class="keyword">return</span> np.angle(u), np.<span class="built_in">abs</span>(v)**<span class="number">2</span>, np.asarray(errors)</span><br><span class="line"></span><br><span class="line">n = <span class="number">256</span></span><br><span class="line">q = np.arange(n) - n // <span class="number">2</span></span><br><span class="line">x, y = np.meshgrid(q, q)</span><br><span class="line">a = np.exp(-(x*x + y*y) / <span class="number">65</span>**<span class="number">2</span>)</span><br><span class="line">a *= (x*x + y*y &lt;= <span class="number">100</span>**<span class="number">2</span>)</span><br><span class="line">a /= np.linalg.norm(a)</span><br><span class="line"></span><br><span class="line">target = <span class="built_in">sum</span>(</span><br><span class="line">    np.exp(-((x-cx)**<span class="number">2</span> + (y-cy)**<span class="number">2</span>) / (<span class="number">2</span>*<span class="number">3.5</span>**<span class="number">2</span>))</span><br><span class="line">    <span class="keyword">for</span> cy <span class="keyword">in</span> (-<span class="number">28</span>, <span class="number">0</span>, <span class="number">28</span>)</span><br><span class="line">    <span class="keyword">for</span> cx <span class="keyword">in</span> (-<span class="number">28</span>, <span class="number">0</span>, <span class="number">28</span>)</span><br><span class="line">)</span><br><span class="line">target /= target.<span class="built_in">sum</span>()</span><br><span class="line">b = np.sqrt(target)</span><br><span class="line">phase, reconstructed, error = gs(a, b)</span><br><span class="line"><span class="built_in">print</span>(error[<span class="number">0</span>], error[-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p><code>norm=&quot;ortho&quot;</code> 使变换酉归一化，输入、输出数组的模平方和可以直接比较。常规 FFT 默认归一化也能实现 GS，但必须一致处理功率尺度及误差定义。</p>
+<p><code>ifftshift → fft2/ifft2 → fftshift</code> 则保证以数组中央作为坐标原点。不要因为偶数网格下 <code>fftshift</code> 和 <code>ifftshift</code> 看起来可以互换，就在所有位置使用同一个移位操作；奇数网格会暴露这种错误。</p>
+<p>如果总像素数为 <script type="math/tex">M=N_xN_y</script>，一轮需要两次二维 FFT，计算复杂度约为 <script type="math/tex">O(M\log M)</script>，主工作数组的内存复杂度为 <script type="math/tex">O(M)</script>。目标图、相位图、多个中间复场和保存的历史都会增加实际内存用量。</p>
+<p>完整程序还会绘制本文六组图，比较四个初值，并导出误差指标与相位数组。它是可下载后直接运行的单文件程序，不依赖本博客代码。</p>
+<h2 id="9-FFT-数组怎样对应真实光学坐标？"><a href="#9-FFT-数组怎样对应真实光学坐标？" class="headerlink" title="9. FFT 数组怎样对应真实光学坐标？"></a>9. FFT 数组怎样对应真实光学坐标？</h2><h3 id="9-1-傅里叶变换成立的光学条件"><a href="#9-1-傅里叶变换成立的光学条件" class="headerlink" title="9.1 傅里叶变换成立的光学条件"></a>9.1 傅里叶变换成立的光学条件</h3><p>本文的传播关系适用于理想远场或适当的透镜傅里叶面模型。下面画出输入平面位于薄透镜前焦面、观察平面位于后焦面的标准结构，假定单色、近轴标量传播以及足够大的透镜孔径。</p>
+<p><img src="/img/gerchberg-saxton/06-optical-system.png" alt="SLM 输入面、透镜与后焦面相机的傅里叶光学示意图"></p>
+<p><em>图 6｜理想前焦面—后焦面系统，图中距离均为 <script type="math/tex">f</script>。反射式 SLM 在实际光路中还需要折转、偏振设置和可能的中继系统；图示只用于说明传播模型。</em></p>
+<p>物理后焦面场与输入面连续傅里叶变换对应，其频率坐标满足</p>
+<div class="math-display">
+$$
+\nu_x=\frac{X}{\lambda f},\qquad
+\nu_y=\frac{Y}{\lambda f}.
+$$
+</div>
+
+<p>整体常数、坐标尺度和由具体参考平面产生的已知相位因子，要与光学布局一致。若 SLM 实际位于透镜面，而不是前焦面，后焦面表达式会包含相应的已知相位因子；即使它不改变单个观察面的强度，也应在反向传播或扩展到其他平面时正确处理。</p>
+<h3 id="9-2-像素间距决定输出采样"><a href="#9-2-像素间距决定输出采样" class="headerlink" title="9.2 像素间距决定输出采样"></a>9.2 像素间距决定输出采样</h3><p>输入面计算像素间距为 <script type="math/tex">\Delta x</script>、横向点数为 <script type="math/tex">N_x</script> 时，DFT 的空间频率间距为 <script type="math/tex">1/(N_x\Delta x)</script>。于是后焦面像素间距为</p>
+<div class="math-display">
+$$
+\Delta X=\frac{\lambda f}{N_x\Delta x},\qquad
+L_X=N_x\Delta X=\frac{\lambda f}{\Delta x}.
+$$
+</div>
+
+<p>例如使用 <script type="math/tex">\lambda=532\thinspace\mathrm{nm}</script>、<script type="math/tex">f=200\thinspace\mathrm{mm}</script>、<script type="math/tex">\Delta x=8\thinspace\mu\mathrm m</script> 和 <script type="math/tex">N_x=256</script>，则</p>
+<div class="math-display">
+$$
+\Delta X\approx51.95\,\mu\mathrm m,
+\qquad L_X\approx13.30\,\mathrm{mm}.
+$$
+</div>
+
+<p>这是把当前 256 点网格解释为 8 微米采样间距时的示例，不是某款 SLM 的规格。若有中继放大率，要使用折算到所选输入平面的有效采样间距；相机坐标也要按成像倍率配准。</p>
+<h3 id="9-3-补零、分辨率与视场不要混为一谈"><a href="#9-3-补零、分辨率与视场不要混为一谈" class="headerlink" title="9.3 补零、分辨率与视场不要混为一谈"></a>9.3 补零、分辨率与视场不要混为一谈</h3><p>在固定输入采样间距和实际孔径下增加外围零填充，会减小输出采样间距，帮助更细地采样衍射图样，但不会增加真实孔径，也不会自动提升物理分辨率。物理细节尺度还受有效口径、波长和数值孔径约束。</p>
+<p>对于全息设计，零填充区域应始终属于输入零振幅区域，不能把新增像素当成可控制的 SLM 像素。DFT 还隐含周期延拓；图样靠近计算边界、传播区域过小或裁剪过强时，需要检查重复像和混叠影响。</p>
+<h2 id="10-从理想相位图到-SLM，还差哪些步骤？"><a href="#10-从理想相位图到-SLM，还差哪些步骤？" class="headerlink" title="10. 从理想相位图到 SLM，还差哪些步骤？"></a>10. 从理想相位图到 SLM，还差哪些步骤？</h2><p>算法输出的是弧度相位，SLM 接收的通常是数字灰度。最简单的线性映射只是理想化示例，真实液晶器件应使用工作波长、偏振和温度条件下标定的灰度—相位响应。</p>
+<p>首先，用实际入射光束的振幅和有效孔径替换理想高斯模型。其次，确认器件相位范围、位深、像素填充因子和坏点，并把这些约束反映到前向计算中。若只在最后将连续相位量化，必须用<strong>量化后的相位重新计算</strong>结果。</p>
+<p>常见加载相位还包含用于选级的载波和像差补偿：</p>
+<div class="math-display">
+$$
+\phi_{\mathrm{load}}=\operatorname{mod}
+\left(\phi_{\mathrm{GS}}+\phi_{\mathrm{carrier}}
+-\phi_{\mathrm{aberr}},2\pi\right).
+$$
+</div>
+
+<p>这里 <script type="math/tex">\phi_{\mathrm{aberr}}</script> 指与该输入平面等效的已测相位像差，符号约定应与标定一致。不同位置的像差不一定都能直接压缩成这张单平面相位图。线性载波会平移衍射图样，有助于通过空间滤波区分目标衍射级和未调制零级光，但要同时检查可用带宽、目标偏移和系统口径。</p>
+<p>实验检验的顺序应当是：加载实际可实现相位，拍摄目标面，做暗场及响应校正、坐标配准，再比较强度和积分功率。若模型与实测存在系统偏差，可以引入相机反馈来更新目标权重或补偿像差。这样形成的闭环包含真实测量误差，不能用理想仿真结果代替。</p>
+<h2 id="11-什么时候需要-GS-的改进版本？"><a href="#11-什么时候需要-GS-的改进版本？" class="headerlink" title="11. 什么时候需要 GS 的改进版本？"></a>11. 什么时候需要 GS 的改进版本？</h2><h3 id="11-1-多初值：先用最直接的办法诊断停滞"><a href="#11-1-多初值：先用最直接的办法诊断停滞" class="headerlink" title="11.1 多初值：先用最直接的办法诊断停滞"></a>11.1 多初值：先用最直接的办法诊断停滞</h3><p>使用多个随机种子，在相同计算预算下比较最终误差、效率与均匀性，往往比只给单个初值无限增加迭代次数更有信息量。不要只挑最好的一张图；至少保留初值、迭代次数和评价指标，才能复现。</p>
+<h3 id="11-2-加权-GS：针对光斑功率不均"><a href="#11-2-加权-GS：针对光斑功率不均" class="headerlink" title="11.2 加权 GS：针对光斑功率不均"></a>11.2 加权 GS：针对光斑功率不均</h3><p>对离散光斑阵列，可以根据当前各光斑的功率偏差调整下一轮目标权重，让偏弱的光斑得到更大的振幅要求。一个示意性的阻尼反馈形式是</p>
+<div class="math-display">
+$$
+w_j^{(k+1)}=w_j^{(k)}
+\left(\frac{P_j^\star}{P_j^{(k)}+\epsilon}\right)^{\gamma/2},
+\qquad 0<\gamma\leq1.
+$$
+</div>
+
+<p>这里 <script type="math/tex">w_j</script> 是目标光斑振幅权重，<script type="math/tex">P_j^\star</script> 和 <script type="math/tex">P_j^{(k)}</script> 分别是期望和当前积分功率。指数中的 <script type="math/tex">1/2</script> 来自振幅与功率的平方关系；<script type="math/tex">\epsilon</script> 与功率同单位，用于限制暗光斑引起的数值发散。</p>
+<p>这只是便于理解的反馈构造，<strong>不是所有“加权 GS”实现的统一公式</strong>。实际还需定义测量窗口、限制权重、统一功率尺度，并重新验证稳定性。因为目标权重随迭代改变，前面对固定目标的单调性证明不能直接沿用。</p>
+<h3 id="11-3-信号区与噪声区：把自由度用在重要位置"><a href="#11-3-信号区与噪声区：把自由度用在重要位置" class="headerlink" title="11.3 信号区与噪声区：把自由度用在重要位置"></a>11.3 信号区与噪声区：把自由度用在重要位置</h3><p>若实验只关心输出面的有限区域，就没必要要求整个平面都精确匹配一幅图。混合区域振幅自由度方法（MRAF）在信号区控制目标振幅，同时允许其他区域有更大振幅自由度，以换取关注区域的质量；代价可能是更多功率进入区域外。具体更新及性能应以 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/0712.0794">Pasienski 与 DeMarco 的原论文</a>为准。</p>
+<p>这也提示一个设计原则：背景是否必须严格为零，是物理任务要求，不应只是“目标图片的黑色像素”无意中施加的苛刻约束。</p>
+<h3 id="11-4-更换约束或传播模型"><a href="#11-4-更换约束或传播模型" class="headerlink" title="11.4 更换约束或传播模型"></a>11.4 更换约束或传播模型</h3><p>只有傅里叶强度、物面只有支持域或非负性先验时，问题与双振幅约束 GS 已不同，可以考虑误差下降法的其他形式或 HIO 等策略。HIO 包含反馈更新，不能简单理解为“把 GS 多跑几次”。</p>
+<p>对于近场、多个离焦平面或多层目标，需要将 <script type="math/tex">\mathcal F</script> 换成正确的菲涅耳或角谱传播算子，并为各平面定义约束与损失。在多个目标平面上达到一个约束，可能破坏另一个约束，更新顺序及权重也需要设计。</p>
+<p>尤其要区分<strong>逆算子</strong>和<strong>伴随算子</strong>：无损且离散为酉算子的模型中二者相同；带孔径裁剪、探测丢失、吸收或非酉重采样时通常不相同。不能在有信息丢失的模型中直接“反向传播一下”，就假设上述误差下降证明仍然成立。此时常需要显式优化目标及匹配的梯度、正则化或统计噪声模型。</p>
+<h2 id="12-常见问题与排查顺序"><a href="#12-常见问题与排查顺序" class="headerlink" title="12. 常见问题与排查顺序"></a>12. 常见问题与排查顺序</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>优先检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>重建亮暗层次不对</td>
+<td>是否把目标强度误当成振幅，漏了平方根</td>
+</tr>
+<tr>
+<td>图案跑到角落、镜像或偏一像素</td>
+<td>移位约定、变换符号、坐标方向和奇偶网格</td>
+</tr>
+<tr>
+<td>第一轮之后报告误差为零</td>
+<td>是否评估了人工替换振幅后的场</td>
+</tr>
+<tr>
+<td>模拟误差长期平台</td>
+<td>多初值对比、功率匹配、约束兼容性、目标是否过苛刻</td>
+</tr>
+<tr>
+<td>固定目标下振幅误差明显上升</td>
+<td>正反变换是否配对，投影是否精确，有无额外量化或裁剪</td>
+</tr>
+<tr>
+<td>仿真好，实验差</td>
+<td>入射光束、像差、偏振、SLM 相位标定、零级光及相机配准</td>
+</tr>
+<tr>
+<td>光斑看起来一样亮，但捕获效果不同</td>
+<td>比较同一窗口的积分功率，而不仅是单像素峰值</td>
+</tr>
+<tr>
+<td>换了网格尺寸，物理光斑位置变了</td>
+<td>是否同步更新了傅里叶面采样和物理坐标</td>
+</tr>
+</tbody></table>
+<p>理解 GS 最关键的一点，是把它看成一个由<strong>传播模型与约束集合共同定义的求解过程</strong>。相位不是凭空猜出来的，而是在两端振幅约束的反复协调中更新；结果是否可信，则要由实际可实现的输入场重新传播，并结合误差、能量、采样和实验标定来判断。</p>
+<h2 id="参考文献与复现资料"><a href="#参考文献与复现资料" class="headerlink" title="参考文献与复现资料"></a>参考文献与复现资料</h2><ol>
+<li>R. W. Gerchberg and W. O. Saxton, <em>A practical algorithm for the determination of phase from image and diffraction plane pictures</em>, Optik <strong>35</strong>, 237–246 (1972)。GS 原始论文。同期应用与该文引用见 <a target="_blank" rel="noopener" href="https://www.nature.com/articles/240404a0">Gerchberg, Nature 240, 404 (1972)</a>。</li>
+<li>J. R. Fienup, <em>Phase retrieval algorithms: a comparison</em>, Applied Optics <strong>21</strong>, 2758–2769 (1982)。<a target="_blank" rel="noopener" href="https://sites.rochester.edu/fienup/wp-content/uploads/2019/07/AO82_PRComparison.pdf">作者机构提供的全文</a>，<a target="_blank" rel="noopener" href="https://doi.org/10.1364/AO.21.002758">DOI</a>。</li>
+<li>M. Pasienski and B. DeMarco, <em>A high-accuracy algorithm for designing arbitrary holographic atom traps</em>, Optics Express <strong>16</strong>, 2176–2190 (2008)。<a target="_blank" rel="noopener" href="https://arxiv.org/abs/0712.0794">作者预印本</a>，<a target="_blank" rel="noopener" href="https://doi.org/10.1364/OE.16.002176">DOI</a>。</li>
+</ol>
+<p>本文的单像素投影展开、数值例子、作图和实现检查均在文中或源码中给出，图 1–6 为本文原创示意与模拟，不是论文实验图片。</p>
+<ul>
+<li><a href="/downloads/gerchberg-saxton/gs_demo.py">下载完整计算、绘图与验证程序 gs_demo.py</a></li>
+<li><a href="/downloads/gerchberg-saxton/validation.json">下载本次运行的参数、误差及验证数据 validation.json</a></li>
+<li><a href="/downloads/gerchberg-saxton/gs-result.npz">下载输入振幅、目标振幅、最终相位、重建强度及误差曲线 gs-result.npz</a></li>
+</ul>
+<p>安装 NumPy 和 Matplotlib 后，运行 <code>python gs_demo.py</code> 即可在当前目录的 <code>gs-output/</code> 下生成全部配图、结果数组和验证报告。中文图注需要系统中有微软雅黑或黑体等字体；缺少中文字体只影响标注显示，不影响计算。本文数值结果使用 NumPy 1.26.4、Matplotlib 3.10.0 生成。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/">http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E5%85%89%E5%AD%A6/">傅里叶光学</a><a class="post-meta__tags" href="/tags/%E7%9B%B8%E4%BD%8D%E6%81%A2%E5%A4%8D/">相位恢复</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E5%85%A8%E6%81%AF/">计算全息</a></div><div class="post_share"><div class="social-share" data-image="/img/gerchberg-saxton/01-two-planes.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/10/04/%E5%AD%A6%E4%B9%A0/numerical-aperture/" title="数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合"><img class="cover" src="/img/numerical-aperture/01-cones.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合</div></div></a></div><div class="next-post pull-right"><a href="/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/" title="量子系综与密度矩阵：从三种系综到磁场中的电子"><img class="cover" src="/img/quantum-ensembles/01-ensemble-map.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">量子系综与密度矩阵：从三种系综到磁场中的电子</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%B8%E6%9C%BA%E7%A9%B6%E7%AB%9F%E4%B8%A2%E6%8E%89%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">1. 相机究竟丢掉了什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%A4%8D%E5%85%89%E5%9C%BA%E3%80%81%E6%8C%AF%E5%B9%85%E3%80%81%E7%9B%B8%E4%BD%8D%E4%B8%8E%E5%BC%BA%E5%BA%A6"><span class="toc-text">1.1 复光场、振幅、相位与强度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E4%B8%80%E6%AC%A1%E9%80%86%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E5%B0%B1%E5%A4%9F%E4%BA%86%EF%BC%9F"><span class="toc-text">1.2 为什么不是一次逆傅里叶变换就够了？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%A6%E6%A1%86%E6%9E%B6%EF%BC%8C%E4%B8%A4%E7%B1%BB%E4%B8%8D%E5%90%8C%E4%BB%BB%E5%8A%A1"><span class="toc-text">2. 一个数学框架，两类不同任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%85%88%E6%BB%A1%E8%B6%B3%E5%BF%85%E8%A6%81%E7%9A%84%E5%8A%9F%E7%8E%87%E6%9D%A1%E4%BB%B6"><span class="toc-text">2.1 先满足必要的功率条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E4%BF%9D%E7%95%99%E7%9B%B8%E4%BD%8D%E3%80%81%E6%9B%BF%E6%8D%A2%E6%8C%AF%E5%B9%85%E2%80%9D%E6%9C%89%E9%81%93%E7%90%86%EF%BC%9F"><span class="toc-text">3. 为什么“保留相位、替换振幅”有道理？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%8E%E5%88%9D%E5%80%BC%E5%88%B0%E5%AE%8C%E6%95%B4%E7%9A%84%E4%B8%80%E6%AC%A1%E8%BF%AD%E4%BB%A3"><span class="toc-text">4. 从初值到完整的一次迭代</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">4.1 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%AD%A3%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%8C%E5%B9%B6%E8%A7%82%E5%AF%9F%E5%BD%93%E5%89%8D%E8%AF%AF%E5%B7%AE"><span class="toc-text">4.2 正向传播，并观察当前误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%9C%A8%E7%9B%AE%E6%A0%87%E9%9D%A2%E6%96%BD%E5%8A%A0%E6%8C%AF%E5%B9%85%E7%BA%A6%E6%9D%9F"><span class="toc-text">4.3 在目标面施加振幅约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%8C%E5%86%8D%E6%96%BD%E5%8A%A0%E8%BE%93%E5%85%A5%E6%8C%AF%E5%B9%85%E7%BA%A6%E6%9D%9F"><span class="toc-text">4.4 反向传播，再施加输入振幅约束</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GS-%E7%9A%84%E8%AF%AF%E5%B7%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8B%E9%99%8D%EF%BC%8C%E5%8F%88%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BB%8D%E4%BC%9A%E5%A4%B1%E8%B4%A5%EF%BC%9F"><span class="toc-text">5. GS 的误差为什么会下降，又为什么仍会失败？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%B0%86%E4%B8%A4%E4%B8%AA%E7%BA%A6%E6%9D%9F%E6%94%BE%E8%BF%9B%E5%90%8C%E4%B8%80%E4%B8%AA%E7%A9%BA%E9%97%B4"><span class="toc-text">5.1 将两个约束放进同一个空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%AF%AF%E5%B7%AE%E4%B8%8D%E5%A2%9E%E7%9A%84%E7%AE%80%E6%B4%81%E6%8E%A8%E5%AF%BC"><span class="toc-text">5.2 误差不增的简洁推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E8%BF%99%E4%B8%AA%E8%AF%81%E6%98%8E%E6%B2%A1%E6%9C%89%E4%BF%9D%E8%AF%81%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">5.3 这个证明没有保证什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E7%9B%B8%E4%BD%8D%E6%9C%AC%E8%BA%AB%E5%8F%AF%E8%83%BD%E4%B8%8D%E5%94%AF%E4%B8%80"><span class="toc-text">5.4 相位本身可能不唯一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%8E%E6%A0%B7%E8%AF%84%E4%BB%B7%E4%B8%80%E4%B8%AA-GS-%E7%BB%93%E6%9E%9C%EF%BC%9F"><span class="toc-text">6. 怎样评价一个 GS 结果？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%8F%AF%E5%A4%8D%E7%8E%B0%E5%AE%9E%E9%AA%8C%EF%BC%9A%E8%AE%A9%E9%AB%98%E6%96%AF%E5%85%89%E5%8F%98%E6%88%90%E4%B9%9D%E4%B8%AA%E5%85%89%E6%96%91"><span class="toc-text">7. 可复现实验：让高斯光变成九个光斑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%95%B0%E5%80%BC%E6%9D%A1%E4%BB%B6"><span class="toc-text">7.1 数值条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%AE%9E%E9%99%85%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C"><span class="toc-text">7.2 实际计算结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E6%95%B0%E5%80%BC%E5%AE%9E%E7%8E%B0%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E6%A3%80%E6%9F%A5%EF%BC%9F"><span class="toc-text">7.3 数值实现做了哪些检查？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Python-%E5%AE%9E%E7%8E%B0%EF%BC%9A%E6%A0%B8%E5%BF%83%E5%B9%B6%E4%B8%8D%E9%95%BF"><span class="toc-text">8. Python 实现：核心并不长</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-FFT-%E6%95%B0%E7%BB%84%E6%80%8E%E6%A0%B7%E5%AF%B9%E5%BA%94%E7%9C%9F%E5%AE%9E%E5%85%89%E5%AD%A6%E5%9D%90%E6%A0%87%EF%BC%9F"><span class="toc-text">9. FFT 数组怎样对应真实光学坐标？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E6%88%90%E7%AB%8B%E7%9A%84%E5%85%89%E5%AD%A6%E6%9D%A1%E4%BB%B6"><span class="toc-text">9.1 傅里叶变换成立的光学条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%83%8F%E7%B4%A0%E9%97%B4%E8%B7%9D%E5%86%B3%E5%AE%9A%E8%BE%93%E5%87%BA%E9%87%87%E6%A0%B7"><span class="toc-text">9.2 像素间距决定输出采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E8%A1%A5%E9%9B%B6%E3%80%81%E5%88%86%E8%BE%A8%E7%8E%87%E4%B8%8E%E8%A7%86%E5%9C%BA%E4%B8%8D%E8%A6%81%E6%B7%B7%E4%B8%BA%E4%B8%80%E8%B0%88"><span class="toc-text">9.3 补零、分辨率与视场不要混为一谈</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%BB%8E%E7%90%86%E6%83%B3%E7%9B%B8%E4%BD%8D%E5%9B%BE%E5%88%B0-SLM%EF%BC%8C%E8%BF%98%E5%B7%AE%E5%93%AA%E4%BA%9B%E6%AD%A5%E9%AA%A4%EF%BC%9F"><span class="toc-text">10. 从理想相位图到 SLM，还差哪些步骤？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81-GS-%E7%9A%84%E6%94%B9%E8%BF%9B%E7%89%88%E6%9C%AC%EF%BC%9F"><span class="toc-text">11. 什么时候需要 GS 的改进版本？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E5%A4%9A%E5%88%9D%E5%80%BC%EF%BC%9A%E5%85%88%E7%94%A8%E6%9C%80%E7%9B%B4%E6%8E%A5%E7%9A%84%E5%8A%9E%E6%B3%95%E8%AF%8A%E6%96%AD%E5%81%9C%E6%BB%9E"><span class="toc-text">11.1 多初值：先用最直接的办法诊断停滞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E5%8A%A0%E6%9D%83-GS%EF%BC%9A%E9%92%88%E5%AF%B9%E5%85%89%E6%96%91%E5%8A%9F%E7%8E%87%E4%B8%8D%E5%9D%87"><span class="toc-text">11.2 加权 GS：针对光斑功率不均</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E4%BF%A1%E5%8F%B7%E5%8C%BA%E4%B8%8E%E5%99%AA%E5%A3%B0%E5%8C%BA%EF%BC%9A%E6%8A%8A%E8%87%AA%E7%94%B1%E5%BA%A6%E7%94%A8%E5%9C%A8%E9%87%8D%E8%A6%81%E4%BD%8D%E7%BD%AE"><span class="toc-text">11.3 信号区与噪声区：把自由度用在重要位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4-%E6%9B%B4%E6%8D%A2%E7%BA%A6%E6%9D%9F%E6%88%96%E4%BC%A0%E6%92%AD%E6%A8%A1%E5%9E%8B"><span class="toc-text">11.4 更换约束或传播模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E6%9F%A5%E9%A1%BA%E5%BA%8F"><span class="toc-text">12. 常见问题与排查顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E4%B8%8E%E5%A4%8D%E7%8E%B0%E8%B5%84%E6%96%99"><span class="toc-text">参考文献与复现资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/04/%E5%AD%A6%E4%B9%A0/numerical-aperture/" title="数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合">数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合</a><time datetime="2026-10-03T16:54:21.000Z" title="发表于 2026-10-04 00:54:21">2026-10-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/" title="GS 算法详解：从相位恢复到纯相位全息图">GS 算法详解：从相位恢复到纯相位全息图</a><time datetime="2026-10-01T14:48:10.000Z" title="发表于 2026-10-01 22:48:10">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/" title="量子系综与密度矩阵：从三种系综到磁场中的电子">量子系综与密度矩阵：从三种系综到磁场中的电子</a><time datetime="2026-10-01T11:37:31.000Z" title="发表于 2026-10-01 19:37:31">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/saturated-absorption-frequency-stabilization/" title="饱和吸收稳频：从 Lamb 凹陷到镱离子实验中的开普勒缩束方案">饱和吸收稳频：从 Lamb 凹陷到镱离子实验中的开普勒缩束方案</a><time datetime="2026-09-30T17:38:19.000Z" title="发表于 2026-10-01 01:38:19">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

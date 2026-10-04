@@ -1,0 +1,1352 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>量子系综与密度矩阵：从三种系综到磁场中的电子 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从纯态与混合态出发，推导微正则、正则和巨正则密度算符，并完整计算磁场中电子自旋的概率、能量、磁矩、熵与热容，以及可交换电子单轨道的四维密度矩阵。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量子系综与密度矩阵：从三种系综到磁场中的电子">
+<meta property="og:url" content="http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从纯态与混合态出发，推导微正则、正则和巨正则密度算符，并完整计算磁场中电子自旋的概率、能量、磁矩、熵与热容，以及可交换电子单轨道的四维密度矩阵。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/quantum-ensembles/01-ensemble-map.png">
+<meta property="article:published_time" content="2026-10-01T11:37:31.000Z">
+<meta property="article:modified_time" content="2026-10-01T11:37:31.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="量子统计">
+<meta property="article:tag" content="密度矩阵">
+<meta property="article:tag" content="统计物理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/quantum-ensembles/01-ensemble-map.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '量子系综与密度矩阵：从三种系综到磁场中的电子',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-01 19:37:31'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="e195196fd5c9b127fba05c90c26e674e0ec09983b3c7cb531c6a8edd6ce6c751";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">量子系综与密度矩阵：从三种系综到磁场中的电子</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-01T11:37:31.000Z" title="发表于 2026-10-01 19:37:31">2026-10-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="量子系综与密度矩阵：从三种系综到磁场中的电子"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>如果我们知道一个电子的波函数，就可以计算它的自旋测量结果。但如果只知道“这个电子与温度为 <script type="math/tex">T</script> 的环境达到热平衡”，通常就不能再用一个确定的波函数描述它。此时需要的是<strong>密度算符</strong>；选择哪一种密度算符，则取决于系统能与环境交换什么、我们掌握哪些宏观约束。</p>
+<p>本文沿着“<strong>量子态 → 宏观约束 → 密度矩阵 → 可测量量</strong>”这条线展开。先建立密度矩阵的物理含义，再推导微正则、正则、巨正则三种系综，最后用磁场中的电子把公式算成具体矩阵和数值。所需基础是线性代数、量子力学中的态矢与算符，以及一点热力学。</p>
+<p><img src="/img/quantum-ensembles/01-ensemble-map.png" alt="三种系综的边界条件与可交换量"></p>
+<p><em>图 1：三种系综的区别来自约束。图中的 <script type="math/tex">V</script> 可理解为体积或几何约束；对局域自旋模型，几何自由度已经冻结。外磁场等外部参数也应指定。</em></p>
+<span id="more"></span>
+
+<h2 id="1-为什么量子统计需要密度矩阵？"><a href="#1-为什么量子统计需要密度矩阵？" class="headerlink" title="1. 为什么量子统计需要密度矩阵？"></a>1. 为什么量子统计需要密度矩阵？</h2><h3 id="1-1-两层概率：态的制备概率与量子测量概率"><a href="#1-1-两层概率：态的制备概率与量子测量概率" class="headerlink" title="1.1 两层概率：态的制备概率与量子测量概率"></a>1.1 两层概率：态的制备概率与量子测量概率</h3><p>设实验装置以概率 <script type="math/tex">p_i</script> 制备归一化态 <script type="math/tex">\vert \psi_i\rangle</script>。每一次制备后，测量可观测量 <script type="math/tex">\hat A</script> 的量子期望值是 <script type="math/tex">\langle\psi_i\vert \hat A\vert \psi_i\rangle</script>。把制备的不确定性也平均进去：</p>
+<div class="math-display">
+$$
+\langle A\rangle
+=\sum_i p_i\langle\psi_i|\hat A|\psi_i\rangle,
+\qquad p_i\geq0,\quad \sum_i p_i=1.
+$$
+</div>
+
+<p>利用迹的恒等式，可以把所有与制备有关的信息收进一个算符：</p>
+<div class="math-display">
+$$
+\boxed{\hat\rho=\sum_i p_i|\psi_i\rangle\langle\psi_i|},
+\qquad
+\boxed{\langle A\rangle=\operatorname{Tr}(\hat\rho\hat A)}.
+$$
+</div>
+
+<p>这里的态不必正交。同一个 <script type="math/tex">\hat\rho</script> 也可能有不同的制备分解；只对这个系统进行测量，无法区分给出同一密度算符的不同分解。</p>
+<p>更一般地，若一次测量结果 <script type="math/tex">a</script> 对应投影算符 <script type="math/tex">\hat\Pi_a</script>，则</p>
+<div class="math-display">
+$$
+P(a)=\operatorname{Tr}(\hat\rho\hat\Pi_a).
+$$
+</div>
+
+<p>因此，密度算符不是只用来计算热平均的辅助符号，而是决定系统所有测量统计的量子态描述。密度算符是与基底无关的对象；<strong>密度矩阵是选定基底后，它的矩阵表示</strong>。</p>
+<h3 id="1-2-什么矩阵才是合法的密度矩阵？"><a href="#1-2-什么矩阵才是合法的密度矩阵？" class="headerlink" title="1.2 什么矩阵才是合法的密度矩阵？"></a>1.2 什么矩阵才是合法的密度矩阵？</h3><p>在任意正交归一基底中，合法密度矩阵满足</p>
+<div class="math-display">
+$$
+\rho^\dagger=\rho,\qquad
+\rho\geq0,\qquad
+\operatorname{Tr}\rho=1.
+$$
+</div>
+
+<p>三个条件分别保证：测量期望值为实数、所有测量概率非负、总概率为一。“正半定”指所有本征值非负，不要求每个矩阵元都为正。</p>
+<p>若系统处于纯态，</p>
+<div class="math-display">
+$$
+\rho=|\psi\rangle\langle\psi|,
+\qquad \rho^2=\rho,\qquad \operatorname{Tr}\rho^2=1.
+$$
+</div>
+
+<p>混合态则满足 <script type="math/tex">\operatorname{Tr}\rho^2<1</script>。在有限的 <script type="math/tex">d</script> 维空间中，纯度的范围是</p>
+<div class="math-display">
+$$
+\frac1d\leq\operatorname{Tr}\rho^2\leq1.
+$$
+</div>
+
+<p>下限由最大混合态 <script type="math/tex">I_d/d</script> 达到。von Neumann 熵定义为</p>
+<div class="math-display">
+$$
+\boxed{S=-k_{\mathrm B}\operatorname{Tr}(\rho\ln\rho)}
+=-k_{\mathrm B}\sum_\alpha\lambda_\alpha\ln\lambda_\alpha,
+$$
+</div>
+
+<p>其中 <script type="math/tex">\lambda_\alpha</script> 是 <script type="math/tex">\rho</script> 的本征值，约定 <script type="math/tex">0\ln0=0</script>。纯态熵为零，最大混合态熵为 <script type="math/tex">k_{\mathrm B}\ln d</script>。<strong>一般不能把任意基底下的对角元直接代入最后一个求和式</strong>；需要先求本征值。</p>
+<h3 id="1-3-混合态不是“一个叠加了各种可能性的波函数”"><a href="#1-3-混合态不是“一个叠加了各种可能性的波函数”" class="headerlink" title="1.3 混合态不是“一个叠加了各种可能性的波函数”"></a>1.3 混合态不是“一个叠加了各种可能性的波函数”</h3><p>在按 <script type="math/tex">(\vert \uparrow\rangle,\vert \downarrow\rangle)</script> 排列的 <script type="math/tex">S_z</script> 基底中，考虑</p>
+<div class="math-display">
+$$
+|+x\rangle=\frac{|\uparrow\rangle+|\downarrow\rangle}{\sqrt2}.
+$$
+</div>
+
+<p>它的密度矩阵，与上下自旋各半的混合态分别为</p>
+<div class="math-display">
+$$
+\rho_{+x}
+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+\rho_{\mathrm{mix}}
+=\frac12\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+$$
+</div>
+
+<p>测量 <script type="math/tex">S_z</script> 时，两者都给出上下各半；但测量 <script type="math/tex">\sigma_x</script> 时，前者必得 <script type="math/tex">+1</script>，后者得到 <script type="math/tex">\pm1</script> 的概率各半。前者保留了上下分量的相位关系，后者没有这种相干性。</p>
+<p><img src="/img/quantum-ensembles/02-density-matrices.png" alt="相干叠加态、等概率混合态和热态的密度矩阵"></p>
+<p><em>图 2：矩阵元均在 <script type="math/tex">S_z</script> 基底中表示。前两幅图的对角元相同，非对角元不同；第三幅图是后文 <script type="math/tex">B=1\thinspace \mathrm T</script>、<script type="math/tex">T=1\thinspace \mathrm K</script>、<script type="math/tex">g=2</script> 的电子自旋热态。</em></p>
+<h3 id="1-4-对环境取偏迹，也会得到混合态"><a href="#1-4-对环境取偏迹，也会得到混合态" class="headerlink" title="1.4 对环境取偏迹，也会得到混合态"></a>1.4 对环境取偏迹，也会得到混合态</h3><p>即使系统与环境的总态是纯态，系统本身也可以是混合态。例如</p>
+<div class="math-display">
+$$
+|\Psi\rangle_{AB}
+=\frac{|\uparrow\rangle_A|\downarrow\rangle_B+
+|\downarrow\rangle_A|\uparrow\rangle_B}{\sqrt2},
+$$
+</div>
+
+<p>对 <script type="math/tex">B</script> 取偏迹后，</p>
+<div class="math-display">
+$$
+\rho_A=\operatorname{Tr}_B|\Psi\rangle\langle\Psi|=\frac{I_2}{2}.
+$$
+</div>
+
+<p>这说明混合态不一定意味着“系统实际处于某个纯态，只是我们不知道”。它也可能来自与环境的纠缠。<a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/22-51-quantum-theory-of-radiation-interactions-fall-2012/00e219fe9b8a81b64613f1428e87cb00_MIT22_51F12_Ch7.pdf">MIT 的 Mixed States 课程讲义</a>讨论了密度算符、部分迹和统计混合的关系；下文把这些工具用于具体的平衡系综。</p>
+<h2 id="2-系综是什么？先确定系统边界，再选择概率分布"><a href="#2-系综是什么？先确定系统边界，再选择概率分布" class="headerlink" title="2. 系综是什么？先确定系统边界，再选择概率分布"></a>2. 系综是什么？先确定系统边界，再选择概率分布</h2><p>“系综”可以想象成大量按同一宏观条件制备的系统副本，它们的微观状态可以不同。这里的副本是统计描述，不是要求实验室真的摆放无穷多个系统。</p>
+<table>
+<thead>
+<tr>
+<th>系综</th>
+<th>指定的宏观条件</th>
+<th>与环境交换</th>
+<th>允许涨落的量</th>
+<th>归一化对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>微正则</td>
+<td>能量壳 <script type="math/tex">E,\delta E</script>、<script type="math/tex">V,N</script></td>
+<td>无</td>
+<td>能量仅限于给定窄壳，粒子数固定</td>
+<td>壳内态数 <script type="math/tex">W</script></td>
+</tr>
+<tr>
+<td>正则</td>
+<td><script type="math/tex">T,V,N</script></td>
+<td>能量</td>
+<td>能量</td>
+<td>配分函数 <script type="math/tex">Z</script></td>
+</tr>
+<tr>
+<td>巨正则</td>
+<td><script type="math/tex">T,V,\mu</script></td>
+<td>能量和粒子</td>
+<td>能量、粒子数</td>
+<td>巨配分函数 <script type="math/tex">\Xi</script></td>
+</tr>
+</tbody></table>
+<p>这三个系综都属于<strong>平衡统计</strong>。知道系统与热库接触，并不意味着它从接触的第一瞬间就处于正则态；还需要足够的弛豫与相应平衡条件。</p>
+<p>本文主要考虑弱耦合环境、固定外部参数和守恒粒子数的平衡模型。强系统—环境耦合时，约化态一般不能简单写成裸系统哈密顿量的 <script type="math/tex">e^{-\beta H}/Z</script>；额外守恒量也可能需要额外的约束。三种常用系综的热力学基础可参照 <a target="_blank" rel="noopener" href="https://www.damtp.cam.ac.uk/user/tong/statphys/statmechhtml/S1.html">David Tong 的统计物理第一章</a>。</p>
+<h2 id="3-微正则系综：在允许的能量壳内等权"><a href="#3-微正则系综：在允许的能量壳内等权" class="headerlink" title="3. 微正则系综：在允许的能量壳内等权"></a>3. 微正则系综：在允许的能量壳内等权</h2><h3 id="3-1-能壳投影算符比“固定能量”更精确"><a href="#3-1-能壳投影算符比“固定能量”更精确" class="headerlink" title="3.1 能壳投影算符比“固定能量”更精确"></a>3.1 能壳投影算符比“固定能量”更精确</h3><p>设固定粒子数子空间中的能量本征方程是</p>
+<div class="math-display">
+$$
+\hat H|n\rangle=E_n|n\rangle.
+$$
+</div>
+
+<p>选一个很窄的能量区间 <script type="math/tex">\mathcal I=[E,E+\delta E]</script>。对应的投影算符与态数为</p>
+<div class="math-display">
+$$
+\hat P_{\mathcal I}
+=\sum_{E_n\in\mathcal I}|n\rangle\langle n|,
+\qquad
+W=\operatorname{Tr}\hat P_{\mathcal I}.
+$$
+</div>
+
+<p>微正则密度算符为</p>
+<div class="math-display">
+$$
+\boxed{\hat\rho_{\mathrm{mc}}=\frac{\hat P_{\mathcal I}}{W}}.
+$$
+</div>
+
+<p>能壳内每个正交微观态的概率都是 <script type="math/tex">1/W</script>，壳外概率为零。因此</p>
+<div class="math-display">
+$$
+\langle A\rangle_{\mathrm{mc}}
+=\frac1W\sum_{E_n\in\mathcal I}\langle n|\hat A|n\rangle,
+\qquad
+S_{\mathrm{mc}}=k_{\mathrm B}\ln W.
+$$
+</div>
+
+<p>对于宏观体系，<script type="math/tex">\delta E</script> 可以在宏观尺度上很窄，同时包含极多微观能级。有限小系统则可能直接选一个简并能量本征空间；这时没有能壳宽度造成的能量不确定性。</p>
+<p><strong>等概率针对微观态，不是针对不同能量值。</strong>一个简并度为 <script type="math/tex">g</script> 的能级，在壳内的总概率为 <script type="math/tex">g/W</script>。</p>
+<h3 id="3-2-为什么等权？这是约束下的最大熵选择"><a href="#3-2-为什么等权？这是约束下的最大熵选择" class="headerlink" title="3.2 为什么等权？这是约束下的最大熵选择"></a>3.2 为什么等权？这是约束下的最大熵选择</h3><p>只知道系统支持在一个 <script type="math/tex">W</script> 维能壳中，并不知道它偏好哪个方向。对该子空间中的本征概率最大化</p>
+<div class="math-display">
+$$
+-\sum_{\alpha=1}^{W}p_\alpha\ln p_\alpha,
+\qquad \sum_\alpha p_\alpha=1,
+$$
+</div>
+
+<p>拉格朗日乘子法给出</p>
+<div class="math-display">
+$$
+-(\ln p_\alpha+1)-\lambda=0
+\quad\Longrightarrow\quad
+p_\alpha=\frac1W.
+$$
+</div>
+
+<p>所有本征值都相等，便得到该子空间上的单位算符除以 <script type="math/tex">W</script>。</p>
+<p>这是一种平衡统计假设或最大熵推断，<strong>不是从孤立系统的薛定谔演化自动推出的结论</strong>。一个精确制备的孤立纯态在幺正演化下仍是纯态，不会凭空变成微正则混合态；热化通常讨论的是局域可观测量、约化态或粗粒化描述。</p>
+<h3 id="3-3-算例：两个电子自旋，总能量为零"><a href="#3-3-算例：两个电子自旋，总能量为零" class="headerlink" title="3.3 算例：两个电子自旋，总能量为零"></a>3.3 算例：两个电子自旋，总能量为零</h3><p>考虑两个分别局域在不同位置、可以按位置标记的电子自旋，忽略它们的相互作用。设</p>
+<div class="math-display">
+$$
+\hat H=a(\sigma_z^{(1)}+\sigma_z^{(2)}),
+\qquad a>0.
+$$
+</div>
+
+<p>在基底 <script type="math/tex">(\vert \uparrow\uparrow\rangle,\vert \uparrow\downarrow\rangle,\vert \downarrow\uparrow\rangle,\vert \downarrow\downarrow\rangle)</script> 中，</p>
+<div class="math-display">
+$$
+H=\operatorname{diag}(2a,0,0,-2a).
+$$
+</div>
+
+<p>选定总能量 <script type="math/tex">E=0</script>，只有中间两个态允许：</p>
+<div class="math-display">
+$$
+\rho_{\mathrm{mc}}
+=\frac12\left(
+|\uparrow\downarrow\rangle\langle\uparrow\downarrow|
++|\downarrow\uparrow\rangle\langle\downarrow\uparrow|
+\right)
+=\begin{pmatrix}
+0&0&0&0\\
+0&1/2&0&0\\
+0&0&1/2&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+</div>
+
+<p><img src="/img/quantum-ensembles/03-microcanonical-shell.png" alt="两个自旋的能级、零能量壳与微正则矩阵"></p>
+<p><em>图 3：零能量本征空间的维数是 2，因此每个允许态的权重是 <script type="math/tex">1/2</script>，不是把三个不同能量值各赋予 <script type="math/tex">1/3</script>。</em></p>
+<p>于是</p>
+<div class="math-display">
+$$
+\langle H\rangle=0,\quad
+\operatorname{Var}(H)=0,\quad
+S=k_{\mathrm B}\ln2.
+$$
+</div>
+
+<p>对第二个自旋取偏迹，得到 <script type="math/tex">\rho_1=I_2/2</script>。不过两个自旋不是相互独立的，因为</p>
+<div class="math-display">
+$$
+\langle\sigma_z^{(1)}\rangle=\langle\sigma_z^{(2)}\rangle=0,
+\qquad
+\langle\sigma_z^{(1)}\sigma_z^{(2)}\rangle=-1.
+$$
+</div>
+
+<p>这个微正则态有经典反关联，但不是纠缠态：它已经写成了两个乘积态的概率混合。前文的纠缠纯态也位于同一个零能量空间，且有相同的单自旋约化态，但它的联合测量统计与上述混合态不同。</p>
+<h2 id="4-正则系综：与热库交换能量"><a href="#4-正则系综：与热库交换能量" class="headerlink" title="4. 正则系综：与热库交换能量"></a>4. 正则系综：与热库交换能量</h2><h3 id="4-1-从“大孤立系统”推导-Boltzmann-权重"><a href="#4-1-从“大孤立系统”推导-Boltzmann-权重" class="headerlink" title="4.1 从“大孤立系统”推导 Boltzmann 权重"></a>4.1 从“大孤立系统”推导 Boltzmann 权重</h3><p>让研究系统 <script type="math/tex">S</script> 与很大的热库 <script type="math/tex">R</script> 弱耦合，二者整体孤立。忽略相互作用能，若系统处于能量 <script type="math/tex">E_n</script> 的某个微观态，则热库能量为 <script type="math/tex">E_{\mathrm{tot}}-E_n</script>。该系统态的概率正比于与之相容的热库态数：</p>
+<div class="math-display">
+$$
+p_n\propto W_R(E_{\mathrm{tot}}-E_n)
+=\exp\!\left[\frac{S_R(E_{\mathrm{tot}}-E_n)}{k_{\mathrm B}}\right].
+$$
+</div>
+
+<p>热库足够大，展开它的熵：</p>
+<div class="math-display">
+$$
+S_R(E_{\mathrm{tot}}-E_n)
+\simeq S_R(E_{\mathrm{tot}})
+-E_n\left(\frac{\partial S_R}{\partial E_R}\right)_{V_R,N_R}.
+$$
+</div>
+
+<p>利用热力学关系 <script type="math/tex">\partial S_R/\partial E_R=1/T</script>，定义 <script type="math/tex">\beta=1/(k_{\mathrm B}T)</script>，就有</p>
+<div class="math-display">
+$$
+p_n\propto e^{-\beta E_n}.
+$$
+</div>
+
+<p>归一化后：</p>
+<div class="math-display">
+$$
+\boxed{\rho_{\mathrm{can}}=\frac{e^{-\beta\hat H}}{Z}},
+\qquad
+\boxed{Z=\operatorname{Tr}_{N}e^{-\beta\hat H}
+=\sum_n e^{-\beta E_n}}.
+$$
+</div>
+
+<p>这里的迹在<strong>固定粒子数 <script type="math/tex">N</script> 的物理 Hilbert 空间</strong>中取，求和包含简并度。若把相同能量合并为一个能级，必须写成 <script type="math/tex">Z=\sum_E g_E e^{-\beta E}</script>。</p>
+<h3 id="4-2-从最大熵原理再推导一次"><a href="#4-2-从最大熵原理再推导一次" class="headerlink" title="4.2 从最大熵原理再推导一次"></a>4.2 从最大熵原理再推导一次</h3><p>现在约束不是“态只能位于某个能壳”，而是归一化与平均能量：</p>
+<div class="math-display">
+$$
+\operatorname{Tr}\rho=1,\qquad
+\operatorname{Tr}(\rho H)=U.
+$$
+</div>
+
+<p>最大化无量纲泛函</p>
+<div class="math-display">
+$$
+\mathcal L=-\operatorname{Tr}(\rho\ln\rho)
+-\alpha(\operatorname{Tr}\rho-1)
+-\beta(\operatorname{Tr}\rho H-U).
+$$
+</div>
+
+<p>利用 <script type="math/tex">\delta\operatorname{Tr}(\rho\ln\rho) =\operatorname{Tr}[(\ln\rho+I)\delta\rho]</script>，得到</p>
+<div class="math-display">
+$$
+\ln\rho+I+\alpha I+\beta H=0.
+$$
+</div>
+
+<p>因此 <script type="math/tex">\rho\propto e^{-\beta H}</script>。归一化确定比例系数为 <script type="math/tex">1/Z</script>，热力学对应关系再把乘子 <script type="math/tex">\beta</script> 识别为 <script type="math/tex">1/(k_{\mathrm B}T)</script>。</p>
+<p>这也说明微正则与正则约束并不一样：<strong>精确限制能量支持空间，比只限制平均能量更强。</strong></p>
+<h3 id="4-3-“矩阵指数”不是把每个矩阵元分别取指数"><a href="#4-3-“矩阵指数”不是把每个矩阵元分别取指数" class="headerlink" title="4.3 “矩阵指数”不是把每个矩阵元分别取指数"></a>4.3 “矩阵指数”不是把每个矩阵元分别取指数</h3><p>若</p>
+<div class="math-display">
+$$
+H=V\,\operatorname{diag}(E_1,\ldots,E_d)V^\dagger,
+$$
+</div>
+
+<p>那么</p>
+<div class="math-display">
+$$
+e^{-\beta H}
+=V\,\operatorname{diag}(e^{-\beta E_1},\ldots,e^{-\beta E_d})V^\dagger.
+$$
+</div>
+
+<p>必须按算符函数计算。一般的逐元素指数会给出错误结果。例如对角矩阵的非对角元原本是零，矩阵指数后仍是零，而逐元素指数会把它们错误地变成 <script type="math/tex">e^0=1</script>。</p>
+<h3 id="4-4-配分函数怎样给出热力学量？"><a href="#4-4-配分函数怎样给出热力学量？" class="headerlink" title="4.4 配分函数怎样给出热力学量？"></a>4.4 配分函数怎样给出热力学量？</h3><p>由 <script type="math/tex">Z=\sum_n e^{-\beta E_n}</script> 直接求导：</p>
+<div class="math-display">
+$$
+U=-\frac{\partial\ln Z}{\partial\beta},
+\qquad
+F=-k_{\mathrm B}T\ln Z,
+\qquad
+S=k_{\mathrm B}(\ln Z+\beta U).
+$$
+</div>
+
+<p>再求一次导数：</p>
+<div class="math-display">
+$$
+\frac{\partial^2\ln Z}{\partial\beta^2}
+=\langle H^2\rangle-\langle H\rangle^2
+=\operatorname{Var}(H).
+$$
+</div>
+
+<p>当哈密顿量不显含温度、其他外部参数固定时，</p>
+<div class="math-display">
+$$
+\boxed{\operatorname{Var}(H)=k_{\mathrm B}T^2 C},
+\qquad C=\left(\frac{\partial U}{\partial T}\right)_{\text{外部参数}}.
+$$
+</div>
+
+<p>正则系综固定的是温度，<strong>不是每次测量的能量</strong>。能量涨落正是热容的统计表现。</p>
+<h2 id="5-巨正则系综：粒子数也可以改变"><a href="#5-巨正则系综：粒子数也可以改变" class="headerlink" title="5. 巨正则系综：粒子数也可以改变"></a>5. 巨正则系综：粒子数也可以改变</h2><h3 id="5-1-从热库熵的两个变量展开出发"><a href="#5-1-从热库熵的两个变量展开出发" class="headerlink" title="5.1 从热库熵的两个变量展开出发"></a>5.1 从热库熵的两个变量展开出发</h3><p>系统可以与库交换粒子时，若它处于粒子数 <script type="math/tex">N</script>、能量 <script type="math/tex">E_{N,r}</script> 的微观态，环境相应有 <script type="math/tex">E_{\mathrm{tot}}-E_{N,r}</script> 和 <script type="math/tex">N_{\mathrm{tot}}-N</script>。</p>
+<p>热力学微分给出</p>
+<div class="math-display">
+$$
+\mathrm dS_R=\frac1T\mathrm dE_R
++\frac{P_R}{T}\mathrm dV_R-\frac{\mu}{T}\mathrm dN_R.
+$$
+</div>
+
+<p>在环境体积固定时，</p>
+<div class="math-display">
+$$
+S_R(E_{\mathrm{tot}}-E_{N,r},N_{\mathrm{tot}}-N)
+\simeq S_R(E_{\mathrm{tot}},N_{\mathrm{tot}})
+-\frac{E_{N,r}}{T}+\frac{\mu N}{T}.
+$$
+</div>
+
+<p>因此</p>
+<div class="math-display">
+$$
+p_{N,r}\propto e^{-\beta(E_{N,r}-\mu N)}.
+$$
+</div>
+
+<p>对于 <script type="math/tex">[H,N]=0</script> 的通常粒子数守恒模型，</p>
+<div class="math-display">
+$$
+\boxed{\rho_{\mathrm{gc}}
+=\frac{e^{-\beta(\hat H-\mu\hat N)}}{\Xi}},
+\qquad
+\boxed{\Xi=\operatorname{Tr}_{\mathcal F}
+e^{-\beta(\hat H-\mu\hat N)}}.
+$$
+</div>
+
+<p>化学势 <script type="math/tex">\mu</script> 的单位是能量，它控制添加粒子在统计上有多“有利”。增加 <script type="math/tex">\mu</script> 会相对提高大粒子数扇区的权重。它是热力学变量，不能简单等同于某个单粒子能级。</p>
+<h3 id="5-2-迹的空间扩大了：必须包含不同粒子数扇区"><a href="#5-2-迹的空间扩大了：必须包含不同粒子数扇区" class="headerlink" title="5.2 迹的空间扩大了：必须包含不同粒子数扇区"></a>5.2 迹的空间扩大了：必须包含不同粒子数扇区</h3><p>巨正则态定义在 Fock 空间</p>
+<div class="math-display">
+$$
+\mathcal F=\mathcal H_0\oplus\mathcal H_1\oplus\mathcal H_2\oplus\cdots,
+$$
+</div>
+
+<p>其中 <script type="math/tex">\mathcal H_N</script> 已经包含相同粒子的 Bose 或 Fermi 对称性。设</p>
+<div class="math-display">
+$$
+Z_N=\operatorname{Tr}_{\mathcal H_N}e^{-\beta H_N},
+$$
+</div>
+
+<p>则</p>
+<div class="math-display">
+$$
+\Xi=\sum_{N=0}^{\infty}e^{\beta\mu N}Z_N,
+\qquad
+P(N)=\frac{e^{\beta\mu N}Z_N}{\Xi}.
+$$
+</div>
+
+<p>整个态可以写成分块形式：</p>
+<div class="math-display">
+$$
+\rho_{\mathrm{gc}}
+=\bigoplus_N P(N)\rho_{\mathrm{can},N}.
+$$
+</div>
+
+<p>也就是说：先按 <script type="math/tex">P(N)</script> 选粒子数，再在这个固定粒子数扇区中按正则分布取态。对一个始终只有一个电子的二能级自旋系统，<script type="math/tex">\mu N</script> 只是常数，归一化后会消掉；要看见真正的粒子数涨落，必须扩大状态空间。</p>
+<h3 id="5-3-热力学量与涨落"><a href="#5-3-热力学量与涨落" class="headerlink" title="5.3 热力学量与涨落"></a>5.3 热力学量与涨落</h3><p>定义巨势 <script type="math/tex">\Phi_G=-k_{\mathrm B}T\ln\Xi</script>，则</p>
+<div class="math-display">
+$$
+\langle N\rangle
+=\frac1\beta\left(\frac{\partial\ln\Xi}{\partial\mu}\right)_{\beta,V},
+\qquad
+U=-\left(\frac{\partial\ln\Xi}{\partial\beta}\right)_{\mu,V}
++\mu\langle N\rangle.
+$$
+</div>
+
+<p>这里不能漏掉最后的 <script type="math/tex">\mu\langle N\rangle</script>：固定 <script type="math/tex">\mu</script> 对 <script type="math/tex">\beta</script> 求导，首先得到的是 <script type="math/tex">\langle H-\mu N\rangle</script>。</p>
+<p>相应地，</p>
+<div class="math-display">
+$$
+S=k_{\mathrm B}\left[\ln\Xi+\beta(U-\mu\langle N\rangle)\right],
+$$
+</div>
+
+<div class="math-display">
+$$
+\boxed{\operatorname{Var}(N)
+=k_{\mathrm B}T\left(\frac{\partial\langle N\rangle}{\partial\mu}\right)_{T,V}}.
+$$
+</div>
+
+<p>在相同条件下 <script type="math/tex">\partial_\beta^2\ln\Xi=\operatorname{Var}(H-\mu N)</script>，通常不等于单独的 <script type="math/tex">\operatorname{Var}(H)</script>。</p>
+<h3 id="5-4-Fermi–Dirac-分布从哪里出现？"><a href="#5-4-Fermi–Dirac-分布从哪里出现？" class="headerlink" title="5.4 Fermi–Dirac 分布从哪里出现？"></a>5.4 Fermi–Dirac 分布从哪里出现？</h3><p>考虑一个能量为 <script type="math/tex">\varepsilon</script> 的独立费米模式。由于 Pauli 原理，模式占据数只能是 <script type="math/tex">n=0,1</script>。它的巨配分函数为</p>
+<div class="math-display">
+$$
+\Xi_\varepsilon=1+e^{-\beta(\varepsilon-\mu)}.
+$$
+</div>
+
+<p>在 <script type="math/tex">(\vert 0\rangle,\vert 1\rangle)</script> 基底中，</p>
+<div class="math-display">
+$$
+\rho_\varepsilon=
+\begin{pmatrix}
+1-f(\varepsilon)&0\\
+0&f(\varepsilon)
+\end{pmatrix},
+\qquad
+\boxed{f(\varepsilon)=\frac1{e^{\beta(\varepsilon-\mu)}+1}}.
+$$
+</div>
+
+<p>这就是 Fermi–Dirac 分布。这里 <script type="math/tex">f</script> 是<strong>某个模式的平均占据数</strong>，不是“电子在所有轨道中出现的归一化单粒子概率”。</p>
+<p>若是独立玻色模式，允许 <script type="math/tex">n=0,1,2,\ldots</script>，则几何级数给出</p>
+<div class="math-display">
+$$
+\Xi_\varepsilon=\frac1{1-e^{-\beta(\varepsilon-\mu)}},
+\qquad
+\langle n\rangle=\frac1{e^{\beta(\varepsilon-\mu)}-1},
+$$
+</div>
+
+<p>要求 <script type="math/tex">\varepsilon-\mu>0</script> 才使该单模式级数收敛。宏观凝聚极限需要单独处理基态。量子气体中独立模式分解的进一步讨论见 <a target="_blank" rel="noopener" href="https://www.damtp.cam.ac.uk/user/tong/statphys/statmechhtml/S3.html">Tong 的量子气体章节</a>。</p>
+<h2 id="6-完整算例：磁场中的一个电子自旋"><a href="#6-完整算例：磁场中的一个电子自旋" class="headerlink" title="6. 完整算例：磁场中的一个电子自旋"></a>6. 完整算例：磁场中的一个电子自旋</h2><h3 id="6-1-先把模型和符号说明白"><a href="#6-1-先把模型和符号说明白" class="headerlink" title="6.1 先把模型和符号说明白"></a>6.1 先把模型和符号说明白</h3><p>考虑一个局域电子，空间轨道自由度被冻结，只研究自旋。忽略轨道磁效应、其他电子、核自旋以及自旋之间的相互作用，假设存在足以使自旋弛豫的弱环境耦合。</p>
+<p>电子带负电，其磁矩与自旋方向相反。本文把 <script type="math/tex">g</script> 定义为<strong>正的自旋 <script type="math/tex">g</script> 因子大小</strong>：</p>
+<div class="math-display">
+$$
+\hat{\boldsymbol\mu}
+=-g\mu_{\mathrm B}\frac{\hat{\boldsymbol S}}{\hbar}
+=-\frac{g\mu_{\mathrm B}}2\boldsymbol\sigma,
+\qquad
+\mu_{\mathrm B}=\frac{e\hbar}{2m_e}>0.
+$$
+</div>
+
+<p>这里 <script type="math/tex">e</script> 表示正的元电荷大小，<script type="math/tex">\boldsymbol\sigma=(\sigma_x,\sigma_y,\sigma_z)</script>。所以 Zeeman 哈密顿量是</p>
+<div class="math-display">
+$$
+\boxed{\hat H=-\hat{\boldsymbol\mu}\cdot\boldsymbol B
+=+\frac{g\mu_{\mathrm B}}2\boldsymbol B\cdot\boldsymbol\sigma}.
+$$
+</div>
+
+<p>正号非常重要。有的文献把符号吸收到磁矩或带符号的 <script type="math/tex">g</script> 因子中；比较公式时应先比较定义。电子自旋的 Zeeman 能量与磁场、磁量子数的关系可参照 <a target="_blank" rel="noopener" href="https://www.physics.nist.gov/Pubs/AtSpec/node12.html">NIST 的 Zeeman 效应说明</a>。</p>
+<p>写成 <script type="math/tex">\boldsymbol B=B\boldsymbol n</script>，其中 <script type="math/tex">B\geq0</script>、<script type="math/tex">\vert \boldsymbol n\vert =1</script>，并定义</p>
+<div class="math-display">
+$$
+a=\frac{g\mu_{\mathrm B}B}{2},
+\qquad
+\Delta=2a=g\mu_{\mathrm B}B,
+\qquad
+x=\beta a=\frac{\Delta}{2k_{\mathrm B}T}.
+$$
+</div>
+
+<script type="math/tex">\Delta</script> 是两能级间隔，<script type="math/tex">a</script> 是半间隔，<script type="math/tex">x</script> 是无量纲的磁场能与热能之比。后面的 <script type="math/tex">g=2</script> 是教学近似，不是在数值上使用自由电子 <script type="math/tex">g</script> 因子的全部精度。
+
+<h3 id="6-2-磁场沿-z-轴：从哈密顿量逐步算到密度矩阵"><a href="#6-2-磁场沿-z-轴：从哈密顿量逐步算到密度矩阵" class="headerlink" title="6.2 磁场沿 z 轴：从哈密顿量逐步算到密度矩阵"></a>6.2 磁场沿 z 轴：从哈密顿量逐步算到密度矩阵</h3><p>取 <script type="math/tex">\boldsymbol B=B\boldsymbol e_z</script>，按 <script type="math/tex">(\vert \uparrow\rangle,\vert \downarrow\rangle)</script> 排列基底：</p>
+<div class="math-display">
+$$
+H=a\sigma_z
+=\begin{pmatrix}a&0\\0&-a\end{pmatrix},
+\qquad
+E_\uparrow=+a,\quad E_\downarrow=-a.
+$$
+</div>
+
+<p>因此电子的<strong>自旋沿场态是高能态</strong>，自旋逆场态是低能态；低能态的磁矩沿磁场。</p>
+<p>第一步，对哈密顿量取指数：</p>
+<div class="math-display">
+$$
+e^{-\beta H}
+=\begin{pmatrix}e^{-x}&0\\0&e^x\end{pmatrix}.
+$$
+</div>
+
+<p>第二步，计算配分函数：</p>
+<div class="math-display">
+$$
+Z=e^{-x}+e^x=2\cosh x.
+$$
+</div>
+
+<p>第三步，归一化：</p>
+<div class="math-display">
+$$
+\boxed{
+\rho_z
+=\frac1{2\cosh x}
+\begin{pmatrix}e^{-x}&0\\0&e^x\end{pmatrix}
+=\frac12\begin{pmatrix}
+1-\tanh x&0\\
+0&1+\tanh x
+\end{pmatrix}}.
+$$
+</div>
+
+<p>由此读出</p>
+<div class="math-display">
+$$
+p_\uparrow=\frac1{1+e^{2x}},
+\qquad
+p_\downarrow=\frac1{1+e^{-2x}},
+\qquad
+\frac{p_\uparrow}{p_\downarrow}=e^{-\beta\Delta}.
+$$
+</div>
+
+<p>这个二能级占据概率在代数形式上与某个费米函数相似，但这里是<strong>固定一个电子在两个自旋态之间的条件概率</strong>，并没有允许电子数变成零或二。</p>
+<p><img src="/img/quantum-ensembles/04-zeeman-populations.png" alt="电子塞曼能级和上下自旋热平衡概率"></p>
+<p><em>图 4：本图使用电子的磁矩符号。低能态是 <script type="math/tex">\vert \downarrow\rangle</script>，能级间隔为 <script type="math/tex">2a</script>。横轴增大可以表示固定温度增加磁场，也可以表示固定磁场降低温度。</em></p>
+<h3 id="6-3-用迹直接计算能量、自旋和磁矩"><a href="#6-3-用迹直接计算能量、自旋和磁矩" class="headerlink" title="6.3 用迹直接计算能量、自旋和磁矩"></a>6.3 用迹直接计算能量、自旋和磁矩</h3><p>先算自旋极化：</p>
+<div class="math-display">
+$$
+\langle\sigma_z\rangle
+=\operatorname{Tr}(\rho_z\sigma_z)
+=p_\uparrow-p_\downarrow=-\tanh x.
+$$
+</div>
+
+<p>于是</p>
+<div class="math-display">
+$$
+\boxed{\langle S_z\rangle=-\frac{\hbar}{2}\tanh x},
+\qquad
+\boxed{U=\langle H\rangle=-a\tanh x}.
+$$
+</div>
+
+<p>电子磁矩与自旋反向，因此</p>
+<div class="math-display">
+$$
+\boxed{\langle\mu_z\rangle
+=+\frac{g\mu_{\mathrm B}}2\tanh x}.
+$$
+</div>
+
+<p>可以用自由能独立核对：</p>
+<div class="math-display">
+$$
+F=-k_{\mathrm B}T\ln(2\cosh x),
+\qquad
+-\left(\frac{\partial F}{\partial B}\right)_T
+=\frac{g\mu_{\mathrm B}}2\tanh x.
+$$
+</div>
+
+<p>若有 <script type="math/tex">N</script> 个独立、等价的局域电子自旋，则总磁矩为 <script type="math/tex">N\langle\mu_z\rangle</script>。在这个忽略相互作用的模型中，总配分函数为 <script type="math/tex">Z_1^N</script>，总密度算符为单自旋热态的张量积。</p>
+<p>在弱场或高温 <script type="math/tex">x\ll1</script> 时，<script type="math/tex">\tanh x\simeq x</script>，所以</p>
+<div class="math-display">
+$$
+\langle\mu_z\rangle
+\simeq\frac{(g\mu_{\mathrm B})^2}{4k_{\mathrm B}T}B.
+$$
+</div>
+
+<p>这是局域独立自旋的 Curie 型响应。这里给出的是磁矩对 <script type="math/tex">B</script> 的响应；若要换成 SI 制下磁化强度对 <script type="math/tex">H</script> 的体磁化率，还要引入自旋数密度以及相应的 <script type="math/tex">B,H</script> 关系。</p>
+<h3 id="6-4-熵、纯度、能量涨落和热容"><a href="#6-4-熵、纯度、能量涨落和热容" class="headerlink" title="6.4 熵、纯度、能量涨落和热容"></a>6.4 熵、纯度、能量涨落和热容</h3><p>把两个本征概率代入熵：</p>
+<div class="math-display">
+$$
+\boxed{\frac{S}{k_{\mathrm B}}
+=\ln(2\cosh x)-x\tanh x}.
+$$
+</div>
+
+<p>纯度为</p>
+<div class="math-display">
+$$
+\boxed{\operatorname{Tr}\rho_z^2
+=p_\uparrow^2+p_\downarrow^2
+=\frac{1+\tanh^2x}{2}}.
+$$
+</div>
+
+<p>由于 <script type="math/tex">H^2=a^2I</script>，</p>
+<div class="math-display">
+$$
+\operatorname{Var}(H)
+=a^2-U^2
+=a^2\operatorname{sech}^2x.
+$$
+</div>
+
+<p>固定磁场求温度导数，得到</p>
+<div class="math-display">
+$$
+\boxed{C_B=k_{\mathrm B}x^2\operatorname{sech}^2x},
+\qquad
+\operatorname{sech}x=\frac1{\cosh x}.
+$$
+</div>
+
+<p>也确实满足 <script type="math/tex">k_{\mathrm B}T^2C_B=\operatorname{Var}(H)</script>。</p>
+<p><img src="/img/quantum-ensembles/05-thermal-observables.png" alt="电子自旋的磁矩、熵、纯度与热容曲线"></p>
+<p><em>图 5：所有曲线都来自同一个二能级热态。横轴是 <script type="math/tex">x=a/(k_{\mathrm B}T)</script>，不是温度本身；固定非零磁场时，向右对应降温。热容在两能级冻结和几乎等概率占据之间出现峰值，即二能级系统的 Schottky 峰。</em></p>
+<p>几个极限值得逐项检查：</p>
+<table>
+<thead>
+<tr>
+<th>极限</th>
+<th>密度矩阵</th>
+<th>能量与熵</th>
+<th>物理图像</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>固定 <script type="math/tex">B>0</script>，<script type="math/tex">T\to0^+</script></td>
+<td><script type="math/tex">\vert \downarrow\rangle\langle\downarrow\vert </script></td>
+<td><script type="math/tex">U\to-a,\ S\to0</script></td>
+<td>基态占据趋于一</td>
+</tr>
+<tr>
+<td>固定 <script type="math/tex">B</script>，<script type="math/tex">T\to\infty</script></td>
+<td><script type="math/tex">I_2/2</script></td>
+<td><script type="math/tex">U\to0,\ S\to k_{\mathrm B}\ln2</script></td>
+<td>两态等概率</td>
+</tr>
+<tr>
+<td>固定 <script type="math/tex">T>0</script>，<script type="math/tex">B\to0</script></td>
+<td><script type="math/tex">I_2/2</script></td>
+<td><script type="math/tex">U\to0,\ S\to k_{\mathrm B}\ln2</script></td>
+<td>能级简并，无优选方向</td>
+</tr>
+</tbody></table>
+<p>严格 <script type="math/tex">B=0</script> 时，模型的基态本身是二重简并的；正则态的零温极限仍是 <script type="math/tex">I_2/2</script>。先取 <script type="math/tex">T\to0</script> 再令 <script type="math/tex">B\to0^+</script>，则保留磁场所选的纯态。<strong>两个极限的次序不同，结果可以不同。</strong></p>
+<h3 id="6-5-任意方向的磁场：不必每次重新对角化"><a href="#6-5-任意方向的磁场：不必每次重新对角化" class="headerlink" title="6.5 任意方向的磁场：不必每次重新对角化"></a>6.5 任意方向的磁场：不必每次重新对角化</h3><p>对单位向量 <script type="math/tex">\boldsymbol n</script>，Pauli 矩阵满足</p>
+<div class="math-display">
+$$
+(\boldsymbol n\cdot\boldsymbol\sigma)^2=I.
+$$
+</div>
+
+<p>将指数级数按奇偶次幂拆开：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+e^{-x\boldsymbol n\cdot\boldsymbol\sigma}
+&=\sum_{m=0}^{\infty}\frac{x^{2m}}{(2m)!}I
+-\sum_{m=0}^{\infty}\frac{x^{2m+1}}{(2m+1)!}
+\boldsymbol n\cdot\boldsymbol\sigma\\
+&=\cosh x\,I-\sinh x\,\boldsymbol n\cdot\boldsymbol\sigma.
+\end{aligned}
+$$
+</div>
+
+<p>因此任意方向的正则态都是</p>
+<div class="math-display">
+$$
+\boxed{\rho(\boldsymbol B)
+=\frac12\left[I-\tanh x\,
+\boldsymbol n\cdot\boldsymbol\sigma\right]}.
+$$
+</div>
+
+<p>这也是 Bloch 向量形式 <script type="math/tex">\rho=(I+\boldsymbol r\cdot\boldsymbol\sigma)/2</script>，其中</p>
+<div class="math-display">
+$$
+\boldsymbol r=-\tanh x\,\boldsymbol n.
+$$
+</div>
+
+<p>Bloch 向量的长度从高温的零增加到零温的 1，方向与磁场相反。它描述自旋极化，不是电子磁矩方向。</p>
+<p>令</p>
+<div class="math-display">
+$$
+\boldsymbol n=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta),
+\qquad t=\tanh x,
+$$
+</div>
+
+<p>在同一个 <script type="math/tex">S_z</script> 基底中便有</p>
+<div class="math-display">
+$$
+\boxed{
+\rho=\frac12
+\begin{pmatrix}
+1-t\cos\theta&-t\sin\theta\,e^{-i\phi}\\
+-t\sin\theta\,e^{i\phi}&1+t\cos\theta
+\end{pmatrix}}.
+$$
+</div>
+
+<p>例如磁场沿 <script type="math/tex">x</script> 轴时，</p>
+<div class="math-display">
+$$
+\rho_x=\frac12
+\begin{pmatrix}
+1&-\tanh x\\
+-\tanh x&1
+\end{pmatrix}.
+$$
+</div>
+
+<p>它在 <script type="math/tex">S_z</script> 基底中有非对角元，但在 <script type="math/tex">S_x</script> 能量本征基底中是对角的，且仍满足 <script type="math/tex">[H,\rho_x]=0</script>，是定态。<strong>“有非对角元”是相对于所选基底而言；它既不等于纯态，也不必意味着系统尚未达到热平衡。</strong></p>
+<p>相应的矢量平均值为</p>
+<div class="math-display">
+$$
+\langle\boldsymbol S\rangle
+=-\frac{\hbar}{2}\tanh x\,\boldsymbol n,
+\qquad
+\langle\boldsymbol\mu\rangle
+=+\frac{g\mu_{\mathrm B}}2\tanh x\,\boldsymbol n.
+$$
+</div>
+
+<h3 id="6-6-把数字代进去：1-T、1-K"><a href="#6-6-把数字代进去：1-T、1-K" class="headerlink" title="6.6 把数字代进去：1 T、1 K"></a>6.6 把数字代进去：1 T、1 K</h3><p>取 <script type="math/tex">g=2</script>、<script type="math/tex">B=1\thinspace \mathrm T</script>、<script type="math/tex">T=1\thinspace \mathrm K</script>，使用</p>
+<div class="math-display">
+$$
+\mu_{\mathrm B}\simeq5.7883818\times10^{-5}\ \mathrm{eV/T},
+\qquad
+k_{\mathrm B}\simeq8.6173333\times10^{-5}\ \mathrm{eV/K}.
+$$
+</div>
+
+<p>常数单位与数值可查 <a target="_blank" rel="noopener" href="https://physics.nist.gov/cuu/Constants/">NIST 基本物理常数数据库</a>。这里保留的位数足以验证例题，不表示模型包含了电子反常磁矩修正。</p>
+<p>此时</p>
+<div class="math-display">
+$$
+a=5.7883818\times10^{-5}\ \mathrm{eV},
+\quad
+\Delta=1.1576764\times10^{-4}\ \mathrm{eV},
+\quad
+x=0.6717138.
+$$
+</div>
+
+<p>所以</p>
+<div class="math-display">
+$$
+\boxed{\rho_z\simeq
+\begin{pmatrix}
+0.206947&0\\
+0&0.793053
+\end{pmatrix}},
+\qquad
+\boxed{\rho_x\simeq
+\begin{pmatrix}
+0.500000&-0.293053\\
+-0.293053&0.500000
+\end{pmatrix}}.
+$$
+</div>
+
+<p>两者本征值相同，区别是磁场方向与表示基底之间的关系。其热力学量为：</p>
+<table>
+<thead>
+<tr>
+<th>物理量</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>平均能量 <script type="math/tex">U</script></td>
+<td><script type="math/tex">-3.392606\times10^{-5}\thinspace \mathrm{eV}</script></td>
+</tr>
+<tr>
+<td>沿磁场的平均磁矩</td>
+<td><script type="math/tex">0.586106\thinspace \mu_{\mathrm B}</script></td>
+</tr>
+<tr>
+<td>沿磁场的平均自旋</td>
+<td><script type="math/tex">-0.293053\thinspace \hbar</script></td>
+</tr>
+<tr>
+<td>熵 <script type="math/tex">S/k_{\mathrm B}</script></td>
+<td><script type="math/tex">0.509883</script></td>
+</tr>
+<tr>
+<td>纯度 <script type="math/tex">\operatorname{Tr}\rho^2</script></td>
+<td><script type="math/tex">0.671760</script></td>
+</tr>
+<tr>
+<td>热容 <script type="math/tex">C_B/k_{\mathrm B}</script></td>
+<td><script type="math/tex">0.296203</script></td>
+</tr>
+</tbody></table>
+<p>如果仍取 <script type="math/tex">1\thinspace \mathrm T</script>，但升至 <script type="math/tex">300\thinspace \mathrm K</script>，则 <script type="math/tex">x\simeq0.002239</script>，低能态概率只有约 <script type="math/tex">0.501120</script>。这说明常温、特斯拉量级磁场下，独立电子自旋的热极化通常很小。</p>
+<h3 id="6-7-同一个单自旋的微正则态是什么？"><a href="#6-7-同一个单自旋的微正则态是什么？" class="headerlink" title="6.7 同一个单自旋的微正则态是什么？"></a>6.7 同一个单自旋的微正则态是什么？</h3><p>若 <script type="math/tex">B>0</script> 且能壳只包含 <script type="math/tex">E=-a</script>，则</p>
+<div class="math-display">
+$$
+\rho_{\mathrm{mc}}=|\downarrow\rangle\langle\downarrow|
+=\begin{pmatrix}0&0\\0&1\end{pmatrix}.
+$$
+</div>
+
+<p>若能壳只包含 <script type="math/tex">E=+a</script>，得到相反的纯态；若人为选择包含两个能级的宽区间，则等权微正则描述给出 <script type="math/tex">I_2/2</script>。最后一种选择对这个小系统并不是“相对能级间隔很窄”的能壳。</p>
+<p>这也解释了为什么讲解微正则系综时，两个自旋的简并例子比单个非简并自旋更能体现“多个微观态共享同一能量”。</p>
+<h2 id="7-让电子数可以改变：一个轨道的巨正则密度矩阵"><a href="#7-让电子数可以改变：一个轨道的巨正则密度矩阵" class="headerlink" title="7. 让电子数可以改变：一个轨道的巨正则密度矩阵"></a>7. 让电子数可以改变：一个轨道的巨正则密度矩阵</h2><h3 id="7-1-建立最小但完整的可变粒子数模型"><a href="#7-1-建立最小但完整的可变粒子数模型" class="headerlink" title="7.1 建立最小但完整的可变粒子数模型"></a>7.1 建立最小但完整的可变粒子数模型</h3><p>现在研究一个能与电子库交换粒子的空间轨道。该轨道有上下两个自旋模式，零场单粒子能量为 <script type="math/tex">\varepsilon_0</script>。外磁场沿 <script type="math/tex">z</script> 轴，仍用 <script type="math/tex">a=g\mu_{\mathrm B}B/2</script>。先忽略双占据的库仑代价：</p>
+<div class="math-display">
+$$
+H=(\varepsilon_0+a)n_\uparrow
++(\varepsilon_0-a)n_\downarrow,
+\qquad
+N=n_\uparrow+n_\downarrow.
+$$
+</div>
+
+<p>这里 <script type="math/tex">n_\uparrow,n_\downarrow</script> 各为 0 或 1。由于是两个不同自旋模式，一个空间轨道可以容纳两个电子，不违背 Pauli 原理。</p>
+<p>四个 Fock 基态是：</p>
+<table>
+<thead>
+<tr>
+<th>基态</th>
+<th><script type="math/tex">(n_\uparrow,n_\downarrow)</script></th>
+<th>粒子数</th>
+<th>能量</th>
+<th>未归一化权重</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">\vert 0\rangle</script></td>
+<td><script type="math/tex">(0,0)</script></td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><script type="math/tex">\vert \uparrow\rangle</script></td>
+<td><script type="math/tex">(1,0)</script></td>
+<td>1</td>
+<td><script type="math/tex">\varepsilon_0+a</script></td>
+<td><script type="math/tex">q_\uparrow=e^{-\beta(\varepsilon_0+a-\mu)}</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">\vert \downarrow\rangle</script></td>
+<td><script type="math/tex">(0,1)</script></td>
+<td>1</td>
+<td><script type="math/tex">\varepsilon_0-a</script></td>
+<td><script type="math/tex">q_\downarrow=e^{-\beta(\varepsilon_0-a-\mu)}</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">\vert \uparrow\downarrow\rangle</script></td>
+<td><script type="math/tex">(1,1)</script></td>
+<td>2</td>
+<td><script type="math/tex">2\varepsilon_0</script></td>
+<td><script type="math/tex">q_\uparrow q_\downarrow</script></td>
+</tr>
+</tbody></table>
+<p>双占据态中的两个自旋磁矩抵消，所以其能量中没有净自旋 Zeeman 项。</p>
+<h3 id="7-2-写出巨配分函数和四维矩阵"><a href="#7-2-写出巨配分函数和四维矩阵" class="headerlink" title="7.2 写出巨配分函数和四维矩阵"></a>7.2 写出巨配分函数和四维矩阵</h3><p>把四个权重相加：</p>
+<div class="math-display">
+$$
+\Xi=1+q_\uparrow+q_\downarrow+q_\uparrow q_\downarrow
+=(1+q_\uparrow)(1+q_\downarrow).
+$$
+</div>
+
+<p>在表格给定的基底顺序中，</p>
+<div class="math-display">
+$$
+\boxed{\rho_{\mathrm{gc}}=\frac1{\Xi}
+\begin{pmatrix}
+1&0&0&0\\
+0&q_\uparrow&0&0\\
+0&0&q_\downarrow&0\\
+0&0&0&q_\uparrow q_\downarrow
+\end{pmatrix}}.
+$$
+</div>
+
+<p>定义 <script type="math/tex">f_\uparrow=f(\varepsilon_0+a)</script>、<script type="math/tex">f_\downarrow=f(\varepsilon_0-a)</script>，同一个矩阵也可以写成</p>
+<div class="math-display">
+$$
+\rho_{\mathrm{gc}}=\operatorname{diag}\!\left(
+(1-f_\uparrow)(1-f_\downarrow),
+f_\uparrow(1-f_\downarrow),
+(1-f_\uparrow)f_\downarrow,
+f_\uparrow f_\downarrow
+\right).
+$$
+</div>
+
+<p><img src="/img/quantum-ensembles/06-grand-canonical.png" alt="单轨道的四个Fock态与巨正则概率"></p>
+<p><em>图 6：横轴改变的是化学势与轨道中心的相对位置。化学势很低时空态占优，很高时双占据态占优；中间区域单占据态有明显权重。两幅图均使用无库仑相互作用模型。</em></p>
+<h3 id="7-3-平均粒子数、粒子数涨落和磁矩"><a href="#7-3-平均粒子数、粒子数涨落和磁矩" class="headerlink" title="7.3 平均粒子数、粒子数涨落和磁矩"></a>7.3 平均粒子数、粒子数涨落和磁矩</h3><p>直接用上面的四态概率求平均：</p>
+<div class="math-display">
+$$
+\boxed{\langle N\rangle=f_\uparrow+f_\downarrow},
+$$
+</div>
+
+<div class="math-display">
+$$
+\boxed{\operatorname{Var}(N)
+=f_\uparrow(1-f_\uparrow)
++f_\downarrow(1-f_\downarrow)}.
+$$
+</div>
+
+<p>最后一个式子利用了无相互作用时两个模式的统计独立性。</p>
+<p>能量和磁矩分别为</p>
+<div class="math-display">
+$$
+U=(\varepsilon_0+a)f_\uparrow
++(\varepsilon_0-a)f_\downarrow,
+$$
+</div>
+
+<div class="math-display">
+$$
+\boxed{\langle\mu_z\rangle
+=\frac{g\mu_{\mathrm B}}2(f_\downarrow-f_\uparrow)}.
+$$
+</div>
+
+<p>若需要熵，可利用模式独立性相加：</p>
+<div class="math-display">
+$$
+S=-k_{\mathrm B}\sum_{\sigma=\uparrow,\downarrow}
+\left[f_\sigma\ln f_\sigma
++(1-f_\sigma)\ln(1-f_\sigma)\right].
+$$
+</div>
+
+<p>注意 <script type="math/tex">\operatorname{diag}(f_\uparrow,f_\downarrow)</script> 是这个模型的<strong>单粒子关联矩阵</strong>，其迹为 <script type="math/tex">\langle N\rangle</script>。它一般不是归一化为一的完整密度矩阵；完整多体密度矩阵是前面的 <script type="math/tex">4\times4</script> 矩阵。</p>
+<h3 id="7-4-一个关键对比：平均一个电子，不等于固定一个电子"><a href="#7-4-一个关键对比：平均一个电子，不等于固定一个电子" class="headerlink" title="7.4 一个关键对比：平均一个电子，不等于固定一个电子"></a>7.4 一个关键对比：平均一个电子，不等于固定一个电子</h3><p>仍取 <script type="math/tex">B=1\thinspace \mathrm T</script>、<script type="math/tex">T=1\thinspace \mathrm K</script>、<script type="math/tex">g=2</script>，并令 <script type="math/tex">\mu=\varepsilon_0</script>。此时</p>
+<div class="math-display">
+$$
+q_\uparrow=e^{-x},\quad q_\downarrow=e^x,\quad
+q_\uparrow q_\downarrow=1.
+$$
+</div>
+
+<p>计算得到</p>
+<div class="math-display">
+$$
+\boxed{\rho_{\mathrm{gc}}\simeq
+\operatorname{diag}(0.223793,\ 0.114321,\ 0.438094,\ 0.223793)}.
+$$
+</div>
+
+<p>其粒子数分布是</p>
+<div class="math-display">
+$$
+P(N=0)=0.223793,\quad
+P(N=1)=0.552415,\quad
+P(N=2)=0.223793.
+$$
+</div>
+
+<p>于是</p>
+<div class="math-display">
+$$
+\langle N\rangle=1,
+\qquad
+\operatorname{Var}(N)=0.447585.
+$$
+</div>
+
+<p>平均数虽然恰好是一，单次测量却可能看到零、一或两个电子。它与第 6 节固定一个电子的正则态明显不同。</p>
+<p>若在此巨正则态中<strong>条件选取 <script type="math/tex">N=1</script></strong>，投影并重新归一化：</p>
+<div class="math-display">
+$$
+\rho_{N=1}
+=\frac{\Pi_1\rho_{\mathrm{gc}}\Pi_1}
+{\operatorname{Tr}(\Pi_1\rho_{\mathrm{gc}})}
+\ \longrightarrow\
+\frac1{q_\uparrow+q_\downarrow}
+\begin{pmatrix}q_\uparrow&0\\0&q_\downarrow\end{pmatrix}.
+$$
+</div>
+
+<p>右侧仅表示保留下来的二维单粒子子空间。约去共同因子 <script type="math/tex">e^{-\beta(\varepsilon_0-\mu)}</script>，得到</p>
+<div class="math-display">
+$$
+\rho_{N=1}
+=\frac1{2\cosh x}
+\begin{pmatrix}e^{-x}&0\\0&e^x\end{pmatrix}
+=\rho_z.
+$$
+</div>
+
+<p><strong>巨正则系综在固定粒子数条件下，恢复对应的正则系综。</strong>“只令平均粒子数为一”并没有进行这个条件选择。</p>
+<h3 id="7-5-如果双占据要付出库仑能量"><a href="#7-5-如果双占据要付出库仑能量" class="headerlink" title="7.5 如果双占据要付出库仑能量"></a>7.5 如果双占据要付出库仑能量</h3><p>在量子点等系统中，双占据通常需要额外能量 <script type="math/tex">U_C</script>。加入 <script type="math/tex">U_C n_\uparrow n_\downarrow</script> 后，第四个权重变为</p>
+<div class="math-display">
+$$
+q_\uparrow q_\downarrow e^{-\beta U_C},
+$$
+</div>
+
+<p>从而</p>
+<div class="math-display">
+$$
+\Xi=1+q_\uparrow+q_\downarrow+
+q_\uparrow q_\downarrow e^{-\beta U_C}.
+$$
+</div>
+
+<p>四态枚举仍然适用，但 <script type="math/tex">\Xi</script> 不再简单因式分解，两个模式也不再统计独立。前面的独立 Fermi 函数公式需要相应修改。</p>
+<h2 id="8-怎样实际计算一个系统的密度矩阵？"><a href="#8-怎样实际计算一个系统的密度矩阵？" class="headerlink" title="8. 怎样实际计算一个系统的密度矩阵？"></a>8. 怎样实际计算一个系统的密度矩阵？</h2><p>可以按下面的顺序做：</p>
+<ol>
+<li><strong>定义系统与模型。</strong>写清有哪些自由度，外部参数是什么，是否允许能量与粒子交换。</li>
+<li><strong>选基底并写出 <script type="math/tex">H</script>。</strong>固定粒子数时使用该扇区；可变粒子数时包含所需的 Fock 态。存在粒子数算符时也写出 <script type="math/tex">N</script>。</li>
+<li><strong>按约束选权重。</strong>微正则用能壳投影，正则用 <script type="math/tex">e^{-\beta H}</script>，巨正则用 <script type="math/tex">e^{-\beta(H-\mu N)}</script>。</li>
+<li><strong>用迹归一化。</strong>不要漏简并度，也不要在错误的状态空间取迹。</li>
+<li><strong>检查合法性。</strong>验证厄米性、正半定性与单位迹。</li>
+<li><strong>计算目标量。</strong>概率用投影算符，平均值用 <script type="math/tex">\operatorname{Tr}(\rho A)</script>，熵用密度矩阵本征值。</li>
+<li><strong>检查极限和单位。</strong>例如零场、高温、低温以及空轨道极限。</li>
+</ol>
+<p>对于小矩阵，下面的 Python 写法足以稳定计算热态。为避免低温下指数溢出，先从所有能量中减去最低本征值；这个共同能量平移会在归一化中抵消。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">thermal_density</span>(<span class="params">K, beta</span>):</span><br><span class="line">    <span class="comment"># 正则：K = H；巨正则：K = H - mu * N</span></span><br><span class="line">    K = np.asarray(K, dtype=<span class="built_in">complex</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> np.allclose(K, K.conj().T):</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;K 必须是厄米矩阵&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> beta &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;本例实现限定正温度或无限温度&quot;</span>)</span><br><span class="line">    energy, vectors = np.linalg.eigh(K)</span><br><span class="line">    weight = np.exp(-beta * (energy - energy.<span class="built_in">min</span>()))</span><br><span class="line">    probability = weight / weight.<span class="built_in">sum</span>()</span><br><span class="line">    <span class="keyword">return</span> (vectors * probability) @ vectors.conj().T</span><br><span class="line"></span><br><span class="line"><span class="comment"># B = 1 T, T = 1 K, g = 2；能量单位统一使用 eV</span></span><br><span class="line">kB = <span class="number">8.617333262145e-5</span>  <span class="comment"># eV/K</span></span><br><span class="line">muB = <span class="number">5.7883817982e-5</span>  <span class="comment"># eV/T</span></span><br><span class="line">a = muB * <span class="number">1.0</span></span><br><span class="line">beta = <span class="number">1.0</span> / (kB * <span class="number">1.0</span>)</span><br><span class="line">H = np.diag([a, -a])</span><br><span class="line">rho = thermal_density(H, beta)</span><br><span class="line"><span class="built_in">print</span>(rho)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;trace =&quot;</span>, np.trace(rho))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;energy / eV =&quot;</span>, np.trace(rho @ H).real)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单轨道巨正则模型：epsilon0 = mu = 0</span></span><br><span class="line">H_fock = np.diag([<span class="number">0.0</span>, a, -a, <span class="number">0.0</span>])</span><br><span class="line">N_fock = np.diag([<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">rho_gc = thermal_density(H_fock - <span class="number">0.0</span> * N_fock, beta)</span><br><span class="line"><span class="built_in">print</span>(rho_gc)</span><br></pre></td></tr></table></figure>
+
+<p>微正则态可以通过筛选 <script type="math/tex">H</script> 的能壳本征向量来构造投影：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">microcanonical_density</span>(<span class="params">H, E_low, E_high</span>):</span><br><span class="line">    energy, vectors = np.linalg.eigh(H)</span><br><span class="line">    keep = (energy &gt;= E_low) &amp; (energy &lt;= E_high)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> np.<span class="built_in">any</span>(keep):</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;所选能壳中没有本征态&quot;</span>)</span><br><span class="line">    V = vectors[:, keep]</span><br><span class="line">    <span class="keyword">return</span> (V @ V.conj().T) / keep.<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure>
+
+<p>有限精度数值计算中，应根据能量尺度为能壳边界留合理容差。对大规模多体体系，完整矩阵维数随自由度迅速增长，往往需要利用对称性、张量网络或统计采样；本文的显式矩阵方法适用于小系统教学与核验。</p>
+<h2 id="9-三个系综什么时候等价？什么时候不能混用？"><a href="#9-三个系综什么时候等价？什么时候不能混用？" class="headerlink" title="9. 三个系综什么时候等价？什么时候不能混用？"></a>9. 三个系综什么时候等价？什么时候不能混用？</h2><p>在适当的热力学极限、短程相互作用和稳定相区中，粒子数、能量等广延量的相对涨落通常按 <script type="math/tex">N^{-1/2}</script> 缩小，三种系综对许多局域量和热力学密度给出相同结果。这是“系综等价”的常用含义。</p>
+<p>但它不意味着：</p>
+<ul>
+<li>三个密度算符在有限系统中相等；</li>
+<li>微正则和正则的能量涨落一样；</li>
+<li>平均粒子数相同就能把巨正则矩阵当作固定粒子数矩阵；</li>
+<li>长程相互作用、相变附近或特殊约束下仍可不加检查地互换。</li>
+</ul>
+<p>本文的单轨道例子就是最小的反例：正则与巨正则都可以有平均一个电子，但只有后者具有非零粒子数涨落。</p>
+<p>还有几个常见误区：</p>
+<table>
+<thead>
+<tr>
+<th>容易误解的说法</th>
+<th>应如何理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>量子系综就是一个很多态的叠加</td>
+<td>系综权重形成密度算符；相干叠加则保留振幅相位</td>
+</tr>
+<tr>
+<td>热态一定是对角矩阵</td>
+<td>它在能量本征基底中可取对角，在其他基底中可以有非对角元</td>
+</tr>
+<tr>
+<td>熵就是任意基底对角元的 Shannon 熵</td>
+<td>von Neumann 熵要用 <script type="math/tex">\rho</script> 的本征值</td>
+</tr>
+<tr>
+<td>孤立系统会自动变成微正则混合态</td>
+<td>幺正演化保持总态纯度；热化还涉及局域、粗粒化与统计条件</td>
+</tr>
+<tr>
+<td>每个能量值都等概率</td>
+<td>微正则等权对象是能壳内正交微观态，必须计入简并</td>
+</tr>
+<tr>
+<td>电子自旋沿场一定能量低</td>
+<td>电子磁矩与自旋反向；在本文符号下，自旋逆场才是低能态</td>
+</tr>
+<tr>
+<td>Boltzmann 权重只适用于经典粒子</td>
+<td>量子正则态同样使用它；量子统计体现在允许的多体状态空间</td>
+</tr>
+<tr>
+<td>单电子自旋模型就是金属中的电子气</td>
+<td>金属还涉及轨道、Fermi 海和 Pauli 顺磁等，不能直接套独立局域自旋的 Curie 响应</td>
+</tr>
+</tbody></table>
+<h2 id="10-把公式连成一条计算链"><a href="#10-把公式连成一条计算链" class="headerlink" title="10. 把公式连成一条计算链"></a>10. 把公式连成一条计算链</h2><p>三种平衡系综的核心可以并排写成</p>
+<div class="math-display">
+$$
+\rho_{\mathrm{mc}}=\frac{P_{\mathcal I}}{W},
+\qquad
+\rho_{\mathrm{can}}=\frac{e^{-\beta H}}{Z},
+\qquad
+\rho_{\mathrm{gc}}=\frac{e^{-\beta(H-\mu N)}}{\Xi}.
+$$
+</div>
+
+<p>它们回答的是同一个问题：<strong>在给定的宏观约束下，应怎样给允许的量子态分配统计权重？</strong></p>
+<p>有了密度矩阵，下一步始终是</p>
+<div class="math-display">
+$$
+P(a)=\operatorname{Tr}(\rho\Pi_a),\qquad
+\langle A\rangle=\operatorname{Tr}(\rho A),\qquad
+S=-k_{\mathrm B}\operatorname{Tr}(\rho\ln\rho).
+$$
+</div>
+
+<p>磁场中的电子自旋使这条链完整落地：从 <script type="math/tex">H=a\sigma_z</script> 得到热态的两个占据概率，进而得到能量、磁矩、熵、纯度、涨落和热容。允许轨道与粒子库交换电子后，状态空间从二维扩大到四维；正是这个空间的变化，让巨正则系综具有了新的物理内容。</p>
+<h2 id="配图、计算与参考资料"><a href="#配图、计算与参考资料" class="headerlink" title="配图、计算与参考资料"></a>配图、计算与参考资料</h2><p>本文六幅图均由公式与明确模型直接绘制，不使用实验测量数据。图 1 是边界条件示意，图 2—6 的矩阵、能级和曲线与正文公式对应。</p>
+<ul>
+<li><a href="/downloads/quantum-ensembles/figures-and-checks.py">下载配图与独立数值核验脚本</a>：依赖 NumPy、SciPy、Matplotlib；在本项目内运行可重新生成 PNG、SVG 与核验记录。</li>
+<li><a href="/downloads/quantum-ensembles/validation.json">查看本次数值核验结果</a>：包括任意磁场方向的矩阵指数对照、密度矩阵合法性、四态枚举与 Fermi 占据的对照、固定粒子数条件化、部分迹与热力学导数核对。</li>
+</ul>
+<p>进一步阅读：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/22-51-quantum-theory-of-radiation-interactions-fall-2012/00e219fe9b8a81b64613f1428e87cb00_MIT22_51F12_Ch7.pdf">MIT 22.51，Chapter 7: Mixed States</a>：密度算符、纯态与混合态、部分迹、统计系综。</li>
+<li><a target="_blank" rel="noopener" href="https://www.damtp.cam.ac.uk/user/tong/statphys/statmechhtml/S1.html">David Tong，Statistical Physics，第一章</a>：微正则、正则与巨正则系综及热力学联系。</li>
+<li><a target="_blank" rel="noopener" href="https://www.damtp.cam.ac.uk/user/tong/statphys/statmechhtml/S3.html">David Tong，Statistical Physics，第三章</a>：量子气体、费米和玻色占据，以及电子气的磁响应。</li>
+<li><a target="_blank" rel="noopener" href="https://www.physics.nist.gov/Pubs/AtSpec/node12.html">NIST，Atomic Spectroscopy: Zeeman Effect</a>：磁场中的能级分裂与符号约定背景。</li>
+<li><a target="_blank" rel="noopener" href="https://physics.nist.gov/cuu/Constants/">NIST，Fundamental Physical Constants</a>：玻尔磁子、玻尔兹曼常数等数值。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/">http://talescuber.github.io/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%87%8F%E5%AD%90%E7%BB%9F%E8%AE%A1/">量子统计</a><a class="post-meta__tags" href="/tags/%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5/">密度矩阵</a><a class="post-meta__tags" href="/tags/%E7%BB%9F%E8%AE%A1%E7%89%A9%E7%90%86/">统计物理</a></div><div class="post_share"><div class="social-share" data-image="/img/quantum-ensembles/01-ensemble-map.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/" title="GS 算法详解：从相位恢复到纯相位全息图"><img class="cover" src="/img/gerchberg-saxton/01-two-planes.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">GS 算法详解：从相位恢复到纯相位全息图</div></div></a></div><div class="next-post pull-right"><a href="/2026/10/01/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/saturated-absorption-frequency-stabilization/" title="饱和吸收稳频：从 Lamb 凹陷到镱离子实验中的开普勒缩束方案"><img class="cover" src="/img/saturated-absorption/00-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">饱和吸收稳频：从 Lamb 凹陷到镱离子实验中的开普勒缩束方案</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8F%E5%AD%90%E7%BB%9F%E8%AE%A1%E9%9C%80%E8%A6%81%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5%EF%BC%9F"><span class="toc-text">1. 为什么量子统计需要密度矩阵？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%A4%E5%B1%82%E6%A6%82%E7%8E%87%EF%BC%9A%E6%80%81%E7%9A%84%E5%88%B6%E5%A4%87%E6%A6%82%E7%8E%87%E4%B8%8E%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E6%A6%82%E7%8E%87"><span class="toc-text">1.1 两层概率：态的制备概率与量子测量概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%80%E4%B9%88%E7%9F%A9%E9%98%B5%E6%89%8D%E6%98%AF%E5%90%88%E6%B3%95%E7%9A%84%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5%EF%BC%9F"><span class="toc-text">1.2 什么矩阵才是合法的密度矩阵？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%B7%B7%E5%90%88%E6%80%81%E4%B8%8D%E6%98%AF%E2%80%9C%E4%B8%80%E4%B8%AA%E5%8F%A0%E5%8A%A0%E4%BA%86%E5%90%84%E7%A7%8D%E5%8F%AF%E8%83%BD%E6%80%A7%E7%9A%84%E6%B3%A2%E5%87%BD%E6%95%B0%E2%80%9D"><span class="toc-text">1.3 混合态不是“一个叠加了各种可能性的波函数”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%AF%B9%E7%8E%AF%E5%A2%83%E5%8F%96%E5%81%8F%E8%BF%B9%EF%BC%8C%E4%B9%9F%E4%BC%9A%E5%BE%97%E5%88%B0%E6%B7%B7%E5%90%88%E6%80%81"><span class="toc-text">1.4 对环境取偏迹，也会得到混合态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%B3%BB%E7%BB%BC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E5%85%88%E7%A1%AE%E5%AE%9A%E7%B3%BB%E7%BB%9F%E8%BE%B9%E7%95%8C%EF%BC%8C%E5%86%8D%E9%80%89%E6%8B%A9%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="toc-text">2. 系综是什么？先确定系统边界，再选择概率分布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BE%AE%E6%AD%A3%E5%88%99%E7%B3%BB%E7%BB%BC%EF%BC%9A%E5%9C%A8%E5%85%81%E8%AE%B8%E7%9A%84%E8%83%BD%E9%87%8F%E5%A3%B3%E5%86%85%E7%AD%89%E6%9D%83"><span class="toc-text">3. 微正则系综：在允许的能量壳内等权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%83%BD%E5%A3%B3%E6%8A%95%E5%BD%B1%E7%AE%97%E7%AC%A6%E6%AF%94%E2%80%9C%E5%9B%BA%E5%AE%9A%E8%83%BD%E9%87%8F%E2%80%9D%E6%9B%B4%E7%B2%BE%E7%A1%AE"><span class="toc-text">3.1 能壳投影算符比“固定能量”更精确</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AD%89%E6%9D%83%EF%BC%9F%E8%BF%99%E6%98%AF%E7%BA%A6%E6%9D%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E7%86%B5%E9%80%89%E6%8B%A9"><span class="toc-text">3.2 为什么等权？这是约束下的最大熵选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%AE%97%E4%BE%8B%EF%BC%9A%E4%B8%A4%E4%B8%AA%E7%94%B5%E5%AD%90%E8%87%AA%E6%97%8B%EF%BC%8C%E6%80%BB%E8%83%BD%E9%87%8F%E4%B8%BA%E9%9B%B6"><span class="toc-text">3.3 算例：两个电子自旋，总能量为零</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%AD%A3%E5%88%99%E7%B3%BB%E7%BB%BC%EF%BC%9A%E4%B8%8E%E7%83%AD%E5%BA%93%E4%BA%A4%E6%8D%A2%E8%83%BD%E9%87%8F"><span class="toc-text">4. 正则系综：与热库交换能量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%BB%8E%E2%80%9C%E5%A4%A7%E5%AD%A4%E7%AB%8B%E7%B3%BB%E7%BB%9F%E2%80%9D%E6%8E%A8%E5%AF%BC-Boltzmann-%E6%9D%83%E9%87%8D"><span class="toc-text">4.1 从“大孤立系统”推导 Boltzmann 权重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BB%8E%E6%9C%80%E5%A4%A7%E7%86%B5%E5%8E%9F%E7%90%86%E5%86%8D%E6%8E%A8%E5%AF%BC%E4%B8%80%E6%AC%A1"><span class="toc-text">4.2 从最大熵原理再推导一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E2%80%9C%E7%9F%A9%E9%98%B5%E6%8C%87%E6%95%B0%E2%80%9D%E4%B8%8D%E6%98%AF%E6%8A%8A%E6%AF%8F%E4%B8%AA%E7%9F%A9%E9%98%B5%E5%85%83%E5%88%86%E5%88%AB%E5%8F%96%E6%8C%87%E6%95%B0"><span class="toc-text">4.3 “矩阵指数”不是把每个矩阵元分别取指数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0%E6%80%8E%E6%A0%B7%E7%BB%99%E5%87%BA%E7%83%AD%E5%8A%9B%E5%AD%A6%E9%87%8F%EF%BC%9F"><span class="toc-text">4.4 配分函数怎样给出热力学量？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B7%A8%E6%AD%A3%E5%88%99%E7%B3%BB%E7%BB%BC%EF%BC%9A%E7%B2%92%E5%AD%90%E6%95%B0%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%94%B9%E5%8F%98"><span class="toc-text">5. 巨正则系综：粒子数也可以改变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E4%BB%8E%E7%83%AD%E5%BA%93%E7%86%B5%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E5%B1%95%E5%BC%80%E5%87%BA%E5%8F%91"><span class="toc-text">5.1 从热库熵的两个变量展开出发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%BF%B9%E7%9A%84%E7%A9%BA%E9%97%B4%E6%89%A9%E5%A4%A7%E4%BA%86%EF%BC%9A%E5%BF%85%E9%A1%BB%E5%8C%85%E5%90%AB%E4%B8%8D%E5%90%8C%E7%B2%92%E5%AD%90%E6%95%B0%E6%89%87%E5%8C%BA"><span class="toc-text">5.2 迹的空间扩大了：必须包含不同粒子数扇区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%83%AD%E5%8A%9B%E5%AD%A6%E9%87%8F%E4%B8%8E%E6%B6%A8%E8%90%BD"><span class="toc-text">5.3 热力学量与涨落</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-Fermi%E2%80%93Dirac-%E5%88%86%E5%B8%83%E4%BB%8E%E5%93%AA%E9%87%8C%E5%87%BA%E7%8E%B0%EF%BC%9F"><span class="toc-text">5.4 Fermi–Dirac 分布从哪里出现？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AE%8C%E6%95%B4%E7%AE%97%E4%BE%8B%EF%BC%9A%E7%A3%81%E5%9C%BA%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E7%94%B5%E5%AD%90%E8%87%AA%E6%97%8B"><span class="toc-text">6. 完整算例：磁场中的一个电子自旋</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%85%88%E6%8A%8A%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%AC%A6%E5%8F%B7%E8%AF%B4%E6%98%8E%E7%99%BD"><span class="toc-text">6.1 先把模型和符号说明白</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%A3%81%E5%9C%BA%E6%B2%BF-z-%E8%BD%B4%EF%BC%9A%E4%BB%8E%E5%93%88%E5%AF%86%E9%A1%BF%E9%87%8F%E9%80%90%E6%AD%A5%E7%AE%97%E5%88%B0%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5"><span class="toc-text">6.2 磁场沿 z 轴：从哈密顿量逐步算到密度矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E7%94%A8%E8%BF%B9%E7%9B%B4%E6%8E%A5%E8%AE%A1%E7%AE%97%E8%83%BD%E9%87%8F%E3%80%81%E8%87%AA%E6%97%8B%E5%92%8C%E7%A3%81%E7%9F%A9"><span class="toc-text">6.3 用迹直接计算能量、自旋和磁矩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E7%86%B5%E3%80%81%E7%BA%AF%E5%BA%A6%E3%80%81%E8%83%BD%E9%87%8F%E6%B6%A8%E8%90%BD%E5%92%8C%E7%83%AD%E5%AE%B9"><span class="toc-text">6.4 熵、纯度、能量涨落和热容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E4%BB%BB%E6%84%8F%E6%96%B9%E5%90%91%E7%9A%84%E7%A3%81%E5%9C%BA%EF%BC%9A%E4%B8%8D%E5%BF%85%E6%AF%8F%E6%AC%A1%E9%87%8D%E6%96%B0%E5%AF%B9%E8%A7%92%E5%8C%96"><span class="toc-text">6.5 任意方向的磁场：不必每次重新对角化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E6%8A%8A%E6%95%B0%E5%AD%97%E4%BB%A3%E8%BF%9B%E5%8E%BB%EF%BC%9A1-T%E3%80%811-K"><span class="toc-text">6.6 把数字代进去：1 T、1 K</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-7-%E5%90%8C%E4%B8%80%E4%B8%AA%E5%8D%95%E8%87%AA%E6%97%8B%E7%9A%84%E5%BE%AE%E6%AD%A3%E5%88%99%E6%80%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">6.7 同一个单自旋的微正则态是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%AE%A9%E7%94%B5%E5%AD%90%E6%95%B0%E5%8F%AF%E4%BB%A5%E6%94%B9%E5%8F%98%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%BD%A8%E9%81%93%E7%9A%84%E5%B7%A8%E6%AD%A3%E5%88%99%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5"><span class="toc-text">7. 让电子数可以改变：一个轨道的巨正则密度矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%BB%BA%E7%AB%8B%E6%9C%80%E5%B0%8F%E4%BD%86%E5%AE%8C%E6%95%B4%E7%9A%84%E5%8F%AF%E5%8F%98%E7%B2%92%E5%AD%90%E6%95%B0%E6%A8%A1%E5%9E%8B"><span class="toc-text">7.1 建立最小但完整的可变粒子数模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%86%99%E5%87%BA%E5%B7%A8%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0%E5%92%8C%E5%9B%9B%E7%BB%B4%E7%9F%A9%E9%98%B5"><span class="toc-text">7.2 写出巨配分函数和四维矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E5%B9%B3%E5%9D%87%E7%B2%92%E5%AD%90%E6%95%B0%E3%80%81%E7%B2%92%E5%AD%90%E6%95%B0%E6%B6%A8%E8%90%BD%E5%92%8C%E7%A3%81%E7%9F%A9"><span class="toc-text">7.3 平均粒子数、粒子数涨落和磁矩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E4%B8%80%E4%B8%AA%E5%85%B3%E9%94%AE%E5%AF%B9%E6%AF%94%EF%BC%9A%E5%B9%B3%E5%9D%87%E4%B8%80%E4%B8%AA%E7%94%B5%E5%AD%90%EF%BC%8C%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%9B%BA%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%94%B5%E5%AD%90"><span class="toc-text">7.4 一个关键对比：平均一个电子，不等于固定一个电子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E5%A6%82%E6%9E%9C%E5%8F%8C%E5%8D%A0%E6%8D%AE%E8%A6%81%E4%BB%98%E5%87%BA%E5%BA%93%E4%BB%91%E8%83%BD%E9%87%8F"><span class="toc-text">7.5 如果双占据要付出库仑能量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%80%8E%E6%A0%B7%E5%AE%9E%E9%99%85%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AF%86%E5%BA%A6%E7%9F%A9%E9%98%B5%EF%BC%9F"><span class="toc-text">8. 怎样实际计算一个系统的密度矩阵？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E4%B8%89%E4%B8%AA%E7%B3%BB%E7%BB%BC%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%AD%89%E4%BB%B7%EF%BC%9F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E8%83%BD%E6%B7%B7%E7%94%A8%EF%BC%9F"><span class="toc-text">9. 三个系综什么时候等价？什么时候不能混用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%8A%8A%E5%85%AC%E5%BC%8F%E8%BF%9E%E6%88%90%E4%B8%80%E6%9D%A1%E8%AE%A1%E7%AE%97%E9%93%BE"><span class="toc-text">10. 把公式连成一条计算链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E5%9B%BE%E3%80%81%E8%AE%A1%E7%AE%97%E4%B8%8E%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">配图、计算与参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/04/%E5%AD%A6%E4%B9%A0/numerical-aperture/" title="数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合">数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合</a><time datetime="2026-10-03T16:54:21.000Z" title="发表于 2026-10-04 00:54:21">2026-10-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/" title="GS 算法详解：从相位恢复到纯相位全息图">GS 算法详解：从相位恢复到纯相位全息图</a><time datetime="2026-10-01T14:48:10.000Z" title="发表于 2026-10-01 22:48:10">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/" title="量子系综与密度矩阵：从三种系综到磁场中的电子">量子系综与密度矩阵：从三种系综到磁场中的电子</a><time datetime="2026-10-01T11:37:31.000Z" title="发表于 2026-10-01 19:37:31">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AE%9E%E9%AA%8C%E4%BB%AA%E5%99%A8%E4%BB%8B%E7%BB%8D/saturated-absorption-frequency-stabilization/" title="饱和吸收稳频：从 Lamb 凹陷到镱离子实验中的开普勒缩束方案">饱和吸收稳频：从 Lamb 凹陷到镱离子实验中的开普勒缩束方案</a><time datetime="2026-09-30T17:38:19.000Z" title="发表于 2026-10-01 01:38:19">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/26/%E5%AD%A6%E4%B9%A0/gaussian-integral-moments/" title="高斯积分 I_n 的计算：从收敛性到奇偶项闭式">高斯积分 I_n 的计算：从收敛性到奇偶项闭式</a><time datetime="2026-09-26T14:52:35.000Z" title="发表于 2026-09-26 22:52:35">2026-09-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
