@@ -1,0 +1,996 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导 | TaLEsCuber'Home</title><meta name="author" content="TaLEsCuber"><meta name="copyright" content="TaLEsCuber"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从接触点的无滑动条件出发，完整推导转盘上小球的牛顿—欧拉方程、2&#x2F;7 角速度比、任意初始条件下的圆轨道，讨论参考系、初始打滑、能量交换、倾斜漂移和实验适用条件，并附原创图解与数值验证程序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导">
+<meta property="og:url" content="http://talescuber.github.io/2026/10/05/%E5%AD%A6%E4%B9%A0/rolling-ball-on-rotating-disk/index.html">
+<meta property="og:site_name" content="TaLEsCuber&#39;Home">
+<meta property="og:description" content="从接触点的无滑动条件出发，完整推导转盘上小球的牛顿—欧拉方程、2&#x2F;7 角速度比、任意初始条件下的圆轨道，讨论参考系、初始打滑、能量交换、倾斜漂移和实验适用条件，并附原创图解与数值验证程序。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://talescuber.github.io/img/rolling-ball-on-rotating-disk/01-model.png">
+<meta property="article:published_time" content="2026-10-04T16:22:40.000Z">
+<meta property="article:modified_time" content="2026-10-04T16:22:40.000Z">
+<meta property="article:author" content="TaLEsCuber">
+<meta property="article:tag" content="经典力学">
+<meta property="article:tag" content="刚体动力学">
+<meta property="article:tag" content="非惯性参考系">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://talescuber.github.io/img/rolling-ball-on-rotating-disk/01-model.png"><link rel="shortcut icon" href="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg"><link rel="canonical" href="http://talescuber.github.io/2026/10/05/%E5%AD%A6%E4%B9%A0/rolling-ball-on-rotating-disk/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="pGf-nsj9QK7ulgbgES1RVBxgUjBe-idE9MHTW9ZP-68"/><meta name="msvalidate.01" content="447A7F96CDFCFE61C61CCC63EE642392"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-05 00:22:40'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="stylesheet" href="/css/thinking.css"><link rel="stylesheet" href="/css/thinking-sidebar.css"><link rel="stylesheet" href="/css/countdown.css"><script src="/js/encrypted-files.js"></script><meta name="generator" content="Hexo 7.3.0"><script>window.__SITE_ENC_KEY__="d8e8b9b1baa8b13d9e3658d64fd62c74fce047be10f37158f5433b2e45fc6cdf";</script>
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">93</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="TaLEsCuber'Home"><span class="site-name">TaLEsCuber'Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/thinking/"><i class="fa-fw fas fa-lightbulb"></i><span> Thinking</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-04T16:22:40.000Z" title="发表于 2026-10-05 00:22:40">2026-10-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>把一颗小球放到匀速转动的水平圆盘上，它一定会被“甩出去”吗？如果你在圆盘旁边观察，可能看到两种反直觉的景象：小球一边自转，球心却几乎停在原地；或者小球的球心沿着一个小圆运动，而且这个小圆的圆心并不在转盘中心。</p>
+<p>在一个明确的理想模型里，均匀实心球的轨道角速度满足</p>
+<div class="math-display">
+$$
+\boxed{\omega_c=\frac27\Omega.}
+$$
+</div>
+
+<p>这里的 <script type="math/tex">\Omega</script> 是转盘角速度，<script type="math/tex">\omega_c</script> 是<strong>实验室中球心绕自身轨道圆心运动的角速度</strong>。它不是小球的自转角速度，也不一定是球心绕转盘中心的角速度。弄清这三个量的区别，才算真正理解了“转盘悖论”。</p>
+<p>本文以所给的 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Aj411y7GL/">B 站视频</a> 和 <a target="_blank" rel="noopener" href="https://m2.askthephysicist.com/Weltner.pdf">Klaus Weltner 的 1979 年论文</a> 为出发点，从刚体运动学重新推导，并补全初始条件、能量和实验限制。原作者 Steve Mould 的 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3oM7hX3UUEU">《The Turntable Paradox》视频说明</a> 也给出了 <script type="math/tex">2/7</script> 的结果，并提醒论文有排印错误。本文不依赖视频逐帧测量，所有配图都是依据下述模型制作的原创示意图或计算曲线。</p>
+<span id="more"></span>
+
+<p><img src="/img/rolling-ball-on-rotating-disk/01-model.png" alt="转盘上的小球：俯视轨道、速度与静摩擦，以及侧视受力图"></p>
+<p><em>图 1：左图中，盘心 O 和轨道圆心 C 是两个不同的点。右图给出实际接触力。图中的摩擦方向只是某一瞬间的方向，不能预先假定它总是朝向盘心。</em></p>
+<h2 id="1-先把问题说准确：研究哪一种小球、哪一种转盘？"><a href="#1-先把问题说准确：研究哪一种小球、哪一种转盘？" class="headerlink" title="1. 先把问题说准确：研究哪一种小球、哪一种转盘？"></a>1. 先把问题说准确：研究哪一种小球、哪一种转盘？</h2><p>我们先研究这样一个系统：圆盘为刚性平面，严格水平；电机使圆盘绕竖直轴以恒定角速度旋转；球体具有球对称的质量分布；接触可近似为一个点；接触处不打滑；忽略空气阻力、滚动阻力矩和接触斑的扭转阻力。</p>
+<p><strong>忽略滚动阻力，不等于忽略静摩擦。</strong> 静摩擦正是使小球转弯、同时改变其自转的力。若把它一并删掉，就不再是本文的问题。</p>
+<p>符号约定如下。</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><script type="math/tex">m,a</script></td>
+<td>球的质量、半径</td>
+</tr>
+<tr>
+<td><script type="math/tex">I=\kappa ma^2</script></td>
+<td>球绕任一直径的转动惯量；<script type="math/tex">\kappa</script> 描述质量分布</td>
+</tr>
+<tr>
+<td><script type="math/tex">D</script></td>
+<td>圆盘的半径</td>
+</tr>
+<tr>
+<td><script type="math/tex">\mathbf k</script></td>
+<td>竖直向上的单位向量</td>
+</tr>
+<tr>
+<td><script type="math/tex">\boldsymbol\Omega=\Omega\mathbf k</script></td>
+<td>圆盘的角速度，俯视逆时针取 <script type="math/tex">\Omega>0</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">\mathbf r=(x,y)</script></td>
+<td>球心的水平位置，也就是接触点相对于盘心的平面位置</td>
+</tr>
+<tr>
+<td><script type="math/tex">\mathbf v=\dot{\mathbf r}</script></td>
+<td>实验室中的球心速度</td>
+</tr>
+<tr>
+<td><script type="math/tex">\boldsymbol\omega</script></td>
+<td>球本身的三维自转角速度</td>
+</tr>
+<tr>
+<td><script type="math/tex">\mathbf C,\rho</script></td>
+<td>球心轨道的圆心位置、半径</td>
+</tr>
+</tbody></table>
+<p>球心的高度恒为 <script type="math/tex">a</script>，所以只需计算其水平运动。均匀实心球有 <script type="math/tex">\kappa=2/5</script>；均匀薄球壳有 <script type="math/tex">\kappa=2/3</script>。后面先保留一般的 <script type="math/tex">\kappa</script>，最后再代入具体球体。</p>
+<p>除非特别说明，以下各矢量的时间导数都在<strong>实验室惯性系</strong>中计算。</p>
+<h2 id="2-最关键的一步：接触点不打滑，究竟是什么意思？"><a href="#2-最关键的一步：接触点不打滑，究竟是什么意思？" class="headerlink" title="2. 最关键的一步：接触点不打滑，究竟是什么意思？"></a>2. 最关键的一步：接触点不打滑，究竟是什么意思？</h2><h3 id="2-1-盘面接触点在运动"><a href="#2-1-盘面接触点在运动" class="headerlink" title="2.1 盘面接触点在运动"></a>2.1 盘面接触点在运动</h3><p>圆盘上位于 <script type="math/tex">\mathbf r</script> 的材料点，其瞬时速度为</p>
+<div class="math-display">
+$$
+\mathbf u(\mathbf r)=\Omega\mathbf k\times\mathbf r.
+\tag{1}
+$$
+</div>
+
+<p>用分量写，就是 <script type="math/tex">u_x=-\Omega y</script>、<script type="math/tex">u_y=\Omega x</script>。离盘心越远，盘面线速度越大。</p>
+<h3 id="2-2-球面接触点的速度是两部分相加"><a href="#2-2-球面接触点的速度是两部分相加" class="headerlink" title="2.2 球面接触点的速度是两部分相加"></a>2.2 球面接触点的速度是两部分相加</h3><p>球心到接触点 P 的矢量为 <script type="math/tex">-a\mathbf k</script>。刚体上任一点的速度等于“质心平动速度 + 绕质心转动的速度”，所以</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\mathbf v_P
+&=\mathbf v+\boldsymbol\omega\times(-a\mathbf k)\\
+&=\mathbf v+a\mathbf k\times\boldsymbol\omega.
+\end{aligned}
+\tag{2}
+$$
+</div>
+
+<p>无滑动要求接触的两块材料在这一瞬间速度相等：</p>
+<div class="math-display">
+$$
+\boxed{\mathbf v+a\mathbf k\times\boldsymbol\omega
+=\Omega\mathbf k\times\mathbf r.}
+\tag{3}
+$$
+</div>
+
+<p>平时小球在静止地面上滚动，右边是零；现在地面本身在运动，右边不能再写成零。</p>
+<p><img src="/img/rolling-ball-on-rotating-disk/02-contact-velocity.png" alt="球心平动速度与自转贡献组成接触点速度，以及球心不动时的滚动"></p>
+<p><em>图 2：左侧是接触点速度的矢量相加示意；右侧用局部运动盘面说明“原地滚动”。右图的盘面速度近似为接触附近的切向速度，并不表示整个圆盘在平移。</em></p>
+<h3 id="2-3-为什么球心可以停在原地？"><a href="#2-3-为什么球心可以停在原地？" class="headerlink" title="2.3 为什么球心可以停在原地？"></a>2.3 为什么球心可以停在原地？</h3><p>把 <script type="math/tex">\mathbf v=0</script> 代入式 (3)，就得到</p>
+<div class="math-display">
+$$
+\boldsymbol\omega_\parallel=\frac{\Omega}{a}\mathbf r,
+\tag{4}
+$$
+</div>
+
+<p>其中下标 <script type="math/tex">\parallel</script> 指自转角速度在盘面内的分量。也就是说，只要预先让球具有合适的自转，球面底部就能跟上盘面，而球心不必随盘面一起跑。</p>
+<p>若球心位于盘心右侧，球的水平自转轴也沿向右的径向方向。此时理想模型允许摩擦力为零，自转角速度保持不变，球心始终固定。这类似一只放在传送带上、轮轴位置固定而持续转动的自由轮子。</p>
+<p>但“无自转的小球被直接放下”不满足式 (4)，通常会先打滑。<strong>原地滚动是特定初态的解，不是所有放球动作的必然结果。</strong></p>
+<h2 id="3-一个摩擦力，同时决定平动与转动"><a href="#3-一个摩擦力，同时决定平动与转动" class="headerlink" title="3. 一个摩擦力，同时决定平动与转动"></a>3. 一个摩擦力，同时决定平动与转动</h2><p>竖直方向上支持力抵消重力：<script type="math/tex">N=mg</script>。水平方向唯一的实际外力是接触处静摩擦 <script type="math/tex">\mathbf f</script>，故</p>
+<div class="math-display">
+$$
+m\dot{\mathbf v}=\mathbf f.
+\tag{5}
+$$
+</div>
+
+<p>对球心取力矩，重力和理想法向力都不贡献力矩，得到</p>
+<div class="math-display">
+$$
+I\dot{\boldsymbol\omega}
+=(-a\mathbf k)\times\mathbf f
+=-a\mathbf k\times\mathbf f.
+\tag{6}
+$$
+</div>
+
+<p>这一步使用了球对称的惯量张量 <script type="math/tex">\mathbf I=I\mathbf 1</script>，因此即使自转轴改变方向，也可直接写 <script type="math/tex">\mathbf L=I\boldsymbol\omega</script>。对一般非球对称刚体，不能不加修改地套用。</p>
+<p>接下来对滚动约束式 (3) 求时间导数。由于盘面水平且 <script type="math/tex">\Omega</script> 不变，</p>
+<div class="math-display">
+$$
+\dot{\mathbf v}+a\mathbf k\times\dot{\boldsymbol\omega}
+=\Omega\mathbf k\times\mathbf v.
+\tag{7}
+$$
+</div>
+
+<p>注意右边是沿着<strong>移动的接触位置</strong>对盘面速度场求导，得到 <script type="math/tex">\Omega\mathbf k\times\dot{\mathbf r}</script>；不能把它误写成某个固定盘面材料点的向心加速度。</p>
+<p>把式 (5)、(6) 代入：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+a\mathbf k\times\dot{\boldsymbol\omega}
+&=-\frac{a^2}{I}\mathbf k\times(\mathbf k\times\mathbf f)\\
+&=\frac{a^2}{I}\mathbf f
+=\frac{ma^2}{I}\dot{\mathbf v}.
+\end{aligned}
+\tag{8}
+$$
+</div>
+
+<p>这里用了水平矢量的恒等式 <script type="math/tex">\mathbf k\times(\mathbf k\times\mathbf f)=-\mathbf f</script>。因此</p>
+<div class="math-display">
+$$
+\left(1+\frac{ma^2}{I}\right)\dot{\mathbf v}
+=\Omega\mathbf k\times\mathbf v.
+\tag{9}
+$$
+</div>
+
+<p>定义</p>
+<div class="math-display">
+$$
+\begin{gathered}
+\alpha=\frac{I}{I+ma^2}=\frac{\kappa}{1+\kappa},\\
+\omega_c=\alpha\Omega.
+\end{gathered}
+\tag{10}
+$$
+</div>
+
+<p>就得到整个问题的核心方程：</p>
+<div class="math-display">
+$$
+\boxed{\ddot{\mathbf r}=\omega_c\mathbf k\times\dot{\mathbf r}.}
+\tag{11}
+$$
+</div>
+
+<p>它不是只靠几何关系得到的。滚动约束提供运动学联系，牛顿定律和角动量定理则决定了系数 <script type="math/tex">\alpha</script>。</p>
+<p><strong>原论文勘误。</strong> Weltner 文中式 (14) 的分母写成 <script type="math/tex">1+mR^2/I</script>，但式 (18)、(19) 的相应位置误印为 <script type="math/tex">1+mR/I</script>；这里的 <script type="math/tex">R</script> 是论文中的球半径，即本文的 <script type="math/tex">a</script>。正确分母必须含平方，才能是无量纲量。本文式 (9)、(10) 保留了这一平方，后续结果也由此独立推出。<a target="_blank" rel="noopener" href="https://m2.askthephysicist.com/Weltner.pdf">原论文，第 985 页</a></p>
+<h2 id="4-不先假设圆轨道，直接证明它一定是圆"><a href="#4-不先假设圆轨道，直接证明它一定是圆" class="headerlink" title="4. 不先假设圆轨道，直接证明它一定是圆"></a>4. 不先假设圆轨道，直接证明它一定是圆</h2><h3 id="4-1-速率不变，但速度方向持续改变"><a href="#4-1-速率不变，但速度方向持续改变" class="headerlink" title="4.1 速率不变，但速度方向持续改变"></a>4.1 速率不变，但速度方向持续改变</h3><p>将式 (11) 与 <script type="math/tex">\mathbf v</script> 点乘：</p>
+<div class="math-display">
+$$
+\frac{\mathrm d}{\mathrm dt}\frac{v^2}{2}
+=\omega_c\mathbf v\cdot(\mathbf k\times\mathbf v)=0.
+\tag{12}
+$$
+</div>
+
+<p>所以 <script type="math/tex">|\mathbf v|=v_0</script> 恒定。加速度始终与速度垂直，而且对于 <script type="math/tex">\Omega>0</script>，它总是在速度方向的左侧。</p>
+<p>定义一个二维操作 <script type="math/tex">J\mathbf p=\mathbf k\times\mathbf p</script>，即把平面矢量逆时针旋转 <script type="math/tex">90^\circ</script>。于是 <script type="math/tex">J^2=-1</script>。</p>
+<p>考察矢量</p>
+<div class="math-display">
+$$
+\mathbf C=\mathbf r+\frac{1}{\omega_c}J\mathbf v.
+\tag{13}
+$$
+</div>
+
+<p>对它求导：</p>
+<div class="math-display">
+$$
+\dot{\mathbf C}=\mathbf v+\frac{1}{\omega_c}J(\omega_c J\mathbf v)
+=\mathbf v-\mathbf v=0.
+$$
+</div>
+
+<p>所以 <script type="math/tex">\mathbf C</script> 是一个固定点。与此同时，</p>
+<div class="math-display">
+$$
+\left|\mathbf r-\mathbf C\right|
+=\frac{|\mathbf v|}{|\omega_c|}
+=\frac{v_0}{|\omega_c|}=\rho.
+\tag{14}
+$$
+</div>
+
+<p>到一个固定点的距离恒定，轨迹自然是圆。进一步有</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\mathbf v&=\omega_c J(\mathbf r-\mathbf C),\\
+\ddot{\mathbf r}&=-\omega_c^2(\mathbf r-\mathbf C).
+\end{aligned}
+\tag{15}
+$$
+</div>
+
+<p>这也直接表明，摩擦力指向<strong>轨道圆心 C</strong>。它不必指向<strong>转盘中心 O</strong>。</p>
+<h3 id="4-2-为什么正好是-2-7？"><a href="#4-2-为什么正好是-2-7？" class="headerlink" title="4.2 为什么正好是 2&#x2F;7？"></a>4.2 为什么正好是 2&#x2F;7？</h3><p>先把转动惯量本身算出来。设均匀质量密度为 <script type="math/tex">\varrho_m</script>，沿竖直轴切出厚度为 <script type="math/tex">\mathrm dz</script> 的薄片。位于高度 <script type="math/tex">z</script> 的截面半径平方为 <script type="math/tex">a^2-z^2</script>。用截面内的柱坐标半径 <script type="math/tex">s</script> 积分：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+I&=\int_{-a}^a\int_0^{\sqrt{a^2-z^2}}
+s^2\varrho_m\,2\pi s\,\mathrm ds\,\mathrm dz\\
+&=\frac{\pi\varrho_m}{2}\int_{-a}^a(a^2-z^2)^2\,\mathrm dz\\
+&=\frac{\pi\varrho_m}{2}
+\left(2a^5-\frac43a^5+\frac25a^5\right)
+=\frac{8\pi\varrho_ma^5}{15}.
+\end{aligned}
+$$
+</div>
+
+<p>再用 <script type="math/tex">m=4\pi\varrho_ma^3/3</script> 消去密度，便得到均匀实心球的转动惯量：</p>
+<div class="math-display">
+$$
+I=\frac25ma^2.
+$$
+</div>
+
+<p>代入式 (10)：</p>
+<div class="math-display">
+$$
+\boxed{\frac{\omega_c}{\Omega}
+=\frac{2/5}{1+2/5}=\frac27.}
+\tag{16}
+$$
+</div>
+
+<p>质量 <script type="math/tex">m</script> 和球半径 <script type="math/tex">a</script> 都约掉了。因此，同为均匀实心球、且都满足理想滚动条件时，大小或质量不同的球具有相同的角速度比。轨道半径仍会随初速度改变。</p>
+<p>周期关系则为</p>
+<div class="math-display">
+$$
+T_c=\frac{2\pi}{|\omega_c|}=\frac72T_d.
+\tag{17}
+$$
+</div>
+
+<p><strong>转盘转 7 圈，球心绕自己的轨道圆心转 2 圈。</strong> 两者方向相同；球的自转圈数并不由这句话给出。</p>
+<p>若 <script type="math/tex">\Omega=0</script>，式 (11) 退化为 <script type="math/tex">\ddot{\mathbf r}=0</script>，即静止水平面上的匀速直线滚动。此时不能再使用含 <script type="math/tex">1/\omega_c</script> 的圆心公式。若 <script type="math/tex">v_0=0</script> 而 <script type="math/tex">\Omega\ne0</script>，则圆退化成一个固定点。</p>
+<h2 id="5-任意初始位置、初始速度：把轨道完整算出来"><a href="#5-任意初始位置、初始速度：把轨道完整算出来" class="headerlink" title="5. 任意初始位置、初始速度：把轨道完整算出来"></a>5. 任意初始位置、初始速度：把轨道完整算出来</h2><p>令初始条件为 <script type="math/tex">\mathbf r(0)=(x_0,y_0)</script>、<script type="math/tex">\mathbf v(0)=(v_{x0},v_{y0})</script>。式 (11) 的分量形式是</p>
+<div class="math-display">
+$$
+\dot v_x=-\omega_cv_y,\qquad
+\dot v_y=\omega_cv_x.
+\tag{18}
+$$
+</div>
+
+<p>因此速度解为</p>
+<div class="math-display">
+$$
+\begin{aligned}
+v_x(t)&=v_{x0}\cos\theta-v_{y0}\sin\theta,\\
+v_y(t)&=v_{x0}\sin\theta+v_{y0}\cos\theta,
+\\ \theta&=\omega_ct.
+\end{aligned}
+\tag{19}
+$$
+</div>
+
+<p>再积分一次：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+x(t)&=x_0+\frac{v_{x0}}{\omega_c}\sin\theta
+       \\&\quad+\frac{v_{y0}}{\omega_c}(\cos\theta-1),\\[4pt]
+y(t)&=y_0+\frac{v_{x0}}{\omega_c}(1-\cos\theta)
+       \\&\quad+\frac{v_{y0}}{\omega_c}\sin\theta.
+\end{aligned}
+\tag{20}
+$$
+</div>
+
+<p>相应圆心与半径为</p>
+<div class="math-display">
+$$
+\boxed{
+\begin{aligned}
+C_x&=x_0-\frac{v_{y0}}{\omega_c},\\
+C_y&=y_0+\frac{v_{x0}}{\omega_c},\\
+\rho&=\frac{\sqrt{v_{x0}^2+v_{y0}^2}}{|\omega_c|}.
+\end{aligned}}
+\tag{21}
+$$
+</div>
+
+<p>这些“任意初始条件”有一个前提：球的初始自转必须与式 (3) 相容。准确地说，<script type="math/tex">\mathbf r_0</script> 与 <script type="math/tex">\mathbf v_0</script> 可以任意选取，而水平自转由无滑动条件确定；不能再把它独立指定成任意值。</p>
+<p><img src="/img/rolling-ball-on-rotating-disk/03-orbits.png" alt="相同转盘速度下，三组不同初始条件产生的圆轨道"></p>
+<p><em>图 3：转盘均为 60 rpm，球均为均匀实心球，三条轨道的周期都是 3.5 s。橙点为初始位置，绿色叉号为轨道圆心。所有初态都假定已经进入无滑动滚动。</em></p>
+<h3 id="从盘心出发的小球，为什么会绕回来？"><a href="#从盘心出发的小球，为什么会绕回来？" class="headerlink" title="从盘心出发的小球，为什么会绕回来？"></a>从盘心出发的小球，为什么会绕回来？</h3><p>设 <script type="math/tex">\mathbf r_0=0</script>、<script type="math/tex">\mathbf v_0=(v_0,0)</script>，且 <script type="math/tex">\Omega>0</script>。式 (20) 化成</p>
+<div class="math-display">
+$$
+\begin{aligned}
+x(t)&=\rho\sin\theta,\\
+y(t)&=\rho(1-\cos\theta),\\
+\rho&=\frac{v_0}{\omega_c}.
+\end{aligned}
+\tag{22}
+$$
+</div>
+
+<p>圆心是 <script type="math/tex">(0,\rho)</script>，所以轨道经过盘心；半个轨道周期后，球到达距盘心 <script type="math/tex">2\rho</script> 的最远处；一个轨道周期后返回盘心。</p>
+<p>这里的最远距离是 <script type="math/tex">2\rho</script>，不是 <script type="math/tex">\rho</script>。只有把轨道圆心和盘心区分开，才不会在判断小球是否越过盘边时漏掉这个因子 2。</p>
+<h3 id="什么时候恰好绕盘心转？"><a href="#什么时候恰好绕盘心转？" class="headerlink" title="什么时候恰好绕盘心转？"></a>什么时候恰好绕盘心转？</h3><p>需要 <script type="math/tex">\mathbf C=0</script>。从式 (13) 得到条件</p>
+<div class="math-display">
+$$
+\mathbf v_0=\omega_cJ\mathbf r_0.
+\tag{23}
+$$
+</div>
+
+<p>它要求初速度沿圆盘切向，大小恰好等于 <script type="math/tex">|\omega_c|\thinspace|\mathbf r_0|</script>。这是许多圆轨道中的一个特殊成员。</p>
+<h2 id="6-球本身到底怎么转？"><a href="#6-球本身到底怎么转？" class="headerlink" title="6. 球本身到底怎么转？"></a>6. 球本身到底怎么转？</h2><p>把式 (3) 的水平部分左乘 <script type="math/tex">J</script>，可解出</p>
+<div class="math-display">
+$$
+\boxed{\boldsymbol\omega_\parallel
+=\frac1a\left(\Omega\mathbf r+J\mathbf v\right).}
+\tag{24}
+$$
+</div>
+
+<p>利用 <script type="math/tex">\mathbf r=\mathbf C+\mathbf s</script>、<script type="math/tex">J\mathbf v=-\omega_c\mathbf s</script>，还可写成</p>
+<div class="math-display">
+$$
+\boldsymbol\omega_\parallel
+=\frac{\Omega}{a}\mathbf C
++\frac{\Omega-\omega_c}{a}\mathbf s.
+\tag{25}
+$$
+</div>
+
+<p>第一项是固定的矢量，第二项随轨道转动。一般而言，自转轴方向与自转角速度大小都会随时间变化。</p>
+<p>如果轨道恰好以盘心为中心，则 <script type="math/tex">\mathbf C=0</script>，水平自转轴始终沿径向，自转角速度大小为</p>
+<div class="math-display">
+$$
+|\boldsymbol\omega_\parallel|
+=\frac{|\Omega|\rho}{(1+\kappa)a}.
+\tag{26}
+$$
+</div>
+
+<p>式 (6) 中力矩没有竖直分量，故 <script type="math/tex">\dot\omega_z=0</script>。在点接触模型里，竖直自转不影响接触点的瞬时速度，也不改变上述球心轨道；真实的有限接触斑则可能产生扭转阻力，使这个结论不再严格成立。</p>
+<p>因此，“球心轨道回到起点”并不等于“球面上的每个花纹也回到初始朝向”。后者还涉及三维姿态的累计变化。</p>
+<h2 id="7-换到跟着转盘转的参考系，会看到什么？"><a href="#7-换到跟着转盘转的参考系，会看到什么？" class="headerlink" title="7. 换到跟着转盘转的参考系，会看到什么？"></a>7. 换到跟着转盘转的参考系，会看到什么？</h2><p>令 <script type="math/tex">\mathbf q=(X,Y)</script> 为随盘转动坐标系中的球心位置，<script type="math/tex">R(\phi)</script> 表示二维旋转矩阵，则</p>
+<div class="math-display">
+$$
+\mathbf r=R(\Omega t)\mathbf q.
+\tag{27}
+$$
+</div>
+
+<p>两次求导，有</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\dot{\mathbf r}&=R(\Omega t)(\dot{\mathbf q}+\Omega J\mathbf q),\\
+\ddot{\mathbf r}&=R(\Omega t)
+\left(\ddot{\mathbf q}+2\Omega J\dot{\mathbf q}-\Omega^2\mathbf q\right).
+\end{aligned}
+\tag{28}
+$$
+</div>
+
+<p>代入核心方程，得到</p>
+<div class="math-display">
+$$
+\boxed{\begin{gathered}
+\ddot{\mathbf q}+(2-\alpha)\Omega J\dot{\mathbf q}
+\\ = (1-\alpha)\Omega^2\mathbf q.
+\end{gathered}}
+\tag{29}
+$$
+</div>
+
+<p>这看起来比实验室方程复杂，但只是同一个运动的另一种描述。离心项与科里奥利项都出现了；摩擦和自转约束也依然存在，不能只拿“离心力向外”一句话判断最终运动。</p>
+<p>更直观的写法是把实验室中的圆轨道变换过去：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\mathbf q(t)&=R(-\Omega t)\mathbf C\\
+&\quad+R\bigl((\omega_c-\Omega)t\bigr)\mathbf s_0.
+\end{aligned}
+\tag{30}
+$$
+</div>
+
+<p>这是两个旋转矢量的叠加。对于实心球，两种角速度分别是 <script type="math/tex">-\Omega</script> 与 <script type="math/tex">-5\Omega/7</script>，因此一般会出现花形曲线；经过 7 个转盘周期，两个矢量同时复位。</p>
+<p><img src="/img/rolling-ball-on-rotating-disk/04-reference-frames.png" alt="同一轨迹在实验室参考系和随盘旋转参考系中的形状"></p>
+<p><em>图 4：两个面板使用完全相同的初态及同一段 7 s 时间。实验室中轨道重复两圈，随盘坐标中形成闭合花形。这里没有新加任何力或修改运动。</em></p>
+<p>如果 <script type="math/tex">\mathbf C=0</script>，式 (30) 只剩一个旋转项，这时才可以直接说“相对于转盘，球心以 <script type="math/tex">-5\Omega/7</script> 绕盘心运动”。对于偏心轨道，不能把这个角速度当成球心绕盘心的统一角速度。</p>
+<h2 id="8-为什么换成空心球，2-7-就变了？"><a href="#8-为什么换成空心球，2-7-就变了？" class="headerlink" title="8. 为什么换成空心球，2&#x2F;7 就变了？"></a>8. 为什么换成空心球，2&#x2F;7 就变了？</h2><p>一般球对称刚体满足</p>
+<div class="math-display">
+$$
+\frac{\omega_c}{\Omega}=\frac{\kappa}{1+\kappa}.
+\tag{31}
+$$
+</div>
+
+<table>
+<thead>
+<tr>
+<th>球体模型</th>
+<th><script type="math/tex">\kappa</script></th>
+<th><script type="math/tex">\omega_c/\Omega</script></th>
+<th><script type="math/tex">T_c/T_d</script></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>均匀实心球</td>
+<td><script type="math/tex">2/5</script></td>
+<td><script type="math/tex">2/7</script></td>
+<td><script type="math/tex">7/2</script></td>
+</tr>
+<tr>
+<td>均匀薄球壳</td>
+<td><script type="math/tex">2/3</script></td>
+<td><script type="math/tex">2/5</script></td>
+<td><script type="math/tex">5/2</script></td>
+</tr>
+</tbody></table>
+<p>转动惯量越大，同样的摩擦力矩越难改变自转；为了同时满足滚动约束，平动方向的变化率也随之改变。结果就是 <script type="math/tex">\kappa</script> 越大，轨道角速度比越大。</p>
+<p><img src="/img/rolling-ball-on-rotating-disk/05-inertia.png" alt="轨道角速度比随无量纲转动惯量的变化曲线"></p>
+<p><em>图 5：这是球对称惯量模型的函数曲线。图上其余点不表示都对应某个常见均匀球体；真正代入实验时，应使用被测球的实际质量分布。</em></p>
+<p>真实乒乓球只能近似看作薄球壳；有液体填充物的球还可能存在内部流动，不能仅凭外形把它当成刚性实心球。圆柱、硬币的惯量张量和允许滚动方向不同，也不能只换一个 <script type="math/tex">\kappa</script> 就套用整套球体公式。</p>
+<h2 id="9-“不会飞走”需要两个独立条件"><a href="#9-“不会飞走”需要两个独立条件" class="headerlink" title="9. “不会飞走”需要两个独立条件"></a>9. “不会飞走”需要两个独立条件</h2><h3 id="9-1-静摩擦必须够用"><a href="#9-1-静摩擦必须够用" class="headerlink" title="9.1 静摩擦必须够用"></a>9.1 静摩擦必须够用</h3><p>由式 (5)、(11)，所需静摩擦大小为</p>
+<div class="math-display">
+$$
+f=m|\omega_c|v_0=m\omega_c^2\rho.
+\tag{32}
+$$
+</div>
+
+<p>若静摩擦系数为 <script type="math/tex">\mu_s</script>，必须满足</p>
+<div class="math-display">
+$$
+\boxed{|\omega_c|v_0\le\mu_sg.}
+\tag{33}
+$$
+</div>
+
+<p>这里的静摩擦是“按需要取值、存在上限”的约束力；并不是只要接触就始终等于 <script type="math/tex">\mu_smg</script>。超出上限以后会发生滑动，核心方程不再成立。</p>
+<h3 id="9-2-整个轨道必须落在圆盘范围内"><a href="#9-2-整个轨道必须落在圆盘范围内" class="headerlink" title="9.2 整个轨道必须落在圆盘范围内"></a>9.2 整个轨道必须落在圆盘范围内</h3><p>在理想点接触模型下，最大盘心距离为</p>
+<div class="math-display">
+$$
+r_{\max}=|\mathbf C|+\rho.
+$$
+</div>
+
+<p>因此，需要</p>
+<div class="math-display">
+$$
+\boxed{|\mathbf C|+\rho\lt D.}
+\tag{34}
+$$
+</div>
+
+<p>这里检查的是接触点是否仍在水平盘面内。若希望整个球的水平投影也不靠近盘边，可采用更保守的实验余量 <script type="math/tex">|\mathbf C|+\rho+a<D</script>；真实边缘接触不能继续用无限平面的方程描述。</p>
+<p>对从盘心出发的小球，<script type="math/tex">|\mathbf C|=\rho</script>，所以</p>
+<div class="math-display">
+$$
+v_0\lt\frac{|\omega_c|D}{2}.
+\tag{35}
+$$
+</div>
+
+<p>即使静摩擦完全够用，推得太快也会使理想圆轨道伸出盘外。标题里的“不飞走”描述的是合适条件下的现象，不是对任何初速度、任何圆盘大小的保证。</p>
+<h2 id="10-算一个具体例子：60-rpm-的转盘"><a href="#10-算一个具体例子：60-rpm-的转盘" class="headerlink" title="10. 算一个具体例子：60 rpm 的转盘"></a>10. 算一个具体例子：60 rpm 的转盘</h2><p>设圆盘半径 <script type="math/tex">D=0.15\ \mathrm m</script>，转速为 60 rpm；球为均匀实心球，质量 <script type="math/tex">m=0.020\ \mathrm{kg}</script>，半径 <script type="math/tex">a=0.010\ \mathrm m</script>。让球从盘心以 <script type="math/tex">v_0=0.10\ \mathrm{m/s}</script> 向右出发，并预先满足纯滚动条件。</p>
+<p>先换算转速：</p>
+<div class="math-display">
+$$
+\Omega=60\frac{\mathrm{rev}}{\mathrm{min}}
+\times\frac{2\pi\ \mathrm{rad}}{\mathrm{rev}}
+\times\frac{1\ \mathrm{min}}{60\ \mathrm s}
+=2\pi\ \mathrm{rad/s}.
+$$
+</div>
+
+<p>于是</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\omega_c&=\frac{4\pi}{7}\ \mathrm{rad/s}\\
+&\approx1.7952\ \mathrm{rad/s},\\
+T_c&=3.50\ \mathrm s.
+\end{aligned}
+$$
+</div>
+
+<p>轨道半径与最大盘心距离分别为</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\rho&=\frac{0.10}{1.7952}\ \mathrm m\\
+&\approx0.05570\ \mathrm m,\\
+r_{\max}&=2\rho\approx0.11141\ \mathrm m.
+\end{aligned}
+$$
+</div>
+
+<p>所以轨道位于半径 15 cm 的圆盘以内，连保守的球体边缘余量也满足。所需摩擦为</p>
+<div class="math-display">
+$$
+\begin{aligned}
+f&=m\omega_cv_0\approx3.59\times10^{-3}\ \mathrm N,\\
+\mu_s&\ge\frac{\omega_cv_0}{g}\approx0.0183.
+\end{aligned}
+$$
+</div>
+
+<p>这个摩擦系数要求仅对应本例的理想平稳滚动，不应当拿来代替对实际材料、表面粗糙度和放球过程的检查。</p>
+<p>初始自转也不能漏掉。盘心处 <script type="math/tex">\mathbf u=0</script>，式 (24) 给出</p>
+<div class="math-display">
+$$
+\boldsymbol\omega_{\parallel,0}=\frac{J\mathbf v_0}{a}
+=(0,10)\ \mathrm{rad/s}.
+$$
+</div>
+
+<p>即球向右滚动所需的通常自转。若只给它一个水平平动速度，却完全不让它转，初始阶段就不是本节计算的状态。</p>
+<h2 id="11-静摩擦不耗散，为什么小球总动能却会变化？"><a href="#11-静摩擦不耗散，为什么小球总动能却会变化？" class="headerlink" title="11. 静摩擦不耗散，为什么小球总动能却会变化？"></a>11. 静摩擦不耗散，为什么小球总动能却会变化？</h2><p>从式 (12) 已知球心速率不变，因此平动动能恒定。但球的转动动能未必恒定。总动能是</p>
+<div class="math-display">
+$$
+E=\frac12m v^2+\frac12I|\boldsymbol\omega|^2.
+\tag{36}
+$$
+</div>
+
+<p>将平动功率与转动力矩的功率相加：</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\dot E
+&=\mathbf f\cdot\mathbf v
++\bigl((-a\mathbf k)\times\mathbf f\bigr)\cdot\boldsymbol\omega\\
+&=\mathbf f\cdot\bigl(\mathbf v+a\mathbf k\times\boldsymbol\omega\bigr)\\
+&=\boxed{\mathbf f\cdot\mathbf u}.
+\end{aligned}
+\tag{37}
+$$
+</div>
+
+<p>接触点在实验室中有速度 <script type="math/tex">\mathbf u</script>，所以静摩擦对小球可以做功。与此同时，圆盘受到相反的接触力，其接触功率为 <script type="math/tex">-\mathbf f\cdot\mathbf u</script>。两个物体的接触功率之和为零，没有相对滑动导致的局部耗散，但能量可以从一个物体传给另一个物体。</p>
+<p>恒速电机承担了维持圆盘转速所需的能量交换。不能同时假定“圆盘由电机恒速驱动”和“小球自身的总能量必须守恒”。</p>
+<p>对本模型还可算出</p>
+<div class="math-display">
+$$
+\dot E=m\omega_c\Omega\,\mathbf r\cdot\mathbf v.
+\tag{38}
+$$
+</div>
+
+<p>一般偏心圆上，<script type="math/tex">\mathbf r\cdot\mathbf v</script> 随时间变号，因此能量在一个轨道周期内往返交换。若圆轨道恰好以盘心为中心，<script type="math/tex">\mathbf r\perp\mathbf v</script>，这项功率才恒为零。</p>
+<p><img src="/img/rolling-ball-on-rotating-disk/06-energy.png" alt="球的平动和转动动能随时间变化，以及圆盘对小球的瞬时功率"></p>
+<p><em>图 6：使用第 10 节的参数，并取竖直自转为零。平动动能固定为 0.10 mJ，总动能随转动动能变化，一个周期后恢复。曲线是理想模型结果，未包含真实滚动损耗。</em></p>
+<p>从另一个角度，也能找到守恒组合。令球关于盘心竖直轴的总角动量为</p>
+<div class="math-display">
+$$
+L_z=m(\mathbf r\times\mathbf v)_z+I\omega_z.
+$$
+</div>
+
+<p>因为 <script type="math/tex">\dot L_z=(\mathbf r\times\mathbf f)_z</script>，式 (37) 等价于 <script type="math/tex">\dot E=\Omega\dot L_z</script>，所以在恒定 <script type="math/tex">\Omega</script> 下</p>
+<div class="math-display">
+$$
+E-\Omega L_z=\text{常数}.
+\tag{39}
+$$
+</div>
+
+<p>守恒的是这个组合，而不是一般情形下小球的总动能 <script type="math/tex">E</script>。</p>
+<h2 id="12-直接把不自转的小球放上去：先打滑，再滚动"><a href="#12-直接把不自转的小球放上去：先打滑，再滚动" class="headerlink" title="12. 直接把不自转的小球放上去：先打滑，再滚动"></a>12. 直接把不自转的小球放上去：先打滑，再滚动</h2><p>若小球被放在非零半径处，初始既不平动也不自转，接触处的相对滑动速度为</p>
+<div class="math-display">
+$$
+\begin{aligned}
+\mathbf s&=\mathbf v+aJ\boldsymbol\omega_\parallel-\Omega J\mathbf r,\\
+\mathbf s_0&=-\Omega J\mathbf r_0.
+\end{aligned}
+\tag{40}
+$$
+</div>
+
+<p>在简单的库仑滑动摩擦模型中，<script type="math/tex">\mathbf s\ne0</script> 时</p>
+<div class="math-display">
+$$
+\mathbf f_k=-\mu_kmg\frac{\mathbf s}{|\mathbf s|}.
+\tag{41}
+$$
+</div>
+
+<p>它反对的是<strong>接触处的相对滑动</strong>，不一定反对球心在实验室中的运动。完整滑动过程应同时积分式 (5)、(6) 与位置方程，并在相对滑动消失且静摩擦足够时切换到滚动模型。</p>
+<p>一个短时近似有助于理解结果：若打滑很快结束，其间盘面速度变化很小，可近似把接触附近看成匀速传送带。设摩擦冲量为 <script type="math/tex">\mathbf P</script>，则</p>
+<div class="math-display">
+$$
+\Delta\mathbf v=\frac{\mathbf P}{m},
+\qquad
+\Delta\boldsymbol\omega_\parallel=-\frac aI J\mathbf P.
+$$
+</div>
+
+<p>因此相对滑动速度变化为</p>
+<div class="math-display">
+$$
+\Delta\mathbf s
+=\left(\frac1m+\frac{a^2}{I}\right)\mathbf P.
+$$
+</div>
+
+<p>令末态相对速度为零，得到</p>
+<div class="math-display">
+$$
+\boxed{\mathbf v_f\simeq\mathbf v_i-\alpha\mathbf s_i.}
+\tag{42}
+$$
+</div>
+
+<p>对于 <script type="math/tex">\mathbf v_i=0</script>、<script type="math/tex">\boldsymbol\omega_i=0</script> 的放球动作，</p>
+<div class="math-display">
+$$
+\mathbf v_f\simeq\alpha\Omega J\mathbf r_0
+=\omega_cJ\mathbf r_0.
+\tag{43}
+$$
+</div>
+
+<p>这恰好接近式 (23) 的绕盘心圆轨道条件。但这是<strong>接触位置和盘面速度近似不变的短暂打滑极限</strong>，不是任意放球过程的精确结论。</p>
+<p>该近似给出的滑动时间量级为</p>
+<div class="math-display">
+$$
+t_s\simeq\frac{\alpha|\mathbf s_i|}{\mu_kg}.
+\tag{44}
+$$
+</div>
+
+<p>需要 <script type="math/tex">|\Omega|t_s\ll1</script>，且小球在这段时间内的位移足够小，才能合理地把盘面局部速度当常量。否则应求解完整的滑动动力学，并用真正进入滚动时的位置、速度来计算轨道。</p>
+<h2 id="13-圆盘略微倾斜：为什么会出现横向漂移？"><a href="#13-圆盘略微倾斜：为什么会出现横向漂移？" class="headerlink" title="13. 圆盘略微倾斜：为什么会出现横向漂移？"></a>13. 圆盘略微倾斜：为什么会出现横向漂移？</h2><p>这一节单独改变几何条件：盘面是一个固定的倾斜平面，圆盘绕它自己的固定法线匀速转动。此处 <script type="math/tex">\mathbf k</script> 改为盘面法线，所有二维矢量都位于盘面内。令重力沿盘面的分量加速度为 <script type="math/tex">\mathbf g_\parallel</script>。</p>
+<p>平动方程成为</p>
+<div class="math-display">
+$$
+m\dot{\mathbf v}=\mathbf f+m\mathbf g_\parallel.
+$$
+</div>
+
+<p>重力通过球心，不改变式 (6) 的接触力矩。重新消去摩擦，得到</p>
+<div class="math-display">
+$$
+\boxed{\dot{\mathbf v}
+=\omega_cJ\mathbf v+\frac{\mathbf g_\parallel}{1+\kappa}.}
+\tag{45}
+$$
+</div>
+
+<p>试着找一个恒定的漂移速度 <script type="math/tex">\mathbf v_d</script>，使右边为零：</p>
+<div class="math-display">
+$$
+\boxed{\mathbf v_d
+=\frac{J\mathbf g_\parallel}{\kappa\Omega}.}
+\tag{46}
+$$
+</div>
+
+<p>这样 <script type="math/tex">\mathbf v-\mathbf v_d</script> 又满足原来的旋转速度方程，所以总运动就是“一个圆周运动 + 圆心的匀速漂移”。</p>
+<p>当 <script type="math/tex">\Omega>0</script>，漂移方向是下坡方向在盘面内逆时针转 <script type="math/tex">90^\circ</script>，而不是简单地沿下坡方向。如果球一开始静止，它的初始加速度仍然沿下坡；<strong>横向漂移是圆周振荡叠加后的平均运动</strong>，两者并不矛盾。</p>
+<p>倾角为 <script type="math/tex">\beta</script> 时，</p>
+<div class="math-display">
+$$
+v_d=\frac{g\sin\beta}{\kappa|\Omega|}.
+\tag{47}
+$$
+</div>
+
+<p>以实心球、60 rpm、倾角 <script type="math/tex">0.05^\circ</script> 为例，得到 <script type="math/tex">v_d\approx3.41\ \mathrm{mm/s}</script>。即使只有很小的不水平，十秒钟内也可能产生厘米级漂移。</p>
+<p><img src="/img/rolling-ball-on-rotating-disk/07-tilt-drift.png" alt="略微倾斜盘面上的球心轨迹和垂直于下坡方向的平均漂移"></p>
+<p><em>图 7：取倾斜盘面内的下坡方向为 x 正向，初速度为 (0.055, 0) m&#x2F;s。虚线表示轨道圆心的匀速移动，曲线仍叠加着圆周运动。本图未包含滚动阻力。</em></p>
+<p>式 (46) 在 <script type="math/tex">\Omega\to0</script> 时看似发散，是因为“圆周运动 + 漂移”的分解在这个极限下不适合单独解释；应回到式 (45)。当圆盘不转时，直接得到通常的斜面滚动加速度 <script type="math/tex">\mathbf g_\parallel/(1+\kappa)</script>。</p>
+<h2 id="14-理想闭合圆为什么在真实实验中会慢慢变形？"><a href="#14-理想闭合圆为什么在真实实验中会慢慢变形？" class="headerlink" title="14. 理想闭合圆为什么在真实实验中会慢慢变形？"></a>14. 理想闭合圆为什么在真实实验中会慢慢变形？</h2><p>理想解不包含任何把不同初态吸引到同一条圆轨道的阻尼机制。初始速度稍微变化，就会换成附近的另一条圆；因此这里的“稳定圆轨道”不应理解成会自动恢复原半径的吸引态。</p>
+<p>实际实验中至少有以下几种偏离来源。</p>
+<table>
+<thead>
+<tr>
+<th>偏离来源</th>
+<th>对模型的影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>滚动阻力、接触变形</td>
+<td>引入额外耗散力矩，轨道圆心与振幅可能缓慢变化</td>
+</tr>
+<tr>
+<td>空气阻力</td>
+<td>水平实际力不再只有接触摩擦，速率也可能改变</td>
+</tr>
+<tr>
+<td>接触斑扭转阻力</td>
+<td>竖直自转与接触动力学可能发生耦合</td>
+</tr>
+<tr>
+<td>盘面倾斜、起伏</td>
+<td>出现额外重力分量或法向载荷变化</td>
+</tr>
+<tr>
+<td>摩擦上限不足</td>
+<td>无滑动约束失效，需要切换到滑动模型</td>
+</tr>
+<tr>
+<td>电机转速变化或盘可自由减速</td>
+<td><script type="math/tex">\Omega</script> 不再是常量，需要额外方程</td>
+</tr>
+</tbody></table>
+<p>不能笼统地说“有摩擦就必然向外漂”或“有耗散就一定往盘心收缩”。<a target="_blank" rel="noopener" href="https://www.tyoma.com/plain/science/papers/14/ball.pdf">Sokirko 等人的 1994 年研究</a> 讨论了含耗散的运动，在其模型和参数范围内可出现先向中心移动、再向外展开的不同阶段。具体漂移方向与所采用的阻力模型、初态有关；这已经超出了式 (11) 的理想闭合圆。</p>
+<p>如果只是电机的给定转速随时间变化、而其他假设保持不变，对式 (3) 重新求导便有</p>
+<div class="math-display">
+$$
+\dot{\mathbf v}
+=\alpha\left(\Omega J\mathbf v+\dot\Omega J\mathbf r\right).
+\tag{48}
+$$
+</div>
+
+<p>多出来的 <script type="math/tex">\dot\Omega</script> 项说明：不能把恒速模型的圆轨道结论直接用于启动或停机过程。若圆盘本身自由转动，还要联立圆盘的转动方程。</p>
+<h2 id="15-怎样做一次能够检验公式的实验？"><a href="#15-怎样做一次能够检验公式的实验？" class="headerlink" title="15. 怎样做一次能够检验公式的实验？"></a>15. 怎样做一次能够检验公式的实验？</h2><p>建议先选坚硬、接近均匀的实心球与平整盘面，让转盘匀速运行并调平。使用固定在实验室中的俯视相机，盘面画一个标记用于测量转盘周期。轻推小球，待明显初始滑动结束后再选取轨迹数据。</p>
+<ol>
+<li><strong>标定尺寸和时间。</strong> 用盘面上的已知长度把像素换成米，用视频时间戳得到每帧时刻，同时由盘面标记求 <script type="math/tex">\Omega</script>。</li>
+<li><strong>拟合轨道圆心。</strong> 从球心坐标拟合 <script type="math/tex">\mathbf C</script> 与 <script type="math/tex">\rho</script>。不要直接把转盘中心当成轨道圆心。</li>
+<li><strong>测量轨道相位。</strong> 计算 <script type="math/tex">\phi(t)=\operatorname{atan2}(y-C_y,x-C_x)</script>，解开跨越 <script type="math/tex">\pm\pi</script> 的跳变，再拟合 <script type="math/tex">\phi(t)=\phi_0+\omega_ct</script>。</li>
+<li><strong>比较无量纲比值。</strong> 对均匀实心球检查 <script type="math/tex">\omega_c/\Omega</script> 是否接近 <script type="math/tex">2/7</script>，并给出拟合误差。改变轻推速度，检查半径是否变化而角速度比近似不变。</li>
+<li><strong>检查模型是否适用。</strong> 看 <script type="math/tex">|\mathbf r-\mathbf C|</script> 和 <script type="math/tex">|\mathbf v|</script> 是否近似恒定；若圆心持续漂移，先检查调平和滚动损耗。</li>
+</ol>
+<p>还可以给球面做标记，测量自转并检验式 (24)。仅靠球心轨迹接近圆形，不能直接证明接触点已经无滑动。</p>
+<p>下面给出可直接用于轨道拟合之后的两个诊断量：</p>
+<div class="math-display">
+$$
+\epsilon_\rho(t)=|\mathbf r(t)-\mathbf C|-\rho,
+\qquad
+\epsilon_v(t)=|\mathbf v(t)|-v_0.
+$$
+</div>
+
+<p>它们分别反映偏离圆形和偏离匀速的程度。实际视频位置求导会放大噪声，应优先使用平滑拟合并报告相机采样率，而不是把逐帧差分产生的抖动都解释为物理效应。</p>
+<h2 id="16-可复现计算与结果核对"><a href="#16-可复现计算与结果核对" class="headerlink" title="16. 可复现计算与结果核对"></a>16. 可复现计算与结果核对</h2><p>本文的七幅图由同一份程序生成，轨道来自解析解，另用 SciPy 数值积分独立检查。程序同时演化平动速度与自转角速度，并验证滚动约束、恒定速率、固定圆心和功率恒等式；还单独积分旋转参考系方程及倾斜盘面方程，与坐标变换和解析解比较。</p>
+<ul>
+<li><a href="/downloads/rolling-ball-on-rotating-disk/figures-and-checks.py">下载绘图与数值验证程序</a></li>
+<li><a href="/downloads/rolling-ball-on-rotating-disk/validation.json">查看本次数值验证结果</a></li>
+</ul>
+<p>程序覆盖 36 组牛顿—欧拉初值问题，每组取 241 个采样点，包含正转、反转、较慢转盘和多种转动惯量。断言要求各检查量按其 SI 单位计的最大绝对误差小于 <script type="math/tex">3\times10^{-8}</script>，实际残差记录在结果文件中。这些是理想方程的数值核对，不能替代真实接触材料与实验初态的验证。</p>
+<p>下载程序后，安装 <code>numpy</code>、<code>scipy</code>、<code>matplotlib</code>，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python figures-and-checks.py</span><br></pre></td></tr></table></figure>
+
+<p>中文图注优先使用微软雅黑或 Noto Sans CJK SC；若本机没有中文字体，需要先安装相应字体。独立下载运行时，图片输出到脚本旁的 <code>rolling-ball-figures</code> 文件夹，验证结果写入 <code>validation.json</code>。</p>
+<h2 id="17-回看这个“悖论”"><a href="#17-回看这个“悖论”" class="headerlink" title="17. 回看这个“悖论”"></a>17. 回看这个“悖论”</h2><p>圆盘没有用某种神秘的向心吸引力把球锁住。真正起作用的是：<strong>球面接触点必须跟上运动盘面，而同一个静摩擦力既改变球心速度，又改变自转。</strong> 两套动力学与一个滚动约束联立，才产生了</p>
+<div class="math-display">
+$$
+\ddot{\mathbf r}=\frac{I}{I+ma^2}\Omega\mathbf k\times\dot{\mathbf r}.
+$$
+</div>
+
+<p>这个加速度只改变速度方向，因而产生匀速圆周运动；系数中的转动惯量，给均匀实心球留下了 <script type="math/tex">2/7</script>。</p>
+<p>判断一次实际观察时，可以依次问：接触是否已进入无滑动滚动？镜头固定在哪个参考系？轨道圆心在哪里？静摩擦是否足够？圆轨道是否完整落在盘面内？这几个问题都回答清楚，“为什么没被甩出去”便不再矛盾。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>Klaus Weltner, <strong>Stable circular orbits of freely moving balls on rotating discs</strong>, <em>American Journal of Physics</em> <strong>47</strong>(11), 984–986 (1979). <a target="_blank" rel="noopener" href="https://doi.org/10.1119/1.11602">DOI: 10.1119&#x2F;1.11602</a>；<a target="_blank" rel="noopener" href="https://m2.askthephysicist.com/Weltner.pdf">用户提供的全文 PDF</a>。本文的主要历史文献；阅读时注意第 985 页式 (18)、(19) 的半径平方排印问题。</li>
+<li>Steve Mould, <strong>The Turntable Paradox</strong>, 2022-11-28。<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Aj411y7GL/">用户提供的 B 站入口</a>；<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3oM7hX3UUEU">原作者视频及说明</a>。用于现象引入；本文未以逐帧视频数据拟合参数。</li>
+<li>A. V. Sokirko, A. A. Belopolskii, A. V. Matytsyn, D. A. Kossakowski, <strong>Behavior of a ball on the surface of a rotating disk</strong>, <em>American Journal of Physics</em> <strong>62</strong>, 151–156 (1994). <a target="_blank" rel="noopener" href="https://www.tyoma.com/plain/science/papers/14/ball.pdf">作者网站全文</a>。用于区分理想无耗散圆轨道与真实滚动耗散引起的长期变化。</li>
+</ol>
+<p><em>资料说明：B 站页面在本文整理时限制自动访问；视频对应关系由该作者其他视频的公开介绍交叉确认，核心理论以逐页核对的 Weltner 原论文及本文推导为依据。本文未转载论文原图，所有图均为原创；图中的参数示例不是实测数据。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://talescuber.github.io">TaLEsCuber</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://talescuber.github.io/2026/10/05/%E5%AD%A6%E4%B9%A0/rolling-ball-on-rotating-disk/">http://talescuber.github.io/2026/10/05/%E5%AD%A6%E4%B9%A0/rolling-ball-on-rotating-disk/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://talescuber.github.io" target="_blank">TaLEsCuber'Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/">经典力学</a><a class="post-meta__tags" href="/tags/%E5%88%9A%E4%BD%93%E5%8A%A8%E5%8A%9B%E5%AD%A6/">刚体动力学</a><a class="post-meta__tags" href="/tags/%E9%9D%9E%E6%83%AF%E6%80%A7%E5%8F%82%E8%80%83%E7%B3%BB/">非惯性参考系</a></div><div class="post_share"><div class="social-share" data-image="/img/rolling-ball-on-rotating-disk/01-model.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/10/05/%E5%AD%A6%E4%B9%A0/wallis-formula/" title="华里士公式：从正弦积分到 π 的无穷乘积"><img class="cover" src="/img/wallis-formula/01-roadmap.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">华里士公式：从正弦积分到 π 的无穷乘积</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/17/%E5%AD%A6%E4%B9%A0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6%C2%B7%E9%AB%98%E6%98%BE-%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94/" title="经典力学·高显--习题解答"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-17</div><div class="title">经典力学·高显--习题解答</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E5%9B%BE%E6%A0%87/talescuber.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TaLEsCuber</div><div class="author-info__description">A self-entertaining learning site</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">93</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:daiph@mail2.sysu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://github.com/talescuber" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/bilibili-gate/" target="_blank" title="bilibili"><i class="fa-brands fa-bilibili" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">本站为本人学习笔记与网络资料整理，如有错漏，欢迎指正！<br> 问题请联系 <a href="mailto:daiph@mail2.sysu.edu.cn">daiph@mail2.sysu.edu.cn</a>
+</div></div><div class="card-widget card-thinking" id="card-thinking"><div class="item-headline"><i class="fas fa-lightbulb"></i><span>随想</span></div><div class="item-content"><div class="thinking-sidebar-meta"><time datetime="2026-05-24T14:31:27.000Z">2026-05-24 22:31</time></div><p class="thinking-sidebar-excerpt">一万个冬天以后是一万个春天，一万次离别以后是一万次相见，或许过往已无可溯洄，但好在还有可以与你相遇的明天。</p><a class="thinking-sidebar-more" href="/thinking/">查看全部随想 <i class="fas fa-arrow-right"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E6%8A%8A%E9%97%AE%E9%A2%98%E8%AF%B4%E5%87%86%E7%A1%AE%EF%BC%9A%E7%A0%94%E7%A9%B6%E5%93%AA%E4%B8%80%E7%A7%8D%E5%B0%8F%E7%90%83%E3%80%81%E5%93%AA%E4%B8%80%E7%A7%8D%E8%BD%AC%E7%9B%98%EF%BC%9F"><span class="toc-text">1. 先把问题说准确：研究哪一种小球、哪一种转盘？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9C%80%E5%85%B3%E9%94%AE%E7%9A%84%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%8E%A5%E8%A7%A6%E7%82%B9%E4%B8%8D%E6%89%93%E6%BB%91%EF%BC%8C%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="toc-text">2. 最关键的一步：接触点不打滑，究竟是什么意思？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%98%E9%9D%A2%E6%8E%A5%E8%A7%A6%E7%82%B9%E5%9C%A8%E8%BF%90%E5%8A%A8"><span class="toc-text">2.1 盘面接触点在运动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%90%83%E9%9D%A2%E6%8E%A5%E8%A7%A6%E7%82%B9%E7%9A%84%E9%80%9F%E5%BA%A6%E6%98%AF%E4%B8%A4%E9%83%A8%E5%88%86%E7%9B%B8%E5%8A%A0"><span class="toc-text">2.2 球面接触点的速度是两部分相加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%90%83%E5%BF%83%E5%8F%AF%E4%BB%A5%E5%81%9C%E5%9C%A8%E5%8E%9F%E5%9C%B0%EF%BC%9F"><span class="toc-text">2.3 为什么球心可以停在原地？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%80%E4%B8%AA%E6%91%A9%E6%93%A6%E5%8A%9B%EF%BC%8C%E5%90%8C%E6%97%B6%E5%86%B3%E5%AE%9A%E5%B9%B3%E5%8A%A8%E4%B8%8E%E8%BD%AC%E5%8A%A8"><span class="toc-text">3. 一个摩擦力，同时决定平动与转动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%B8%8D%E5%85%88%E5%81%87%E8%AE%BE%E5%9C%86%E8%BD%A8%E9%81%93%EF%BC%8C%E7%9B%B4%E6%8E%A5%E8%AF%81%E6%98%8E%E5%AE%83%E4%B8%80%E5%AE%9A%E6%98%AF%E5%9C%86"><span class="toc-text">4. 不先假设圆轨道，直接证明它一定是圆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%80%9F%E7%8E%87%E4%B8%8D%E5%8F%98%EF%BC%8C%E4%BD%86%E9%80%9F%E5%BA%A6%E6%96%B9%E5%90%91%E6%8C%81%E7%BB%AD%E6%94%B9%E5%8F%98"><span class="toc-text">4.1 速率不变，但速度方向持续改变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%A5%BD%E6%98%AF-2-7%EF%BC%9F"><span class="toc-text">4.2 为什么正好是 2&#x2F;7？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BB%BB%E6%84%8F%E5%88%9D%E5%A7%8B%E4%BD%8D%E7%BD%AE%E3%80%81%E5%88%9D%E5%A7%8B%E9%80%9F%E5%BA%A6%EF%BC%9A%E6%8A%8A%E8%BD%A8%E9%81%93%E5%AE%8C%E6%95%B4%E7%AE%97%E5%87%BA%E6%9D%A5"><span class="toc-text">5. 任意初始位置、初始速度：把轨道完整算出来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%9B%98%E5%BF%83%E5%87%BA%E5%8F%91%E7%9A%84%E5%B0%8F%E7%90%83%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E7%BB%95%E5%9B%9E%E6%9D%A5%EF%BC%9F"><span class="toc-text">从盘心出发的小球，为什么会绕回来？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%81%B0%E5%A5%BD%E7%BB%95%E7%9B%98%E5%BF%83%E8%BD%AC%EF%BC%9F"><span class="toc-text">什么时候恰好绕盘心转？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%90%83%E6%9C%AC%E8%BA%AB%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E8%BD%AC%EF%BC%9F"><span class="toc-text">6. 球本身到底怎么转？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%8D%A2%E5%88%B0%E8%B7%9F%E7%9D%80%E8%BD%AC%E7%9B%98%E8%BD%AC%E7%9A%84%E5%8F%82%E8%80%83%E7%B3%BB%EF%BC%8C%E4%BC%9A%E7%9C%8B%E5%88%B0%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">7. 换到跟着转盘转的参考系，会看到什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8D%A2%E6%88%90%E7%A9%BA%E5%BF%83%E7%90%83%EF%BC%8C2-7-%E5%B0%B1%E5%8F%98%E4%BA%86%EF%BC%9F"><span class="toc-text">8. 为什么换成空心球，2&#x2F;7 就变了？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E2%80%9C%E4%B8%8D%E4%BC%9A%E9%A3%9E%E8%B5%B0%E2%80%9D%E9%9C%80%E8%A6%81%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E6%9D%A1%E4%BB%B6"><span class="toc-text">9. “不会飞走”需要两个独立条件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E9%9D%99%E6%91%A9%E6%93%A6%E5%BF%85%E9%A1%BB%E5%A4%9F%E7%94%A8"><span class="toc-text">9.1 静摩擦必须够用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E6%95%B4%E4%B8%AA%E8%BD%A8%E9%81%93%E5%BF%85%E9%A1%BB%E8%90%BD%E5%9C%A8%E5%9C%86%E7%9B%98%E8%8C%83%E5%9B%B4%E5%86%85"><span class="toc-text">9.2 整个轨道必须落在圆盘范围内</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E7%AE%97%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E4%BE%8B%E5%AD%90%EF%BC%9A60-rpm-%E7%9A%84%E8%BD%AC%E7%9B%98"><span class="toc-text">10. 算一个具体例子：60 rpm 的转盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E9%9D%99%E6%91%A9%E6%93%A6%E4%B8%8D%E8%80%97%E6%95%A3%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B0%8F%E7%90%83%E6%80%BB%E5%8A%A8%E8%83%BD%E5%8D%B4%E4%BC%9A%E5%8F%98%E5%8C%96%EF%BC%9F"><span class="toc-text">11. 静摩擦不耗散，为什么小球总动能却会变化？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E7%9B%B4%E6%8E%A5%E6%8A%8A%E4%B8%8D%E8%87%AA%E8%BD%AC%E7%9A%84%E5%B0%8F%E7%90%83%E6%94%BE%E4%B8%8A%E5%8E%BB%EF%BC%9A%E5%85%88%E6%89%93%E6%BB%91%EF%BC%8C%E5%86%8D%E6%BB%9A%E5%8A%A8"><span class="toc-text">12. 直接把不自转的小球放上去：先打滑，再滚动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%9C%86%E7%9B%98%E7%95%A5%E5%BE%AE%E5%80%BE%E6%96%9C%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%A8%AA%E5%90%91%E6%BC%82%E7%A7%BB%EF%BC%9F"><span class="toc-text">13. 圆盘略微倾斜：为什么会出现横向漂移？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E7%90%86%E6%83%B3%E9%97%AD%E5%90%88%E5%9C%86%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E7%9C%9F%E5%AE%9E%E5%AE%9E%E9%AA%8C%E4%B8%AD%E4%BC%9A%E6%85%A2%E6%85%A2%E5%8F%98%E5%BD%A2%EF%BC%9F"><span class="toc-text">14. 理想闭合圆为什么在真实实验中会慢慢变形？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%80%8E%E6%A0%B7%E5%81%9A%E4%B8%80%E6%AC%A1%E8%83%BD%E5%A4%9F%E6%A3%80%E9%AA%8C%E5%85%AC%E5%BC%8F%E7%9A%84%E5%AE%9E%E9%AA%8C%EF%BC%9F"><span class="toc-text">15. 怎样做一次能够检验公式的实验？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E5%8F%AF%E5%A4%8D%E7%8E%B0%E8%AE%A1%E7%AE%97%E4%B8%8E%E7%BB%93%E6%9E%9C%E6%A0%B8%E5%AF%B9"><span class="toc-text">16. 可复现计算与结果核对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E5%9B%9E%E7%9C%8B%E8%BF%99%E4%B8%AA%E2%80%9C%E6%82%96%E8%AE%BA%E2%80%9D"><span class="toc-text">17. 回看这个“悖论”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/%E5%AD%A6%E4%B9%A0/rolling-ball-on-rotating-disk/" title="转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导">转盘上的小球为什么不飞走？从滚动约束到圆轨道的完整推导</a><time datetime="2026-10-04T16:22:40.000Z" title="发表于 2026-10-05 00:22:40">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/05/%E5%AD%A6%E4%B9%A0/wallis-formula/" title="华里士公式：从正弦积分到 π 的无穷乘积">华里士公式：从正弦积分到 π 的无穷乘积</a><time datetime="2026-10-04T16:01:41.000Z" title="发表于 2026-10-05 00:01:41">2026-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/04/%E5%AD%A6%E4%B9%A0/numerical-aperture/" title="数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合">数值孔径 NA：从收光锥角到分辨率、聚焦与光纤耦合</a><time datetime="2026-10-03T16:54:21.000Z" title="发表于 2026-10-04 00:54:21">2026-10-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AD%A6%E4%B9%A0/gerchberg-saxton-algorithm/" title="GS 算法详解：从相位恢复到纯相位全息图">GS 算法详解：从相位恢复到纯相位全息图</a><time datetime="2026-10-01T14:48:10.000Z" title="发表于 2026-10-01 22:48:10">2026-10-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/01/%E5%AD%A6%E4%B9%A0/quantum-ensembles-density-matrix/" title="量子系综与密度矩阵：从三种系综到磁场中的电子">量子系综与密度矩阵：从三种系综到磁场中的电子</a><time datetime="2026-10-01T11:37:31.000Z" title="发表于 2026-10-01 19:37:31">2026-10-01</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By TaLEsCuber</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Carpe Diem!<br>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,127,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★,我欲乘风归去，又恐Ciallo～(∠・ω&lt; )⌒★玉宇,一点寒芒先到，随后Cia出如llo～(∠・ω&lt; )⌒☆,欲穷千里目，更上一ciallo～(∠・ω&lt; )⌒☆,问君能有几多愁，cia似一江春水向东llo～(∠・ω&lt; )⌒☆,昔人已cia黄鹤去，此地空余黄鹤llo～(∠・ω&lt; )⌒☆,小cia llo～(∠・ω&lt; )⌒☆水人家,青青子衿悠悠我心。但为君故cia llo～(∠・ω&lt; )⌒☆至今,黄沙百战cia金甲，不破llo～(∠・ω&lt; )⌒☆兰终不还,一身转战三cia llo～(∠・ω&lt; )⌒☆，一剑曾当百万师,杨柳cia cia江水平，问llo～(∠・ω&lt; )⌒☆江上歌唱声,老骥思Ciallo～(∠・ω&lt; )⌒★，飞鸿阅九洲。,朝cia白帝cia云间，千里江llo～(∠・ω&lt; )⌒☆一日还,桃花潭水深cia尺，不及汪llo～(∠・ω&lt; )⌒☆送我情,Ciallo～(∠・ω&lt; )⌒★稻花应秀色，五更桐叶最佳音。,但愿人长久，千里共cia llo～(∠・ω&lt; )⌒☆,醉里挑灯看cia，梦回吹角连llo～(∠・ω&lt; )⌒☆,今夜月明人尽望，不知cia思llo谁家～(∠・ω&lt; )⌒☆,平分cia色一轮满，长伴云衢千llo明～(∠・ω&lt; )⌒☆,但愿人长久，ciallo共婵娟～(∠・ω&lt; )⌒☆,阴晴圆cia都休说，且喜llo间好时节～(∠・ω&lt; )⌒☆,人道cia中明月好，欲邀同赏意llo何～(∠・ω&lt; )⌒☆" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
