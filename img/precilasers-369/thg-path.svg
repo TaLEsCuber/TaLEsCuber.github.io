@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="630" viewBox="0 0 1080 630" role="img" aria-labelledby="title desc">
+<title id="title">1108 nm 到 369 nm 的单通三倍频功能示意</title>
+<desc id="desc">DFB 种子经光纤放大，进入倍频级生成 554 nm。绿光与剩余 1108 nm 经模式与偏振匹配进入和频级，输出 369 nm，经分色获得紫外光。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto-start-reverse"><path d="M0 0L9 4.5L0 9Z" fill="context-stroke"/></marker></defs>
+<rect width="1080" height="630" rx="22" fill="#f5f7fb"/>
+<g font-family="Microsoft YaHei, Noto Sans SC, sans-serif" fill="#182b46">
+<text x="48" y="60" font-size="29" font-weight="700">从近红外到紫外：两个二阶过程串联</text>
+<text x="48" y="93" font-size="17" fill="#53647b">功能示意 · 波长为近似标称值 · 不代表厂家的精确内部布局</text>
+<g fill="#fff" stroke="#cfdae7" stroke-width="2">
+<rect x="48" y="140" width="215" height="105" rx="14"/>
+<rect x="325" y="140" width="215" height="105" rx="14"/>
+<rect x="602" y="140" width="265" height="105" rx="14"/>
+<rect x="602" y="360" width="265" height="105" rx="14"/>
+<rect x="325" y="360" width="215" height="105" rx="14"/>
+<rect x="48" y="360" width="215" height="105" rx="14"/>
+</g>
+<g text-anchor="middle">
+<text x="155" y="180" font-size="23" font-weight="700">DFB 光纤种子</text><text x="155" y="217" font-size="20" fill="#b45031">1108 nm · ω</text>
+<text x="432" y="180" font-size="23" font-weight="700">光纤放大</text><text x="432" y="217" font-size="19">增强基频功率</text>
+<text x="734" y="179" font-size="23" font-weight="700">第一级：倍频 SHG</text><text x="734" y="217" font-size="21">ω + ω → 2ω</text>
+<text x="734" y="400" font-size="23" font-weight="700">模式与偏振匹配</text><text x="734" y="436" font-size="18">红外与绿光在晶体内重合</text>
+<text x="432" y="400" font-size="23" font-weight="700">第二级：和频</text><text x="432" y="436" font-size="21">ω + 2ω → 3ω</text>
+<text x="155" y="400" font-size="23" font-weight="700">分色与紫外输出</text><text x="155" y="436" font-size="21" fill="#743ac0">369 nm · 3ω</text>
+</g>
+<g fill="none" stroke-width="5" marker-end="url(#arrow)">
+<path d="M263 192H318" stroke="#bd623e"/><path d="M540 192H595" stroke="#bd623e"/>
+<path d="M685 245V352" stroke="#bd623e"/><path d="M785 245V352" stroke="#369659"/>
+<path d="M602 395H548" stroke="#bd623e"/><path d="M602 429H548" stroke="#369659"/>
+<path d="M325 412H270" stroke="#804aca"/>
+</g>
+<text x="570" y="288" font-size="17" fill="#a94b2b">剩余基频</text><text x="570" y="314" font-size="19" fill="#a94b2b">1108 nm</text>
+<text x="809" y="288" font-size="17" fill="#297a45">二倍频</text><text x="809" y="314" font-size="19" fill="#297a45">554 nm</text>
+<rect x="48" y="505" width="982" height="85" rx="12" fill="#e9edf5"/>
+<text x="72" y="539" font-size="20" font-weight="700">保留红外光，是三倍频链路的必要条件</text>
+<text x="72" y="570" font-size="18">第二级需要同时输入 ω 和 2ω；只把绿光再次倍频，会得到约 277 nm。</text>
+</g></svg>

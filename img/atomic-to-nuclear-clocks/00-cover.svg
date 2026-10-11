@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="817.2pt" height="446.256pt" viewBox="0 0 817.2 446.256" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-11T10:04:00.056307</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 446.256 
+L 817.2 446.256 
+L 817.2 0 
+L 0 0 
+z
+" style="fill: #f7f9fc"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 45.342 367.538112 
+L 256.266 367.538112 
+Q 265.6404 367.538112 265.6404 362.61504 
+L 265.6404 104.15376 
+Q 265.6404 99.230688 256.266 99.230688 
+L 45.342 99.230688 
+Q 35.9676 99.230688 35.9676 104.15376 
+L 35.9676 362.61504 
+Q 35.9676 367.538112 45.342 367.538112 
+z
+" clip-path="url(#p8a2377a747)" style="fill: #ffffff; stroke: #d4dce8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 303.138 367.538112 
+L 514.062 367.538112 
+Q 523.4364 367.538112 523.4364 362.61504 
+L 523.4364 104.15376 
+Q 523.4364 99.230688 514.062 99.230688 
+L 303.138 99.230688 
+Q 293.7636 99.230688 293.7636 104.15376 
+L 293.7636 362.61504 
+Q 293.7636 367.538112 303.138 367.538112 
+z
+" clip-path="url(#p8a2377a747)" style="fill: #ffffff; stroke: #d4dce8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 560.934 367.538112 
+L 771.858 367.538112 
+Q 781.2324 367.538112 781.2324 362.61504 
+L 781.2324 104.15376 
+Q 781.2324 99.230688 771.858 99.230688 
+L 560.934 99.230688 
+Q 551.5596 99.230688 551.5596 104.15376 
+L 551.5596 362.61504 
+Q 551.5596 367.538112 560.934 367.538112 
+z
+" clip-path="url(#p8a2377a747)" style="fill: #ffffff; stroke: #d4dce8; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 88.308 280.56384 
+L 213.3 280.56384 
+" clip-path="url(#p8a2377a747)" style="fill: none; stroke: #355cbb; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 88.308 210.82032 
+L 213.3 210.82032 
+" clip-path="url(#p8a2377a747)" style="fill: none; stroke: #355cbb; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 346.104 280.56384 
+L 471.096 280.56384 
+" clip-path="url(#p8a2377a747)" style="fill: none; stroke: #087f8c; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 346.104 210.82032 
+L 471.096 210.82032 
+" clip-path="url(#p8a2377a747)" style="fill: none; stroke: #087f8c; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 603.9 280.56384 
+L 728.892 280.56384 
+" clip-path="url(#p8a2377a747)" style="fill: none; stroke: #b77820; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 603.9 210.82032 
+L 728.892 210.82032 
+" clip-path="url(#p8a2377a747)" style="fill: none; stroke: #b77820; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 25px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b43" x="33.624" y="48.240775" transform="rotate(-0 33.624 48.240775)">从原子钟到核钟</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #52657b" x="33.624" y="75.118785" transform="rotate(-0 33.624 75.118785)">共同任务：把量子跃迁变成稳定、可复现的频率参考</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #355cbb" x="150.804" y="128.76912" transform="rotate(-0 150.804 128.76912)">微波原子钟</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="150.804" y="161.5896" transform="rotate(-0 150.804 161.5896)">¹³³Cs</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 150.804 274.459329 
+Q 150.804 245.692221 150.804 219.272984 
+" style="fill: none; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 147.404 226.072984 
+L 150.804 219.272984 
+L 154.204 226.072984 
+z
+" style="fill: #355cbb; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #355cbb" x="150.804" y="315.4356" transform="rotate(-0 150.804 315.4356)">9.192 631 770 GHz</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="150.804" y="344.15352" transform="rotate(-0 150.804 344.15352)">基态超精细跃迁</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #087f8c" x="408.6" y="128.76912" transform="rotate(-0 408.6 128.76912)">光学原子钟</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="408.6" y="161.5896" transform="rotate(-0 408.6 161.5896)">⁸⁷Sr 等</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 408.6 274.459329 
+Q 408.6 245.692221 408.6 219.272984 
+" style="fill: none; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 405.2 226.072984 
+L 408.6 219.272984 
+L 412 226.072984 
+z
+" style="fill: #087f8c; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #087f8c" x="408.6" y="315.4356" transform="rotate(-0 408.6 315.4356)">数百 THz</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="408.6" y="344.15352" transform="rotate(-0 408.6 344.15352)">电子能级之间的窄跃迁</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #b77820" x="666.396" y="128.76912" transform="rotate(-0 666.396 128.76912)">钍-229 核钟</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="666.396" y="161.5896" transform="rotate(-0 666.396 161.5896)">²²⁹Th</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 666.396 274.459329 
+Q 666.396 245.692221 666.396 219.272984 
+" style="fill: none; stroke: #b77820; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 662.996 226.072984 
+L 666.396 219.272984 
+L 669.796 226.072984 
+z
+" style="fill: #b77820; stroke: #b77820; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #b77820" x="666.396" y="315.4356" transform="rotate(-0 666.396 315.4356)">约 2.02 PHz</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="666.396" y="344.15352" transform="rotate(-0 666.396 344.15352)">核基态与低能异构态</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="408.6" y="399.53808" transform="rotate(-0 408.6 399.53808)">能级间距为示意  ·  核跃迁不改变元素种类  ·  参考频率高不等于所有误差更小</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8a2377a747">
+   <rect x="18" y="18" width="781.2" height="410.256"/>
+  </clipPath>
+ </defs>
+</svg>

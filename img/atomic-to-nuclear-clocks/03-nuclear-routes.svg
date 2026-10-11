@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="873pt" height="479.52pt" viewBox="0 0 873 479.52" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-11T10:04:01.052093</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 479.52 
+L 873 479.52 
+L 873 0 
+L 0 0 
+z
+" style="fill: #f7f9fc"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 43.947 229.55904 
+L 184.563 229.55904 
+Q 199.629 229.55904 199.629 221.57568 
+L 199.629 147.06432 
+Q 199.629 139.08096 184.563 139.08096 
+L 43.947 139.08096 
+Q 28.881 139.08096 28.881 147.06432 
+L 28.881 221.57568 
+Q 28.881 229.55904 43.947 229.55904 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #087f8c; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 257.382 229.55904 
+L 397.998 229.55904 
+Q 413.064 229.55904 413.064 221.57568 
+L 413.064 147.06432 
+Q 413.064 139.08096 397.998 139.08096 
+L 257.382 139.08096 
+Q 242.316 139.08096 242.316 147.06432 
+L 242.316 221.57568 
+Q 242.316 229.55904 257.382 229.55904 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #087f8c; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 470.817 229.55904 
+L 611.433 229.55904 
+Q 626.499 229.55904 626.499 221.57568 
+L 626.499 147.06432 
+Q 626.499 139.08096 611.433 139.08096 
+L 470.817 139.08096 
+Q 455.751 139.08096 455.751 147.06432 
+L 455.751 221.57568 
+Q 455.751 229.55904 470.817 229.55904 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #087f8c; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 684.252 229.55904 
+L 824.868 229.55904 
+Q 839.934 229.55904 839.934 221.57568 
+L 839.934 147.06432 
+Q 839.934 139.08096 824.868 139.08096 
+L 684.252 139.08096 
+Q 669.186 139.08096 669.186 147.06432 
+L 669.186 221.57568 
+Q 669.186 229.55904 684.252 229.55904 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #087f8c; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 43.947 400.31424 
+L 184.563 400.31424 
+Q 199.629 400.31424 199.629 392.33088 
+L 199.629 317.81952 
+Q 199.629 309.83616 184.563 309.83616 
+L 43.947 309.83616 
+Q 28.881 309.83616 28.881 317.81952 
+L 28.881 392.33088 
+Q 28.881 400.31424 43.947 400.31424 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #355cbb; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 257.382 400.31424 
+L 397.998 400.31424 
+Q 413.064 400.31424 413.064 392.33088 
+L 413.064 317.81952 
+Q 413.064 309.83616 397.998 309.83616 
+L 257.382 309.83616 
+Q 242.316 309.83616 242.316 317.81952 
+L 242.316 392.33088 
+Q 242.316 400.31424 257.382 400.31424 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #355cbb; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 470.817 400.31424 
+L 611.433 400.31424 
+Q 626.499 400.31424 626.499 392.33088 
+L 626.499 317.81952 
+Q 626.499 309.83616 611.433 309.83616 
+L 470.817 309.83616 
+Q 455.751 309.83616 455.751 317.81952 
+L 455.751 392.33088 
+Q 455.751 400.31424 470.817 400.31424 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #355cbb; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 684.252 400.31424 
+L 824.868 400.31424 
+Q 839.934 400.31424 839.934 392.33088 
+L 839.934 317.81952 
+Q 839.934 309.83616 824.868 309.83616 
+L 684.252 309.83616 
+Q 669.186 309.83616 669.186 317.81952 
+L 669.186 392.33088 
+Q 669.186 400.31424 684.252 400.31424 
+z
+" clip-path="url(#p2bc7d1e0e8)" style="fill: #ffffff; stroke: #355cbb; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 25px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #172b43" x="34.74" y="49.072375" transform="rotate(-0 34.74 49.072375)">两种连续波钍-229 核钟路线</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #52657b" x="34.74" y="78.777825" transform="rotate(-0 34.74 78.777825)">均利用核吸收信号校正振荡器；晶体中的实际线宽远大于自然线宽。</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #087f8c" x="38.925" y="111.1392" transform="rotate(-0 38.925 111.1392)">Huang 等：镉蒸气四波混频</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: start; fill: #355cbb" x="38.925" y="281.8944" transform="rotate(-0 38.925 281.8944)">Toscani De Col 等：逐级倍频</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #087f8c" x="114.255" y="170.116967" transform="rotate(-0 114.255 170.116967)">750 / 710 nm</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="114.255" y="201.224235" transform="rotate(-0 114.255 201.224235)">光频梳传递相干性</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #087f8c" x="327.69" y="170.116967" transform="rotate(-0 327.69 170.116967)">镉蒸气混频</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="327.69" y="201.224235" transform="rotate(-0 327.69 201.224235)">375 + 375 + 710 nm</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #087f8c" x="541.125" y="170.116967" transform="rotate(-0 541.125 170.116967)">148.4 nm</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="541.125" y="201.224235" transform="rotate(-0 541.125 201.224235)">照射 Th:CaF₂</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #087f8c" x="754.56" y="170.116967" transform="rotate(-0 754.56 170.116967)">光电管鉴频</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="754.56" y="201.224235" transform="rotate(-0 754.56 201.224235)">反馈 → AOM</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 202.468486 184.32 
+Q 220.136332 184.32 235.456307 184.32 
+" style="fill: none; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 228.656307 180.92 
+L 235.456307 184.32 
+L 228.656307 187.72 
+z
+" style="fill: #087f8c; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 415.903486 184.32 
+Q 433.571332 184.32 448.891307 184.32 
+" style="fill: none; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 442.091307 180.92 
+L 448.891307 184.32 
+L 442.091307 187.72 
+z
+" style="fill: #087f8c; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 629.338486 184.32 
+Q 647.006332 184.32 662.326307 184.32 
+" style="fill: none; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 655.526307 180.92 
+L 662.326307 184.32 
+L 655.526307 187.72 
+z
+" style="fill: #087f8c; stroke: #087f8c; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #355cbb" x="114.255" y="340.872167" transform="rotate(-0 114.255 340.872167)">1187 nm</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="114.255" y="371.979435" transform="rotate(-0 114.255 371.979435)">钟激光锁高精细腔</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #355cbb" x="327.69" y="340.872167" transform="rotate(-0 327.69 340.872167)">连续倍频</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="327.69" y="371.979435" transform="rotate(-0 327.69 371.979435)">594 → 297 → 148 nm</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #355cbb" x="541.125" y="340.872167" transform="rotate(-0 541.125 340.872167)">148 nm</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="541.125" y="371.979435" transform="rotate(-0 541.125 371.979435)">照射 Th:CaF₂</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 18px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #355cbb" x="754.56" y="340.872167" transform="rotate(-0 754.56 340.872167)">PMT 鉴频</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 15px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="754.56" y="371.979435" transform="rotate(-0 754.56 371.979435)">反馈 → EOM</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 202.468486 355.0752 
+Q 220.136332 355.0752 235.456307 355.0752 
+" style="fill: none; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 228.656307 351.6752 
+L 235.456307 355.0752 
+L 228.656307 358.4752 
+z
+" style="fill: #355cbb; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 415.903486 355.0752 
+Q 433.571332 355.0752 448.891307 355.0752 
+" style="fill: none; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 442.091307 351.6752 
+L 448.891307 355.0752 
+L 442.091307 358.4752 
+z
+" style="fill: #355cbb; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 629.338486 355.0752 
+Q 647.006332 355.0752 662.326307 355.0752 
+" style="fill: none; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+    <path d="M 655.526307 351.6752 
+L 662.326307 355.0752 
+L 655.526307 358.4752 
+z
+" style="fill: #355cbb; stroke: #355cbb; stroke-width: 2.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="436.5" y="244.1952" transform="rotate(-0 436.5 244.1952)">VUV 产生约 10 μW；优化配置探测到 350 nW；钟线宽约 27 kHz</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #172b43" x="436.5" y="414.9504" transform="rotate(-0 436.5 414.9504)">到达 PMT 的 VUV 约 65 pW；钟线宽约 100 kHz；外部 Yb⁺ 钟用于比较</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'DejaVu Sans'; text-anchor: middle; fill: #52657b" x="436.5" y="445.9968" transform="rotate(-0 436.5 445.9968)">依据 Nature (2026) 两篇论文重绘的功能示意；功率注明所在位置，不能混用。</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p2bc7d1e0e8">
+   <rect x="18" y="18" width="837" height="443.52"/>
+  </clipPath>
+ </defs>
+</svg>
