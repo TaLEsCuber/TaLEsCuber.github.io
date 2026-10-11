@@ -166,6 +166,59 @@ axes[1].set(xlabel='激光失谐 Δ / Γ', ylabel='相对准静态响应的相�
 fig.suptitle('RF 频率接近自然线宽时，原子响应不能视为瞬时  |  理想二能级模型', fontsize=14)
 save(fig, 'dynamic-response')
 
+# Teaching figure: display every physical link on the same RF time axis.
+theta_chain = np.linspace(0, 4 * np.pi, 1200)
+omega_chain, beta_chain = 25 / 19.6, .04
+signal_chain = -1j * transfer(-.5, .05, omega_chain) * beta_chain
+chain_y = [np.cos(theta_chain), -np.cos(theta_chain), np.sin(theta_chain),
+           -np.sin(theta_chain), 1 + np.real(signal_chain * np.exp(1j * theta_chain))]
+chain_titles = ['① 离子平均位置处的 RF 电场：随驱动周期反向',
+                '② RF 驱动产生的位移：围绕平均位置往复',
+                '③ 沿探测光方向的速度：位移的时间导数',
+                '④ 运动引起的激光失谐变化：与速度反号',
+                '⑤ 预期荧光计数率：包含原子有限响应时间']
+fig, axes = plt.subplots(5, 1, figsize=(10.5, 10), sharex=True, layout='constrained')
+for ax, yy, title, color in zip(axes, chain_y, chain_titles, [GRAY, VIOLET, TEAL, RED, VIOLET]):
+    ax.plot(theta_chain / (2 * np.pi), yy, color=color, lw=2)
+    ax.axhline(1 if ax is axes[-1] else 0, color=GRAY, ls=':', alpha=.5)
+    ax.set_title(title, loc='left', fontsize=11)
+    ax.set_ylabel('归一化值' if ax is not axes[-1] else '计数率 / 均值')
+    ax.grid(axis='x', alpha=.15)
+axes[-1].set_xlabel('时间 / RF 周期（各行使用相同的时间轴）')
+fig.suptitle('RF 场 → 位移 → 速度 → 失谐 → 荧光  |  理想一维模型', fontsize=14)
+save(fig, 'physical-chain')
+checks['physical_chain'] = {'beta': beta_chain, 'omega_over_gamma': omega_chain,
+                            'fluorescence_modulation': float(abs(signal_chain))}
+
+# Teaching figure: explicit timestamp conversion, followed by a separate histogram.
+ref_ns = np.arange(0, 161, 40)
+photons_ns = np.array([5., 43., 87., 125.])
+delays_ns = photons_ns % 40
+assert np.array_equal(delays_ns, [5., 3., 7., 5.])
+fig, axes = plt.subplots(3, 1, figsize=(10.5, 8.4), layout='constrained')
+t_ns = np.linspace(0, 160, 1200)
+axes[0].plot(t_ns, np.cos(2 * np.pi * t_ns / 40), color=TEAL, lw=1.8)
+for edge in ref_ns:
+    axes[0].axvline(edge, color=GRAY, ls=':', alpha=.6)
+axes[0].set(xlim=(0, 160), title='① 选定同一方向的 RF 参考边沿：0、40、80、120 ns…', ylabel='RF 参考', xlabel='绝对时间 / ns')
+axes[1].vlines(photons_ns, 0, 1, color=VIOLET, lw=2)
+for arrival, delay in zip(photons_ns, delays_ns):
+    axes[1].text(arrival, 1.04, f'{arrival:g} ns', ha='center', fontsize=10)
+    axes[1].annotate('', xy=(arrival-delay, .45), xytext=(arrival, .45), arrowprops={'arrowstyle':'<->', 'color':TEAL})
+    axes[1].text(arrival+2, .4, f'τ = {delay:g} ns', fontsize=10)
+for edge in ref_ns:
+    axes[1].axvline(edge, color=GRAY, ls=':', alpha=.6)
+axes[1].set(xlim=(0,160), ylim=(-.08,1.35), title='② 每个光子减去它之前最近的参考边沿时间', ylabel='光子电脉冲', xlabel='绝对时间 / ns', yticks=[])
+rng_fold = np.random.default_rng(20261005)
+fold_centers = (np.arange(64)+.5)/64*40
+fold_counts = rng_fold.poisson(350*(1+.15*np.cos(2*np.pi*fold_centers/40)-.1*np.sin(2*np.pi*fold_centers/40)))
+axes[2].bar(fold_centers, fold_counts, width=.52, color=VIOLET, alpha=.7)
+axes[2].set(xlim=(0,40), title='③ 另一次合成记录：把大量光子按 τ 分类，得到一个周期内的计数', ylabel='每个时间区间的计数', xlabel='相对时间 τ / ns')
+fig.suptitle('“按 RF 相位累积”具体怎样做？  |  25 MHz 对应 40 ns', fontsize=14)
+save(fig, 'timestamp-folding')
+checks['timestamp_example_ns'] = {'arrivals': photons_ns.tolist(), 'delays': delays_ns.tolist(),
+                                'period': 40, 'histogram_is_separate_synthetic_record': True}
+
 # Worked example: assumed parameters, not actual settings of the user's trap.
 lam, gamma, om, charge, mass, c = 369.5e-9, 2*np.pi*19.6e6, 2*np.pi*25e6, 1.602176634e-19, 172*1.66053906660e-27, 299792458.
 xobs, yobs, dilution = .015, .020, .8
