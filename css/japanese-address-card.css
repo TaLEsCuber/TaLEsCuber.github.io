@@ -1,0 +1,171 @@
+#article-container .jp-address-card {
+  --jp-accent: var(--text-hover, #49b1f5);
+  color: var(--font-color);
+  margin: 24px 0 8px;
+}
+
+#article-container .jp-address-card .jp-address-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+#article-container .jp-address-card .jp-address-caption {
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
+#article-container .jp-address-card .jp-address-caption i {
+  color: var(--jp-accent);
+  margin-right: 8px;
+}
+
+#article-container .jp-address-card .jp-address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#article-container .jp-address-card .jp-address-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--light-grey);
+  border-radius: 12px;
+  background: var(--card-bg);
+  transition: border-color .2s ease;
+}
+
+#article-container .jp-address-card .jp-address-field:hover {
+  border-color: var(--jp-accent);
+}
+
+#article-container .jp-address-card .jp-address-wide {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+}
+
+#article-container .jp-address-card .jp-address-label {
+  font-size: .92em;
+  opacity: .7;
+  overflow-wrap: anywhere;
+}
+
+#article-container .jp-address-card .jp-address-value {
+  min-width: 0;
+  font-size: 1.12em;
+  font-weight: 600;
+  text-align: center;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+#article-container .jp-address-card .jp-address-full {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-color: var(--jp-accent);
+}
+
+#article-container .jp-address-card button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-width: 76px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--light-grey);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--jp-accent);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+#article-container .jp-address-card button:hover,
+#article-container .jp-address-card button[data-copied] {
+  border-color: var(--jp-accent);
+  background: rgba(73, 177, 245, .1);
+}
+
+#article-container .jp-address-card button:focus-visible,
+#article-container .jp-address-card .jp-address-back:focus-visible {
+  outline: 2px solid var(--jp-accent);
+  outline-offset: 4px;
+}
+
+#article-container .jp-address-card button:disabled {
+  cursor: wait;
+  opacity: .7;
+}
+
+#article-container .jp-address-card .jp-address-copy-all {
+  padding-right: 18px;
+  padding-left: 18px;
+  background: var(--btn-bg, #49b1f5);
+  color: var(--btn-color, #fff);
+  border-color: transparent;
+}
+
+#article-container .jp-address-card .jp-address-copy-all:hover,
+#article-container .jp-address-card .jp-address-copy-all[data-copied] {
+  background: var(--btn-hover-color, #ff7242);
+  color: var(--btn-color, #fff);
+  border-color: transparent;
+}
+
+#article-container .jp-address-card .jp-address-status {
+  min-height: 1.8em;
+  margin: 12px 0 4px;
+  color: var(--jp-accent);
+  font-size: 13px;
+}
+
+#article-container .jp-address-card .jp-address-status[data-error] {
+  color: var(--font-color);
+}
+
+#article-container .jp-address-card .jp-address-back {
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  #article-container .jp-address-card .jp-address-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  #article-container .jp-address-card .jp-address-field {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+    padding: 16px;
+  }
+
+  #article-container .jp-address-card .jp-address-label {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #article-container .jp-address-card .jp-address-value {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+    font-size: 1.06em;
+  }
+
+  #article-container .jp-address-card .jp-address-field button {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+}
