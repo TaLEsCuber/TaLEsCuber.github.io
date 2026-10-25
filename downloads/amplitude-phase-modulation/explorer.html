@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AM 与 PM 交互演示</title>
+<style>
+:root{color-scheme:light;--ink:#23374d;--muted:#5a6b7d;--blue:#3369a8;--teal:#008b8b;--orange:#cb7428;--line:#dce5eb}
+*{box-sizing:border-box}body{margin:0;background:#f2f5f8;color:var(--ink);font:16px/1.7 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1140px;margin:auto;padding:28px 22px 40px}a{color:var(--blue)}h1{font-size:clamp(26px,4vw,38px);line-height:1.3;margin:0 0 12px}h2{font-size:19px;line-height:1.4;margin:0 0 8px}.intro{max-width:900px;color:var(--muted);margin:0 0 22px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px;box-shadow:0 3px 15px #23374d05}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}label{display:block;font-weight:650}input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;margin:12px 0}#beta{accent-color:var(--teal)}output{font-variant-numeric:tabular-nums;font-weight:700}small,.note{color:var(--muted);font-size:14px;line-height:1.6}.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px}.grid .card{min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.stat strong{display:block;font-size:24px;font-variant-numeric:tabular-nums}.stat span{font-size:14px;color:var(--muted)}canvas{display:block;width:100%;height:390px}#iq{height:330px}#spectrum{height:330px}.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;margin-bottom:8px}.am{color:var(--blue)}.pm{color:var(--teal)}.swatch:before{content:"";display:inline-block;width:18px;height:3px;background:currentColor;vertical-align:middle;margin-right:6px}button{font:inherit;font-size:14px;color:var(--blue);background:#edf3f9;border:1px solid #b9cce1;border-radius:7px;padding:4px 12px;cursor:pointer;margin-right:6px}button:focus-visible,input:focus-visible{outline:3px solid #cb742880;outline-offset:3px}.notice{padding:12px 16px;border-left:3px solid var(--orange);background:#fff7ef;margin-top:14px}.formula{font-family:"Cambria Math",system-ui,sans-serif;overflow-wrap:anywhere;font-size:15px}footer{font-size:14px;color:var(--muted)}@media(max-width:760px){main{padding:22px 14px}.controls,.grid{grid-template-columns:1fr}.controls{gap:12px}.stats{grid-template-columns:1fr 1fr}.card{padding:16px}canvas{height:420px}#iq,#spectrum{height:320px}.stat strong{font-size:21px}}
+</style>
+</head>
+<body>
+<main>
+<h1>振幅调制与相位调制</h1>
+<p class="intro">拖动参数，看同一个余弦消息如何改变载波的长度或角度，再观察这些变化怎样出现在边带里。所有曲线均为理想模型的计算结果。</p>
+<section class="card" aria-label="调制参数">
+<div class="controls">
+<div><label for="mu">AM 调制度 μ：<output id="muValue">0.60</output></label><input id="mu" type="range" min="0" max="1.5" step="0.01" value="0.6"><small>超过 1 时，带符号的振幅系数会穿过零点。</small></div>
+<div><label for="beta">PM 相位深度 β：<output id="betaValue">1.00 rad</output></label><input id="beta" type="range" min="0" max="4" step="0.01" value="1"><small>加深调制会改变边带功率，谱线间距保持不变。</small></div>
+<div><label for="time">观察时刻 t / Tm：<output id="timeValue">0.00</output></label><input id="time" type="range" min="0" max="2" step="0.002" value="0"><button id="play" type="button" aria-pressed="false">播放</button><button id="reset" type="button">重置</button></div>
+</div>
+<div class="notice" id="notice" aria-live="polite">AM 包络可直接跟随消息；PM 需要相位参考才能解调。</div>
+</section>
+<section class="card">
+<h2>同一消息，两种时域波形</h2>
+<div class="legend"><span class="am swatch">AM</span><span class="pm swatch">PM</span><span style="color:var(--orange)" class="swatch">AM 带符号包络</span></div>
+<canvas id="wave" role="img" aria-label="消息、AM 与 PM 的时域曲线，载波频率为消息频率的十二倍"></canvas>
+<p class="note">竖线标记观察时刻。教学显示取 fc/fm = 12，图中 PM 的瞬时频偏为 −βfm sin(2πfmt)；PM 的包络始终为 1。</p>
+</section>
+<div class="grid">
+<section class="card">
+<h2>去掉载波后的复包络</h2>
+<div class="legend"><span class="am swatch">AM：沿实轴</span><span class="pm swatch">PM：沿圆弧</span></div>
+<canvas id="iq" role="img" aria-label="AM 的实轴轨迹与 PM 的恒半径轨迹，以及当前时刻的相量"></canvas>
+<p class="formula">AM：z = 1 + μm(t)<br>PM：z = exp[jβm(t)]<br>s = I cos(ωct) − Q sin(ωct)</p>
+</section>
+<section class="card">
+<h2>单条边带的功率</h2>
+<div class="legend"><span class="am swatch">AM</span><span class="pm swatch">PM</span></div>
+<canvas id="spectrum" role="img" aria-label="以未调制载波功率为基准的 AM 与 PM 谱线功率"></canvas>
+<p class="note">横轴为边带阶数 n，频率为 fc+nfm；纵轴统一为 Pn/Pc。AM 仅有 n=0、±1，PM 为 Jn(β)²。此图显示功率，未显示区分 AM 与 PM 所需的边带相位。</p>
+</section>
+</div>
+<section class="card stats" aria-label="数值读数">
+<div class="stat"><strong id="amTotal"></strong><span>AM 总功率 / Pc</span></div>
+<div class="stat"><strong id="pmCarrier"></strong><span>PM 载波功率 / Pc</span></div>
+<div class="stat"><strong id="pmSide"></strong><span>PM 每条一阶边带功率 / Pc</span></div>
+<div class="stat"><strong id="phaseNow"></strong><span>当前 PM 相位 / rad</span></div>
+<div class="stat"><strong id="freqNow"></strong><span>当前 PM 频偏 / fm</span></div>
+<div class="stat"><strong id="shownPower"></strong><span>图示 ±8 阶内的 PM 功率比例</span></div>
+</section>
+<footer>理想 PM 总功率恒为 Pc；AM 总功率随 μ 改变。实际器件损耗、噪声与滤波不包含在本演示中。<a href="/2026/10/24/学习/amplitude-phase-modulation/">返回文章</a> · <a href="figures-and-checks.py">下载计算脚本</a></footer>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const C={am:'#3369a8',pm:'#008b8b',orange:'#cb7428',ink:'#23374d',gray:'#8593a3',grid:'#e7edf2'};
+let playing=false,last=0,frame=0;
+function bessel(n,x){const sign=n<0&&Math.abs(n)%2?-1:1;n=Math.abs(n);let a=1;for(let k=1;k<=n;k++)a*=x/(2*k);let sum=a;for(let k=1;k<80;k++){a*=-(x*x/4)/(k*(n+k));sum+=a;if(Math.abs(a)<1e-17)break}return sign*sum}
+function surface(id){const el=$(id),r=el.getBoundingClientRect(),d=window.devicePixelRatio||1;el.width=Math.round(r.width*d);el.height=Math.round(r.height*d);const ctx=el.getContext('2d');ctx.setTransform(d,0,0,d,0,0);ctx.font='12px system-ui,"Microsoft YaHei",sans-serif';return{ctx,w:r.width,h:r.height}}
+function text(ctx,s,x,y,color=C.gray,align='left'){ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(s,x,y)}
+function line(ctx,pts,color,width=1.5,dash=[]){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.stroke();ctx.setLineDash([])}
+function dot(ctx,x,y,color,r=4){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()}
+function wave(mu,beta,t){const{ctx,w,h}=surface('wave'),left=42,right=w-12,row=(h-35)/3;
+ const count=Math.max(1600,Math.floor(w*3));
+ const functions=[x=>Math.cos(2*Math.PI*x),x=>(1+mu*Math.cos(2*Math.PI*x))*Math.cos(24*Math.PI*x),x=>Math.cos(24*Math.PI*x+beta*Math.cos(2*Math.PI*x))];
+ const titles=['消息 m(t) = cos(2πfmt)','AM：振幅系数 1 + μm(t)','PM：附加相位 βm(t)'];
+ functions.forEach((f,j)=>{const top=j*row+25,mid=top+(row-35)/2,scale=(row-40)/(j===1?5.4:2.7),X=x=>left+x/2*(right-left),Y=y=>mid-y*scale;
+ text(ctx,titles[j],left,j*row+15,C.ink);
+ line(ctx,[[left,mid],[right,mid]],C.grid,1);
+ for(let k=0;k<=8;k++){const x=X(k/4);line(ctx,[[x,top],[x,top+row-40]],C.grid,.6)}
+ const pts=[];for(let k=0;k<=count;k++){const x=2*k/count;pts.push([X(x),Y(f(x))])}line(ctx,pts,[C.gray,C.am,C.pm][j],j?1.2:1.8);
+ if(j===1){for(const sign of [1,-1]){const pts=[];for(let k=0;k<=600;k++){const x=2*k/600;pts.push([X(x),Y(sign*(1+mu*Math.cos(2*Math.PI*x)))])}line(ctx,pts,C.orange,1.5,[5,4])}}
+ line(ctx,[[X(t),top],[X(t),top+row-40]],C.ink,1,[3,3]);dot(ctx,X(t),Y(f(t)),[C.gray,C.am,C.pm][j]);
+ if(j===2){for(let k=0;k<=4;k++)text(ctx,(k/2).toFixed(1),X(k/2),h-14,C.gray,'center')}
+ });text(ctx,'t / Tm',w-10,h-1,C.gray,'right')}
+function iq(mu,beta,t){const{ctx,w,h}=surface('iq'),left=34,right=w-20,top=20,bottom=h-35,size=Math.min(right-left,bottom-top),cx=(left+right)/2,cy=(top+bottom)/2,scale=size/5.7,X=x=>cx+x*scale,Y=y=>cy-y*scale;
+ for(let k=-2;k<=2;k++){line(ctx,[[X(k),Y(-2.4)],[X(k),Y(2.4)]],C.grid,.7);line(ctx,[[X(-2.4),Y(k)],[X(2.4),Y(k)]],C.grid,.7);text(ctx,String(k),X(k),Y(0)+16,C.gray,'center')}
+ line(ctx,[[X(-2.6),Y(0)],[X(2.6),Y(0)]],C.gray,1);line(ctx,[[X(0),Y(-2.5)],[X(0),Y(2.5)]],C.gray,1);
+ const circle=[];for(let k=0;k<=360;k++){const a=2*Math.PI*k/360;circle.push([X(Math.cos(a)),Y(Math.sin(a))])}line(ctx,circle,C.grid,1,[4,4]);
+ const arc=[];for(let k=0;k<=600;k++){const a=-beta+2*beta*k/600;arc.push([X(Math.cos(a)),Y(Math.sin(a))])}line(ctx,arc,C.pm,3);
+ line(ctx,[[X(1-mu),Y(0)],[X(1+mu),Y(0)]],C.am,4);
+ const m=Math.cos(2*Math.PI*t),a=beta*m;
+ line(ctx,[[X(0),Y(0)],[X(1+mu*m),Y(0)]],C.am,1.5);dot(ctx,X(1+mu*m),Y(0),C.am,6);
+ line(ctx,[[X(0),Y(0)],[X(Math.cos(a)),Y(Math.sin(a))]],C.pm,1.5);dot(ctx,X(Math.cos(a)),Y(Math.sin(a)),C.pm,6);
+ text(ctx,'I / Ac',right,bottom+23,C.ink,'right');text(ctx,'Q / Ac',X(0)+8,14,C.ink)}
+function spectrum(mu,beta){const{ctx,w,h}=surface('spectrum'),left=42,right=w-12,top=16,bottom=h-43,X=n=>left+(n+8.8)/17.6*(right-left),Y=p=>bottom-p/1.08*(bottom-top);
+ for(const p of [0,.25,.5,.75,1]){line(ctx,[[left,Y(p)],[right,Y(p)]],C.grid,.8);text(ctx,p.toFixed(2),left-5,Y(p)+4,C.gray,'right')}
+ for(let n=-8;n<=8;n++){const pa=n===0?1:Math.abs(n)===1?mu*mu/4:0,pp=bessel(n,beta)**2,offset=Math.min(3,(right-left)/90);line(ctx,[[X(n)-offset,Y(0)],[X(n)-offset,Y(pa)]],C.am,3);line(ctx,[[X(n)+offset,Y(0)],[X(n)+offset,Y(pp)]],C.pm,3);if(n%2===0)text(ctx,String(n),X(n),bottom+18,C.gray,'center')}
+ text(ctx,'边带阶数 n',right,h-5,C.ink,'right');text(ctx,'Pn / Pc',left,12,C.ink)}
+function render(){const mu=+$('mu').value,beta=+$('beta').value,t=+$('time').value,m=Math.cos(2*Math.PI*t);$('muValue').textContent=mu.toFixed(2);$('betaValue').textContent=beta.toFixed(2)+' rad';$('timeValue').textContent=t.toFixed(2);
+ $('amTotal').textContent=(1+mu*mu/2).toFixed(4);$('pmCarrier').textContent=(bessel(0,beta)**2).toFixed(4);$('pmSide').textContent=(bessel(1,beta)**2).toFixed(4);$('phaseNow').textContent=(beta*m).toFixed(3);$('freqNow').textContent=(-beta*Math.sin(2*Math.PI*t)).toFixed(3);
+ let sum=0;for(let n=-8;n<=8;n++)sum+=bessel(n,beta)**2;$('shownPower').textContent=(100*sum).toFixed(4)+'%';
+ const notices=[];if(mu>1)notices.push('AM 已过调制：包络检波会把负的振幅系数折回正方向。');else notices.push('AM 未过调制：理想包络可直接跟随消息。');
+ if(Math.abs(beta-2.40482556)<.03)notices.push('PM 接近第一个载波零点：总功率仍为 Pc。');else if(beta>.8)notices.push('PM 高阶边带已不可忽略，单独读取 Q 不再等于线性相位。');else notices.push('小深度 PM 的边带功率可与 AM 相似；区分它们还需要相位信息。');$('notice').textContent=notices.join(' ');
+ wave(mu,beta,t);iq(mu,beta,t);spectrum(mu,beta)}
+function stop(){playing=false;cancelAnimationFrame(frame);$('play').textContent='播放';$('play').setAttribute('aria-pressed','false')}
+function tick(now){if(!playing)return;const dt=last?Math.min((now-last)/1000,.05):0;last=now;$('time').value=((+$('time').value+dt*.16)%2).toFixed(3);render();frame=requestAnimationFrame(tick)}
+for(const id of ['mu','beta','time'])$(id).addEventListener('input',render);
+$('play').addEventListener('click',()=>{if(playing){stop();return}playing=true;last=0;$('play').textContent='暂停';$('play').setAttribute('aria-pressed','true');frame=requestAnimationFrame(tick)});
+$('reset').addEventListener('click',()=>{stop();$('mu').value=.6;$('beta').value=1;$('time').value=0;render()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
+window.addEventListener('resize',render);render();
+</script>
+</body>
+</html>
