@@ -200,15 +200,3 @@ http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%
 http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/
 http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/
 http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E8%A3%85%E6%9C%BA/
-http://talescuber.github.io/downloads/tahara-metalens-supercell/qa-notes.html
-http://talescuber.github.io/downloads/tahara-metalens-supercell/validation.json
-http://talescuber.github.io/downloads/tahara-metalens-supercell/source-figure-manifest.json
-http://talescuber.github.io/downloads/tahara-metalens-supercell/03-angular-width.alignment.json
-http://talescuber.github.io/downloads/tahara-metalens-supercell/01-phase-gradient.alignment.json
-http://talescuber.github.io/downloads/tahara-metalens-supercell/figure-contracts.json
-http://talescuber.github.io/2026/11/05/%E5%AD%A6%E4%B9%A0/tahara-yasui-metalens-supercell-design/
-http://talescuber.github.io/downloads/tahara-metalens-supercell/README.html
-http://talescuber.github.io/tags/%E8%B6%85%E8%A1%A8%E9%9D%A2/
-http://talescuber.github.io/tags/%E4%BC%B4%E9%9A%8F%E4%BC%98%E5%8C%96/
-http://talescuber.github.io/tags/%E9%80%86%E5%90%91%E8%AE%BE%E8%AE%A1/
-http://talescuber.github.io/tags/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/
