@@ -200,3 +200,4 @@ http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%
 http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6/
 http://talescuber.github.io/categories/%E5%AD%A6%E4%B9%A0/%E7%89%A9%E7%90%86%E7%AC%94%E8%AE%B0/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6/
 http://talescuber.github.io/categories/%E7%94%9F%E6%B4%BB/%E8%A3%85%E6%9C%BA/
+http://talescuber.github.io/tags/JLPT/

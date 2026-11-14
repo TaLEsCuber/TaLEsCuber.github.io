@@ -364,7 +364,7 @@
   <url>
     <loc>http://talescuber.github.io/2026/08/08/%E5%AD%A6%E4%B9%A0/%E6%97%A5%E8%AF%AD%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E6%B1%87%E6%80%BB/</loc>
     
-    <lastmod>2026-08-08</lastmod>
+    <lastmod>2026-11-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1567,4 +1567,10 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://talescuber.github.io/tags/JLPT/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
 </urlset>
