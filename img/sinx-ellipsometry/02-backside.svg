@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840px" height="462px" viewBox="0 0 840 462" role="img" aria-labelledby="title desc">
+  <title id="title">平行双抛熔融石英的背面反射光路</title>
+  <desc id="desc">前表面反射与第一次背面返回光平行，从前表面不同位置出射。两出射点沿表面间隔为两倍衬底厚度乘折射角正切。收光孔径可同时接收两束光。</desc>
+  <defs>
+    <marker id="front" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0L10 5L0 10Z" fill="#007a73"/>
+    </marker>
+    <marker id="back" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0L10 5L0 10Z" fill="#ac501d"/>
+    </marker>
+  </defs>
+  <rect width="840" height="462" rx="20" fill="#f4f8fa"/>
+  <g font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif" fill="#142c3a">
+    <text x="36" y="51" font-size="28" font-weight="700">双面抛光衬底产生两束平行出射光</text>
+    <rect x="84" y="232" width="672" height="125" rx="3" fill="#dbe7ee" stroke="#9bb0bd" stroke-width="1.5"/>
+    <rect x="84" y="224" width="672" height="8" rx="2" fill="#449a95"/>
+    <text x="103" y="216" font-size="19">SiNₓ</text>
+    <text x="103" y="269" font-size="23">熔融石英</text>
+    <text x="104" y="384" font-size="20" fill="#516571">石英／空气界面</text>
+    <path d="M278 181V328" stroke="#6e8190" stroke-width="1.6" stroke-dasharray="5 5"/>
+    <path d="M278 298A70 70 0 0 0 322 282" stroke="#6e8190" stroke-width="1.6" fill="none"/>
+    <text x="304" y="326" font-size="19" fill="#516571">θₛ</text>
+    <path d="M106 132L270 222M278 227L487 112" fill="none" stroke="#007a73" stroke-width="4" marker-end="url(#front)"/>
+    <text x="111" y="120" font-size="20" fill="#007a73">入射</text>
+    <text x="501" y="111" font-size="23" fill="#007a73">前面反射</text>
+    <path d="M278 228L385 356L492 228L706 110" fill="none" stroke="#ac501d" stroke-width="3.5" stroke-dasharray="9 6" marker-end="url(#back)"/>
+    <text x="605" y="199" font-size="23" fill="#944314">背面返回</text>
+    <circle cx="278" cy="228" r="4" fill="#007a73"/>
+    <circle cx="385" cy="356" r="4" fill="#ac501d"/>
+    <circle cx="492" cy="228" r="4" fill="#ac501d"/>
+    <path d="M771 232h16m-8 0v125m-8 0h16M278 401v16m0-8h214m0-8v16" stroke="#516571" stroke-width="1.8" fill="none"/>
+    <text x="792" y="300" font-size="21">L</text>
+    <text x="385" y="441" text-anchor="middle" font-size="21">沿前表面的间距 Δx</text>
+  </g>
+</svg>

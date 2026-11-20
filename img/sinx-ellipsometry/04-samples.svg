@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840px" height="487px" viewBox="0 0 840 487" role="img" aria-labelledby="title desc">
+  <title id="title">首次标定与后续监控的样品分工</title>
+  <desc id="desc">同炉沉积形成实际衬底上的连续膜和硅陪片，首次独立厚度标定用于交叉验证。材料常数由石英连续膜测定，硅陪片追踪批次漂移，正式纳米柱另外测几何。</desc>
+  <rect width="840" height="487" rx="20" fill="#f4f8fa"/>
+  <g font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif" fill="#142c3a">
+    <text x="36" y="51" font-size="28" font-weight="700">用哪块样品回答哪个问题？</text>
+    <g fill="#fff" stroke="#c5d3db" stroke-width="1.4">
+      <rect x="36" y="77" width="768" height="107" rx="12"/>
+      <rect x="36" y="199" width="768" height="107" rx="12"/>
+      <rect x="36" y="321" width="768" height="107" rx="12"/>
+    </g>
+    <g font-size="23" font-weight="700">
+      <text x="245" y="118">熔融石英上的未刻蚀连续膜</text>
+      <text x="245" y="240">同炉 Si 陪片</text>
+      <text x="245" y="362">正式纳米柱／周期测试区</text>
+    </g>
+    <g font-size="21" fill="#3d5665">
+      <text x="245" y="153">受控背反射下测 n(λ)、k(λ) 与膜厚</text>
+      <text x="245" y="275">先与石英膜交叉标定，再监控批次漂移</text>
+      <text x="245" y="397">量柱高、直径和侧壁，结合材料常数仿真</text>
+    </g>
+    <g stroke="#a5bac7" fill="#dbe7ee">
+      <rect x="75" y="130" width="131" height="22" rx="3"/>
+      <rect x="75" y="374" width="131" height="22" rx="3"/>
+    </g>
+    <rect x="75" y="252" width="131" height="22" rx="3" fill="#8298a5"/>
+    <g fill="#449a95">
+      <rect x="75" y="112" width="131" height="18" rx="3"/>
+      <rect x="75" y="234" width="131" height="18" rx="3"/>
+      <rect x="84" y="348" width="12" height="26" rx="2"/>
+      <rect x="107" y="348" width="17" height="26" rx="2"/>
+      <rect x="136" y="348" width="21" height="26" rx="2"/>
+      <rect x="169" y="348" width="13" height="26" rx="2"/>
+      <rect x="193" y="348" width="6" height="26" rx="2"/>
+    </g>
+    <text x="36" y="463" font-size="19" fill="#516571">首次标定增加台阶仪或截面测厚，并记录衬底与炉位。</text>
+  </g>
+</svg>
